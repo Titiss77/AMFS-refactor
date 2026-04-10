@@ -33,7 +33,9 @@
         <div>
             <label style="font-weight: bold; display: block; margin-bottom: 2px;">Lien (URL) :</label>
             <small style="color: var(--texte-secondaire); display: block; margin-bottom: 5px; font-size: 12px;">
-                💡 Astuce optionnelle : Utilise <b>{s}</b> pour la saison et <b>{ep}</b> pour l'épisode.
+                💡 Astuce : <b>{s}</b> = saison, <b>{ep}</b> = épisode normal (1). <br>
+                Utilise <b>{ep2}</b>, <b>{ep3}</b> ou <b>{ep4}</b> pour forcer les zéros (ex: <b>01</b>, <b>001</b>,
+                <b>0001</b>).
             </small>
             <input type="text" name="lien" value="<?= htmlspecialchars($item['lien'] ?? '') ?>"
                 style="width: 100%; padding: 8px; border: 1px solid var(--bordure); border-radius: 4px; box-sizing: border-box;">

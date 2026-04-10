@@ -27,9 +27,22 @@ if (empty($groupedItems)) {
                 style="background: var(--fond-carte); border: 1px solid var(--bordure); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                 <div class="card-body" style="padding: 15px; flex-grow: 1;">
                     <?php
-                    // Remplacement dynamique de {ep} et {s} (Totalement optionnels)
+                    // Variables de base
                     $lienFinal = $item['lien'] ?? '#';
-                    $lienFinal = str_replace(['{ep}', '{s}'], [$item['episode'], $item['saison']], $lienFinal);
+                    $ep = $item['episode'] ?? '1';
+                    $saison = $item['saison'] ?? '1';
+
+                    // Création des versions avec zéros (01, 001, 0001)
+                    $ep2 = str_pad($ep, 2, '0', STR_PAD_LEFT);
+                    $ep3 = str_pad($ep, 3, '0', STR_PAD_LEFT);
+                    $ep4 = str_pad($ep, 4, '0', STR_PAD_LEFT);
+
+                    // On remplace tous les mots-clés s'ils sont présents dans le lien
+                    $lienFinal = str_replace(
+                        ['{ep}', '{s}', '{ep2}', '{ep3}', '{ep4}'],
+                        [$ep, $saison, $ep2, $ep3, $ep4],
+                        $lienFinal
+                    );
                     ?>
                     <a href="<?= htmlspecialchars($lienFinal) ?>" target="_blank"
                         style="text-decoration: none; color: inherit; display: block; margin-bottom: 10px;">
