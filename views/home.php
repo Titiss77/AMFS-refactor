@@ -32,9 +32,6 @@ if (empty($groupedItems)) {
                 <div class="card"
                     style="background: var(--fond-carte); border: 1px solid var(--bordure); border-radius: 8px; overflow: hidden; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
 
-                    <img src="<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['titre']) ?>"
-                        style="width: 100%; height: 250px; object-fit: cover;">
-
                     <div class="card-body" style="padding: 15px;">
                         <h4 style="margin: 0 0 10px 0; font-size: 16px;"><?= htmlspecialchars($item['titre']) ?></h4>
 
@@ -45,7 +42,6 @@ if (empty($groupedItems)) {
                         <?php endif; ?>
 
                         <div style="font-size: 12px; font-weight: bold;">
-                            <span style="color: var(--succes);">S: <?= htmlspecialchars($item['saison']) ?></span> |
                             <span style="color: var(--info);">Ep: <?= htmlspecialchars($item['episode']) ?></span>
                         </div>
                     </div>
