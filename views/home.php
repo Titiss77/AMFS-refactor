@@ -1,61 +1,60 @@
+<div style="margin-bottom: 20px; text-align: right;">
+    <a href="index.php?action=form"
+        style="background-color: var(--succes); color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">+
+        Ajouter une carte</a>
+</div>
+
 <?php 
-// Sécurité : s'assurer qu'il y a des données à afficher
 if (empty($groupedItems)) {
     echo "<p>Aucune donnée disponible.</p>";
 } else {
-    // Boucle sur les Headers (ex: Streaming, IA, Séries...)
     foreach ($groupedItems as $headerName => $divisions) : ?>
-
 <section class="header-section" style="margin-bottom: 50px;">
     <h2 style="border-bottom: 2px solid var(--couleur-secondaire); padding-bottom: 10px;">
         <?= htmlspecialchars($headerName) ?>
     </h2>
 
-    <?php 
-            // Boucle sur les Divisions de ce Header (ex: Animés à voir, En cours...)
-            foreach ($divisions as $divisionName => $items) : ?>
-
+    <?php foreach ($divisions as $divisionName => $items) : ?>
     <div class="division-section" style="margin-left: 20px; margin-bottom: 30px;">
-        <h3 style="color: var(--texte-secondaire);">
-            &#x25B6; <?= htmlspecialchars($divisionName) ?>
-        </h3>
+        <h3 style="color: var(--texte-secondaire);">&#x25B6; <?= htmlspecialchars($divisionName) ?></h3>
 
         <div class="cards-container"
             style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+            <?php foreach ($items as $item) : ?>
 
-            <?php 
-                        // Boucle sur les cartes de cette division
-                        foreach ($items as $item) : ?>
-
-            <a href="<?= htmlspecialchars($item['lien'] ?? '#') ?>" target="_blank"
-                style="text-decoration: none; color: inherit;">
-                <div class="card"
-                    style="background: var(--fond-carte); border: 1px solid var(--bordure); border-radius: 8px; overflow: hidden; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-
-                    <div class="card-body" style="padding: 15px;">
-                        <h4 style="margin: 0 0 10px 0; font-size: 16px;"><?= htmlspecialchars($item['titre']) ?></h4>
-
+            <div class="card"
+                style="background: var(--fond-carte); border: 1px solid var(--bordure); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <div class="card-body" style="padding: 15px; flex-grow: 1;">
+                    <a href="<?= htmlspecialchars($item['lien'] ?? '#') ?>" target="_blank"
+                        style="text-decoration: none; color: inherit; display: block; margin-bottom: 10px;">
+                        <h4 style="margin: 0 0 10px 0; font-size: 16px; color: var(--couleur-principale);">
+                            <?= htmlspecialchars($item['titre']) ?></h4>
                         <?php if (!empty($item['description'])): ?>
                         <p style="font-size: 12px; color: var(--texte-secondaire); margin-bottom: 8px;">
-                            <?= htmlspecialchars($item['description']) ?>
-                        </p>
+                            <?= htmlspecialchars($item['description']) ?></p>
                         <?php endif; ?>
-
-                        <div style="font-size: 12px; font-weight: bold;">
-                            <span style="color: var(--info);">Ep: <?= htmlspecialchars($item['episode']) ?></span>
-                        </div>
+                    </a>
+                    <div style="font-size: 12px; font-weight: bold;">
+                        <span style="color: var(--info);">Ep: <?= htmlspecialchars($item['episode']) ?></span>
                     </div>
-
                 </div>
-            </a>
+
+                <div
+                    style="padding: 10px; background: var(--ligne-survol); border-top: 1px solid var(--bordure); display: flex; justify-content: space-between;">
+                    <a href="index.php?action=form&id=<?= $item['id'] ?>"
+                        style="color: var(--couleur-principale); text-decoration: none; font-size: 13px;">✏️
+                        Modifier</a>
+                    <a href="index.php?action=delete&id=<?= $item['id'] ?>"
+                        onclick="return confirm('Es-tu sûr de vouloir supprimer cette carte ?');"
+                        style="color: red; text-decoration: none; font-size: 13px;">🗑️ Supprimer</a>
+                </div>
+            </div>
 
             <?php endforeach; ?>
         </div>
     </div>
-
     <?php endforeach; ?>
 </section>
-
 <?php endforeach; 
 } 
 ?>

@@ -16,9 +16,16 @@
     </header>
 
     <main>
-        <?php 
-            // On inclut la vue spécifique demandée par le contrôleur
-            require_once 'views/home.php'; 
+        <?php
+        // On récupère l'action proprement depuis l'URL
+        $currentAction = $_GET['action'] ?? 'home';
+
+        // Charge dynamiquement la vue en fonction de l'action
+        if ($currentAction === 'form') {
+            require_once 'views/item_form.php';
+        } else {
+            require_once 'views/home.php';
+        }
         ?>
     </main>
 
