@@ -22,6 +22,6 @@ INSERT INTO `division` (`id`, `id_header`, `nom`) VALUES
 -- --------------------------------------------------------
 -- 4. INSERTION DES 50 ITEMS AVEC TES VRAIES IMAGES
 -- --------------------------------------------------------
-INSERT INTO `item` (`id`, `id_user`, `id_division`, `titre`, `lien`, `description`, `episode`) VALUES
-(1, 1, 1, 'Animé : One Piece', 'https://voir-anime.to/anime/one-piece/one-piece-1141-vostfr/', NULL, '1141'),
-(2, 1, 2, 'Manga : One Piece', 'https://www.scan-vf.net/one_piece/chapitre-1177', NULL, '1177');
+INSERT INTO `item` (`id`, `id_user`, `id_division`, `titre`, `lien`, `description`, `episode`, `saison`) VALUES
+(1, 1, 1, 'Animé : One Piece', 'https://voir-anime.to/anime/one-piece/one-piece-1141-vostfr/', NULL, '1141', '1'),
+(2, 1, 2, 'Manga : One Piece', 'https://www.scan-vf.net/one_piece/chapitre-1177', NULL, '1177', '1');

@@ -4,28 +4,34 @@
         Ajouter une carte</a>
 </div>
 
-<?php 
+<?php
 if (empty($groupedItems)) {
-    echo "<p>Aucune donnée disponible.</p>";
+    echo '<p>Aucune donnée disponible.</p>';
 } else {
-    foreach ($groupedItems as $headerName => $divisions) : ?>
+    foreach ($groupedItems as $headerName => $divisions):
+        ?>
 <section class="header-section" style="margin-bottom: 50px;">
     <h2 style="border-bottom: 2px solid var(--couleur-secondaire); padding-bottom: 10px;">
         <?= htmlspecialchars($headerName) ?>
     </h2>
 
-    <?php foreach ($divisions as $divisionName => $items) : ?>
+    <?php foreach ($divisions as $divisionName => $items): ?>
     <div class="division-section" style="margin-left: 20px; margin-bottom: 30px;">
         <h3 style="color: var(--texte-secondaire);">&#x25B6; <?= htmlspecialchars($divisionName) ?></h3>
 
         <div class="cards-container"
             style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
-            <?php foreach ($items as $item) : ?>
+            <?php foreach ($items as $item): ?>
 
             <div class="card"
                 style="background: var(--fond-carte); border: 1px solid var(--bordure); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                 <div class="card-body" style="padding: 15px; flex-grow: 1;">
-                    <a href="<?= htmlspecialchars($item['lien'] ?? '#') ?>" target="_blank"
+                    <?php
+                    // Remplacement dynamique de {ep} par le numéro de l'épisode
+                    $lienFinal = $item['lien'] ?? '#';
+                    $lienFinal = str_replace('{ep}', $item['episode'], $lienFinal);
+                    ?>
+                    <a href="<?= htmlspecialchars($lienFinal) ?>" target="_blank"
                         style="text-decoration: none; color: inherit; display: block; margin-bottom: 10px;">
                         <h4 style="margin: 0 0 10px 0; font-size: 16px; color: var(--couleur-principale);">
                             <?= htmlspecialchars($item['titre']) ?></h4>
@@ -55,6 +61,7 @@ if (empty($groupedItems)) {
     </div>
     <?php endforeach; ?>
 </section>
-<?php endforeach; 
-} 
+<?php
+    endforeach;
+}
 ?>

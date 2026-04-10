@@ -23,7 +23,8 @@ CREATE TABLE `item` (
   `titre` varchar(100) NOT NULL,
   `lien` text,
   `description` text,
-  `episode` varchar(10) DEFAULT 'N/A'
+  `episode` varchar(10) DEFAULT '1',
+  `saison` varchar(10) DEFAULT '1'
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE `user` (
   `id` int UNSIGNED NOT NULL,
