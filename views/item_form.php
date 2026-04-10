@@ -33,17 +33,23 @@
         <div>
             <label style="font-weight: bold; display: block; margin-bottom: 2px;">Lien (URL) :</label>
             <small style="color: var(--texte-secondaire); display: block; margin-bottom: 5px; font-size: 12px;">
-                💡 Astuce : Utilise <b>{ep}</b> dans le lien. Il sera remplacé automatiquement par l'épisode ci-dessous
-                !
+                💡 Astuce optionnelle : Utilise <b>{s}</b> pour la saison et <b>{ep}</b> pour l'épisode.
             </small>
             <input type="text" name="lien" value="<?= htmlspecialchars($item['lien'] ?? '') ?>"
                 style="width: 100%; padding: 8px; border: 1px solid var(--bordure); border-radius: 4px; box-sizing: border-box;">
         </div>
 
-        <div>
-            <label style="font-weight: bold; display: block; margin-bottom: 5px;">Épisode / Infos courtes :</label>
-            <input type="text" name="episode" value="<?= htmlspecialchars($item['episode'] ?? 'N/A') ?>"
-                style="width: 100%; padding: 8px; border: 1px solid var(--bordure); border-radius: 4px; box-sizing: border-box;">
+        <div style="display: flex; gap: 15px;">
+            <div style="flex: 1;">
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">Saison :</label>
+                <input type="text" name="saison" value="<?= htmlspecialchars($item['saison'] ?? '1') ?>"
+                    style="width: 100%; padding: 8px; border: 1px solid var(--bordure); border-radius: 4px; box-sizing: border-box;">
+            </div>
+            <div style="flex: 1;">
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">Épisode :</label>
+                <input type="text" name="episode" value="<?= htmlspecialchars($item['episode'] ?? '1') ?>"
+                    style="width: 100%; padding: 8px; border: 1px solid var(--bordure); border-radius: 4px; box-sizing: border-box;">
+            </div>
         </div>
 
         <div>

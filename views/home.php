@@ -27,9 +27,9 @@ if (empty($groupedItems)) {
                 style="background: var(--fond-carte); border: 1px solid var(--bordure); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                 <div class="card-body" style="padding: 15px; flex-grow: 1;">
                     <?php
-                    // Remplacement dynamique de {ep} par le numéro de l'épisode
+                    // Remplacement dynamique de {ep} et {s} (Totalement optionnels)
                     $lienFinal = $item['lien'] ?? '#';
-                    $lienFinal = str_replace('{ep}', $item['episode'], $lienFinal);
+                    $lienFinal = str_replace(['{ep}', '{s}'], [$item['episode'], $item['saison']], $lienFinal);
                     ?>
                     <a href="<?= htmlspecialchars($lienFinal) ?>" target="_blank"
                         style="text-decoration: none; color: inherit; display: block; margin-bottom: 10px;">
@@ -41,7 +41,8 @@ if (empty($groupedItems)) {
                         <?php endif; ?>
                     </a>
                     <div style="font-size: 12px; font-weight: bold;">
-                        <span style="color: var(--info);">Ep: <?= htmlspecialchars($item['episode']) ?></span>
+                        <span style="color: var(--succes);">S: <?= htmlspecialchars($item['saison'] ?? '1') ?></span> |
+                        <span style="color: var(--info);">Ep: <?= htmlspecialchars($item['episode'] ?? '1') ?></span>
                     </div>
                 </div>
 

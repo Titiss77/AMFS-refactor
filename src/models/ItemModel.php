@@ -68,22 +68,22 @@ class ItemModel
     /**
      * Ajoute une nouvelle carte
      */
-    public function createItem($id_user, $id_division, $titre, $lien, $description, $episode)
+    public function createItem($id_user, $id_division, $titre, $lien, $description, $episode, $saison)
     {
-        $sql = 'INSERT INTO item (id_user, id_division, titre, lien, description, episode) 
-                VALUES (?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO item (id_user, id_division, titre, lien, description, episode, saison) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)';
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$id_user, $id_division, $titre, $lien, $description, $episode]);
+        return $stmt->execute([$id_user, $id_division, $titre, $lien, $description, $episode, $saison]);
     }
 
     /**
      * Met à jour une carte existante
      */
-    public function updateItem($id, $id_division, $titre, $lien, $description, $episode)
+    public function updateItem($id, $id_division, $titre, $lien, $description, $episode, $saison)
     {
-        $sql = 'UPDATE item SET id_division = ?, titre = ?, lien = ?, description = ?, episode = ? WHERE id = ?';
+        $sql = 'UPDATE item SET id_division = ?, titre = ?, lien = ?, description = ?, episode = ?, saison = ? WHERE id = ?';
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$id_division, $titre, $lien, $description, $episode, $id]);
+        return $stmt->execute([$id_division, $titre, $lien, $description, $episode, $saison, $id]);
     }
 
     /**
