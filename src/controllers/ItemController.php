@@ -24,28 +24,43 @@ class ItemController
         require_once 'views/layout.php';
     }
 
+    // Sauvegarder l'ajout ou la modification
     public function save()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id'] ?? null;
             $titre = $_POST['titre'] ?? '';
-            $lien = $_POST['lien'] ?? '';
-            $description = $_POST['description'] ?? '';
-            $saison = $_POST['saison'] ?? '1';  // Ajout de la saison
-            $episode = $_POST['episode'] ?? '1';
             $id_division = $_POST['id_division'] ?? 1;
+            
+            // --- GESTION DES CHAMPS VIDES (Transformation en NULL) ---
+            
+            $lien = $_POST['lien'] ?? '';
+            if ($lien === '') $lien = null;
 
-            $id_user = 1;
+            $description = $_POST['description'] ?? '';
+            if ($description === '') $description = null;
+
+            $saison = $_POST['saison'] ?? '';
+            if ($saison === '') $saison = null;
+
+            $episode = $_POST['episode'] ?? '';
+            if ($episode === '') $episode = null;
+
+            // ---------------------------------------------------------
+            
+            // Pour l'exemple, on associe l'ajout à l'utilisateur ID 1
+            $id_user = 1; 
 
             if ($id) {
-                // On ajoute la saison ici
+                // Mise à jour
                 $this->model->updateItem($id, $id_division, $titre, $lien, $description, $episode, $saison);
             } else {
-                // Et ici aussi
+                // Création
                 $this->model->createItem($id_user, $id_division, $titre, $lien, $description, $episode, $saison);
             }
 
-            header('Location: index.php');
+            // Redirection vers l'accueil après sauvegarde
+            header("Location: index.php");
             exit();
         }
     }
@@ -56,7 +71,7 @@ class ItemController
         if (isset($_GET['id'])) {
             $this->model->deleteItem($_GET['id']);
         }
-        header('Location: index.php');
+        header("Location: index.php");
         exit();
     }
 }

@@ -54,8 +54,13 @@ if (empty($groupedItems)) {
                         <?php endif; ?>
                     </a>
                     <div style="font-size: 12px; font-weight: bold;">
+                        <?php if (isset($item['saison'])): ?>
                         <span style="color: var(--succes);">S: <?= htmlspecialchars($item['saison'] ?? '1') ?></span> |
+                        <?php endif; ?>
+
+                        <?php if (isset($item['episode'])): ?>
                         <span style="color: var(--info);">Ep: <?= htmlspecialchars($item['episode'] ?? '1') ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
 

@@ -11,11 +11,11 @@ CREATE TABLE `division` (
   `id` int UNSIGNED NOT NULL,
   `id_header` int UNSIGNED NOT NULL,
   `nom` varchar(50) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `header` (
   `id` int UNSIGNED NOT NULL,
   `nom` varchar(50) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `item` (
   `id` int UNSIGNED NOT NULL,
   `id_user` int UNSIGNED NOT NULL,
@@ -23,18 +23,18 @@ CREATE TABLE `item` (
   `titre` varchar(100) NOT NULL,
   `lien` text,
   `description` text,
-  `episode` varchar(10) DEFAULT '1',
-  `saison` varchar(10) DEFAULT '1'
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+  `episode` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `saison` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `user` (
   `id` int UNSIGNED NOT NULL,
   `login` varchar(30) NOT NULL,
   `nom` varchar(30) NOT NULL,
   `prenom` varchar(20) NOT NULL,
-  `author` enum('0', '1', '2') NOT NULL DEFAULT '1',
+  `author` enum('0','1','2') NOT NULL DEFAULT '1',
   `dateDeCreation` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `motDePasse` char(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 ALTER TABLE `division`
 ADD PRIMARY KEY (`id`),
   ADD KEY `id_header` (`id_header`);
