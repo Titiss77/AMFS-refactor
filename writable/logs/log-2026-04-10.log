@@ -166,3 +166,38 @@ CRITICAL - 2026-04-10 14:57:01 --> ErrorException: Declaration of App\Database\S
 [Method: CLI, Route: db:seed/CategorieSeeder]
 in APPPATH\Database\Seeds\CategorieSeeder.php on line 9.
  1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-04-10 15:29:20 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "cartes/index.php"
+[Method: GET, Route: /]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('cartes/index.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('cartes/index', [], true)
+ 3 APPPATH\Controllers\CartesController.php(22): view('cartes/index', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(887): App\Controllers\CartesController->index()
+ 5 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CartesController))
+ 6 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-10 15:29:22 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "cartes/index.php"
+[Method: GET, Route: /]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('cartes/index.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('cartes/index', [], true)
+ 3 APPPATH\Controllers\CartesController.php(22): view('cartes/index', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(887): App\Controllers\CartesController->index()
+ 5 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CartesController))
+ 6 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-10 15:29:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-10 15:30:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-10 15:31:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-10 15:31:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-10 15:33:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-10 15:33:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-10 15:33:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-10 15:34:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-10 15:34:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-10 15:34:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-10 15:34:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
