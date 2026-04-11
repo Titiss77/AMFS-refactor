@@ -17,19 +17,31 @@ class ItemModel extends Model
 
     public function getItemsGroupedByHeaderAndDivision($userId = null)
     {
-        // Si aucun utilisateur n'est passé (visiteur non connecté), on retourne un tableau vide
+        $idUtilisateurPublic = 1; // ID de l'utilisateur fictif (par défaut)
+
+        // Si personne n'est connecté, on ne cherche que les cartes de l'ID 1
         if ($userId === null) {
-            return [];
+            $whereClause = "WHERE i.id_user = ?";
+            $params = [$idUtilisateurPublic];
+        } 
+        // Si c'est l'utilisateur public qui est connecté (l'admin), on ne cherche que ses cartes
+        elseif ($userId === $idUtilisateurPublic) {
+            $whereClause = "WHERE i.id_user = ?";
+            $params = [$idUtilisateurPublic];
+        } 
+        // Si un autre utilisateur est connecté, on cherche ses cartes ET les cartes publiques
+        else {
+            $whereClause = "WHERE i.id_user = ? OR i.id_user = ?";
+            $params = [$userId, $idUtilisateurPublic];
         }
 
-        // On ajoute la condition WHERE i.id_user = ?
-        $sql = 'SELECT h.nom AS header_nom, d.nom AS division_nom, i.* FROM item i
+        $sql = "SELECT h.nom AS header_nom, d.nom AS division_nom, i.* FROM item i
                 JOIN division d ON i.id_division = d.id
                 JOIN header h ON d.id_header = h.id
-                WHERE i.id_user = ?
-                ORDER BY h.id, d.id, i.titre ASC';
+                $whereClause
+                ORDER BY h.id, d.id, i.titre ASC";
 
-        $query = $this->db->query($sql, [$userId]);
+        $query = $this->db->query($sql, $params);
         $results = $query->getResultArray();
 
         $groupedData = [];

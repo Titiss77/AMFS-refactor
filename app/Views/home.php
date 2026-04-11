@@ -1,118 +1,90 @@
-<?php if (auth()->loggedIn()): ?>
-<div style="margin-bottom: 20px; text-align: right;">
+<?php if (!auth()->loggedIn()) : ?>
+<div style="background-color: #e9ecef; padding: 15px; border-radius: 5px; text-align: center; margin-bottom: 30px;">
+    <p style="margin: 0;">
+        <a href="<?= base_url('login') ?>"
+            style="color: #007bff; font-weight: bold; text-decoration: none;">Connectez-vous</a> ou
+        <a href="<?= base_url('register') ?>" style="color: #007bff; font-weight: bold; text-decoration: none;">créez un
+            compte</a>
+        pour ajouter et gérer vos propres cartes !
+    </p>
+</div>
+<?php else : ?>
+<div style="text-align: right; margin-bottom: 20px;">
     <a href="<?= base_url('item/form') ?>"
-        style="background-color: var(--succes); color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+        style="padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
         + Ajouter une carte
     </a>
 </div>
 <?php endif; ?>
-<?php if (!auth()->loggedIn()): ?>
+
+<?php if (empty($groupedItems)) : ?>
 <div
-    style="text-align: center; padding: 50px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-    <h2>Bienvenue sur AMFS Dashboard</h2>
-    <p>Veuillez vous connecter ou créer un compte pour gérer et visualiser vos cartes.</p>
-    <br>
-    <a href="<?= base_url('login') ?>"
-        style="padding: 10px 20px; background: var(--couleur-principale); color: white; text-decoration: none; border-radius: 5px;">Se
-        connecter</a>
+    style="text-align: center; padding: 50px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+    <h3 style="color: #555;">Aucune carte à afficher pour le moment.</h3>
 </div>
-
-<?php elseif (empty($groupedItems)): ?>
-<div style="text-align: center; padding: 50px;">
-    <h2>Vous n'avez pas encore de cartes.</h2>
-    <p>Commencez par en ajouter une !</p>
-    <br>
-    <a href="<?= base_url('item/form') ?>"
-        style="padding: 10px 20px; background: var(--succes); color: white; text-decoration: none; border-radius: 5px;">+
-        Ajouter une carte</a>
-</div>
-
-<?php else: ?>
-
+<?php else : ?>
 <?php foreach ($groupedItems as $headerNom => $divisions): ?>
-<?php endforeach; ?>
+<h2 style="color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-top: 40px;">
+    <?= esc($headerNom) ?>
+</h2>
 
-<?php endif; ?>
-<?php
-if (empty($groupedItems)) {
-    echo '<p>Aucune donnée disponible.</p>';
-} else {
-    foreach ($groupedItems as $headerName => $divisions) {
-        ?>
-<section class="header-section" style="margin-bottom: 50px;">
-    <h2 style="border-bottom: 2px solid var(--couleur-secondaire); padding-bottom: 10px;">
-        <?php echo htmlspecialchars($headerName); ?>
-    </h2>
+<?php foreach ($divisions as $divisionNom => $items): ?>
+<h3 style="color: #666; margin-left: 10px; margin-top: 20px;">
+    > <?= esc($divisionNom) ?>
+</h3>
 
-    <?php foreach ($divisions as $divisionName => $items) { ?>
-    <div class="division-section" style="margin-left: 20px; margin-bottom: 30px;">
-        <h3 style="color: var(--texte-secondaire);">&#x25B6; <?php echo htmlspecialchars($divisionName); ?></h3>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; margin-left: 10px; margin-bottom: 30px;">
 
-        <div class="cards-container"
-            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
-            <?php foreach ($items as $item) { ?>
+    <?php foreach ($items as $item): ?>
+    <div
+        style="border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; width: 300px; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
 
-            <div class="card"
-                style="background: var(--fond-carte); border: 1px solid var(--bordure); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                <div class="card-body" style="padding: 15px; flex-grow: 1;">
-                    <?php
-                    // Variables de base
-                    $lienFinal = $item['lien'] ?? '#';
-                    $ep = $item['episode'] ?? '1';
-                    $saison = $item['saison'] ?? '1';
+        <h4 style="margin-top: 0; margin-bottom: 10px; color: #222;">
+            <?= esc($item['titre']) ?>
+        </h4>
 
-                    // Création des versions avec zéros (01, 001, 0001)
-                    $ep2 = str_pad($ep, 2, '0', STR_PAD_LEFT);
-                    $ep3 = str_pad($ep, 3, '0', STR_PAD_LEFT);
-                    $ep4 = str_pad($ep, 4, '0', STR_PAD_LEFT);
+        <?php if (!empty($item['description'])): ?>
+        <p style="font-size: 0.9em; color: #555; line-height: 1.4;">
+            <?= nl2br(esc($item['description'])) ?>
+        </p>
+        <?php endif; ?>
 
-                    // On remplace tous les mots-clés s'ils sont présents dans le lien
-                    $lienFinal = str_replace(
-                        ['{ep}', '{s}', '{ep2}', '{ep3}', '{ep4}'],
-                        [$ep, $saison, $ep2, $ep3, $ep4],
-                        $lienFinal
-                    );
-                    ?>
-                    <a href="<?php echo htmlspecialchars($lienFinal); ?>" target="_blank"
-                        style="text-decoration: none; color: inherit; display: block; margin-bottom: 10px;">
-                        <h4 style="margin: 0 0 10px 0; font-size: 16px; color: var(--couleur-principale);">
-                            <?php echo htmlspecialchars($item['titre']); ?></h4>
-                        <?php if (!empty($item['description'])) { ?>
-                        <p style="font-size: 12px; color: var(--texte-secondaire); margin-bottom: 8px;">
-                            <?php echo htmlspecialchars($item['description']); ?></p>
-                        <?php } ?>
-                    </a>
-                    <div style="font-size: 12px; font-weight: bold;">
-                        <?php if (isset($item['saison'])) { ?>
-                        <span style="color: var(--succes);">S:
-                            <?php echo htmlspecialchars($item['saison'] ?? '1'); ?></span> |
-                        <?php } ?>
-
-                        <?php if (isset($item['episode'])) { ?>
-                        <span style="color: var(--info);">Ep:
-                            <?php echo htmlspecialchars($item['episode'] ?? '1'); ?></span>
-                        <?php } ?>
-                    </div>
-                </div>
-                <?php if (auth()->loggedIn()): ?>
-                <div
-                    style="padding: 10px; background: var(--ligne-survol); border-top: 1px solid var(--bordure); display: flex; justify-content: space-between;">
-                    <a href="<?php echo base_url('item/form/' . $item['id']); ?>"
-                        style="color: var(--couleur-principale); text-decoration: none; font-size: 13px;">✏️
-                        Modifier</a>
-                    <a href="<?php echo base_url('item/delete/' . $item['id']); ?>"
-                        onclick="return confirm('Es-tu sûr de vouloir supprimer cette carte ?');"
-                        style="color: red; text-decoration: none; font-size: 13px;">🗑️ Supprimer</a>
-                </div>
-                <?php endif; ?>
-            </div>
-
-            <?php } ?>
+        <?php if (!empty($item['saison']) || !empty($item['episode'])): ?>
+        <div
+            style="font-size: 0.85em; background: #f8f9fa; padding: 8px; border-radius: 4px; margin-bottom: 10px; color: #444;">
+            <?php if (!empty($item['saison'])) echo "<strong>Saison :</strong> " . esc($item['saison']) . " &nbsp;|&nbsp; "; ?>
+            <?php if (!empty($item['episode'])) echo "<strong>Épisode :</strong> " . esc($item['episode']); ?>
         </div>
+        <?php endif; ?>
+
+        <?php if (!empty($item['lien'])): ?>
+        <div style="margin-bottom: 10px;">
+            <a href="<?= esc($item['lien']) ?>" target="_blank" rel="noopener noreferrer"
+                style="color: #007bff; text-decoration: none; font-size: 0.9em; font-weight: bold;">
+                Consulter le lien ↗
+            </a>
+        </div>
+        <?php endif; ?>
+
+        <?php if (auth()->loggedIn() && auth()->id() == $item['id_user']) : ?>
+        <div
+            style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee; text-align: right; font-size: 0.9em;">
+            <a href="<?= base_url('item/form/' . $item['id']) ?>"
+                style="color: #ffc107; text-decoration: none; margin-right: 15px; font-weight: bold;">
+                ✏️ Modifier
+            </a>
+            <a href="<?= base_url('item/delete/' . $item['id']) ?>"
+                onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement cette carte ?')"
+                style="color: #dc3545; text-decoration: none; font-weight: bold;">
+                🗑️ Supprimer
+            </a>
+        </div>
+        <?php endif; ?>
+
     </div>
-    <?php } ?>
-</section>
-<?php
-    }
-}
-?>
+    <?php endforeach; ?>
+
+</div>
+<?php endforeach; ?>
+<?php endforeach; ?>
+<?php endif; ?>

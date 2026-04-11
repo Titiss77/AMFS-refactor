@@ -12,15 +12,11 @@ class HomeController extends BaseController
     {
         $model = new ItemModel();
         
-        // On vérifie si l'utilisateur est connecté
-        if (auth()->loggedIn()) {
-            // On récupère l'ID de l'utilisateur connecté via Shield
-            $userId = auth()->id();
-            $groupedItems = $model->getItemsGroupedByHeaderAndDivision($userId);
-        } else {
-            // S'il n'est pas connecté, on ne charge aucun item
-            $groupedItems = [];
-        }
+        // On récupère l'ID si connecté, sinon on laisse null
+        $userId = auth()->loggedIn() ? auth()->id() : null;
+        
+        // Le modèle va maintenant nous renvoyer les cartes publiques + privées
+        $groupedItems = $model->getItemsGroupedByHeaderAndDivision($userId);
 
         return view('layout', ['groupedItems' => $groupedItems, 'view' => 'home']);
     }
