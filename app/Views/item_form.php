@@ -1,61 +1,65 @@
-<div>
-
-    <h2>
-        <?php echo isset($item) ? 'Modifier la carte' : 'Ajouter une nouvelle carte'; ?>
+<div class="form-container card">
+    <h2 class="header-title">
+        <?= isset($item) ? '✏️ Modifier la carte' : '+ Ajouter une carte' ?>
     </h2>
 
-    <form action="<?php echo base_url('item/save'); ?>" method="POST">
+    <form action="<?= base_url('item/save') ?>" method="POST">
+        <?= csrf_field() ?>
 
-        <?php if (isset($item)) { ?>
-        <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
-        <?php } ?>
+        <input type="hidden" name="id" value="<?= isset($item) ? esc($item['id']) : '' ?>">
 
-        <div>
-            <label>Titre :</label>
-            <input type="text" name="titre" value="<?php echo htmlspecialchars($item['titre'] ?? ''); ?>" required>
+        <div class="form-group">
+            <label for="titre" class="form-label">Titre *</label>
+            <input type="text" id="titre" name="titre" class="form-control"
+                value="<?= isset($item) ? esc($item['titre']) : '' ?>" required>
         </div>
 
-        <div>
-            <label>Division :</label>
-            <select name="id_division" required>
-                <?php foreach ($divisions as $div) { ?>
-                <option value="<?php echo $div['id']; ?>"
-                    <?php echo (isset($item) && $item['id_division'] == $div['id']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($div['nom']); ?>
+        <div class="form-group">
+            <label for="id_division" class="form-label">Division *</label>
+            <select id="id_division" name="id_division" class="form-control" required>
+                <?php if (!empty($divisions)) : ?>
+                <?php foreach ($divisions as $div): ?>
+                <option value="<?= esc($div['id']) ?>"
+                    <?= (isset($item) && $item['id_division'] == $div['id']) ? 'selected' : '' ?>>
+                    <?= esc($div['nom']) ?>
                 </option>
-                <?php } ?>
+                <?php endforeach; ?>
+                <?php else: ?>
+                <option value="">Aucune division disponible</option>
+                <?php endif; ?>
             </select>
         </div>
 
-        <div>
-            <label>Lien (URL) :</label>
-            <small>
-                💡 Astuce : <b>{s}</b> = saison, <b>{ep}</b> = épisode normal (1). <br>
-                Utilise <b>{ep2}</b>, <b>{ep3}</b> ou <b>{ep4}</b> pour forcer les zéros (ex: <b>01</b>, <b>001</b>,
-                <b>0001</b>).
-            </small>
-            <input type="text" name="lien" value="<?php echo htmlspecialchars($item['lien'] ?? ''); ?>">
+        <div class="form-group">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" name="description" class="form-control"
+                rows="4"><?= isset($item) ? esc($item['description']) : '' ?></textarea>
         </div>
 
-        <div>
-            <div>
-                <label>Saison :</label>
-                <input type="text" name="saison" value="<?php echo htmlspecialchars($item['saison'] ?? '1'); ?>">
+        <div class="form-group row">
+            <div class="col-half">
+                <label for="saison" class="form-label">Saison</label>
+                <input type="number" id="saison" name="saison" class="form-control"
+                    value="<?= isset($item) ? esc($item['saison']) : '' ?>">
             </div>
-            <div>
-                <label>Épisode :</label>
-                <input type="text" name="episode" value="<?php echo htmlspecialchars($item['episode'] ?? '1'); ?>">
+            <div class="col-half">
+                <label for="episode" class="form-label">Épisode</label>
+                <input type="text" id="episode" name="episode" class="form-control"
+                    value="<?= isset($item) ? esc($item['episode']) : '' ?>">
             </div>
         </div>
 
-        <div>
-            <label>Description :</label>
-            <textarea name="description" rows="3"><?php echo htmlspecialchars($item['description'] ?? ''); ?></textarea>
+        <div class="form-group">
+            <label for="lien" class="form-label">Lien externe</label>
+            <input type="url" id="lien" name="lien" class="form-control" placeholder="https://..."
+                value="<?= isset($item) ? esc($item['lien']) : '' ?>">
         </div>
 
-        <div>
-            <a href="<?php echo base_url('/'); ?>">Annuler</a>
-            <button type="submit">Enregistrer</button>
+        <div class="form-actions">
+            <a href="<?= base_url('/') ?>" class="btn btn-cancel">Annuler</a>
+            <button type="submit" class="btn btn-success">
+                <?= isset($item) ? 'Enregistrer les modifications' : 'Créer la carte' ?>
+            </button>
         </div>
     </form>
 </div>
