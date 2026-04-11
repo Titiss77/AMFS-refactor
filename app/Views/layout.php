@@ -22,7 +22,16 @@
             <?php endif; ?>
         </div>
     </header>
-
+    <?php if (isset($headers) && !empty($headers)) : ?>
+    <nav class="category-nav container">
+        <?php foreach ($headers as $h) : ?>
+        <a href="<?= base_url('categorie/' . $h['id']) ?>"
+            class="nav-tab <?= (isset($currentHeaderId) && $currentHeaderId == $h['id']) ? 'active' : '' ?>">
+            <?= esc($h['nom']) ?>
+        </a>
+        <?php endforeach; ?>
+    </nav>
+    <?php endif; ?>
     <main class="container">
         <?php echo view($view ?? 'home'); ?>
     </main>

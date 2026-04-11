@@ -15,15 +15,15 @@ class ItemController extends BaseController
 
     public function form($id = null)
     {
+        $headers = $this->model->getHeaders(); // <-- NOUVEAU
         $divisions = $this->model->getDivisions();
         $item = null;
 
-        // Si on a un ID dans l'URL, on le récupère
         if (null !== $id) {
             $item = $this->model->getItemById($id);
         }
 
-        return view('layout', ['divisions' => $divisions, 'item' => $item, 'view' => 'item_form']);
+        return view('layout', ['headers' => $headers, 'divisions' => $divisions, 'item' => $item, 'view' => 'item_form']);
     }
 
     public function save()

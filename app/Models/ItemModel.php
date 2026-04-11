@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
@@ -12,27 +10,35 @@ class ItemModel extends Model
     protected $primaryKey = 'id';
 
     protected $allowedFields = [
-        'id_user', 'id_division', 'titre', 'lien', 'description', 'episode', 'saison',
+        'id_user',
+        'id_division',
+        'titre',
+        'lien',
+        'description',
+        'episode',
+        'saison',
     ];
 
-    public function getItemsGroupedByHeaderAndDivision($userId = null)
+    public function getItemsGroupedByHeaderAndDivision($userId = null, $headerId = null)
     {
-        $idUtilisateurPublic = 1; // ID de l'utilisateur fictif (par défaut)
+        $idUtilisateurPublic = 1;
 
-        // Si personne n'est connecté, on ne cherche que les cartes de l'ID 1
         if ($userId === null) {
-            $whereClause = "WHERE i.id_user = ?";
+            $whereClause = 'WHERE i.id_user = ?';
             $params = [$idUtilisateurPublic];
-        } 
-        // Si c'est l'utilisateur public qui est connecté (l'admin), on ne cherche que ses cartes
-        elseif ($userId === $idUtilisateurPublic) {
-            $whereClause = "WHERE i.id_user = ?";
+        } elseif ($userId === $idUtilisateurPublic) {
+            $whereClause = 'WHERE i.id_user = ?';
             $params = [$idUtilisateurPublic];
-        } 
-        // Si un autre utilisateur est connecté, on cherche ses cartes ET les cartes publiques
-        else {
-            $whereClause = "WHERE i.id_user = ? OR i.id_user = ?";
+        } else {
+            // Attention : Les parenthèses ici sont très importantes pour le OR
+            $whereClause = 'WHERE (i.id_user = ? OR i.id_user = ?)';
             $params = [$userId, $idUtilisateurPublic];
+        }
+
+        // NOUVEAU : On filtre par la catégorie sélectionnée si elle est fournie
+        if ($headerId !== null) {
+            $whereClause .= ' AND h.id = ?';
+            $params[] = $headerId;
         }
 
         $sql = "SELECT h.nom AS header_nom, d.nom AS division_nom, i.* FROM item i
@@ -60,7 +66,7 @@ class ItemModel extends Model
 
         return $groupedData;
     }
-    
+
     public function getDivisions()
     {
         $query = $this->db->query('SELECT id, nom FROM division ORDER BY nom ASC');
@@ -72,7 +78,7 @@ class ItemModel extends Model
     {
         $query = $this->db->query('SELECT * FROM item WHERE id = ?', [$id]);
 
-        return $query->getRowArray(); // Equivalent de fetch(PDO::FETCH_ASSOC)
+        return $query->getRowArray();  // Equivalent de fetch(PDO::FETCH_ASSOC)
     }
 
     public function createItem($id_user, $id_division, $titre, $lien, $description, $episode, $saison)
@@ -92,5 +98,11 @@ class ItemModel extends Model
     public function deleteItem($id)
     {
         return $this->db->query('DELETE FROM item WHERE id = ?', [$id]);
+    }
+
+    public function getHeaders()
+    {
+        $query = $this->db->query('SELECT id, nom FROM header ORDER BY id ASC');
+        return $query->getResultArray();
     }
 }

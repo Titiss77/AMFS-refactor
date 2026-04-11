@@ -12,6 +12,9 @@ $routes->group('', ['filter' => 'session'], static function ($routes) {
     $routes->get('item/form/(:num)', 'ItemController::form/$1');
     $routes->post('item/save', 'ItemController::save');
     $routes->get('item/delete/(:num)', 'ItemController::delete/$1');
+    // Page d'accueil publique et routes catégories
+    $routes->get('/', 'HomeController::index');
+    $routes->get('categorie/(:num)', 'HomeController::categorie/$1');
 });
 
 service('auth')->routes($routes);

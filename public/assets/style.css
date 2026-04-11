@@ -471,3 +471,43 @@ select.form-control {
     border: 1px solid #bbf7d0;
     color: #166534;
 }
+
+/* =========================================
+   NAVIGATION DES CATÉGORIES (ONGLETS)
+   ========================================= */
+.category-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--bordure);
+    overflow-x: auto;
+    /* Permet de scroller le menu sur smartphone */
+}
+
+.nav-tab {
+    padding: 0.5rem 1.25rem;
+    background: var(--fond-carte);
+    border: 1px solid var(--bordure);
+    border-radius: var(--radius-md);
+    color: var(--texte-principal);
+    font-weight: 500;
+    text-decoration: none !important;
+    transition: var(--transition);
+    white-space: nowrap;
+    /* Empêche le texte de se couper sur 2 lignes */
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-tab:hover {
+    background: var(--ligne-survol);
+    color: var(--couleur-principale);
+    transform: translateY(-1px);
+}
+
+.nav-tab.active {
+    background: var(--couleur-principale);
+    color: white;
+    border-color: var(--couleur-principale);
+    box-shadow: var(--shadow-md);
+}
