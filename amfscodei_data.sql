@@ -1,3 +1,7 @@
+TRUNCATE `item`;
+TRUNCATE `division`;
+TRUNCATE `header`;
+TRUNCATE `user`;
 -- --------------------------------------------------------
 -- 1. INSERTION DES UTILISATEURS (Garde tes utilisateurs)
 -- --------------------------------------------------------
