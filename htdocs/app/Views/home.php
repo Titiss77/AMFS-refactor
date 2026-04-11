@@ -68,7 +68,7 @@ if (empty($groupedItems)) {
 
                 <div
                     style="padding: 10px; background: var(--ligne-survol); border-top: 1px solid var(--bordure); display: flex; justify-content: space-between;">
-                    <a href="index.php?action=form&id=<?php echo $item['id']; ?>"
+                    <a href="<?= base_url('item/form/' . $item['id']) ?>"
                         style="color: var(--couleur-principale); text-decoration: none; font-size: 13px;">✏️
                         Modifier</a>
                     <a href="<?= base_url('item/delete/' . $item['id']) ?>"
