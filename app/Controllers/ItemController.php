@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Controllers;
+
 use App\Models\ItemModel;
 
 class ItemController extends BaseController
@@ -20,7 +21,7 @@ class ItemController extends BaseController
         $item = null;
 
         // Si on a un ID dans l'URL, on le récupère
-        if ($id !== null) {
+        if (null !== $id) {
             $item = $this->model->getItemById($id);
         }
 
@@ -29,7 +30,7 @@ class ItemController extends BaseController
 
     public function save()
     {
-        if ($this->request->getMethod() === 'POST' || $this->request->getMethod() === 'post') {
+        if ('POST' === $this->request->getMethod() || 'post' === $this->request->getMethod()) {
             $id = $this->request->getPost('id');
             $titre = $this->request->getPost('titre') ?? '';
             $id_division = $this->request->getPost('id_division') ?? 1;
@@ -53,9 +54,10 @@ class ItemController extends BaseController
 
     public function delete($id = null)
     {
-        if ($id !== null) {
+        if (null !== $id) {
             $this->model->deleteItem($id);
         }
+
         return redirect()->to('/');
     }
 }

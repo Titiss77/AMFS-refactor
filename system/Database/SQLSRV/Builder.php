@@ -706,15 +706,13 @@ class Builder extends BaseBuilder
             $sql .= implode(
                 ' AND ',
                 array_map(
-                    static fn ($key, $value)
-                        => ($value instanceof RawSql && is_string($key))
+                    static fn ($key, $value) => ($value instanceof RawSql && is_string($key))
                         ? $fullTableName.'.'.$key.' = '.$value
                         : (
                             $value instanceof RawSql
                             ? $value
                             : $fullTableName.'.'.$value.' = '.$alias.'.'.$value
-                        )
-                    ,
+                        ),
                     array_keys($constraints),
                     $constraints,
                 ),

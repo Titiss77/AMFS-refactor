@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 use CodeIgniter\Router\RouteCollection;
 
-/**
- * @var RouteCollection $routes
- */
+// @var RouteCollection $routes
 $routes->get('/', 'HomeController::index');
 
 // Routes pour la gestion des items

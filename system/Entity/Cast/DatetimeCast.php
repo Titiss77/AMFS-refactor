@@ -21,6 +21,8 @@ use CodeIgniter\I18n\Time;
 class DatetimeCast extends BaseCast
 {
     /**
+     * @param mixed $value
+     *
      * @return Time
      *
      * @throws \Exception

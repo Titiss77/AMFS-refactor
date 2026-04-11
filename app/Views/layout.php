@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <head>
-    <link rel="stylesheet" href="<?= base_url('assets/style.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/style.css'); ?>">
     <title>AMFS - Mes Cartes</title>
 </head>
 
@@ -11,10 +11,10 @@
         <h1 style="color: var(--couleur-principale);">AMFS Dashboard</h1>
     </header>
     <main>
-        <?php 
+        <?php
         // Affiche la vue transmise par le contrôleur
-        echo view($view ?? 'home'); 
-        ?>
+        echo view($view ?? 'home');
+    ?>
     </main>
 </body>
 

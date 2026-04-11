@@ -1,5 +1,5 @@
 <div style="margin-bottom: 20px; text-align: right;">
-    <a href="<?= base_url('item/form') ?>" style=" background-color: var(--succes); color: white; padding: 10px 20px; text-decoration: none;
+    <a href="<?php echo base_url('item/form'); ?>" style=" background-color: var(--succes); color: white; padding: 10px 20px; text-decoration: none;
         border-radius: 5px; font-weight: bold;">+
         Ajouter une carte</a>
 </div>
@@ -68,10 +68,10 @@ if (empty($groupedItems)) {
 
                 <div
                     style="padding: 10px; background: var(--ligne-survol); border-top: 1px solid var(--bordure); display: flex; justify-content: space-between;">
-                    <a href="<?= base_url('item/form/' . $item['id']) ?>"
+                    <a href="<?php echo base_url('item/form/'.$item['id']); ?>"
                         style="color: var(--couleur-principale); text-decoration: none; font-size: 13px;">✏️
                         Modifier</a>
-                    <a href="<?= base_url('item/delete/' . $item['id']) ?>"
+                    <a href="<?php echo base_url('item/delete/'.$item['id']); ?>"
                         onclick="return confirm('Es-tu sûr de vouloir supprimer cette carte ?');"
                         style="color: red; text-decoration: none; font-size: 13px;">🗑️ Supprimer</a>
                 </div>
@@ -85,4 +85,4 @@ if (empty($groupedItems)) {
 <?php
     }
 }
-?>
+    ?>

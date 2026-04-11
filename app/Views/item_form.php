@@ -5,7 +5,7 @@
         <?php echo isset($item) ? 'Modifier la carte' : 'Ajouter une nouvelle carte'; ?>
     </h2>
 
-    <form action="<?= base_url('item/save') ?>" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+    <form action="<?php echo base_url('item/save'); ?>" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
 
         <?php if (isset($item)) { ?>
         <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
@@ -61,7 +61,7 @@
         </div>
 
         <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-            <a href="<?= base_url('/') ?>"
+            <a href="<?php echo base_url('/'); ?>"
                 style="color: var(--danger); text-decoration: none; padding: 10px; border: 1px solid var(--danger); border-radius: 4px;">Annuler</a>
             <button type="submit"
                 style="background-color: var(--couleur-principale); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Enregistrer</button>

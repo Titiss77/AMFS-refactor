@@ -2867,15 +2867,13 @@ class BaseBuilder
             $sql .= 'WHERE '.implode(
                 ' AND ',
                 array_map(
-                    static fn ($key, $value)
-                        => ($value instanceof RawSql && is_string($key))
+                    static fn ($key, $value) => ($value instanceof RawSql && is_string($key))
                         ? $table.'.'.$key.' = '.$value
                         : (
                             $value instanceof RawSql
                             ? $value
                             : $table.'.'.$value.' = '.$alias.'.'.$value
-                        )
-                    ,
+                        ),
                     array_keys($constraints),
                     $constraints,
                 ),
@@ -2952,15 +2950,13 @@ class BaseBuilder
             $sql .= 'ON '.implode(
                 ' AND ',
                 array_map(
-                    static fn ($key, $value)
-                        => $value instanceof RawSql
+                    static fn ($key, $value) => $value instanceof RawSql
                         ? $value
                         : (
                             is_string($key)
                             ? $table.'.'.$key.' = '.$alias.'.'.$value
                             : $table.'.'.$value.' = '.$alias.'.'.$value
-                        )
-                    ,
+                        ),
                     array_keys($constraints),
                     $constraints,
                 ),

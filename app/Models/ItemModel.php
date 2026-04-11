@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use CodeIgniter\Model;
 
 class ItemModel extends Model
 {
-    protected $table      = 'item';
+    protected $table = 'item';
     protected $primaryKey = 'id';
-    
+
     protected $allowedFields = [
-        'id_user', 'id_division', 'titre', 'lien', 'description', 'episode', 'saison'
+        'id_user', 'id_division', 'titre', 'lien', 'description', 'episode', 'saison',
     ];
 
     public function getItemsGroupedByHeaderAndDivision()
@@ -43,24 +45,28 @@ class ItemModel extends Model
     public function getDivisions()
     {
         $query = $this->db->query('SELECT id, nom FROM division ORDER BY nom ASC');
+
         return $query->getResultArray();
     }
 
     public function getItemById($id)
     {
         $query = $this->db->query('SELECT * FROM item WHERE id = ?', [$id]);
+
         return $query->getRowArray(); // Equivalent de fetch(PDO::FETCH_ASSOC)
     }
 
     public function createItem($id_user, $id_division, $titre, $lien, $description, $episode, $saison)
     {
         $sql = 'INSERT INTO item (id_user, id_division, titre, lien, description, episode, saison) VALUES (?, ?, ?, ?, ?, ?, ?)';
+
         return $this->db->query($sql, [$id_user, $id_division, $titre, $lien, $description, $episode, $saison]);
     }
 
     public function updateItem($id, $id_division, $titre, $lien, $description, $episode, $saison)
     {
         $sql = 'UPDATE item SET id_division = ?, titre = ?, lien = ?, description = ?, episode = ?, saison = ? WHERE id = ?';
+
         return $this->db->query($sql, [$id_division, $titre, $lien, $description, $episode, $saison, $id]);
     }
 
