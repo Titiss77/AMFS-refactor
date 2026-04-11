@@ -6,22 +6,19 @@
     <title>AMFS - Mes Cartes</title>
 </head>
 
-<body style="background-color: var(--fond-page); font-family: sans-serif; margin: 0; padding: 20px;">
-    <header
-        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 10px; border-bottom: 1px solid #ccc;">
-        <h1 style="color: var(--couleur-principale); margin: 0;">AMFS Dashboard</h1>
+<body>
+    <header>
+        <h1>AMFS Dashboard</h1>
 
         <div>
             <?php if (auth()->loggedIn()) : ?>
-            <span style="margin-right: 15px; font-weight: bold;">
+            <span>
                 👤 Bienvenue, <?= auth()->user()->username ?>
             </span>
-            <a href="<?= base_url('logout') ?>" style="color: red; text-decoration: none;">Déconnexion</a>
+            <a href="<?= base_url('logout') ?>">Déconnexion</a>
             <?php else : ?>
-            <a href="<?= base_url('login') ?>"
-                style="margin-right: 15px; text-decoration: none; color: blue;">Connexion</a>
-            <a href="<?= base_url('register') ?>"
-                style="text-decoration: none; background: #007bff; color: white; padding: 5px 10px; border-radius: 5px;">Créer
+            <a href="<?= base_url('login') ?>">Connexion</a>
+            <a href="<?= base_url('register') ?>">Créer
                 un compte</a>
             <?php endif; ?>
         </div>
