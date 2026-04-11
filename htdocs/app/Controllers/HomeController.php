@@ -1,6 +1,12 @@
 <?php
 
-class HomeController
+declare(strict_types=1);
+
+namespace App\Controllers;
+
+use App\Models\ItemModel;
+
+class HomeController extends BaseController
 {
     public function index()
     {
@@ -11,6 +17,6 @@ class HomeController
         $groupedItems = $model->getItemsGroupedByHeaderAndDivision();
 
         // 3. Charger la vue avec les données
-        require_once 'views/layout.php';
+        return view('views/layout.php', ['groupedItems' => $groupedItems]);
     }
 }

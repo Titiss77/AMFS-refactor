@@ -1,8 +1,11 @@
 <?php
 
-require_once 'src/models/ItemModel.php';
+declare(strict_types=1);
 
-class ItemController
+namespace App\Controllers;
+use App\Models\ItemModel;
+
+class ItemController extends BaseController
 {
     private $model;
 
@@ -22,7 +25,7 @@ class ItemController
             $item = $this->model->getItemById($_GET['id']);
         }
 
-        require_once 'views/layout.php';
+        return view('views/layout.php', ['divisions' => $divisions, 'item' => $item, 'view' => 'item_form']);
     }
 
     // Sauvegarder l'ajout ou la modification

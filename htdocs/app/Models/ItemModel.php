@@ -1,13 +1,26 @@
 <?php
 
-class ItemModel
-{
-    private $db;
+namespace App\Models;
 
-    public function __construct()
-    {
-        $this->db = Database::getConnection();
-    }
+use CodeIgniter\Model;
+
+class ItemModel extends Model
+{
+    protected $table      = 'item';
+    protected $primaryKey = 'id';
+    
+    // Les champs que vous autorisez à insérer ou modifier via les formulaires
+    protected $allowedFields = [
+        'id_user', 
+        'id_division', 
+        'titre', 
+        'lien', 
+        'description', 
+        'episode', 
+        'saison'
+    ];
+
+    private $db;
 
     /**
      * Récupère tous les items et les groupe par Header puis par Division.
