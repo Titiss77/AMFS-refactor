@@ -1,37 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 :root {
-    --couleur-principale: #0056b3;
-    --couleur-secondaire: #007bff;
-    --fond-page: #f0f2f5;
+    /* Couleurs principales (Tons Indigo/Bleu modernes) */
+    --couleur-principale: #4f46e5;
+    --couleur-principale-hover: #4338ca;
+    --couleur-secondaire: #0ea5e9;
+    --couleur-secondaire-hover: #0284c7;
+
+    /* Fonds et Textes (Tons Slate/Gris) */
+    --fond-page: #f8fafc;
     --fond-carte: #ffffff;
-    --texte-principal: #1d1d1f;
-    --texte-secondaire: #6e6e73;
-    --bordure: #d2d2d7;
-    --ligne-survol: #f5f5f7;
-    --couleur-temps: #1d1d1f;
-    --succes: #28a745;
-    --danger: #dc9435;
-    --info: #17a2b8;
-    --avertissement: #ff9800;
+    --texte-principal: #1e293b;
+    --texte-secondaire: #64748b;
+    --bordure: #e2e8f0;
+    --ligne-survol: #f1f5f9;
+    --couleur-temps: #475569;
+
+    /* États */
+    --succes: #10b981;
+    --succes-hover: #059669;
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --info: #3b82f6;
+    --avertissement: #f59e0b;
+    --avertissement-hover: #d97706;
+
+    /* Ombres et Arrondis */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* --- BASE --- */
 body {
     background-color: var(--fond-page);
     color: var(--texte-principal);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.5;
     margin: 0;
     padding: 20px;
+    -webkit-font-smoothing: antialiased;
 }
 
 a {
     color: var(--couleur-principale);
     text-decoration: none;
-    transition: color 0.2s ease-in-out;
+    transition: var(--transition);
 }
 
 a:hover {
-    color: var(--couleur-secondaire);
-    text-decoration: underline;
+    color: var(--couleur-principale-hover);
 }
 
 /* --- LAYOUT & HEADER --- */
@@ -45,13 +66,16 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid var(--bordure);
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--bordure);
 }
 
 .main-header h1 {
-    color: var(--couleur-principale);
+    color: var(--texte-principal);
+    font-weight: 700;
+    font-size: 1.75rem;
     margin: 0;
+    letter-spacing: -0.025em;
 }
 
 .user-nav {
@@ -61,167 +85,223 @@ a:hover {
 }
 
 .welcome-text {
-    font-weight: bold;
+    font-weight: 500;
     color: var(--texte-secondaire);
+    font-size: 0.95rem;
 }
 
 /* --- BOUTONS --- */
 .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 0.95rem;
     text-decoration: none !important;
     cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    font-family: inherit;
 }
 
 .btn-success {
     background-color: var(--succes);
     color: white;
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-success:hover {
-    background-color: #218838;
+    background-color: var(--succes-hover);
     color: white;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-login {
     color: var(--couleur-principale);
-    font-weight: bold;
+    font-weight: 600;
+}
+
+.btn-login:hover {
+    color: var(--couleur-principale-hover);
+    background-color: rgba(79, 70, 229, 0.05);
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-md);
 }
 
 .btn-register {
-    background-color: var(--couleur-secondaire);
+    background-color: var(--couleur-principale);
     color: white;
-    padding: 8px 15px;
-    border-radius: 5px;
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-register:hover {
-    background-color: var(--couleur-principale);
+    background-color: var(--couleur-principale-hover);
     color: white;
-    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-logout {
     color: var(--danger);
-    font-weight: bold;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+}
+
+.btn-logout:hover {
+    background-color: rgba(239, 68, 68, 0.1);
 }
 
 /* --- BANNERS & MESSAGES --- */
 .banner {
-    padding: 15px;
-    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-md);
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
 }
 
 .banner-info {
-    background-color: var(--ligne-survol);
-    border: 1px solid var(--bordure);
+    background-color: #eff6ff;
+    /* Blue 50 */
+    border: 1px solid #bfdbfe;
+    /* Blue 200 */
+    color: #1e3a8a;
+    /* Blue 900 */
 }
 
 .empty-state {
     text-align: center;
-    padding: 50px;
+    padding: 4rem 2rem;
     background: var(--fond-carte);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--bordure);
+    color: var(--texte-secondaire);
 }
 
 /* --- TYPOGRAPHIE TITRES --- */
 .header-title {
     color: var(--texte-principal);
-    border-bottom: 2px solid var(--bordure);
-    padding-bottom: 5px;
-    margin-top: 40px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--ligne-survol);
 }
 
 .division-title {
-    color: var(--texte-secondaire);
-    margin-left: 10px;
-    margin-top: 20px;
+    color: var(--couleur-principale);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
 /* --- GRILLE & CARTES --- */
 .actions-container {
     text-align: right;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
 }
 
 .cards-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-left: 10px;
-    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
 }
 
 .card {
     background: var(--fond-carte);
     border: 1px solid var(--bordure);
-    padding: 15px;
-    border-radius: 8px;
-    width: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s, box-shadow 0.2s;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
 }
 
 .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    background-color: var(--ligne-survol);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: #cbd5e1;
 }
 
 .card-title {
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 0.75rem;
     color: var(--texte-principal);
+    font-size: 1.15rem;
+    font-weight: 600;
 }
 
 .card-desc {
-    font-size: 0.9em;
+    font-size: 0.9rem;
     color: var(--texte-secondaire);
-    line-height: 1.4;
+    line-height: 1.6;
+    flex-grow: 1;
+    /* Pousse les actions vers le bas */
 }
 
 .card-meta {
-    font-size: 0.85em;
-    background: var(--fond-page);
-    padding: 8px;
-    border-radius: 4px;
-    margin-bottom: 10px;
+    font-size: 0.85rem;
+    background: var(--ligne-survol);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1rem;
     color: var(--couleur-temps);
+    display: inline-block;
+    font-weight: 500;
 }
 
 .separator {
-    color: var(--bordure);
-    margin: 0 5px;
+    color: #94a3b8;
+    margin: 0 0.5rem;
 }
 
 .card-link {
-    margin-bottom: 10px;
-    font-weight: bold;
-    font-size: 0.9em;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.card-link a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
 }
 
 .card-actions {
-    margin-top: 15px;
-    padding-top: 10px;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
     border-top: 1px solid var(--bordure);
-    text-align: right;
-    font-size: 0.9em;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    font-size: 0.9rem;
 }
 
 .btn-edit {
     color: var(--avertissement);
-    margin-right: 15px;
-    font-weight: bold;
+    font-weight: 600;
+}
+
+.btn-edit:hover {
+    color: var(--avertissement-hover);
 }
 
 .btn-delete {
     color: var(--danger);
-    font-weight: bold;
+    font-weight: 600;
+}
+
+.btn-delete:hover {
+    color: var(--danger-hover);
 }
 
 /* =========================================
@@ -229,22 +309,28 @@ a:hover {
    ========================================= */
 
 .form-container {
-    max-width: 600px;
-    margin: 40px auto;
-    /* Centre le formulaire sur la page */
-    padding: 30px;
-    width: 100%;
-    box-sizing: border-box;
+    max-width: 650px;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    background: var(--fond-carte);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--bordure);
+}
+
+.form-container .header-title {
+    margin-top: 0;
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 }
 
-/* Utile pour mettre des champs côte à côte (ex: Saison et Episode) */
 .form-group.row {
     display: flex;
-    gap: 15px;
+    gap: 1rem;
 }
 
 .col-half {
@@ -253,36 +339,45 @@ a:hover {
 
 .form-label {
     display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
     color: var(--texte-principal);
+    font-size: 0.95rem;
 }
 
 .form-control {
     width: 100%;
-    padding: 10px 12px;
+    padding: 0.75rem 1rem;
     border: 1px solid var(--bordure);
-    border-radius: 5px;
+    border-radius: var(--radius-md);
     font-size: 1rem;
     font-family: inherit;
-    background-color: var(--fond-page);
+    background-color: var(--fond-carte);
     color: var(--texte-principal);
     box-sizing: border-box;
-    /* Empêche le champ de déborder */
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
 }
 
-/* Effet quand on clique dans un champ pour écrire */
 .form-control:focus {
     outline: none;
-    border-color: var(--couleur-secondaire);
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
-    background-color: var(--fond-carte);
+    border-color: var(--couleur-principale);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
 }
 
 textarea.form-control {
     resize: vertical;
-    /* Permet d'agrandir la zone de texte uniquement vers le bas */
+    min-height: 100px;
+}
+
+select.form-control {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
 }
 
 /* Zone des boutons en bas du formulaire */
@@ -290,26 +385,20 @@ textarea.form-control {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 15px;
-    margin-top: 30px;
-    padding-top: 20px;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
     border-top: 1px solid var(--bordure);
 }
 
-/* Bouton pour annuler */
 .btn-cancel {
-    background-color: var(--texte-secondaire);
-    color: white;
+    background-color: white;
+    color: var(--texte-principal);
+    border: 1px solid var(--bordure);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-cancel:hover {
-    background-color: var(--texte-principal);
-    color: white;
-}
-
-/* On s'assure que le bouton Envoyer ressemble aux autres boutons (en enlevant les styles par défaut du navigateur) */
-button.btn {
-    border: none;
-    font-size: 1rem;
-    font-family: inherit;
+    background-color: var(--ligne-survol);
+    color: var(--texte-principal);
 }
