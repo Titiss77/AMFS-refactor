@@ -1,12 +1,16 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 // AMFS-refactor/index.php
 session_start();
 
+
 require_once 'config/Env.php';
 require_once 'config/Database.php';
-require_once 'src/Models/ItemModel.php';
-require_once 'src/Controllers/HomeController.php';
-require_once 'src/Controllers/ItemController.php'; // Ajout
+require_once 'src/models/ItemModel.php';
+require_once 'src/controllers/HomeController.php';
+require_once 'src/controllers/ItemController.php';
 
 Env::load(__DIR__ . '/.env');
 

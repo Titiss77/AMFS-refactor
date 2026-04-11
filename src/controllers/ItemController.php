@@ -1,5 +1,5 @@
 <?php
-require_once 'src/Models/ItemModel.php';
+require_once 'src/models/ItemModel.php';
 
 class ItemController
 {
