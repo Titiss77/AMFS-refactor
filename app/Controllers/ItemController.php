@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -30,7 +28,12 @@ class ItemController extends BaseController
 
     public function save()
     {
-        if ('POST' === $this->request->getMethod() || 'post' === $this->request->getMethod()) {
+        if ($this->request->getMethod() === 'POST' || $this->request->getMethod() === 'post') {
+            // On vérifie que l'utilisateur est bien connecté par sécurité supplémentaire
+            if (!auth()->loggedIn()) {
+                return redirect()->to('login');
+            }
+
             $id = $this->request->getPost('id');
             $titre = $this->request->getPost('titre') ?? '';
             $id_division = $this->request->getPost('id_division') ?? 1;
@@ -40,7 +43,8 @@ class ItemController extends BaseController
             $saison = $this->request->getPost('saison') ?: null;
             $episode = $this->request->getPost('episode') ?: null;
 
-            $id_user = 1;
+            // NOUVEAU : On récupère l'ID du vrai compte utilisateur via Shield !
+            $id_user = auth()->id();
 
             if ($id) {
                 $this->model->updateItem($id, $id_division, $titre, $lien, $description, $episode, $saison);
