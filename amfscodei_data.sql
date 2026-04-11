@@ -12,14 +12,19 @@ CREATE DATABASE IF NOT EXISTS `b13_39213320_database` DEFAULT CHARACTER SET lati
 USE `b13_39213320_database`;
 
 INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
-(1, 1, 'user', '2026-04-11 16:35:41');
+(1, 1, 'user', '2026-04-11 17:01:16'),
+(2, 2, 'user', '2026-04-11 17:02:38');
 
 INSERT INTO `auth_identities` (`id`, `user_id`, `type`, `name`, `secret`, `secret2`, `expires`, `extra`, `force_reset`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$o8fb2qzNUHt.cp.ql5twHO2gIC0olV9efaaBx7GNR71tcPW34u6n6', NULL, NULL, 0, '2026-04-11 16:36:30', '2026-04-11 16:35:40', '2026-04-11 16:36:30'),
-(2, 1, 'magic-link', NULL, 'd8cf18a1d24203166da5', NULL, '2026-04-11 17:37:00', NULL, 0, NULL, '2026-04-11 16:37:00', '2026-04-11 16:37:00');
+(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-04-11 17:23:35', '2026-04-11 17:01:16', '2026-04-11 17:23:35'),
+(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$zqJUMEtVBDWzxe6Orkj2XO9DpI34W94tIIWxude20vrz5wjSaHwKC', NULL, NULL, 0, '2026-04-11 17:22:30', '2026-04-11 17:02:38', '2026-04-11 17:22:30');
 
 INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identifier`, `user_id`, `date`, `success`) VALUES
-(1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 1, '2026-04-11 16:36:30', 1);
+(1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-11 17:03:15', 1),
+(2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-11 17:20:13', 1),
+(3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-11 17:20:25', 1),
+(4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-11 17:22:30', 1),
+(5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-11 17:23:35', 1);
 
 INSERT INTO `division` (`id`, `id_header`, `nom`) VALUES
 (1, 1, 'Animés'),
@@ -41,16 +46,11 @@ INSERT INTO `item` (`id`, `id_user`, `id_division`, `titre`, `lien`, `descriptio
 (9, 2, 1, 'To Your Eternity', 'https://voir-anime.to/anime/fumetsu-no-anata-e-{s}/fumetsu-no-anata-e-{s}-{ep2}-vostfr/', '', '9', 3),
 (10, 2, 1, 'Bleach', 'https://voir-anime.to/anime/bleach/bleach-{ep3}-vostfr/', '', '154', 8),
 (11, 2, 2, 'Jujutsu Kaisen', 'https://www.scan-vf.net/jujutsu-kaisen/chapitre-{ep}', '', '175', 1),
-(12, 1, 3, 'VoirAnime', 'https://voir-anime.to/', '', '1', 1);
-
-INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`, `batch`) VALUES
-(1, '2020-12-28-223112', 'CodeIgniter\\Shield\\Database\\Migrations\\CreateAuthTables', 'development', 'CodeIgniter\\Shield', 1775924925, 1),
-(2, '2021-07-04-041948', 'CodeIgniter\\Settings\\Database\\Migrations\\CreateSettingsTable', 'development', 'CodeIgniter\\Settings', 1775924926, 1),
-(3, '2021-11-14-143905', 'CodeIgniter\\Settings\\Database\\Migrations\\AddContextColumn', 'development', 'CodeIgniter\\Settings', 1775924926, 1),
-(4, '2026-01-01-000001', 'App\\Database\\Migrations\\CreateFirst', 'development', 'App', 1775924926, 1);
+(12, 1, 3, 'VoirAnime', 'https://voir-anime.to/', NULL, NULL, NULL);
 
 INSERT INTO `users` (`id`, `username`, `status`, `status_message`, `active`, `last_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Titiss', NULL, NULL, 1, '2026-04-11 16:36:40', '2026-04-11 16:35:40', '2026-04-11 16:35:41', NULL);
+(1, 'UserFictif', NULL, NULL, 1, '2026-04-11 17:03:22', '2026-04-11 17:01:15', '2026-04-11 17:01:16', NULL),
+(2, 'Titiss', NULL, NULL, 1, '2026-04-11 17:02:56', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
