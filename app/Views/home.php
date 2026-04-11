@@ -6,7 +6,33 @@
     </a>
 </div>
 <?php endif; ?>
+<?php if (!auth()->loggedIn()): ?>
+<div
+    style="text-align: center; padding: 50px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <h2>Bienvenue sur AMFS Dashboard</h2>
+    <p>Veuillez vous connecter ou créer un compte pour gérer et visualiser vos cartes.</p>
+    <br>
+    <a href="<?= base_url('login') ?>"
+        style="padding: 10px 20px; background: var(--couleur-principale); color: white; text-decoration: none; border-radius: 5px;">Se
+        connecter</a>
+</div>
 
+<?php elseif (empty($groupedItems)): ?>
+<div style="text-align: center; padding: 50px;">
+    <h2>Vous n'avez pas encore de cartes.</h2>
+    <p>Commencez par en ajouter une !</p>
+    <br>
+    <a href="<?= base_url('item/form') ?>"
+        style="padding: 10px 20px; background: var(--succes); color: white; text-decoration: none; border-radius: 5px;">+
+        Ajouter une carte</a>
+</div>
+
+<?php else: ?>
+
+<?php foreach ($groupedItems as $headerNom => $divisions): ?>
+<?php endforeach; ?>
+
+<?php endif; ?>
 <?php
 if (empty($groupedItems)) {
     echo '<p>Aucune donnée disponible.</p>';

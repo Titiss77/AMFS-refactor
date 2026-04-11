@@ -15,15 +15,22 @@ class ItemModel extends Model
         'id_user', 'id_division', 'titre', 'lien', 'description', 'episode', 'saison',
     ];
 
-    public function getItemsGroupedByHeaderAndDivision()
+    public function getItemsGroupedByHeaderAndDivision($userId = null)
     {
+        // Si aucun utilisateur n'est passé (visiteur non connecté), on retourne un tableau vide
+        if ($userId === null) {
+            return [];
+        }
+
+        // On ajoute la condition WHERE i.id_user = ?
         $sql = 'SELECT h.nom AS header_nom, d.nom AS division_nom, i.* FROM item i
                 JOIN division d ON i.id_division = d.id
                 JOIN header h ON d.id_header = h.id
+                WHERE i.id_user = ?
                 ORDER BY h.id, d.id, i.titre ASC';
 
-        $query = $this->db->query($sql);
-        $results = $query->getResultArray(); // Equivalent de fetchAll(PDO::FETCH_ASSOC)
+        $query = $this->db->query($sql, [$userId]);
+        $results = $query->getResultArray();
 
         $groupedData = [];
         foreach ($results as $row) {
@@ -41,7 +48,7 @@ class ItemModel extends Model
 
         return $groupedData;
     }
-
+    
     public function getDivisions()
     {
         $query = $this->db->query('SELECT id, nom FROM division ORDER BY nom ASC');
