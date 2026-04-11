@@ -10,13 +10,10 @@ class HomeController extends BaseController
 {
     public function index()
     {
-        // 1. Instancier le modèle
         $model = new ItemModel();
-
-        // 2. Récupérer les données groupées
         $groupedItems = $model->getItemsGroupedByHeaderAndDivision();
 
-        // 3. Charger la vue avec les données
-        return view('views/layout.php', ['groupedItems' => $groupedItems]);
+        // En CI4, on pointe directement vers les noms des vues (sans l'extension .php ni le dossier views si on est déjà dedans)
+        return view('layout', ['groupedItems' => $groupedItems, 'view' => 'home']);
     }
 }

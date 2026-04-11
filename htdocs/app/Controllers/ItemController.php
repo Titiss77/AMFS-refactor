@@ -14,78 +14,48 @@ class ItemController extends BaseController
         $this->model = new ItemModel();
     }
 
-    // Afficher le formulaire (Ajout ou Modification)
-    public function form()
+    public function form($id = null)
     {
         $divisions = $this->model->getDivisions();
         $item = null;
 
-        // Si on a un ID, on est en mode "Modification"
-        if (isset($_GET['id'])) {
-            $item = $this->model->getItemById($_GET['id']);
+        // Si on a un ID dans l'URL, on le récupère
+        if ($id !== null) {
+            $item = $this->model->getItemById($id);
         }
 
-        return view('views/layout.php', ['divisions' => $divisions, 'item' => $item, 'view' => 'item_form']);
+        return view('layout', ['divisions' => $divisions, 'item' => $item, 'view' => 'item_form']);
     }
 
-    // Sauvegarder l'ajout ou la modification
     public function save()
     {
-        if ('POST' === $_SERVER['REQUEST_METHOD']) {
-            $id = $_POST['id'] ?? null;
-            $titre = $_POST['titre'] ?? '';
-            $id_division = $_POST['id_division'] ?? 1;
+        if ($this->request->getMethod() === 'POST' || $this->request->getMethod() === 'post') {
+            $id = $this->request->getPost('id');
+            $titre = $this->request->getPost('titre') ?? '';
+            $id_division = $this->request->getPost('id_division') ?? 1;
 
-            // --- GESTION DES CHAMPS VIDES (Transformation en NULL) ---
+            $lien = $this->request->getPost('lien') ?: null;
+            $description = $this->request->getPost('description') ?: null;
+            $saison = $this->request->getPost('saison') ?: null;
+            $episode = $this->request->getPost('episode') ?: null;
 
-            $lien = $_POST['lien'] ?? '';
-            if ('' === $lien) {
-                $lien = null;
-            }
-
-            $description = $_POST['description'] ?? '';
-            if ('' === $description) {
-                $description = null;
-            }
-
-            $saison = $_POST['saison'] ?? '';
-            if ('' === $saison) {
-                $saison = null;
-            }
-
-            $episode = $_POST['episode'] ?? '';
-            if ('' === $episode) {
-                $episode = null;
-            }
-
-            // ---------------------------------------------------------
-
-            // Pour l'exemple, on associe l'ajout à l'utilisateur ID 1
             $id_user = 1;
 
             if ($id) {
-                // Mise à jour
                 $this->model->updateItem($id, $id_division, $titre, $lien, $description, $episode, $saison);
             } else {
-                // Création
                 $this->model->createItem($id_user, $id_division, $titre, $lien, $description, $episode, $saison);
             }
 
-            // Redirection vers l'accueil après sauvegarde
-            header('Location: index.php');
-
-            exit;
+            return redirect()->to('/');
         }
     }
 
-    // Supprimer une carte
-    public function delete()
+    public function delete($id = null)
     {
-        if (isset($_GET['id'])) {
-            $this->model->deleteItem($_GET['id']);
+        if ($id !== null) {
+            $this->model->deleteItem($id);
         }
-        header('Location: index.php');
-
-        exit;
+        return redirect()->to('/');
     }
 }

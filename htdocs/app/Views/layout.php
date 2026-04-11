@@ -2,33 +2,20 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?= base_url('assets/style.css') ?>">
     <title>AMFS - Mes Cartes</title>
-    <link rel="stylesheet" href="assets/style.css">
 </head>
 
-<body
-    style="background-color: var(--fond-page); font-family: sans-serif; color: var(--texte-principal); margin: 0; padding: 20px;">
-
+<body style="background-color: var(--fond-page); font-family: sans-serif; margin: 0; padding: 20px;">
     <header style="text-align: center; margin-bottom: 40px;">
         <h1 style="color: var(--couleur-principale);">AMFS Dashboard</h1>
     </header>
-
     <main>
-        <?php
-        // On récupère l'action proprement depuis l'URL
-        $currentAction = $_GET['action'] ?? 'home';
-
-        // Charge dynamiquement la vue en fonction de l'action
-        if ('form' === $currentAction) {
-            require_once 'views/item_form.php';
-        } else {
-            require_once 'views/home.php';
-        }
+        <?php 
+        // Affiche la vue transmise par le contrôleur
+        echo view($view ?? 'home'); 
         ?>
     </main>
-
 </body>
 
 </html>

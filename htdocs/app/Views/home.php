@@ -1,6 +1,6 @@
 <div style="margin-bottom: 20px; text-align: right;">
-    <a href="index.php?action=form"
-        style="background-color: var(--succes); color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">+
+    <a href="<?= base_url('item/form') ?>" style=" background-color: var(--succes); color: white; padding: 10px 20px; text-decoration: none;
+        border-radius: 5px; font-weight: bold;">+
         Ajouter une carte</a>
 </div>
 
@@ -55,11 +55,13 @@ if (empty($groupedItems)) {
                     </a>
                     <div style="font-size: 12px; font-weight: bold;">
                         <?php if (isset($item['saison'])) { ?>
-                        <span style="color: var(--succes);">S: <?php echo htmlspecialchars($item['saison'] ?? '1'); ?></span> |
+                        <span style="color: var(--succes);">S:
+                            <?php echo htmlspecialchars($item['saison'] ?? '1'); ?></span> |
                         <?php } ?>
 
                         <?php if (isset($item['episode'])) { ?>
-                        <span style="color: var(--info);">Ep: <?php echo htmlspecialchars($item['episode'] ?? '1'); ?></span>
+                        <span style="color: var(--info);">Ep:
+                            <?php echo htmlspecialchars($item['episode'] ?? '1'); ?></span>
                         <?php } ?>
                     </div>
                 </div>
@@ -69,7 +71,7 @@ if (empty($groupedItems)) {
                     <a href="index.php?action=form&id=<?php echo $item['id']; ?>"
                         style="color: var(--couleur-principale); text-decoration: none; font-size: 13px;">✏️
                         Modifier</a>
-                    <a href="index.php?action=delete&id=<?php echo $item['id']; ?>"
+                    <a href="<?= base_url('item/delete/' . $item['id']) ?>"
                         onclick="return confirm('Es-tu sûr de vouloir supprimer cette carte ?');"
                         style="color: red; text-decoration: none; font-size: 13px;">🗑️ Supprimer</a>
                 </div>
