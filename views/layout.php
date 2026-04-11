@@ -21,7 +21,7 @@
         $currentAction = $_GET['action'] ?? 'home';
 
         // Charge dynamiquement la vue en fonction de l'action
-        if ($currentAction === 'form') {
+        if ('form' === $currentAction) {
             require_once 'views/item_form.php';
         } else {
             require_once 'views/home.php';

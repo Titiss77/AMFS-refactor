@@ -8,20 +8,20 @@
 if (empty($groupedItems)) {
     echo '<p>Aucune donnée disponible.</p>';
 } else {
-    foreach ($groupedItems as $headerName => $divisions):
+    foreach ($groupedItems as $headerName => $divisions) {
         ?>
 <section class="header-section" style="margin-bottom: 50px;">
     <h2 style="border-bottom: 2px solid var(--couleur-secondaire); padding-bottom: 10px;">
-        <?= htmlspecialchars($headerName) ?>
+        <?php echo htmlspecialchars($headerName); ?>
     </h2>
 
-    <?php foreach ($divisions as $divisionName => $items): ?>
+    <?php foreach ($divisions as $divisionName => $items) { ?>
     <div class="division-section" style="margin-left: 20px; margin-bottom: 30px;">
-        <h3 style="color: var(--texte-secondaire);">&#x25B6; <?= htmlspecialchars($divisionName) ?></h3>
+        <h3 style="color: var(--texte-secondaire);">&#x25B6; <?php echo htmlspecialchars($divisionName); ?></h3>
 
         <div class="cards-container"
             style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
-            <?php foreach ($items as $item): ?>
+            <?php foreach ($items as $item) { ?>
 
             <div class="card"
                 style="background: var(--fond-carte); border: 1px solid var(--bordure); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
@@ -29,58 +29,58 @@ if (empty($groupedItems)) {
                     <?php
                     // Variables de base
                     $lienFinal = $item['lien'] ?? '#';
-                    $ep = $item['episode'] ?? '1';
-                    $saison = $item['saison'] ?? '1';
+                $ep = $item['episode'] ?? '1';
+                $saison = $item['saison'] ?? '1';
 
-                    // Création des versions avec zéros (01, 001, 0001)
-                    $ep2 = str_pad($ep, 2, '0', STR_PAD_LEFT);
-                    $ep3 = str_pad($ep, 3, '0', STR_PAD_LEFT);
-                    $ep4 = str_pad($ep, 4, '0', STR_PAD_LEFT);
+                // Création des versions avec zéros (01, 001, 0001)
+                $ep2 = str_pad($ep, 2, '0', STR_PAD_LEFT);
+                $ep3 = str_pad($ep, 3, '0', STR_PAD_LEFT);
+                $ep4 = str_pad($ep, 4, '0', STR_PAD_LEFT);
 
-                    // On remplace tous les mots-clés s'ils sont présents dans le lien
-                    $lienFinal = str_replace(
-                        ['{ep}', '{s}', '{ep2}', '{ep3}', '{ep4}'],
-                        [$ep, $saison, $ep2, $ep3, $ep4],
-                        $lienFinal
-                    );
-                    ?>
-                    <a href="<?= htmlspecialchars($lienFinal) ?>" target="_blank"
+                // On remplace tous les mots-clés s'ils sont présents dans le lien
+                $lienFinal = str_replace(
+                    ['{ep}', '{s}', '{ep2}', '{ep3}', '{ep4}'],
+                    [$ep, $saison, $ep2, $ep3, $ep4],
+                    $lienFinal
+                );
+                ?>
+                    <a href="<?php echo htmlspecialchars($lienFinal); ?>" target="_blank"
                         style="text-decoration: none; color: inherit; display: block; margin-bottom: 10px;">
                         <h4 style="margin: 0 0 10px 0; font-size: 16px; color: var(--couleur-principale);">
-                            <?= htmlspecialchars($item['titre']) ?></h4>
-                        <?php if (!empty($item['description'])): ?>
+                            <?php echo htmlspecialchars($item['titre']); ?></h4>
+                        <?php if (!empty($item['description'])) { ?>
                         <p style="font-size: 12px; color: var(--texte-secondaire); margin-bottom: 8px;">
-                            <?= htmlspecialchars($item['description']) ?></p>
-                        <?php endif; ?>
+                            <?php echo htmlspecialchars($item['description']); ?></p>
+                        <?php } ?>
                     </a>
                     <div style="font-size: 12px; font-weight: bold;">
-                        <?php if (isset($item['saison'])): ?>
-                        <span style="color: var(--succes);">S: <?= htmlspecialchars($item['saison'] ?? '1') ?></span> |
-                        <?php endif; ?>
+                        <?php if (isset($item['saison'])) { ?>
+                        <span style="color: var(--succes);">S: <?php echo htmlspecialchars($item['saison'] ?? '1'); ?></span> |
+                        <?php } ?>
 
-                        <?php if (isset($item['episode'])): ?>
-                        <span style="color: var(--info);">Ep: <?= htmlspecialchars($item['episode'] ?? '1') ?></span>
-                        <?php endif; ?>
+                        <?php if (isset($item['episode'])) { ?>
+                        <span style="color: var(--info);">Ep: <?php echo htmlspecialchars($item['episode'] ?? '1'); ?></span>
+                        <?php } ?>
                     </div>
                 </div>
 
                 <div
                     style="padding: 10px; background: var(--ligne-survol); border-top: 1px solid var(--bordure); display: flex; justify-content: space-between;">
-                    <a href="index.php?action=form&id=<?= $item['id'] ?>"
+                    <a href="index.php?action=form&id=<?php echo $item['id']; ?>"
                         style="color: var(--couleur-principale); text-decoration: none; font-size: 13px;">✏️
                         Modifier</a>
-                    <a href="index.php?action=delete&id=<?= $item['id'] ?>"
+                    <a href="index.php?action=delete&id=<?php echo $item['id']; ?>"
                         onclick="return confirm('Es-tu sûr de vouloir supprimer cette carte ?');"
                         style="color: red; text-decoration: none; font-size: 13px;">🗑️ Supprimer</a>
                 </div>
             </div>
 
-            <?php endforeach; ?>
+            <?php } ?>
         </div>
     </div>
-    <?php endforeach; ?>
+    <?php } ?>
 </section>
 <?php
-    endforeach;
+    }
 }
 ?>
