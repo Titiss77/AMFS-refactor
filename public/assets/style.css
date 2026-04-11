@@ -1,15 +1,473 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 :root {
-    --couleur-principale: #0056b3;
-    --couleur-secondaire: #007bff;
-    --fond-page: #f0f2f5;
+    /* Couleurs principales (Tons Indigo/Bleu modernes) */
+    --couleur-principale: #4f46e5;
+    --couleur-principale-hover: #4338ca;
+    --couleur-secondaire: #0ea5e9;
+    --couleur-secondaire-hover: #0284c7;
+
+    /* Fonds et Textes */
+    --fond-page: #f8fafc;
     --fond-carte: #ffffff;
-    --texte-principal: #1d1d1f;
-    --texte-secondaire: #6e6e73;
-    --bordure: #d2d2d7;
-    --ligne-survol: #f5f5f7;
-    --couleur-temps: #1d1d1f;
-    --succes: #28a745;
-    --danger: #dc9435;
-    --info: #17a2b8;
-    --avertissement: #ff9800;
+    --texte-principal: #1e293b;
+    --texte-secondaire: #64748b;
+    --bordure: #e2e8f0;
+    --ligne-survol: #f1f5f9;
+    --couleur-temps: #475569;
+
+    /* États */
+    --succes: #10b981;
+    --succes-hover: #059669;
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --info: #3b82f6;
+    --avertissement: #f59e0b;
+    --avertissement-hover: #d97706;
+
+    /* Ombres et Arrondis */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================
+   BASE & LAYOUT
+   ========================================= */
+body {
+    background-color: var(--fond-page);
+    color: var(--texte-principal);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    padding: 20px;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: var(--couleur-principale);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--couleur-principale-hover);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* =========================================
+   HEADER (Navigation)
+   ========================================= */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--bordure);
+}
+
+.main-header h1 {
+    color: var(--texte-principal);
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin: 0;
+    letter-spacing: -0.025em;
+}
+
+.user-nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.welcome-text {
+    font-weight: 500;
+    color: var(--texte-secondaire);
+    font-size: 0.95rem;
+}
+
+/* =========================================
+   BOUTONS
+   ========================================= */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background-color: var(--couleur-principale);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background-color: var(--couleur-principale-hover);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-success {
+    background-color: var(--succes);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-success:hover {
+    background-color: var(--succes-hover);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-login {
+    color: var(--couleur-principale);
+    font-weight: 600;
+}
+
+.btn-login:hover {
+    color: var(--couleur-principale-hover);
+    background-color: rgba(79, 70, 229, 0.05);
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-md);
+}
+
+.btn-register {
+    background-color: var(--couleur-principale);
+    color: white;
+    box-shadow: var(--shadow-sm);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+}
+
+.btn-register:hover {
+    background-color: var(--couleur-principale-hover);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-logout {
+    color: var(--danger);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+}
+
+.btn-logout:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.btn-cancel {
+    background-color: white;
+    color: var(--texte-principal);
+    border: 1px solid var(--bordure);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-cancel:hover {
+    background-color: var(--ligne-survol);
+    color: var(--texte-principal);
+}
+
+/* =========================================
+   MESSAGES & ÉTATS VIDES
+   ========================================= */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--fond-carte);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--bordure);
+    color: var(--texte-secondaire);
+    margin-top: 2rem;
+}
+
+.empty-state h2 {
+    color: var(--texte-principal);
+    margin-bottom: 1rem;
+}
+
+.shadow-card {
+    border: 1px solid var(--bordure);
+    border-style: solid;
+    box-shadow: var(--shadow-md);
+}
+
+/* =========================================
+   PAGE D'ACCUEIL : TITRES ET GRILLES
+   ========================================= */
+.actions-container {
+    text-align: right;
+    margin-bottom: 2rem;
+}
+
+.header-section {
+    margin-bottom: 3rem;
+}
+
+.header-title {
+    color: var(--texte-principal);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--bordure);
+}
+
+.division-section {
+    margin-left: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.division-title {
+    color: var(--couleur-secondaire);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+/* --- CARTES (ITEMS) --- */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.card {
+    background: var(--fond-carte);
+    border: 1px solid var(--bordure);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: #cbd5e1;
+}
+
+.card-body {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-link-block {
+    display: block;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: inherit;
+    flex-grow: 1;
+}
+
+.card-link-block:hover .card-title {
+    color: var(--couleur-principale);
+    text-decoration: underline;
+}
+
+.card-title {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: var(--texte-principal);
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.card-desc {
+    font-size: 0.9rem;
+    color: var(--texte-secondaire);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.card-meta {
+    font-size: 0.85rem;
+    background: var(--ligne-survol);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-md);
+    color: var(--couleur-temps);
+    display: inline-block;
+    align-self: flex-start;
+}
+
+.meta-season {
+    color: var(--succes);
+    font-weight: 600;
+}
+
+.meta-episode {
+    color: var(--couleur-principale);
+    font-weight: 600;
+}
+
+.separator {
+    color: #94a3b8;
+    margin: 0 0.5rem;
+}
+
+.card-actions-bottom {
+    padding: 0.75rem 1.5rem;
+    background: var(--ligne-survol);
+    border-top: 1px solid var(--bordure);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-edit-sm {
+    color: var(--avertissement);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-edit-sm:hover {
+    color: var(--avertissement-hover);
+}
+
+.btn-delete-sm {
+    color: var(--danger);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-delete-sm:hover {
+    color: var(--danger-hover);
+}
+
+/* =========================================
+   FORMULAIRES (item_form.php)
+   ========================================= */
+.form-container {
+    max-width: 650px;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    background: var(--fond-carte);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--bordure);
+    box-sizing: border-box;
+}
+
+.form-container .header-title {
+    margin-top: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group.row {
+    display: flex;
+    gap: 1rem;
+}
+
+.col-half {
+    flex: 1;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--texte-principal);
+    font-size: 0.95rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--bordure);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-family: inherit;
+    background-color: var(--fond-carte);
+    color: var(--texte-principal);
+    box-sizing: border-box;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--couleur-principale);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+select.form-control {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--bordure);
+}
+
+/* =========================================
+   SÉCURITÉ D'AFFICHAGE DU LOGIN (Bootstrap Shield)
+   ========================================= */
+.alert {
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.alert-danger {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+
+.alert-success {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
 }

@@ -2,35 +2,29 @@
 <html lang="fr">
 
 <head>
-    <link rel="stylesheet" href="<?php echo base_url('assets/style.css'); ?>">
-    <title>AMFS - Mes Cartes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMFS Dashboard</title>
+    <link rel="stylesheet" href="<?= base_url('assets/style.css') ?>">
 </head>
 
-<body style="background-color: var(--fond-page); font-family: sans-serif; margin: 0; padding: 20px;">
-    <header
-        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 10px; border-bottom: 1px solid #ccc;">
-        <h1 style="color: var(--couleur-principale); margin: 0;">AMFS Dashboard</h1>
+<body>
+    <header class="main-header">
+        <h1>AMFS Dashboard</h1>
 
-        <div>
+        <div class="user-nav">
             <?php if (auth()->loggedIn()) : ?>
-            <span style="margin-right: 15px; font-weight: bold;">
-                👤 Bienvenue, <?= auth()->user()->username ?>
-            </span>
-            <a href="<?= base_url('logout') ?>" style="color: red; text-decoration: none;">Déconnexion</a>
+            <span class="welcome-text">👤 Bienvenue, <?= esc(auth()->user()->username) ?></span>
+            <a href="<?= base_url('logout') ?>" class="btn-logout">Déconnexion</a>
             <?php else : ?>
-            <a href="<?= base_url('login') ?>"
-                style="margin-right: 15px; text-decoration: none; color: blue;">Connexion</a>
-            <a href="<?= base_url('register') ?>"
-                style="text-decoration: none; background: #007bff; color: white; padding: 5px 10px; border-radius: 5px;">Créer
-                un compte</a>
+            <a href="<?= base_url('login') ?>" class="btn-login">Connexion</a>
+            <a href="<?= base_url('register') ?>" class="btn-register">Créer un compte</a>
             <?php endif; ?>
         </div>
     </header>
-    <main>
-        <?php
-        // Affiche la vue transmise par le contrôleur
-        echo view($view ?? 'home');
-    ?>
+
+    <main class="container">
+        <?php echo view($view ?? 'home'); ?>
     </main>
 </body>
 
