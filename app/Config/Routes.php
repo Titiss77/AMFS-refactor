@@ -1,14 +1,17 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 use CodeIgniter\Router\RouteCollection;
 
-// @var RouteCollection $routes
+/** @var RouteCollection $routes */
+// Page d'accueil publique
 $routes->get('/', 'HomeController::index');
 
-// Routes pour la gestion des items
-$routes->get('item/form', 'ItemController::form'); // Pour l'ajout
-$routes->get('item/form/(:num)', 'ItemController::form/$1'); // Pour la modification
-$routes->post('item/save', 'ItemController::save');
-$routes->get('item/delete/(:num)', 'ItemController::delete/$1');
+// Routes protégées par l'authentification Shield
+$routes->group('', ['filter' => 'session'], static function ($routes) {
+    $routes->get('item/form', 'ItemController::form');
+    $routes->get('item/form/(:num)', 'ItemController::form/$1');
+    $routes->post('item/save', 'ItemController::save');
+    $routes->get('item/delete/(:num)', 'ItemController::delete/$1');
+});
+
+service('auth')->routes($routes);

@@ -1,8 +1,11 @@
+<?php if (auth()->loggedIn()): ?>
 <div style="margin-bottom: 20px; text-align: right;">
-    <a href="<?php echo base_url('item/form'); ?>" style=" background-color: var(--succes); color: white; padding: 10px 20px; text-decoration: none;
-        border-radius: 5px; font-weight: bold;">+
-        Ajouter une carte</a>
+    <a href="<?= base_url('item/form') ?>"
+        style="background-color: var(--succes); color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+        + Ajouter une carte
+    </a>
 </div>
+<?php endif; ?>
 
 <?php
 if (empty($groupedItems)) {
@@ -29,21 +32,21 @@ if (empty($groupedItems)) {
                     <?php
                     // Variables de base
                     $lienFinal = $item['lien'] ?? '#';
-                $ep = $item['episode'] ?? '1';
-                $saison = $item['saison'] ?? '1';
+                    $ep = $item['episode'] ?? '1';
+                    $saison = $item['saison'] ?? '1';
 
-                // Création des versions avec zéros (01, 001, 0001)
-                $ep2 = str_pad($ep, 2, '0', STR_PAD_LEFT);
-                $ep3 = str_pad($ep, 3, '0', STR_PAD_LEFT);
-                $ep4 = str_pad($ep, 4, '0', STR_PAD_LEFT);
+                    // Création des versions avec zéros (01, 001, 0001)
+                    $ep2 = str_pad($ep, 2, '0', STR_PAD_LEFT);
+                    $ep3 = str_pad($ep, 3, '0', STR_PAD_LEFT);
+                    $ep4 = str_pad($ep, 4, '0', STR_PAD_LEFT);
 
-                // On remplace tous les mots-clés s'ils sont présents dans le lien
-                $lienFinal = str_replace(
-                    ['{ep}', '{s}', '{ep2}', '{ep3}', '{ep4}'],
-                    [$ep, $saison, $ep2, $ep3, $ep4],
-                    $lienFinal
-                );
-                ?>
+                    // On remplace tous les mots-clés s'ils sont présents dans le lien
+                    $lienFinal = str_replace(
+                        ['{ep}', '{s}', '{ep2}', '{ep3}', '{ep4}'],
+                        [$ep, $saison, $ep2, $ep3, $ep4],
+                        $lienFinal
+                    );
+                    ?>
                     <a href="<?php echo htmlspecialchars($lienFinal); ?>" target="_blank"
                         style="text-decoration: none; color: inherit; display: block; margin-bottom: 10px;">
                         <h4 style="margin: 0 0 10px 0; font-size: 16px; color: var(--couleur-principale);">
@@ -65,16 +68,17 @@ if (empty($groupedItems)) {
                         <?php } ?>
                     </div>
                 </div>
-
+                <?php if (auth()->loggedIn()): ?>
                 <div
                     style="padding: 10px; background: var(--ligne-survol); border-top: 1px solid var(--bordure); display: flex; justify-content: space-between;">
-                    <a href="<?php echo base_url('item/form/'.$item['id']); ?>"
+                    <a href="<?php echo base_url('item/form/' . $item['id']); ?>"
                         style="color: var(--couleur-principale); text-decoration: none; font-size: 13px;">✏️
                         Modifier</a>
-                    <a href="<?php echo base_url('item/delete/'.$item['id']); ?>"
+                    <a href="<?php echo base_url('item/delete/' . $item['id']); ?>"
                         onclick="return confirm('Es-tu sûr de vouloir supprimer cette carte ?');"
                         style="color: red; text-decoration: none; font-size: 13px;">🗑️ Supprimer</a>
                 </div>
+                <?php endif; ?>
             </div>
 
             <?php } ?>
@@ -85,4 +89,4 @@ if (empty($groupedItems)) {
 <?php
     }
 }
-    ?>
+?>
