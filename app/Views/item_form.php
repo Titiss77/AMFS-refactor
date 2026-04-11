@@ -17,7 +17,7 @@
         <div class="form-group">
             <label for="id_division" class="form-label">Division *</label>
             <select id="id_division" name="id_division" class="form-control" required>
-                <?php if (!empty($divisions)) : ?>
+                <?php if (!empty($divisions)): ?>
                 <?php foreach ($divisions as $div): ?>
                 <option value="<?= esc($div['id']) ?>"
                     <?= (isset($item) && $item['id_division'] == $div['id']) ? 'selected' : '' ?>>
@@ -36,6 +36,16 @@
                 rows="4"><?= isset($item) ? esc($item['description']) : '' ?></textarea>
         </div>
 
+        <div>
+            <label>Lien (URL) :</label>
+            <small>
+                💡 Astuce : <b>{s}</b> = saison, <b>{ep}</b> = épisode normal (1). <br>
+                Utilise <b>{ep2}</b>, <b>{ep3}</b> ou <b>{ep4}</b> pour forcer les zéros (ex: <b>01</b>, <b>001</b>,
+                <b>0001</b>).
+            </small>
+            <input type="text" name="lien" value="<?php echo htmlspecialchars($item['lien'] ?? ''); ?>">
+        </div>
+
         <div class="form-group row">
             <div class="col-half">
                 <label for="saison" class="form-label">Saison</label>
@@ -49,11 +59,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="lien" class="form-label">Lien externe</label>
-            <input type="url" id="lien" name="lien" class="form-control" placeholder="https://..."
-                value="<?= isset($item) ? esc($item['lien']) : '' ?>">
-        </div>
 
         <div class="form-actions">
             <a href="<?= base_url('/') ?>" class="btn btn-cancel">Annuler</a>
