@@ -677,4 +677,17 @@ select.form-control {
         margin: 1.5rem auto;
         border-radius: var(--radius-lg);
     }
+    .main-header {
+        padding: 12px 20px;
+    }
+    .main-header h1 {
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+    .user-nav {
+        font-size: smaller;
+        text-align: center;
+    }
 }
