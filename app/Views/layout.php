@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMFS Dashboard</title>
+    <title>AMFS</title>
     <link rel="stylesheet" href="<?= base_url('assets/style.css') ?>">
 </head>
 
 <body>
     <header class="main-header">
-        <h1>AMFS Dashboard</h1>
+        <h1>AMFS</h1>
 
         <div class="user-nav">
             <?php if (auth()->loggedIn()) : ?>
