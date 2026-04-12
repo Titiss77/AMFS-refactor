@@ -1,1 +1,1 @@
-__ci_last_regenerate|i:1776012513;csrf_test_name|s:32:"7bf5e392d96c98e475c733514befa7af";_ci_previous_url|s:24:"http://perso.local/login";beforeLoginUrl|s:30:"http://perso.local/categorie/1";__ci_vars|a:1:{s:14:"beforeLoginUrl";i:1776012840;}
+__ci_last_regenerate|i:1776012882;csrf_test_name|s:32:"7bf5e392d96c98e475c733514befa7af";_ci_previous_url|s:30:"http://perso.local/categorie/3";beforeLoginUrl|s:30:"http://perso.local/categorie/1";__ci_vars|a:1:{s:14:"beforeLoginUrl";i:1776012840;}

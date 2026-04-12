@@ -1,9 +1,11 @@
 <?php if (!auth()->loggedIn()): ?>
 <div class="empty-state shadow-card">
     <h2>Bienvenue sur AMFS Dashboard</h2>
-    <p>Veuillez vous connecter ou créer un compte pour gérer et visualiser vos cartes.</p>
+    <p style="color: var(--danger);">Seuls les Liens & Outils sont accessibles sans être connecté.</p>
+    <p>Veuillez vous connecter ou créer un compte pour gérer et visualiser vos propres cartes.</p>
     <br>
-    <a href="<?= base_url('login') ?>" class="btn btn-primary">Se connecter</a>
+    <a href=" <?= base_url('login') ?>" class="btn btn-primary">Se connecter</a>
+    <a href="<?= base_url('register') ?>" class="btn btn-primary">Créer un compte</a>
 </div>
 <?php else: ?>
 <div class="actions-container">

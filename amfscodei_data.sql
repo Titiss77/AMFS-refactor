@@ -1,8 +1,6 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-CREATE DATABASE IF NOT EXISTS `b13_39213320_database` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `b13_39213320_database`;
 
 TRUNCATE TABLE `auth_groups_users`;
 INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
@@ -11,7 +9,7 @@ INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
 
 TRUNCATE TABLE `auth_identities`;
 INSERT INTO `auth_identities` (`id`, `user_id`, `type`, `name`, `secret`, `secret2`, `expires`, `extra`, `force_reset`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-04-12 16:17:13', '2026-04-11 17:01:16', '2026-04-12 16:17:13'),
+(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-04-12 16:58:55', '2026-04-11 17:01:16', '2026-04-12 16:58:55'),
 (2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$zqJUMEtVBDWzxe6Orkj2XO9DpI34W94tIIWxude20vrz5wjSaHwKC', NULL, NULL, 0, '2026-04-12 16:24:47', '2026-04-11 17:02:38', '2026-04-12 16:24:47');
 
 TRUNCATE TABLE `auth_logins`;
@@ -47,7 +45,8 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identif
 (29, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-12 16:13:31', 1),
 (30, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 16:13:50', 1),
 (31, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-12 16:17:13', 1),
-(32, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 16:24:47', 1);
+(32, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 16:24:47', 1),
+(33, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-12 16:58:55', 1);
 
 TRUNCATE TABLE `auth_permissions_users`;
 TRUNCATE TABLE `auth_remember_tokens`;
@@ -86,7 +85,6 @@ INSERT INTO `item` (`id`, `id_user`, `id_division`, `titre`, `lien`, `descriptio
 (13, 2, 2, 'Chainsow Man', 'https://sushiscan.net/chainsaw-man-chapitre-{ep}/', NULL, '52', NULL),
 (14, 1, 8, 'PapaduStream', 'https://papadustream.singles/', NULL, NULL, NULL),
 (15, 1, 8, 'PLR', 'https://sites.google.com/view/prl-series/accueil?authuser=0', NULL, NULL, NULL),
-(16, 1, 4, 'Anime-Sama', 'https://anime-sama.fr/', NULL, NULL, NULL),
 (17, 1, 3, 'Franime', 'https://franime.fr/', NULL, NULL, NULL),
 (18, 1, 4, 'Vostfree', 'https://vostfree.in/', NULL, NULL, NULL),
 (19, 1, 7, 'Lelmanga', 'https://www.lelmanga.com/', NULL, NULL, NULL),
@@ -112,10 +110,9 @@ TRUNCATE TABLE `migrations`;
 TRUNCATE TABLE `settings`;
 TRUNCATE TABLE `users`;
 INSERT INTO `users` (`id`, `username`, `status`, `status_message`, `active`, `last_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'UserFictif', NULL, NULL, 1, '2026-04-12 16:24:40', '2026-04-11 17:01:15', '2026-04-11 17:01:16', NULL),
-(2, 'Titiss', NULL, NULL, 1, '2026-04-12 16:43:29', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
+(1, 'UserFictif', NULL, NULL, 1, '2026-04-12 16:59:08', '2026-04-11 17:01:15', '2026-04-11 17:01:16', NULL),
+(2, 'Titiss', NULL, NULL, 1, '2026-04-12 16:48:31', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
 DROP TABLE IF EXISTS `cards_userfictif`;
 
-DROP VIEW IF EXISTS `cards_userfictif`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cards_userfictif`  AS SELECT `i`.`id` AS `id`, `i`.`id_user` AS `id_user`, `d`.`nom` AS `titre_division`, `i`.`titre` AS `titre`, `i`.`lien` AS `lien`, `i`.`description` AS `description`, `i`.`episode` AS `episode`, `i`.`saison` AS `saison` FROM (`item` `i` join `division` `d` on((`d`.`id` = `i`.`id_division`))) WHERE ((`d`.`nom` like '%Sites') OR (`d`.`nom` like 'Outils')) ;
 COMMIT;
