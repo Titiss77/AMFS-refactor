@@ -33,28 +33,30 @@
     </h2>
 
     <?php foreach ($divisions as $divisionName => $items): ?>
-    <div class="division-section">
-        <h3 class="division-title">&#x25B6; <?= htmlspecialchars($divisionName) ?></h3>
+    <details class="division-section">
+        <summary class="division-title">
+            <span class="toggle-icon">&#x25B6;</span> <?= htmlspecialchars($divisionName) ?>
+        </summary>
 
         <div class="cards-grid">
             <?php foreach ($items as $item): ?>
             <div class="card fade-in">
                 <div class="card-body">
                     <?php
-        $lienFinal = $item['lien'] ?? '#';
-        $ep = $item['episode'] ?? '1';
-        $saison = $item['saison'] ?? '1';
+                    $lienFinal = $item['lien'] ?? '#';
+                    $ep = $item['episode'] ?? '1';
+                    $saison = $item['saison'] ?? '1';
 
-        $ep2 = str_pad((string)$ep, 2, '0', STR_PAD_LEFT);
-        $ep3 = str_pad((string)$ep, 3, '0', STR_PAD_LEFT);
-        $ep4 = str_pad((string)$ep, 4, '0', STR_PAD_LEFT);
+                    $ep2 = str_pad((string) $ep, 2, '0', STR_PAD_LEFT);
+                    $ep3 = str_pad((string) $ep, 3, '0', STR_PAD_LEFT);
+                    $ep4 = str_pad((string) $ep, 4, '0', STR_PAD_LEFT);
 
-        $lienFinal = str_replace(
-            ['{ep}', '{s}', '{ep2}', '{ep3}', '{ep4}'],
-            [$ep, $saison, $ep2, $ep3, $ep4],
-            $lienFinal
-        );
-        ?>
+                    $lienFinal = str_replace(
+                        ['{ep}', '{s}', '{ep2}', '{ep3}', '{ep4}'],
+                        [$ep, $saison, $ep2, $ep3, $ep4],
+                        $lienFinal
+                    );
+                    ?>
 
                     <a href="<?= htmlspecialchars($lienFinal) ?>" target="_blank" class="card-link-block">
                         <h4 class="card-title"><?= htmlspecialchars($item['titre']) ?></h4>
@@ -99,7 +101,7 @@
             </div>
             <?php endforeach; ?>
         </div>
-    </div>
+    </details>
     <?php endforeach; ?>
 </section>
 <?php endforeach; ?>

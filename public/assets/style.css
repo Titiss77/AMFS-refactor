@@ -86,11 +86,10 @@ a:hover {
    ========================================= */
 .main-header {
     display: flex;
-        justify-content: space-between;
-        margin: 0 30px;
+    justify-content: space-between;
     background-color: var(--bg-card);
     border-bottom: 1px solid var(--border-color);
-    padding: 16px 0;
+    padding: 16px 30px;
     margin-bottom: 32px;
     box-shadow: var(--shadow-sm);
     position: sticky;
@@ -102,6 +101,7 @@ a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .main-header h1 {
@@ -147,7 +147,6 @@ a:hover {
     font-weight: 500;
     font-size: 0.95rem;
     border-radius: 9999px;
-    /* Style "Pillule" */
     transition: var(--transition);
     white-space: nowrap;
 }
@@ -164,7 +163,7 @@ a:hover {
 }
 
 /* =========================================
-   GRILLE & CARTES (Affichage des items)
+   ACTIONS CONTAINER
    ========================================= */
 .actions-container {
     display: flex;
@@ -172,23 +171,111 @@ a:hover {
     margin-bottom: 2rem;
 }
 
-.division-title {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+/* =========================================
+   MENUS DÉROULANTS (Divisions / Accordéon)
+   ========================================= */
+.division-section {
     margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
 }
 
+.division-title {
+    color: var(--text-main);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    list-style: none;
+    /* Cache la flèche native */
+    padding: 0.75rem 0;
+    transition: color 0.2s;
+    user-select: none;
+}
+
+.division-title:hover {
+    color: var(--primary);
+}
+
+/* Cache la flèche native pour Safari/Chrome */
+.division-title::-webkit-details-marker {
+    display: none;
+}
+
+/* L'icône de flèche personnalisée - Rendu UI Premium */
+.toggle-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.division-title:hover .toggle-icon {
+    color: var(--primary);
+    border-color: var(--primary-light);
+    box-shadow: var(--shadow-md);
+}
+
+/* Animation de la flèche quand ouvert */
+details[open].division-section .toggle-icon {
+    transform: rotate(90deg);
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* =========================================
+   ANIMATION DE DÉROULEMENT (Slide Down)
+   ========================================= */
+.division-section .cards-grid {
+    overflow: hidden;
+    margin-top: 0;
+    /* Un peu de padding pour ne pas couper les ombres des cartes au survol */
+    padding: 10px 10px 20px 10px;
+    margin: -10px -10px 28px -10px;
+}
+
+details[open].division-section .cards-grid {
+    animation: slideDown 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transform-origin: top center;
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px) scaleY(0.95);
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+        max-height: 5000px;
+        transform: translateY(0) scaleY(1);
+    }
+}
+
+/* =========================================
+   GRILLE & CARTES
+   ========================================= */
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
-    margin-bottom: 48px;
 }
 
 .card {
@@ -212,7 +299,6 @@ a:hover {
     padding: 1.5rem;
     flex-grow: 1;
     display: flex;
-    text-align: center;
     flex-direction: column;
 }
 
@@ -248,7 +334,6 @@ a:hover {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    justify-content: center;
     margin-top: auto;
 }
 
@@ -276,7 +361,7 @@ a:hover {
     background: #f8fafc;
     border-top: 1px solid var(--border-color);
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 16px;
     align-items: center;
 }
@@ -543,7 +628,6 @@ select.form-control {
     opacity: 0;
 }
 
-/* Décalage en cascade pour l'apparition des cartes */
 .card:nth-child(1) {
     animation-delay: 0.05s;
 }
@@ -568,7 +652,6 @@ select.form-control {
     animation-delay: 0.3s;
 }
 
-/* Adaptabilité Mobile */
 @media (max-width: 768px) {
     .main-header .container {
         flex-direction: column;
