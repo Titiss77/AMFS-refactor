@@ -1,39 +1,39 @@
 <div class="form-container card">
     <h2 class="header-title">
-        <?= isset($item) ? '✏️ Modifier la carte' : '+ Ajouter une carte' ?>
+        <?php echo isset($item) ? '✏️ Modifier la carte' : '+ Ajouter une carte'; ?>
     </h2>
 
-    <form action="<?= base_url('item/save') ?>" method="POST">
-        <?= csrf_field() ?>
+    <form action="<?php echo base_url('item/save'); ?>" method="POST">
+        <?php echo csrf_field(); ?>
 
-        <input type="hidden" name="id" value="<?= isset($item) ? esc($item['id']) : '' ?>">
+        <input type="hidden" name="id" value="<?php echo isset($item) ? esc($item['id']) : ''; ?>">
 
         <div class="form-group">
             <label for="titre" class="form-label">Titre *</label>
             <input type="text" id="titre" name="titre" class="form-control"
-                value="<?= isset($item) ? esc($item['titre']) : '' ?>" required>
+                value="<?php echo isset($item) ? esc($item['titre']) : ''; ?>" required>
         </div>
 
         <div class="form-group">
             <label for="id_division" class="form-label">Division *</label>
             <select id="id_division" name="id_division" class="form-control" required>
-                <?php if (!empty($divisions)): ?>
-                <?php foreach ($divisions as $div): ?>
-                <option value="<?= esc($div['id']) ?>"
-                    <?= (isset($item) && $item['id_division'] == $div['id']) ? 'selected' : '' ?>>
-                    <?= esc($div['nom']) ?>
+                <?php if (!empty($divisions)) { ?>
+                <?php foreach ($divisions as $div) { ?>
+                <option value="<?php echo esc($div['id']); ?>"
+                    <?php echo (isset($item) && $item['id_division'] == $div['id']) ? 'selected' : ''; ?>>
+                    <?php echo esc($div['nom']); ?>
                 </option>
-                <?php endforeach; ?>
-                <?php else: ?>
+                <?php } ?>
+                <?php } else { ?>
                 <option value="">Aucune division disponible</option>
-                <?php endif; ?>
+                <?php } ?>
             </select>
         </div>
 
         <div class="form-group">
             <label for="description" class="form-label">Description</label>
             <textarea id="description" name="description" class="form-control" rows="1"
-                maxlength="30"><?= isset($item) ? esc($item['description']) : '' ?></textarea>
+                maxlength="30"><?php echo isset($item) ? esc($item['description']) : ''; ?></textarea>
             <small id="char-count" class="char-counter">0 / 30</small>
         </div>
 
@@ -52,20 +52,20 @@
             <div class="col-half">
                 <label for="saison" class="form-label">Saison</label>
                 <input type="number" id="saison" name="saison" class="form-control"
-                    value="<?= isset($item) ? esc($item['saison']) : '' ?>">
+                    value="<?php echo isset($item) ? esc($item['saison']) : ''; ?>">
             </div>
             <div class="col-half">
                 <label for="episode" class="form-label">Épisode</label>
                 <input type="text" id="episode" name="episode" class="form-control"
-                    value="<?= isset($item) ? esc($item['episode']) : '' ?>">
+                    value="<?php echo isset($item) ? esc($item['episode']) : ''; ?>">
             </div>
         </div>
 
 
         <div class="form-actions">
-            <a href="<?= base_url('/') ?>" class="btn btn-cancel">Annuler</a>
+            <a href="<?php echo base_url('/'); ?>" class="btn btn-cancel">Annuler</a>
             <button type="submit" class="btn btn-success">
-                <?= isset($item) ? 'Enregistrer les modifications' : 'Créer la carte' ?>
+                <?php echo isset($item) ? 'Enregistrer les modifications' : 'Créer la carte'; ?>
             </button>
         </div>
     </form>

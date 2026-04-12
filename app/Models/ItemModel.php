@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -23,7 +25,7 @@ class ItemModel extends Model
     {
         $idUtilisateurPublic = 1;
 
-        if ($userId === null) {
+        if (null === $userId) {
             $whereClause = 'WHERE i.id_user = ?';
             $params = [$idUtilisateurPublic];
         } elseif ($userId === $idUtilisateurPublic) {
@@ -36,7 +38,7 @@ class ItemModel extends Model
         }
 
         // NOUVEAU : On filtre par la catégorie sélectionnée si elle est fournie
-        if ($headerId !== null) {
+        if (null !== $headerId) {
             $whereClause .= ' AND h.id = ?';
             $params[] = $headerId;
         }
@@ -44,7 +46,7 @@ class ItemModel extends Model
         $sql = "SELECT h.nom AS header_nom, d.nom AS division_nom, i.* FROM item i
                 JOIN division d ON i.id_division = d.id
                 JOIN header h ON d.id_header = h.id
-                $whereClause
+                {$whereClause}
                 ORDER BY h.id, d.id, i.titre ASC";
 
         $query = $this->db->query($sql, $params);
@@ -103,6 +105,7 @@ class ItemModel extends Model
     public function getHeaders()
     {
         $query = $this->db->query('SELECT id, nom FROM header ORDER BY id ASC');
+
         return $query->getResultArray();
     }
 }

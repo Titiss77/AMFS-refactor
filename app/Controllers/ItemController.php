@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -33,7 +35,7 @@ class ItemController extends BaseController
 
     public function save()
     {
-        if ($this->request->getMethod() === 'POST' || $this->request->getMethod() === 'post') {
+        if ('POST' === $this->request->getMethod() || 'post' === $this->request->getMethod()) {
             // On vérifie que l'utilisateur est bien connecté par sécurité supplémentaire
             if (!auth()->loggedIn()) {
                 return redirect()->to('login');

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -13,7 +15,7 @@ class HomeController extends BaseController
 
         // Redirection automatique vers le premier onglet s'il existe
         if (!empty($headers)) {
-            return redirect()->to('categorie/' . $headers[0]['id']);
+            return redirect()->to('categorie/'.$headers[0]['id']);
         }
 
         // Si aucune catégorie n'existe en base de données
@@ -35,7 +37,7 @@ class HomeController extends BaseController
             'headers' => $headers,
             'groupedItems' => $groupedItems,
             'currentHeaderId' => $headerId,  // Permet de savoir quel onglet colorer
-            'view' => 'home'
+            'view' => 'home',
         ]);
     }
 }

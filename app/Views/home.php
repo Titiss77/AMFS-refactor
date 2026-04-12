@@ -1,47 +1,47 @@
-<?php if (!auth()->loggedIn()): ?>
+<?php if (!auth()->loggedIn()) { ?>
 <div class="empty-state shadow-card">
     <h2>Bienvenue sur AMFS Dashboard</h2>
     <p style="color: var(--danger);">Seuls les Liens & Outils sont accessibles sans être connecté.</p>
     <p>Veuillez vous connecter ou créer un compte pour gérer et visualiser vos propres cartes.</p>
     <br>
-    <a href=" <?= base_url('login') ?>" class="btn btn-primary">Se connecter</a>
-    <a href="<?= base_url('register') ?>" class="btn btn-primary">Créer un compte</a>
+    <a href=" <?php echo base_url('login'); ?>" class="btn btn-primary">Se connecter</a>
+    <a href="<?php echo base_url('register'); ?>" class="btn btn-primary">Créer un compte</a>
 </div>
-<?php else: ?>
+<?php } else { ?>
 <div class="actions-container">
-    <a href="<?= base_url('item/form') ?>" class="btn btn-success">+ Ajouter une carte</a>
+    <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>
 </div>
-<?php endif; ?>
+<?php } ?>
 
-<?php if (empty($groupedItems)): ?>
-<?php if (auth()->loggedIn()): ?>
+<?php if (empty($groupedItems)) { ?>
+<?php if (auth()->loggedIn()) { ?>
 <div class="empty-state">
     <h2>Vous n'avez pas encore de cartes.</h2>
     <p>Commencez par en ajouter une !</p>
     <br>
-    <a href="<?= base_url('item/form') ?>" class="btn btn-success">+ Ajouter une carte</a>
+    <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>
 </div>
-<?php else: ?>
+<?php } else { ?>
 <div class="empty-state">
     <p>Aucune donnée disponible.</p>
 </div>
-<?php endif; ?>
+<?php } ?>
 
-<?php else: ?>
-<?php foreach ($groupedItems as $headerName => $divisions): ?>
+<?php } else { ?>
+<?php foreach ($groupedItems as $headerName => $divisions) { ?>
 <section class="header-section">
     <h2 class="header-title">
-        <?= htmlspecialchars($headerName) ?>
+        <?php echo htmlspecialchars($headerName); ?>
     </h2>
 
-    <?php foreach ($divisions as $divisionName => $items): ?>
+    <?php foreach ($divisions as $divisionName => $items) { ?>
     <details class="division-section">
         <summary class="division-title">
-            <span class="toggle-icon">&#x25B6;</span> <?= htmlspecialchars($divisionName) ?>
+            <span class="toggle-icon">&#x25B6;</span> <?php echo htmlspecialchars($divisionName); ?>
         </summary>
 
         <div class="cards-grid">
-            <?php foreach ($items as $item): ?>
+            <?php foreach ($items as $item) { ?>
             <div class="card fade-in">
                 <?php
                 $lienFinal = $item['lien'] ?? '#';
@@ -59,31 +59,31 @@
                 );
                 ?>
 
-                <a href="<?= htmlspecialchars($lienFinal) ?>" target="_blank" class="card-link-block">
+                <a href="<?php echo htmlspecialchars($lienFinal); ?>" target="_blank" class="card-link-block">
                     <div class="card-body">
 
-                        <h4 class="card-title"><?= htmlspecialchars($item['titre']) ?></h4>
-                        <?php if (!empty($item['description'])): ?>
-                        <p class="card-desc"><?= htmlspecialchars($item['description']) ?></p>
-                        <?php endif; ?>
+                        <h4 class="card-title"><?php echo htmlspecialchars($item['titre']); ?></h4>
+                        <?php if (!empty($item['description'])) { ?>
+                        <p class="card-desc"><?php echo htmlspecialchars($item['description']); ?></p>
+                        <?php } ?>
 
                         <div class="card-badges">
-                            <?php if (!empty($item['saison'])): ?>
-                            <span class="badge badge-season">Saison <?= htmlspecialchars($item['saison']) ?></span>
-                            <?php endif; ?>
+                            <?php if (!empty($item['saison'])) { ?>
+                            <span class="badge badge-season">Saison <?php echo htmlspecialchars($item['saison']); ?></span>
+                            <?php } ?>
 
-                            <?php if (!empty($item['episode'])): ?>
-                            <span class="badge badge-episode">Ép. <?= htmlspecialchars($item['episode']) ?></span>
-                            <?php endif; ?>
+                            <?php if (!empty($item['episode'])) { ?>
+                            <span class="badge badge-episode">Ép. <?php echo htmlspecialchars($item['episode']); ?></span>
+                            <?php } ?>
                         </div>
 
 
                     </div>
                 </a>
 
-                <?php if (auth()->loggedIn() && (int) $item['id_user'] === (int) auth()->id()): ?>
+                <?php if (auth()->loggedIn() && (int) $item['id_user'] === (int) auth()->id()) { ?>
                 <div class="card-actions-bottom">
-                    <a href="<?= base_url('item/form/' . $item['id']) ?>" class="btn-icon btn-edit-sm">
+                    <a href="<?php echo base_url('item/form/'.$item['id']); ?>" class="btn-icon btn-edit-sm">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
@@ -91,7 +91,7 @@
                         </svg>
                         Modifier
                     </a>
-                    <a href="<?= base_url('item/delete/' . $item['id']) ?>"
+                    <a href="<?php echo base_url('item/delete/'.$item['id']); ?>"
                         onclick="return confirm('Es-tu sûr de vouloir supprimer cette carte ?');"
                         class="btn-icon btn-delete-sm">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -102,12 +102,12 @@
                         Supprimer
                     </a>
                 </div>
-                <?php endif; ?>
+                <?php } ?>
             </div>
-            <?php endforeach; ?>
+            <?php } ?>
         </div>
     </details>
-    <?php endforeach; ?>
+    <?php } ?>
 </section>
-<?php endforeach; ?>
-<?php endif; ?>
+<?php } ?>
+<?php } ?>
