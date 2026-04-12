@@ -897,3 +897,173 @@ DEBUG - 2026-04-12 20:15:47 --> Session: Class initialized using 'CodeIgniter\Se
 DEBUG - 2026-04-12 20:15:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-04-12 20:15:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-04-12 20:15:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:16:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:16:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:16:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:16:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:16:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:19:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-12 20:19:53 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "\app\Views\auth\login.php"
+[Method: GET, Route: login]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('\\app\\Views\\auth\\login.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('\\app\\Views\\auth\\login', [], true)
+ 3 VENDORPATH\codeigniter4\shield\src\Traits\Viewable.php(25): view('\\app\\Views\\auth\\login', [], [])
+ 4 VENDORPATH\codeigniter4\shield\src\Controllers\LoginController.php(45): CodeIgniter\Shield\Controllers\LoginController->view('\\app\\Views\\auth\\login')
+ 5 SYSTEMPATH\CodeIgniter.php(887): CodeIgniter\Shield\Controllers\LoginController->loginView()
+ 6 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(CodeIgniter\Shield\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-12 20:19:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-12 20:19:54 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "\app\Views\auth\login.php"
+[Method: GET, Route: login]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('\\app\\Views\\auth\\login.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('\\app\\Views\\auth\\login', [], true)
+ 3 VENDORPATH\codeigniter4\shield\src\Traits\Viewable.php(25): view('\\app\\Views\\auth\\login', [], [])
+ 4 VENDORPATH\codeigniter4\shield\src\Controllers\LoginController.php(45): CodeIgniter\Shield\Controllers\LoginController->view('\\app\\Views\\auth\\login')
+ 5 SYSTEMPATH\CodeIgniter.php(887): CodeIgniter\Shield\Controllers\LoginController->loginView()
+ 6 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(CodeIgniter\Shield\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-12 20:20:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-12 20:20:14 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "\app\Views\auth\login.php"
+[Method: GET, Route: login]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('\\app\\Views\\auth\\login.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('\\app\\Views\\auth\\login', [], true)
+ 3 VENDORPATH\codeigniter4\shield\src\Traits\Viewable.php(25): view('\\app\\Views\\auth\\login', [], [])
+ 4 VENDORPATH\codeigniter4\shield\src\Controllers\LoginController.php(45): CodeIgniter\Shield\Controllers\LoginController->view('\\app\\Views\\auth\\login')
+ 5 SYSTEMPATH\CodeIgniter.php(887): CodeIgniter\Shield\Controllers\LoginController->loginView()
+ 6 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(CodeIgniter\Shield\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-12 20:20:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-12 20:20:42 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "app\Views\auth\login.php"
+[Method: GET, Route: login]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('app\\Views\\auth\\login.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('app\\Views\\auth\\login.php', [], true)
+ 3 VENDORPATH\codeigniter4\shield\src\Traits\Viewable.php(25): view('app\\Views\\auth\\login.php', [], [])
+ 4 VENDORPATH\codeigniter4\shield\src\Controllers\LoginController.php(45): CodeIgniter\Shield\Controllers\LoginController->view('app\\Views\\auth\\login.php')
+ 5 SYSTEMPATH\CodeIgniter.php(887): CodeIgniter\Shield\Controllers\LoginController->loginView()
+ 6 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(CodeIgniter\Shield\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-12 20:20:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-12 20:20:43 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "app\Views\auth\login.php"
+[Method: GET, Route: login]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('app\\Views\\auth\\login.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('app\\Views\\auth\\login.php', [], true)
+ 3 VENDORPATH\codeigniter4\shield\src\Traits\Viewable.php(25): view('app\\Views\\auth\\login.php', [], [])
+ 4 VENDORPATH\codeigniter4\shield\src\Controllers\LoginController.php(45): CodeIgniter\Shield\Controllers\LoginController->view('app\\Views\\auth\\login.php')
+ 5 SYSTEMPATH\CodeIgniter.php(887): CodeIgniter\Shield\Controllers\LoginController->loginView()
+ 6 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(CodeIgniter\Shield\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-12 20:20:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-12 20:20:44 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "app\Views\auth\login.php"
+[Method: GET, Route: login]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('app\\Views\\auth\\login.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('app\\Views\\auth\\login.php', [], true)
+ 3 VENDORPATH\codeigniter4\shield\src\Traits\Viewable.php(25): view('app\\Views\\auth\\login.php', [], [])
+ 4 VENDORPATH\codeigniter4\shield\src\Controllers\LoginController.php(45): CodeIgniter\Shield\Controllers\LoginController->view('app\\Views\\auth\\login.php')
+ 5 SYSTEMPATH\CodeIgniter.php(887): CodeIgniter\Shield\Controllers\LoginController->loginView()
+ 6 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(CodeIgniter\Shield\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-12 20:21:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-12 20:21:18 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "\app\Views\auth\login.php"
+[Method: GET, Route: login]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('\\app\\Views\\auth\\login.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('\\app\\Views\\auth\\login.php', [], true)
+ 3 VENDORPATH\codeigniter4\shield\src\Traits\Viewable.php(25): view('\\app\\Views\\auth\\login.php', [], [])
+ 4 VENDORPATH\codeigniter4\shield\src\Controllers\LoginController.php(45): CodeIgniter\Shield\Controllers\LoginController->view('\\app\\Views\\auth\\login.php')
+ 5 SYSTEMPATH\CodeIgniter.php(887): CodeIgniter\Shield\Controllers\LoginController->loginView()
+ 6 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(CodeIgniter\Shield\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-12 20:21:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-12 20:21:20 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "\app\Views\auth\login.php"
+[Method: GET, Route: login]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('\\app\\Views\\auth\\login.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('\\app\\Views\\auth\\login.php', [], true)
+ 3 VENDORPATH\codeigniter4\shield\src\Traits\Viewable.php(25): view('\\app\\Views\\auth\\login.php', [], [])
+ 4 VENDORPATH\codeigniter4\shield\src\Controllers\LoginController.php(45): CodeIgniter\Shield\Controllers\LoginController->view('\\app\\Views\\auth\\login.php')
+ 5 SYSTEMPATH\CodeIgniter.php(887): CodeIgniter\Shield\Controllers\LoginController->loginView()
+ 6 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(CodeIgniter\Shield\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-12 20:21:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-12 20:21:20 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "\app\Views\auth\login.php"
+[Method: GET, Route: login]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('\\app\\Views\\auth\\login.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('\\app\\Views\\auth\\login.php', [], true)
+ 3 VENDORPATH\codeigniter4\shield\src\Traits\Viewable.php(25): view('\\app\\Views\\auth\\login.php', [], [])
+ 4 VENDORPATH\codeigniter4\shield\src\Controllers\LoginController.php(45): CodeIgniter\Shield\Controllers\LoginController->view('\\app\\Views\\auth\\login.php')
+ 5 SYSTEMPATH\CodeIgniter.php(887): CodeIgniter\Shield\Controllers\LoginController->loginView()
+ 6 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(CodeIgniter\Shield\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-12 20:21:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-12 20:21:42 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "\app\Views\auth\login.php"
+[Method: GET, Route: login]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('\\app\\Views\\auth\\login.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('\\app\\Views\\auth\\login.php', [], true)
+ 3 VENDORPATH\codeigniter4\shield\src\Traits\Viewable.php(25): view('\\app\\Views\\auth\\login.php', [], [])
+ 4 VENDORPATH\codeigniter4\shield\src\Controllers\LoginController.php(45): CodeIgniter\Shield\Controllers\LoginController->view('\\app\\Views\\auth\\login.php')
+ 5 SYSTEMPATH\CodeIgniter.php(887): CodeIgniter\Shield\Controllers\LoginController->loginView()
+ 6 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(CodeIgniter\Shield\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-12 20:21:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-04-12 20:21:43 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "\app\Views\auth\login.php"
+[Method: GET, Route: login]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('\\app\\Views\\auth\\login.php')
+ 2 SYSTEMPATH\Common.php(1181): CodeIgniter\View\View->render('\\app\\Views\\auth\\login.php', [], true)
+ 3 VENDORPATH\codeigniter4\shield\src\Traits\Viewable.php(25): view('\\app\\Views\\auth\\login.php', [], [])
+ 4 VENDORPATH\codeigniter4\shield\src\Controllers\LoginController.php(45): CodeIgniter\Shield\Controllers\LoginController->view('\\app\\Views\\auth\\login.php')
+ 5 SYSTEMPATH\CodeIgniter.php(887): CodeIgniter\Shield\Controllers\LoginController->loginView()
+ 6 SYSTEMPATH\CodeIgniter.php(576): CodeIgniter\CodeIgniter->runController(Object(CodeIgniter\Shield\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(238): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(340): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(61): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-04-12 20:24:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:24:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:25:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:25:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:25:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:25:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:27:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:27:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:27:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:27:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-04-12 20:27:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
