@@ -43,40 +43,43 @@
         <div class="cards-grid">
             <?php foreach ($items as $item): ?>
             <div class="card fade-in">
-                <div class="card-body">
-                    <?php
-                    $lienFinal = $item['lien'] ?? '#';
-                    $ep = $item['episode'] ?? '1';
-                    $saison = $item['saison'] ?? '1';
+                <?php
+                $lienFinal = $item['lien'] ?? '#';
+                $ep = $item['episode'] ?? '1';
+                $saison = $item['saison'] ?? '1';
 
-                    $ep2 = str_pad((string) $ep, 2, '0', STR_PAD_LEFT);
-                    $ep3 = str_pad((string) $ep, 3, '0', STR_PAD_LEFT);
-                    $ep4 = str_pad((string) $ep, 4, '0', STR_PAD_LEFT);
+                $ep2 = str_pad((string) $ep, 2, '0', STR_PAD_LEFT);
+                $ep3 = str_pad((string) $ep, 3, '0', STR_PAD_LEFT);
+                $ep4 = str_pad((string) $ep, 4, '0', STR_PAD_LEFT);
 
-                    $lienFinal = str_replace(
-                        ['{ep}', '{s}', '{ep2}', '{ep3}', '{ep4}'],
-                        [$ep, $saison, $ep2, $ep3, $ep4],
-                        $lienFinal
-                    );
-                    ?>
+                $lienFinal = str_replace(
+                    ['{ep}', '{s}', '{ep2}', '{ep3}', '{ep4}'],
+                    [$ep, $saison, $ep2, $ep3, $ep4],
+                    $lienFinal
+                );
+                ?>
 
-                    <a href="<?= htmlspecialchars($lienFinal) ?>" target="_blank" class="card-link-block">
+                <a href="<?= htmlspecialchars($lienFinal) ?>" target="_blank" class="card-link-block">
+                    <div class="card-body">
+
                         <h4 class="card-title"><?= htmlspecialchars($item['titre']) ?></h4>
                         <?php if (!empty($item['description'])): ?>
                         <p class="card-desc"><?= htmlspecialchars($item['description']) ?></p>
                         <?php endif; ?>
-                    </a>
 
-                    <div class="card-badges">
-                        <?php if (!empty($item['saison'])): ?>
-                        <span class="badge badge-season">Saison <?= htmlspecialchars($item['saison']) ?></span>
-                        <?php endif; ?>
+                        <div class="card-badges">
+                            <?php if (!empty($item['saison'])): ?>
+                            <span class="badge badge-season">Saison <?= htmlspecialchars($item['saison']) ?></span>
+                            <?php endif; ?>
 
-                        <?php if (!empty($item['episode'])): ?>
-                        <span class="badge badge-episode">Ép. <?= htmlspecialchars($item['episode']) ?></span>
-                        <?php endif; ?>
+                            <?php if (!empty($item['episode'])): ?>
+                            <span class="badge badge-episode">Ép. <?= htmlspecialchars($item['episode']) ?></span>
+                            <?php endif; ?>
+                        </div>
+
+
                     </div>
-                </div>
+                </a>
 
                 <?php if (auth()->loggedIn() && (int) $item['id_user'] === (int) auth()->id()): ?>
                 <div class="card-actions-bottom">
