@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AMFS</title>
     <link rel="stylesheet" href="<?= base_url('assets/style.css') ?>">
+    <script src="<?= base_url('assets/script.js') ?>"></script>
 </head>
 
 <body>

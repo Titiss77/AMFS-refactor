@@ -32,8 +32,9 @@
 
         <div class="form-group">
             <label for="description" class="form-label">Description</label>
-            <textarea id="description" name="description" class="form-control"
-                rows="4"><?= isset($item) ? esc($item['description']) : '' ?></textarea>
+            <textarea id="description" name="description" class="form-control" rows="1"
+                maxlength="30"><?= isset($item) ? esc($item['description']) : '' ?></textarea>
+            <small id="char-count" class="char-counter">0 / 30</small>
         </div>
 
         <div class="form-group">
