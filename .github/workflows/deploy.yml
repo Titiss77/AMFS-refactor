@@ -1,6 +1,6 @@
 name: Deploy to ByetHost FTP
 
-# Cette action se déclenche à chaque push sur la branche "main" 
+# Cette action se déclenche à chaque push sur la branche "main"
 # (remplacez "main" par "master" si votre branche principale s'appelle master)
 on:
   push:
@@ -30,6 +30,11 @@ jobs:
             **/.git*/**
             **/.github/**
             writable/**
-            .env
+            tests/** # <-- Ignore tous les tests locaux (très lourd)
+            user_guide_src/** # <-- Ignore la documentation de CI4
             phpunit.xml.dist
+            *.sql
+            .env
             spark
+            README.md
+            LICENSE
