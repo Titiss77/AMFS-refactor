@@ -3,9 +3,9 @@
 
 :root {
     /* Palette de couleurs professionnelles */
-    --primary: #4f46e5;
+    --primary: #000000;
     /* Indigo 600 */
-    --primary-hover: #4338ca;
+    --primary-hover: #000000;
     --primary-light: #e0e7ff;
 
     --bg-body: #f8fafc;
@@ -24,9 +24,9 @@
     --success-bg: #d1fae5;
     --success-text: #065f46;
 
-    --info: #3b82f6;
+    --info: #172a47;
     --info-bg: #dbeafe;
-    --info-text: #1e40af;
+    --info-text: #000000;
 
     --danger: #ef4444;
     --danger-hover: #dc2626;
@@ -69,10 +69,6 @@ a {
     color: var(--primary);
     text-decoration: none;
     transition: var(--transition);
-}
-
-a:hover {
-    color: var(--primary-hover);
 }
 
 .container {
