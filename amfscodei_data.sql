@@ -1,7 +1,8 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
+CREATE DATABASE IF NOT EXISTS `b13_39213320_database` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `b13_39213320_database`;
 
 TRUNCATE TABLE `auth_groups_users`;
 INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
@@ -10,8 +11,8 @@ INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
 
 TRUNCATE TABLE `auth_identities`;
 INSERT INTO `auth_identities` (`id`, `user_id`, `type`, `name`, `secret`, `secret2`, `expires`, `extra`, `force_reset`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-04-12 12:07:30', '2026-04-11 17:01:16', '2026-04-12 12:07:30'),
-(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$zqJUMEtVBDWzxe6Orkj2XO9DpI34W94tIIWxude20vrz5wjSaHwKC', NULL, NULL, 0, '2026-04-12 16:05:15', '2026-04-11 17:02:38', '2026-04-12 16:05:15');
+(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-04-12 16:17:13', '2026-04-11 17:01:16', '2026-04-12 16:17:13'),
+(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$zqJUMEtVBDWzxe6Orkj2XO9DpI34W94tIIWxude20vrz5wjSaHwKC', NULL, NULL, 0, '2026-04-12 16:24:47', '2026-04-11 17:02:38', '2026-04-12 16:24:47');
 
 TRUNCATE TABLE `auth_logins`;
 INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identifier`, `user_id`, `date`, `success`) VALUES
@@ -41,7 +42,12 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identif
 (24, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 12:11:34', 1),
 (25, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 12:39:39', 1),
 (26, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 15:52:37', 1),
-(27, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 16:05:15', 1);
+(27, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 16:05:15', 1),
+(28, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 16:10:17', 1),
+(29, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-12 16:13:31', 1),
+(30, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 16:13:50', 1),
+(31, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-12 16:17:13', 1),
+(32, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 16:24:47', 1);
 
 TRUNCATE TABLE `auth_permissions_users`;
 TRUNCATE TABLE `auth_remember_tokens`;
@@ -89,16 +95,27 @@ INSERT INTO `item` (`id`, `id_user`, `id_division`, `titre`, `lien`, `descriptio
 (22, 1, 7, 'Sushiscan', 'https://sushiscan.top', NULL, NULL, NULL),
 (23, 1, 5, 'PLR', 'https://sites.google.com/view/teamprl/', NULL, NULL, NULL),
 (24, 1, 5, 'Wiflix', 'https://flemmix.zip', NULL, NULL, NULL),
-(25, 2, 3, 'Netflix', 'https://www.netflix.com/browse', NULL, NULL, NULL),
+(25, 1, 3, 'Netflix', 'https://www.netflix.com/browse', NULL, NULL, NULL),
 (26, 2, 10, 'The Boys', 'https://flemmix.farm/serie-en-streaming/35782-the-boys-saison-5.html', NULL, '1', 5),
 (27, 2, 1, 'Noble Reincarnation', 'https://voir-anime.to/anime/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power-{ep2}-vostfr/', NULL, '2', 1),
 (28, 1, 11, 'Audio To Text', 'https://editor.flixier.com/transcribe?fx_source=search&lang=en&fx_campaign=convert-audio-to-text&fx_medium=tools', 'Convertir les fichiers audio en textes', NULL, NULL),
-(29, 1, 11, 'Bootstrap Icons', 'https://icons.getbootstrap.com', 'Bibliothèque d\'icônes', NULL, NULL);
+(29, 1, 11, 'Bootstrap Icons', 'https://icons.getbootstrap.com', 'Bibliothèque d\'icônes', NULL, NULL),
+(30, 1, 3, 'Prime Video', 'https://www.primevideo.com/', NULL, NULL, NULL),
+(31, 1, 11, 'Cleanup', 'https://cleanup.pictures/', 'Nettoyer des images', NULL, NULL),
+(32, 1, 11, 'DALL.E', 'https://labs.openai.com/', 'Générer des Images', NULL, NULL),
+(33, 1, 11, 'Durable', 'https://app.durable.co/dashboard', 'Générer de site web', NULL, NULL),
+(34, 1, 11, 'Fotor', 'https://www.fotor.com/', 'conceptions et éditions d\'images', NULL, NULL),
+(35, 1, 11, 'Krea.ai', 'https://www.krea.ai/apps/image/realtime', 'Générer des Images', NULL, NULL),
+(36, 1, 11, 'obfuscator', 'https://obfuscator.io/', 'crypter les scripts javascripts', NULL, NULL);
 
 TRUNCATE TABLE `migrations`;
 TRUNCATE TABLE `settings`;
 TRUNCATE TABLE `users`;
 INSERT INTO `users` (`id`, `username`, `status`, `status_message`, `active`, `last_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'UserFictif', NULL, NULL, 1, '2026-04-12 12:11:26', '2026-04-11 17:01:15', '2026-04-11 17:01:16', NULL),
-(2, 'Titiss', NULL, NULL, 1, '2026-04-12 16:05:16', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
+(1, 'UserFictif', NULL, NULL, 1, '2026-04-12 16:24:40', '2026-04-11 17:01:15', '2026-04-11 17:01:16', NULL),
+(2, 'Titiss', NULL, NULL, 1, '2026-04-12 16:43:29', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
+DROP TABLE IF EXISTS `cards_userfictif`;
+
+DROP VIEW IF EXISTS `cards_userfictif`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cards_userfictif`  AS SELECT `i`.`id` AS `id`, `i`.`id_user` AS `id_user`, `d`.`nom` AS `titre_division`, `i`.`titre` AS `titre`, `i`.`lien` AS `lien`, `i`.`description` AS `description`, `i`.`episode` AS `episode`, `i`.`saison` AS `saison` FROM (`item` `i` join `division` `d` on((`d`.`id` = `i`.`id_division`))) WHERE ((`d`.`nom` like '%Sites') OR (`d`.`nom` like 'Outils')) ;
 COMMIT;

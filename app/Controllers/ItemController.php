@@ -34,14 +34,24 @@ class ItemController extends BaseController
     public function save()
     {
         if ($this->request->getMethod() === 'POST' || $this->request->getMethod() === 'post') {
+            // On vérifie que l'utilisateur est bien connecté par sécurité supplémentaire
             if (!auth()->loggedIn()) {
                 return redirect()->to('login');
             }
 
+            // --- IL MANQUAIT CES LIGNES ---
             $id = $this->request->getPost('id');
-            $id_user = auth()->id();
+            $titre = $this->request->getPost('titre') ?? '';
+            $id_division = $this->request->getPost('id_division') ?? 1;
 
-            // ... récupération des autres champs (titre, division, etc.) ...
+            $lien = $this->request->getPost('lien') ?: null;
+            $description = $this->request->getPost('description') ?: null;
+            $saison = $this->request->getPost('saison') ?: null;
+            $episode = $this->request->getPost('episode') ?: null;
+            // ------------------------------
+
+            // On récupère l'ID du compte utilisateur connecté
+            $id_user = auth()->id();
 
             if ($id) {
                 // Verifier la propriété avant l'update
@@ -50,6 +60,7 @@ class ItemController extends BaseController
                     $this->model->updateItem($id, $id_division, $titre, $lien, $description, $episode, $saison);
                 }
             } else {
+                // Si pas d'ID, on crée la carte
                 $this->model->createItem($id_user, $id_division, $titre, $lien, $description, $episode, $saison);
             }
 
