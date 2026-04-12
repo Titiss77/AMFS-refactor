@@ -14,7 +14,7 @@
 
         <div class="user-nav">
             <?php if (auth()->loggedIn()) : ?>
-            <span class="welcome-text">👤 Bienvenue, <?= esc(auth()->user()->username) ?></span>
+            <span class="welcome-text">👤 <?= esc(auth()->user()->username) ?></span>
             <a href="<?= base_url('logout') ?>" class="btn-logout">Déconnexion</a>
             <?php else : ?>
             <a href="<?= base_url('login') ?>" class="btn-login">Connexion</a>
