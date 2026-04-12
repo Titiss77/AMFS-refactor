@@ -16,7 +16,7 @@ namespace Config;
 use CodeIgniter\Shield\Config\AuthToken as ShieldAuthToken;
 
 /**
- * Configuration for Token Auth and HMAC Auth
+ * Configuration for Token Auth and HMAC Auth.
  */
 class AuthToken extends ShieldAuthToken
 {
@@ -43,7 +43,7 @@ class AuthToken extends ShieldAuthToken
      */
     public array $authenticatorHeader = [
         'tokens' => 'Authorization',
-        'hmac'   => 'Authorization',
+        'hmac' => 'Authorization',
     ];
 
     /**
@@ -68,7 +68,7 @@ class AuthToken extends ShieldAuthToken
      * HMAC secret key byte size
      * --------------------------------------------------------------------
      * Specify in integer the desired byte size of the
-     * HMAC SHA256 byte size
+     * HMAC SHA256 byte size.
      */
     public int $hmacSecretKeyByteSize = 32;
 
