@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AMFS</title>
+    <link rel="stylesheet" href="<?php echo base_url('assets/root.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/style.css'); ?>">
     <script src="<?php echo base_url('assets/script.js'); ?>"></script>
 </head>

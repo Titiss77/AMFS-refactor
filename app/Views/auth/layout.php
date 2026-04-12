@@ -7,8 +7,8 @@
 
     <title><?= $this->renderSection('title') ?></title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="<?php echo base_url('assets/style.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/root.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/loginregister.css'); ?>">
 
     <?= $this->renderSection('pageStyles') ?>
 </head>
