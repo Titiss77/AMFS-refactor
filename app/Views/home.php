@@ -76,7 +76,7 @@
                     </div>
                 </div>
 
-                <?php if (auth()->loggedIn()): ?>
+                <?php if (auth()->loggedIn() && (int) $item['id_user'] === (int) auth()->id()): ?>
                 <div class="card-actions-bottom">
                     <a href="<?= base_url('item/form/' . $item['id']) ?>" class="btn-icon btn-edit-sm">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
