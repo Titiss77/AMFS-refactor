@@ -17,77 +17,97 @@ class ItemController extends BaseController
 
     public function form($id = null)
     {
-        $headers = $this->model->getHeaders();
-        $divisions = $this->model->getDivisions();
-        $item = null;
+        $data = [
+            'headers' => $this->model->getHeaders(),
+            'divisions' => $this->model->getDivisions(),
+            'item' => null,
+            'view' => 'item_form'
+        ];
 
-        if (null !== $id) {
-            $item = $this->model->getItemById($id);
+        if ($id !== null) {
+            $data['item'] = $this->model->find($id); // Remplacé getItemById par find()
 
-            // Si l'item n'appartient pas à l'utilisateur, on refuse l'accès
-            if ($item && (int) $item['id_user'] !== (int) auth()->id()) {
+            if ($data['item'] && (int) $data['item']['id_user'] !== (int) auth()->id()) {
                 return redirect()->to('/')->with('error', 'Modification interdite.');
             }
         }
 
-        return view('layout', ['headers' => $headers, 'divisions' => $divisions, 'item' => $item, 'view' => 'item_form']);
+        return view('layout', $data);
     }
 
     public function save()
     {
-        if ('POST' === $this->request->getMethod() || 'post' === $this->request->getMethod()) {
-            // On vérifie que l'utilisateur est bien connecté par sécurité supplémentaire
+        if ($this->request->is('post')) {
             if (!auth()->loggedIn()) {
                 return redirect()->to('login');
             }
 
-            // --- IL MANQUAIT CES LIGNES ---
+            // 1. VALIDATION DE SÉCURITÉ
+            $rules = [
+                'titre' => 'required|max_length[100]',
+                'id_division' => 'required|numeric'
+            ];
+
+            if (!$this->validate($rules)) {
+                return redirect()->back()->withInput()->with('error', 'Vérifiez vos champs obligatoires.');
+            }
+
+            // 2. RÉCUPÉRATION DES DONNÉES
+            $data = $this->request->getPost();
+            $data['id_user'] = auth()->id(); // Force l'assignation à l'utilisateur actuel
+            
+            // Si la case is_public n'est pas cochée, elle n'est pas envoyée par le formulaire
+            $data['is_public'] = $this->request->getPost('is_public') ? 1 : 0;
+
             $id = $this->request->getPost('id');
-            $titre = $this->request->getPost('titre') ?? '';
-            $id_division = $this->request->getPost('id_division') ?? 1;
 
-            $lien = $this->request->getPost('lien') ?: null;
-            $image = $this->request->getPost('img') ?: null;
-            $description = $this->request->getPost('description') ?: null;
-            $saison = $this->request->getPost('saison') ?: null;
-            $episode = $this->request->getPost('episode') ?: null;
-            // ------------------------------
-
-            // On récupère l'ID du compte utilisateur connecté
-            $id_user = auth()->id();
-
+            // 3. SAUVEGARDE (INSERT OU UPDATE AUTO)
             if ($id) {
-                // Verifier la propriété avant l'update
-                $existingItem = $this->model->getItemById($id);
-                if ($existingItem && (int) $existingItem['id_user'] === (int) $id_user) {
-                    $this->model->updateItem($id, $id_division, $titre, $lien, $image, $description, $episode, $saison);
+                $existingItem = $this->model->find($id);
+                if ($existingItem && (int) $existingItem['id_user'] === (int) auth()->id()) {
+                    $this->model->save($data); // UPDATE auto de CodeIgniter
+                } else {
+                    return redirect()->to('/')->with('error', 'Action non autorisée.');
                 }
             } else {
-                // Si pas d'ID, on crée la carte
-                $this->model->createItem($id_user, $id_division, $titre, $lien, $image, $description, $episode, $saison);
+                $this->model->save($data); // INSERT auto de CodeIgniter
             }
 
             return redirect()->to('/');
         }
     }
 
-    // Fichier : Controllers/ItemController.php
-
     public function delete($id = null)
     {
-        if (null !== $id) {
-            $item = $this->model->getItemById($id);
-            $userId = auth()->id();
-
-            // Vérification : l'utilisateur doit être le propriétaire
-            if ($item && (int) $item['id_user'] === (int) $userId) {
-                $this->model->deleteItem($id);
-            } else {
-                // Optionnel : ajouter un message d'erreur flash
-                return redirect()->back()->with('error', 'Action non autorisée.');
+        if ($id !== null) {
+            $item = $this->model->find($id);
+            if ($item && (int) $item['id_user'] === (int) auth()->id()) {
+                $this->model->delete($id); // Méthode native CodeIgniter
             }
         }
-
         return redirect()->to('/');
+    }
+
+    // --- NOUVELLE FONCTIONNALITÉ : BOUTON +1 ÉPISODE EN AJAX ---
+    public function incrementEpisode($id)
+    {
+        if (!auth()->loggedIn()) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Non connecté']);
+        }
+
+        $item = $this->model->find($id);
+        
+        if ($item && (int) $item['id_user'] === (int) auth()->id()) {
+            // On s'assure de récupérer un nombre, on l'incrémente, puis on repasse en string
+            $currentEp = (int) $item['episode'];
+            $newEp = (string) ($currentEp + 1);
+            
+            // Mise à jour ciblée
+            $this->model->update($id, ['episode' => $newEp]);
+
+            return $this->response->setJSON(['success' => true, 'new_episode' => $newEp]);
+        }
+
+        return $this->response->setJSON(['success' => false, 'message' => 'Non autorisé']);
     }
 }

@@ -16,6 +16,7 @@ $routes->group('', ['filter' => 'session'], static function ($routes): void {
     $routes->get('item/form/(:num)', 'ItemController::form/$1');
     $routes->post('item/save', 'ItemController::save');
     $routes->get('item/delete/(:num)', 'ItemController::delete/$1');
+    $routes->post('item/increment-episode/(:num)', 'ItemController::incrementEpisode/$1');
 });
 
 service('auth')->routes($routes);

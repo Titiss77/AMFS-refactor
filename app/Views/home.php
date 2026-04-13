@@ -75,8 +75,18 @@
                             <?php } ?>
 
                             <?php if (!empty($item['episode'])) { ?>
-                            <span class="badge badge-episode">Ép.
-                                <?php echo htmlspecialchars($item['episode']); ?></span>
+                            <span class="badge badge-episode">
+                                Ép. <span
+                                    id="ep-count-<?php echo $item['id']; ?>"><?php echo htmlspecialchars($item['episode']); ?></span>
+
+                                <?php // Le bouton n'apparait que si c'est notre carte ?>
+                                <?php if (auth()->loggedIn() && (int) $item['id_user'] === (int) auth()->id()) { ?>
+                                <button type="button" class="btn-increment" data-id="<?php echo $item['id']; ?>"
+                                    title="+1 Épisode">
+                                    +1
+                                </button>
+                                <?php } ?>
+                            </span>
                             <?php } ?>
                         </div>
                     </div>
@@ -90,7 +100,7 @@
 
                 <?php if (auth()->loggedIn() && (int) $item['id_user'] === (int) auth()->id()) { ?>
                 <div class="card-actions-bottom">
-                    <a href="<?php echo base_url('item/form/'.$item['id']); ?>" class="btn-icon btn-edit-sm">
+                    <a href="<?php echo base_url('item/form/' . $item['id']); ?>" class="btn-icon btn-edit-sm">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
@@ -98,7 +108,7 @@
                         </svg>
                         Modifier
                     </a>
-                    <a href="<?php echo base_url('item/delete/'.$item['id']); ?>"
+                    <a href="<?php echo base_url('item/delete/' . $item['id']); ?>"
                         onclick="return confirm('Es-tu sûr de vouloir supprimer cette carte ?');"
                         class="btn-icon btn-delete-sm">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,3 +128,43 @@
 </section>
 <?php } ?>
 <?php } ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.btn-increment');
+
+    buttons.forEach(button => {
+        // Empêche le clic du bouton de déclencher le lien de la carte globale
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const itemId = this.getAttribute('data-id');
+
+            fetch('<?php echo base_url("item/increment-episode/"); ?>' + itemId, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        '<?= csrf_header() ?>': '<?= csrf_hash() ?>' // Protection CSRF CodeIgniter
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Met à jour le numéro d'épisode dans la carte visuellement
+                        document.getElementById('ep-count-' + itemId).innerText = data
+                            .new_episode;
+
+                        // Optionnel : petite animation visuelle (feedback)
+                        this.style.color = 'var(--success)';
+                        setTimeout(() => {
+                            this.style.color = 'white';
+                        }, 1000);
+                    } else {
+                        alert('Erreur: ' + data.message);
+                    }
+                })
+                .catch(error => console.error('Erreur:', error));
+        });
+    });
+});
+</script>

@@ -304,6 +304,7 @@ details[open].division-section .cards-grid {
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.02em;
+    cursor: default;
 }
 
 .badge-season {
@@ -375,6 +376,17 @@ details[open].division-section .cards-grid {
 .btn-success:hover {
     background-color: var(--primary-hover);
     box-shadow: var(--shadow-md);
+}
+
+.btn-increment {
+    background: none;
+    border: none;
+    color: var(--danger-text);
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 4px;
+    border: 1px solid var(--danger-text);
+    border-radius: var(--radius-xl);
 }
 
 .btn-login {

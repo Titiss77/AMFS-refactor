@@ -29,6 +29,12 @@
                 <?php } ?>
             </select>
         </div>
+        <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+            <input type="checkbox" id="is_public" name="is_public" value="1"
+                <?php echo (isset($item) && $item['is_public'] == 1) ? 'checked' : ''; ?> style="width: auto;">
+            <label for="is_public" class="form-label" style="margin-bottom: 0;">Rendre ce lien visible au public (non
+                connectés)</label>
+        </div>
 
         <div class="form-group">
             <label for="description" class="form-label">Description</label>
