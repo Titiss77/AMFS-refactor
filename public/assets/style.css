@@ -361,6 +361,7 @@ details[open].division-section .cards-grid {
     transition: var(--transition);
     border: none;
     font-family: inherit;
+    margin-bottom: 10px;
 }
 
 .btn-primary,
