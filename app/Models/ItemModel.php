@@ -11,9 +11,12 @@ class ItemModel extends Model
     protected $table = 'item';
     protected $primaryKey = 'id';
 
-    // AJOUT DE 'is_public' DANS LES CHAMPS AUTORISÉS
+    // On dit au Modèle d'utiliser notre Entity
+    protected $returnType = \App\Entities\Item::class; 
+
+    // Nouveaux champs autorisés
     protected $allowedFields = [
-        'id_user', 'is_public', 'id_division', 'titre', 
+        'id_user', 'is_public', 'id_division', 'titre', 'status', 'ordre',
         'image', 'lien', 'description', 'episode', 'saison'
     ];
 
@@ -24,7 +27,6 @@ class ItemModel extends Model
             ->join('division d', 'i.id_division = d.id')
             ->join('header h', 'd.id_header = h.id');
 
-        // GESTION PROPRE DE LA VISIBILITÉ
         if ($userId === null) {
             $builder->where('i.is_public', 1);
         } else {
@@ -34,42 +36,33 @@ class ItemModel extends Model
                     ->groupEnd();
         }
 
-        // FILTRE PAR CATÉGORIE
         if ($headerId !== null) {
             $builder->where('h.id', $headerId);
         }
 
+        // Tri par ordre ajouté
         $builder->orderBy('h.id', 'ASC')
                 ->orderBy('d.id', 'ASC')
+                ->orderBy('i.ordre', 'ASC') 
                 ->orderBy('i.titre', 'ASC');
 
-        $results = $builder->get()->getResultArray();
+        // On retourne des Objets Entity, pas des Array simples
+        $results = $builder->get()->getCustomResultObject(\App\Entities\Item::class);
 
-        // REGROUPEMENT
         $groupedData = [];
-        foreach ($results as $row) {
-            $header = $row['header_nom'];
-            $division = $row['division_nom'];
+        foreach ($results as $item) {
+            $header = $item->header_nom;
+            $division = $item->division_nom;
 
             if (!isset($groupedData[$header])) $groupedData[$header] = [];
             if (!isset($groupedData[$header][$division])) $groupedData[$header][$division] = [];
             
-            $groupedData[$header][$division][] = $row;
+            $groupedData[$header][$division][] = $item;
         }
 
         return $groupedData;
     }
 
-    public function getDivisions()
-    {
-        return $this->db->table('division')->orderBy('nom', 'ASC')->get()->getResultArray();
-    }
-
-    public function getHeaders()
-    {
-        return $this->db->table('header')->orderBy('id', 'ASC')->get()->getResultArray();
-    }
-
-    // SUPPRESSION DE createItem, updateItem, deleteItem et getItemById 
-    // CodeIgniter gère ça tout seul maintenant !
+    public function getDivisions() { return $this->db->table('division')->orderBy('nom', 'ASC')->get()->getResultArray(); }
+    public function getHeaders() { return $this->db->table('header')->orderBy('id', 'ASC')->get()->getResultArray(); }
 }

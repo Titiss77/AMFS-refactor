@@ -328,6 +328,27 @@ details[open].division-section .cards-grid {
     align-items: center;
 }
 
+body.dark-theme {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-theme .card {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+}
+
+body.dark-theme .form-control {
+    background-color: #2c2c2c;
+    color: white;
+    border-color: #444;
+}
+
+.status-completed {
+    opacity: 0.6;
+    filter: grayscale(50%);
+}
+
 .btn-icon {
     display: inline-flex;
     align-items: center;
