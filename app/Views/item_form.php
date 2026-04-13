@@ -86,53 +86,56 @@
         </div>
     </form>
 </div>
+<script>
+const apiKey = '9774091bee3bd236f4438cd6d8caa8d8';
+</script>
 
 <script>
-document.getElementById('btn-api-search').addEventListener('click', async function() {
-    const titreInput = document.getElementById('titre').value;
-    if (!titreInput) {
-        alert("Entre d'abord un titre !");
-        return;
-    }
+document.addEventListener('DOMContentLoaded', function() {
+    const btnApiSearch = document.getElementById('btn-api-search');
 
-    const statusTxt = document.getElementById('api-status');
-    statusTxt.style.display = 'inline';
-    statusTxt.innerText = '⏳ Recherche en cours...';
-
-    // Il te faudra une clé API gratuite TMDB
-    const apiKey = '9774091bee3bd236f4438cd6d8caa8d8';
-
-    // On cherche dans les animes/séries (tv) en français
-    const url =
-        `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&language=fr-FR&query=${encodeURIComponent(titreInput)}&page=1`;
-
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (data.results && data.results.length > 0) {
-            const resultat = data.results[0]; // On prend le premier résultat
-
-            // TMDB donne le nom en français
-            document.getElementById('titre').value = resultat.name || resultat.original_name;
-
-            // TMDB donne un chemin d'image partiel, il faut rajouter le début de l'URL
-            if (resultat.poster_path) {
-                document.getElementById('img').value =
-                    `https://image.tmdb.org/t/p/w500${resultat.poster_path}`;
+    if (btnApiSearch) { // <-- VÉRIFICATION AJOUTÉE ICI
+        btnApiSearch.addEventListener('click', async function() {
+            const titreInput = document.getElementById('titre').value;
+            if (!titreInput) {
+                alert("Entre d'abord un titre !");
+                return;
             }
 
-            // Le fameux synopsis EN FRANÇAIS ! (limité à 100 caractères pour ton exemple)
-            let desc = resultat.overview ? resultat.overview.substring(0, 100) + "..." : "";
-            document.getElementById('description').value = desc;
+            const statusTxt = document.getElementById('api-status');
+            statusTxt.style.display = 'inline';
+            statusTxt.innerText = '⏳ Recherche en cours...';
 
-            statusTxt.innerText = '✅ Trouvé (en français) !';
-        } else {
-            statusTxt.innerText = '❌ Non trouvé';
-        }
-    } catch (e) {
-        console.error(e);
-        statusTxt.innerText = 'Erreur API';
+            const url =
+                `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&language=fr-FR&query=${encodeURIComponent(titreInput)}&page=1`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.results && data.results.length > 0) {
+                    const resultat = data.results[0];
+
+                    document.getElementById('titre').value = resultat.name || resultat
+                        .original_name;
+
+                    if (resultat.poster_path) {
+                        document.getElementById('img').value =
+                            `https://image.tmdb.org/t/p/w500${resultat.poster_path}`;
+                    }
+
+                    let desc = resultat.overview ? resultat.overview.substring(0, 100) + "..." : "";
+                    document.getElementById('description').value = desc;
+
+                    statusTxt.innerText = '✅ Trouvé (en français) !';
+                } else {
+                    statusTxt.innerText = '❌ Non trouvé';
+                }
+            } catch (e) {
+                console.error(e);
+                statusTxt.innerText = 'Erreur API';
+            }
+        });
     }
 });
 </script>

@@ -1,9 +1,4 @@
 <?php if (!auth()->loggedIn()) { ?>
-<div class="dashboard-toolbar" style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center;">
-    <input type="text" id="searchInput" placeholder="🔍 Rechercher une série, un lien..." class="form-control"
-        style="flex: 1;">
-    <button id="themeToggle" class="btn btn-secondary">🌙 Mode Sombre</button>
-</div>
 
 <div class="empty-state shadow-card">
     <h2>Bienvenue sur AMFS Dashboard</h2>
@@ -108,6 +103,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // --- 1. BOUTON +1 EPISODE (AJAX) ---
+    // (querySelectorAll ne plante pas même s'il ne trouve rien, donc c'est sécurisé par défaut)
     const buttons = document.querySelectorAll('.btn-increment');
     buttons.forEach(button => {
         button.addEventListener('click', function(e) {
@@ -123,39 +119,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(res => res.json())
                 .then(data => {
-                    if (data.success) document.getElementById('ep-count-' + itemId)
-                        .innerText = data.new_episode;
+                    if (data.success) {
+                        document.getElementById('ep-count-' + itemId).innerText = data
+                            .new_episode;
+                    }
                 });
         });
-    });
-
-    // --- 2. BARRE DE RECHERCHE EN TEMPS REEL ---
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', function(e) {
-        const text = e.target.value.toLowerCase();
-        document.querySelectorAll('.searchable-card').forEach(card => {
-            const title = card.querySelector('.card-title').innerText.toLowerCase();
-            card.style.display = title.includes(text) ? 'flex' : 'none';
-        });
-    });
-
-    // --- 3. DARK MODE TOGGLE ---
-    const themeBtn = document.getElementById('themeToggle');
-    // Vérifie le stockage local
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-theme');
-        themeBtn.innerText = '☀️ Mode Clair';
-    }
-
-    themeBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-theme');
-        if (document.body.classList.contains('dark-theme')) {
-            localStorage.setItem('theme', 'dark');
-            themeBtn.innerText = '☀️ Mode Clair';
-        } else {
-            localStorage.setItem('theme', 'light');
-            themeBtn.innerText = '🌙 Mode Sombre';
-        }
     });
 });
 </script>
