@@ -43,7 +43,7 @@ class ItemController extends BaseController
             $rules = [
                 'titre' => 'required|max_length[100]',
                 'id_division' => 'required|numeric',
-                'status' => 'in_list[À voir,En cours,En pause,Terminé]'
+                'status' => 'in_list[Aucun,À voir,En cours,En pause,Terminé]'
             ];
 
             if (!$this->validate($rules)) {

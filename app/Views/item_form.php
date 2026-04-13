@@ -30,7 +30,8 @@
             <div class="col-half">
                 <label for="status" class="form-label">Statut</label>
                 <select id="status" name="status" class="form-control">
-                    <?php $currentStatus = isset($item) ? $item->status : 'À voir'; ?>
+                    <?php $currentStatus = isset($item) ? $item->status : 'Aucun'; ?>
+                    <option value="Aucun" <?php echo $currentStatus == 'Aucun' ? 'selected' : ''; ?>>Aucun</option>
                     <option value="À voir" <?php echo $currentStatus == 'À voir' ? 'selected' : ''; ?>>À voir</option>
                     <option value="En cours" <?php echo $currentStatus == 'En cours' ? 'selected' : ''; ?>>En cours
                     </option>

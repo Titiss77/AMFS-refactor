@@ -1,6 +1,8 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
+CREATE DATABASE IF NOT EXISTS `b13_39213320_database` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `b13_39213320_database`;
 
 DROP TABLE IF EXISTS `auth_groups_users`;
 CREATE TABLE `auth_groups_users` (
@@ -70,14 +72,14 @@ CREATE TABLE `auth_token_logins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 DROP VIEW IF EXISTS `cards_userfictif`;
 CREATE TABLE `cards_userfictif` (
-`description` text
-,`episode` varchar(10)
-,`id` int unsigned
+`id` int unsigned
 ,`id_user` int unsigned
-,`lien` text
-,`saison` int
-,`titre` varchar(100)
 ,`titre_division` varchar(50)
+,`titre` varchar(100)
+,`lien` text
+,`description` text
+,`episode` varchar(10)
+,`saison` int
 );
 
 DROP TABLE IF EXISTS `division`;
@@ -97,13 +99,16 @@ DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item` (
   `id` int UNSIGNED NOT NULL,
   `id_user` int UNSIGNED NOT NULL,
+  `is_public` tinyint(1) NOT NULL DEFAULT '0',
   `id_division` int UNSIGNED NOT NULL,
   `titre` varchar(100) NOT NULL,
+  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'Aucun',
   `image` varchar(255) DEFAULT NULL,
   `lien` text,
   `description` text,
   `episode` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `saison` int DEFAULT NULL
+  `saison` int DEFAULT NULL,
+  `ordre` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `migrations`;

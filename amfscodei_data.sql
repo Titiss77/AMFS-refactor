@@ -1,5 +1,4 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -11,7 +10,7 @@ INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
 TRUNCATE TABLE `auth_identities`;
 INSERT INTO `auth_identities` (`id`, `user_id`, `type`, `name`, `secret`, `secret2`, `expires`, `extra`, `force_reset`, `last_used_at`, `created_at`, `updated_at`) VALUES
 (1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-04-13 11:29:48', '2026-04-11 17:01:16', '2026-04-13 11:29:48'),
-(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$zqJUMEtVBDWzxe6Orkj2XO9DpI34W94tIIWxude20vrz5wjSaHwKC', NULL, NULL, 0, '2026-04-13 11:31:30', '2026-04-11 17:02:38', '2026-04-13 11:31:30');
+(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$zqJUMEtVBDWzxe6Orkj2XO9DpI34W94tIIWxude20vrz5wjSaHwKC', NULL, NULL, 0, '2026-04-13 15:21:23', '2026-04-11 17:02:38', '2026-04-13 15:21:23');
 
 TRUNCATE TABLE `auth_logins`;
 INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identifier`, `user_id`, `date`, `success`) VALUES
@@ -57,7 +56,10 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identif
 (40, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-13 11:22:27', 1),
 (41, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 11:25:21', 1),
 (42, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-13 11:29:48', 1),
-(43, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 11:31:30', 1);
+(43, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 11:31:30', 1),
+(44, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 14:21:19', 1),
+(45, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 14:41:09', 1),
+(46, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 15:21:23', 1);
 
 TRUNCATE TABLE `auth_permissions_users`;
 TRUNCATE TABLE `auth_remember_tokens`;
@@ -83,48 +85,53 @@ INSERT INTO `header` (`id`, `nom`) VALUES
 (5, 'Outils');
 
 TRUNCATE TABLE `item`;
-INSERT INTO `item` (`id`, `id_user`, `id_division`, `titre`, `image`, `lien`, `description`, `episode`, `saison`) VALUES
-(1, 2, 1, 'One Piece', 'https://www.myutaku.com/media/anime/poster/81797.jpg', 'https://voir-anime.to/anime/one-piece/one-piece-{ep4}-vostfr/', NULL, '1141', 1),
-(2, 2, 2, 'Manga : One Piece', 'https://www.myutaku.com/media/mangas/12.jpg', 'https://www.scan-vf.net/one_piece/chapitre-{ep}', 'Sortie : ~ 16 Avril', '1180', NULL),
-(6, 2, 1, 'Farming Life in Another World', 'https://www.myutaku.com/media/anime/poster/354478.jpg', 'https://voir-anime.to/anime/isekai-nonbiri-nouka-{s}/isekai-nonbiri-nouka-{s}-{ep2}-vostfr/', NULL, '1', 2),
-(7, 2, 1, 'Frieren', 'https://www.myutaku.com/media/anime/poster/355325.jpg', 'https://voir-anime.to/anime/sousou-no-frieren-{s}/sousou-no-frieren-{s}-{ep1}-vostfr/', NULL, '3', 2),
-(8, 2, 1, 'Wind Breaker', 'https://www.myutaku.com/media/anime/poster/357086.jpg', 'https://voir-anime.to/anime/wind-breaker-{s}/wind-breaker-{s}-{ep2}-vostfr/', NULL, '9', 2),
-(9, 2, 1, 'To Your Eternity', 'https://www.myutaku.com/media/anime/poster/346664.jpg', 'https://voir-anime.to/anime/fumetsu-no-anata-e-{s}/fumetsu-no-anata-e-{s}-{ep2}-vostfr/', NULL, '9', 3),
-(10, 2, 1, 'Bleach', 'https://www.myutaku.com/media/anime/poster/74796.jpg?t=1741173301', 'https://voir-anime.to/anime/bleach/bleach-{ep3}-vostfr/', '', '154', 8),
-(11, 2, 2, 'Jujutsu Kaisen', 'https://www.myutaku.com/media/mangas/49948.jpg', 'https://www.scan-vf.net/jujutsu-kaisen/chapitre-{ep}', NULL, '175', NULL),
-(12, 1, 4, 'VoirAnime', NULL, 'https://voir-anime.to/', NULL, NULL, NULL),
-(13, 2, 2, 'Chainsow Man', 'https://www.myutaku.com/media/mangas/52657.jpg', 'https://sushiscan.net/chainsaw-man-chapitre-{ep}/', NULL, '52', NULL),
-(14, 1, 8, 'PapaduStream', NULL, 'https://papadustream.singles/', NULL, NULL, NULL),
-(15, 1, 8, 'PLR', NULL, 'https://sites.google.com/view/prl-series/accueil?authuser=0', NULL, NULL, NULL),
-(17, 1, 3, 'Franime', 'https://linktr.ee/og/image/franime.jpg', 'https://franime.fr/', NULL, NULL, NULL),
-(18, 1, 4, 'Vostfree', NULL, 'https://vostfree.in/', NULL, NULL, NULL),
-(19, 1, 7, 'Lelmanga', NULL, 'https://www.lelmanga.com/', NULL, NULL, NULL),
-(20, 1, 7, 'ScanVf', NULL, 'https://www.scan-vf.net/', NULL, NULL, NULL),
-(21, 1, 7, 'Shaeishu', NULL, 'https://mangamoins.shaeishu.co/', NULL, NULL, NULL),
-(22, 1, 7, 'Sushiscan', NULL, 'https://sushiscan.top', NULL, NULL, NULL),
-(23, 1, 5, 'PLR', NULL, 'https://sites.google.com/view/teamprl/', NULL, NULL, NULL),
-(24, 1, 5, 'Wiflix', NULL, 'https://flemmix.zip', NULL, NULL, NULL),
-(25, 1, 3, 'Netflix', 'https://images.ctfassets.net/4cd45et68cgf/Rx83JoRDMkYNlMC9MKzcB/2b14d5a59fc3937afd3f03191e19502d/Netflix-Symbol.png?w=700&h=456', 'https://www.netflix.com/browse', NULL, NULL, NULL),
-(26, 2, 10, 'The Boys', 'https://upload.wikimedia.org/wikipedia/en/1/14/The_Boys_Season_2.jpg', 'https://flemmix.farm/serie-en-streaming/35782-the-boys-saison-5.html', NULL, '1', 5),
-(27, 2, 1, 'Noble Reincarnation: Born Blessed, So I’ll Obtain Ultimate Power', 'https://www.myutaku.com/media/anime/poster/361049.jpg', 'https://voir-anime.to/anime/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power-{ep2}-vostfr/', NULL, '2', 1),
-(28, 1, 11, 'Audio To Text', NULL, 'https://editor.flixier.com/transcribe?fx_source=search&lang=en&fx_campaign=convert-audio-to-text&fx_medium=tools', 'Convertir les fichiers audio en textes', NULL, NULL),
-(29, 1, 11, 'Bootstrap Icons', NULL, 'https://icons.getbootstrap.com', 'Bibliothèque d\'icônes', NULL, NULL),
-(30, 1, 3, 'Prime Video', NULL, 'https://www.primevideo.com/', NULL, NULL, NULL),
-(31, 1, 11, 'Cleanup', NULL, 'https://cleanup.pictures/', 'Nettoyer des images', NULL, NULL),
-(32, 1, 11, 'DALL.E', NULL, 'https://labs.openai.com/', 'Générer des Images', NULL, NULL),
-(33, 1, 11, 'Durable', NULL, 'https://app.durable.co/dashboard', 'Générer de site web', NULL, NULL),
-(34, 1, 11, 'Fotor', NULL, 'https://www.fotor.com/', 'conceptions et éditions d\'images', NULL, NULL),
-(35, 1, 11, 'Krea.ai', NULL, 'https://www.krea.ai/apps/image/realtime', 'Générer des Images', NULL, NULL),
-(36, 1, 11, 'obfuscator', NULL, 'https://obfuscator.io/', 'crypter les scripts javascripts', NULL, NULL),
-(37, 2, 1, 'Daemons of the Shadow Realm', 'https://www.myutaku.com/media/anime/poster/361772.jpg', 'https://voir-anime.to/anime/yomi-no-tsugai/daemons-of-the-shadow-realm-{ep2}-vostfr/', NULL, '1', 1),
-(38, 2, 1, 'Classroom of the Elite', 'https://www.myutaku.com/media/anime/poster/13141.jpg', 'https://voir-anime.to/anime/classroom-of-the-elite-{s}/classroom-of-the-elite-{s}-{ep2}-vostfr/', NULL, '1', 3),
-(39, 2, 1, 'Re:ZERO -Starting Life in Another World-', 'https://www.myutaku.com/media/anime/poster/305089.jpg', 'https://voir-anime.to/anime/rezero-kara-hajimeru-isekai-seikatsu-s{s}/re-zero-kara-hajimeru-isekai-seikatsu-saison-{s}-{ep2}-vostfr/', NULL, '1', 3),
-(40, 2, 1, 'Dr. Stone', 'https://www.myutaku.com/media/anime/poster/344884.jpg', 'https://voir-anime.to/anime/dr-stone-{s}-science-future/dr-stone-{s}-{ep2}-vostfr/', NULL, '1', 4);
+INSERT INTO `item` (`id`, `id_user`, `is_public`, `id_division`, `titre`, `status`, `image`, `lien`, `description`, `episode`, `saison`, `ordre`) VALUES
+(1, 2, 0, 1, 'One Piece', 'En cours', 'https://image.tmdb.org/t/p/w500/l5menwH7JjOBbXjoftYdwMmsqmT.jpg', 'https://voir-anime.to/anime/one-piece/one-piece-{ep4}-vostfr/', 'Une aventure en haute mer légendaire et unique en son genre. Monkey D. Luffy est un jeune aventurier...', '1141', 1, 0),
+(2, 2, 0, 2, 'Manga : One Piece', 'À voir', 'https://www.myutaku.com/media/mangas/12.jpg', 'https://www.scan-vf.net/one_piece/chapitre-{ep}', 'Sortie : ~ 16 Avril', '1180', NULL, 0),
+(6, 2, 0, 1, 'Farming Life in Another World', 'À voir', 'https://image.tmdb.org/t/p/w500/mE4pE6NOV3AbvTUE3MkFMlfs12n.jpg', 'https://voir-anime.to/anime/isekai-nonbiri-nouka-{s}/isekai-nonbiri-nouka-{s}-{ep2}-vostfr/', 'Alors qu’il tente de sauver de la faillite l’entreprise dans laquelle il travaille, Hiruka Machio, 3...', '1', 2, 0),
+(7, 2, 0, 1, 'Frieren', 'À voir', 'https://image.tmdb.org/t/p/w500/j8K7vgF3Kp5T6EwJvez9B4it6CB.jpg', 'https://voir-anime.to/anime/sousou-no-frieren-{s}/sousou-no-frieren-{s}-{ep1}-vostfr/', 'L’elfe Frieren a vaincu le roi des démons aux côtés du groupe mené par le jeune héros Himmel. Après ...', '3', 2, 0),
+(8, 2, 0, 1, 'Wind Breaker', 'À voir', 'https://image.tmdb.org/t/p/w500/cciJ1sSUtbdamdhM01qUqkxgEEf.jpg', 'https://voir-anime.to/anime/wind-breaker-{s}/wind-breaker-{s}-{ep2}-vostfr/', 'Au lycée Fûrin, on n\'a pas la moyenne, mais on sait se battre ! Cet établissement a le pire taux de ...', '9', 2, 0),
+(9, 2, 0, 1, 'To Your Eternity', 'À voir', 'https://image.tmdb.org/t/p/w500/bohMYRVSIG68md0zQobyWbV4S8e.jpg', 'https://voir-anime.to/anime/fumetsu-no-anata-e-{s}/fumetsu-no-anata-e-{s}-{ep2}-vostfr/', 'Un garçon solitaire errant dans les régions arctiques de l\'Amérique du Nord rencontre un loup. Tous ...', '9', 3, 0),
+(10, 2, 0, 1, 'Bleach', 'À voir', 'https://image.tmdb.org/t/p/w500/e0kKmeM8R7Kersh5N2PPzIRNRhr.jpg', 'https://voir-anime.to/anime/bleach/bleach-{ep3}-vostfr/', 'Adolescent de quinze ans, Ichigo Kurosaki possède un don particulier : celui de voir les esprits. Un...', '154', 8, 0),
+(11, 2, 0, 2, 'Jujutsu Kaisen', 'À voir', 'https://www.myutaku.com/media/mangas/49948.jpg', 'https://www.scan-vf.net/jujutsu-kaisen/chapitre-{ep}', NULL, '175', NULL, 0),
+(12, 1, 1, 4, 'VoirAnime', 'À voir', NULL, 'https://voir-anime.to/', NULL, NULL, NULL, 0),
+(13, 2, 0, 2, 'Chainsow Man', 'À voir', 'https://www.myutaku.com/media/mangas/52657.jpg', 'https://sushiscan.net/chainsaw-man-chapitre-{ep}/', NULL, '52', NULL, 0),
+(14, 1, 1, 8, 'PapaduStream', 'À voir', NULL, 'https://papadustream.singles/', NULL, NULL, NULL, 0),
+(15, 1, 1, 8, 'PLR', 'À voir', NULL, 'https://sites.google.com/view/prl-series/accueil?authuser=0', NULL, NULL, NULL, 0),
+(17, 1, 1, 3, 'Franime', 'À voir', 'https://linktr.ee/og/image/franime.jpg', 'https://franime.fr/', NULL, NULL, NULL, 0),
+(18, 1, 1, 4, 'Vostfree', 'À voir', NULL, 'https://vostfree.in/', NULL, NULL, NULL, 0),
+(19, 1, 1, 7, 'Lelmanga', 'À voir', NULL, 'https://www.lelmanga.com/', NULL, NULL, NULL, 0),
+(20, 1, 1, 7, 'ScanVf', 'À voir', NULL, 'https://www.scan-vf.net/', NULL, NULL, NULL, 0),
+(21, 1, 1, 7, 'Shaeishu', 'À voir', NULL, 'https://mangamoins.shaeishu.co/', NULL, NULL, NULL, 0),
+(22, 1, 1, 7, 'Sushiscan', 'À voir', NULL, 'https://sushiscan.top', NULL, NULL, NULL, 0),
+(23, 1, 1, 5, 'PLR', 'À voir', NULL, 'https://sites.google.com/view/teamprl/', NULL, NULL, NULL, 0),
+(24, 1, 1, 5, 'Wiflix', 'À voir', NULL, 'https://flemmix.zip', NULL, NULL, NULL, 0),
+(25, 1, 1, 3, 'Netflix', 'À voir', 'https://images.ctfassets.net/4cd45et68cgf/Rx83JoRDMkYNlMC9MKzcB/2b14d5a59fc3937afd3f03191e19502d/Netflix-Symbol.png?w=700&h=456', 'https://www.netflix.com/browse', NULL, NULL, NULL, 0),
+(26, 2, 0, 10, 'The Boys', 'À voir', 'https://image.tmdb.org/t/p/w500/4Tw8TB9ikrcgzJgR0LOvgfnXD74.jpg', 'https://flemmix.farm/serie-en-streaming/35782-the-boys-saison-5.html', 'Lorsque les super-héros abusent de leurs super-pouvoirs au lieu de les utiliser pour faire le bien, ...', '1', 5, 0),
+(27, 2, 0, 1, 'Noble Reincarnation', 'À voir', 'https://image.tmdb.org/t/p/w500/ggxUYlw7a3eVegnXDv8aCDiLccJ.jpg', 'https://voir-anime.to/anime/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power-{ep2}-vostfr/', 'En tant que treizième prince de la famille royale, Noah a toujours mené une vie paisible, loin des i...', '2', 1, 0),
+(28, 1, 1, 11, 'Audio To Text', 'À voir', NULL, 'https://editor.flixier.com/transcribe?fx_source=search&lang=en&fx_campaign=convert-audio-to-text&fx_medium=tools', 'Convertir les fichiers audio en textes', NULL, NULL, 0),
+(29, 1, 1, 11, 'Bootstrap Icons', 'À voir', NULL, 'https://icons.getbootstrap.com', 'Bibliothèque d\'icônes', NULL, NULL, 0),
+(30, 1, 1, 3, 'Prime Video', 'À voir', NULL, 'https://www.primevideo.com/', NULL, NULL, NULL, 0),
+(31, 1, 1, 11, 'Cleanup', 'À voir', NULL, 'https://cleanup.pictures/', 'Nettoyer des images', NULL, NULL, 0),
+(32, 1, 1, 11, 'DALL.E', 'À voir', NULL, 'https://labs.openai.com/', 'Générer des Images', NULL, NULL, 0),
+(33, 1, 1, 11, 'Durable', 'À voir', NULL, 'https://app.durable.co/dashboard', 'Générer de site web', NULL, NULL, 0),
+(34, 1, 1, 11, 'Fotor', 'À voir', NULL, 'https://www.fotor.com/', 'conceptions et éditions d\'images', NULL, NULL, 0),
+(35, 1, 1, 11, 'Krea.ai', 'À voir', NULL, 'https://www.krea.ai/apps/image/realtime', 'Générer des Images', NULL, NULL, 0),
+(36, 1, 1, 11, 'obfuscator', 'À voir', NULL, 'https://obfuscator.io/', 'crypter les scripts javascripts', NULL, NULL, 0),
+(37, 2, 0, 1, 'Tsugai - Daemons of the Shadow Realm', 'À voir', 'https://image.tmdb.org/t/p/w500/mNqW2jnAogZa0nJ94q1LUum8Hos.jpg', 'https://voir-anime.to/anime/yomi-no-tsugai/daemons-of-the-shadow-realm-{ep2}-vostfr/', 'Yuru, le chasseur, vit séparé de sa sœur jumelle Asa, enfermée dans une prison pour satisfaire un ri...', '1', 1, 0),
+(38, 2, 0, 1, 'Classroom of the Elite', 'À voir', 'https://image.tmdb.org/t/p/w500/mmhx3dImdsfYpcFm3J1tlQt5IRN.jpg', 'https://voir-anime.to/anime/classroom-of-the-elite-{s}/classroom-of-the-elite-{s}-{ep2}-vostfr/', 'Kiyotaka Ayanokôji intègre le prestigieux lycée de haut niveau de Tokyo où, une fois le diplôme en p...', '1', 3, 0),
+(39, 2, 0, 1, 'Re:ZERO', 'À voir', 'https://image.tmdb.org/t/p/w500/ccG0ZfXOQ0834bIus4SwZrXtkyM.jpg', 'https://voir-anime.to/anime/rezero-kara-hajimeru-isekai-seikatsu-s{s}/re-zero-kara-hajimeru-isekai-seikatsu-saison-{s}-{ep2}-vostfr/', 'Subaru Natsuki a basculé dans un monde fantastique où il fait la connaissance d’Émilia, une jeune fi...', '1', 3, 0),
+(40, 2, 0, 1, 'Dr. STONE', 'À voir', 'https://image.tmdb.org/t/p/w500/dLlnzbDCblBXcJqFLXyvN43NIwp.jpg', 'https://voir-anime.to/anime/dr-stone-{s}-science-future/dr-stone-{s}-{ep2}-vostfr/', 'Plusieurs milliers d\'années après un mystérieux phénomène qui a transformé toute l\'humanité en pierr...', '1', 4, 0),
+(42, 1, 1, 11, 'Gemini', 'À voir', '', 'https://gemini.google.com/app?hl=fr', '', '', 0, 0);
 
 TRUNCATE TABLE `migrations`;
 TRUNCATE TABLE `settings`;
 TRUNCATE TABLE `users`;
 INSERT INTO `users` (`id`, `username`, `status`, `status_message`, `active`, `last_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'UserFictif', NULL, NULL, 1, '2026-04-13 11:30:15', '2026-04-11 17:01:15', '2026-04-11 17:01:16', NULL),
-(2, 'Titiss', NULL, NULL, 1, '2026-04-13 11:52:25', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
+(2, 'Titiss', NULL, NULL, 1, '2026-04-13 15:28:35', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
+DROP TABLE IF EXISTS `cards_userfictif`;
+
+DROP VIEW IF EXISTS `cards_userfictif`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cards_userfictif`  AS SELECT `i`.`id` AS `id`, `i`.`id_user` AS `id_user`, `d`.`nom` AS `titre_division`, `i`.`titre` AS `titre`, `i`.`lien` AS `lien`, `i`.`description` AS `description`, `i`.`episode` AS `episode`, `i`.`saison` AS `saison` FROM (`item` `i` join `division` `d` on((`d`.`id` = `i`.`id_division`))) WHERE ((`d`.`nom` like '%Sites') OR (`d`.`nom` like 'Outils')) ;
 COMMIT;
