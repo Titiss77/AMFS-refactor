@@ -73,8 +73,8 @@
                                 Ép. <span
                                     id="ep-count-<?php echo $item->id; ?>"><?php echo htmlspecialchars($item->episode); ?></span>
                                 <?php if (auth()->loggedIn() && (int) $item->id_user === (int) auth()->id()) { ?>
-                                <button type="button" class="btn-increment" data-id="<?php echo $item->id; ?>"
-                                    style="background: transparent; border: none; color: white; cursor: pointer;">+</button>
+                                <button type="button" class="btn-increment"
+                                    data-id="<?php echo $item->id; ?>">+1</button>
                                 <?php } ?>
                             </span>
                             <?php } ?>
