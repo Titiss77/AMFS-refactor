@@ -1,5 +1,4 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -79,48 +78,51 @@ INSERT INTO `header` (`id`, `nom`) VALUES
 (5, 'Outils');
 
 TRUNCATE TABLE `item`;
-INSERT INTO `item` (`id`, `id_user`, `id_division`, `titre`, `lien`, `description`, `episode`, `saison`) VALUES
-(1, 2, 1, 'Animé : One Piece', 'https://voir-anime.to/anime/one-piece/one-piece-{ep4}-vostfr/', NULL, '1141', 1),
-(2, 2, 2, 'Manga : One Piece', 'https://www.scan-vf.net/one_piece/chapitre-{ep}', 'Sortie aux environs de 16 Avril.', '1180', NULL),
-(6, 2, 1, 'Farming Life', 'https://voir-anime.to/anime/isekai-nonbiri-nouka-{s}/isekai-nonbiri-nouka-{s}-{ep2}-vostfr/', '', '1', 2),
-(7, 2, 1, 'Frieren', 'https://voir-anime.to/anime/sousou-no-frieren-{s}/sousou-no-frieren-{s}-{ep1}-vostfr/', '', '3', 2),
-(8, 2, 1, 'Wind Breaker', 'https://voir-anime.to/anime/wind-breaker-{s}/wind-breaker-{s}-{ep2}-vostfr/', '', '9', 2),
-(9, 2, 1, 'To Your Eternity', 'https://voir-anime.to/anime/fumetsu-no-anata-e-{s}/fumetsu-no-anata-e-{s}-{ep2}-vostfr/', '', '9', 3),
-(10, 2, 1, 'Bleach', 'https://voir-anime.to/anime/bleach/bleach-{ep3}-vostfr/', '', '154', 8),
-(11, 2, 2, 'Jujutsu Kaisen', 'https://www.scan-vf.net/jujutsu-kaisen/chapitre-{ep}', NULL, '175', NULL),
-(12, 1, 4, 'VoirAnime', 'https://voir-anime.to/', NULL, NULL, NULL),
-(13, 2, 2, 'Chainsow Man', 'https://sushiscan.net/chainsaw-man-chapitre-{ep}/', NULL, '52', NULL),
-(14, 1, 8, 'PapaduStream', 'https://papadustream.singles/', NULL, NULL, NULL),
-(15, 1, 8, 'PLR', 'https://sites.google.com/view/prl-series/accueil?authuser=0', NULL, NULL, NULL),
-(17, 1, 3, 'Franime', 'https://franime.fr/', NULL, NULL, NULL),
-(18, 1, 4, 'Vostfree', 'https://vostfree.in/', NULL, NULL, NULL),
-(19, 1, 7, 'Lelmanga', 'https://www.lelmanga.com/', NULL, NULL, NULL),
-(20, 1, 7, 'ScanVf', 'https://www.scan-vf.net/', NULL, NULL, NULL),
-(21, 1, 7, 'Shaeishu', 'https://mangamoins.shaeishu.co/', NULL, NULL, NULL),
-(22, 1, 7, 'Sushiscan', 'https://sushiscan.top', NULL, NULL, NULL),
-(23, 1, 5, 'PLR', 'https://sites.google.com/view/teamprl/', NULL, NULL, NULL),
-(24, 1, 5, 'Wiflix', 'https://flemmix.zip', NULL, NULL, NULL),
-(25, 1, 3, 'Netflix', 'https://www.netflix.com/browse', NULL, NULL, NULL),
-(26, 2, 10, 'The Boys', 'https://flemmix.farm/serie-en-streaming/35782-the-boys-saison-5.html', NULL, '1', 5),
-(27, 2, 1, 'Noble Reincarnation', 'https://voir-anime.to/anime/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power-{ep2}-vostfr/', NULL, '2', 1),
-(28, 1, 11, 'Audio To Text', 'https://editor.flixier.com/transcribe?fx_source=search&lang=en&fx_campaign=convert-audio-to-text&fx_medium=tools', 'Convertir les fichiers audio en textes', NULL, NULL),
-(29, 1, 11, 'Bootstrap Icons', 'https://icons.getbootstrap.com', 'Bibliothèque d\'icônes', NULL, NULL),
-(30, 1, 3, 'Prime Video', 'https://www.primevideo.com/', NULL, NULL, NULL),
-(31, 1, 11, 'Cleanup', 'https://cleanup.pictures/', 'Nettoyer des images', NULL, NULL),
-(32, 1, 11, 'DALL.E', 'https://labs.openai.com/', 'Générer des Images', NULL, NULL),
-(33, 1, 11, 'Durable', 'https://app.durable.co/dashboard', 'Générer de site web', NULL, NULL),
-(34, 1, 11, 'Fotor', 'https://www.fotor.com/', 'conceptions et éditions d\'images', NULL, NULL),
-(35, 1, 11, 'Krea.ai', 'https://www.krea.ai/apps/image/realtime', 'Générer des Images', NULL, NULL),
-(36, 1, 11, 'obfuscator', 'https://obfuscator.io/', 'crypter les scripts javascripts', NULL, NULL),
-(37, 2, 1, 'Tsugai', 'https://voir-anime.to/anime/yomi-no-tsugai/daemons-of-the-shadow-realm-{ep2}-vostfr/', NULL, '1', 1),
-(38, 2, 1, 'Classroom of the Elite', 'https://voir-anime.to/anime/classroom-of-the-elite-{s}/classroom-of-the-elite-{s}-{ep2}-vostfr/', NULL, '1', 3),
-(39, 2, 1, 'Re:Zero', 'https://voir-anime.to/anime/rezero-kara-hajimeru-isekai-seikatsu-s{s}/re-zero-kara-hajimeru-isekai-seikatsu-saison-{s}-{ep2}-vostfr/', NULL, '1', 3),
-(40, 2, 1, 'Dr. Stone', 'https://voir-anime.to/anime/dr-stone-{s}-science-future/dr-stone-{s}-{ep2}-vostfr/', NULL, '1', 4);
+INSERT INTO `item` (`id`, `id_user`, `id_division`, `titre`, `image`, `lien`, `description`, `episode`, `saison`) VALUES
+(1, 2, 1, 'Animé : One Piece', 'https://www.myutaku.com/media/anime/poster/81797.jpg', 'https://voir-anime.to/anime/one-piece/one-piece-{ep4}-vostfr/', NULL, '1141', 1),
+(2, 2, 2, 'Manga : One Piece', NULL, 'https://www.scan-vf.net/one_piece/chapitre-{ep}', 'Sortie aux environs de 16 Avril.', '1180', NULL),
+(6, 2, 1, 'Farming Life', NULL, 'https://voir-anime.to/anime/isekai-nonbiri-nouka-{s}/isekai-nonbiri-nouka-{s}-{ep2}-vostfr/', '', '1', 2),
+(7, 2, 1, 'Frieren', NULL, 'https://voir-anime.to/anime/sousou-no-frieren-{s}/sousou-no-frieren-{s}-{ep1}-vostfr/', '', '3', 2),
+(8, 2, 1, 'Wind Breaker', NULL, 'https://voir-anime.to/anime/wind-breaker-{s}/wind-breaker-{s}-{ep2}-vostfr/', '', '9', 2),
+(9, 2, 1, 'To Your Eternity', NULL, 'https://voir-anime.to/anime/fumetsu-no-anata-e-{s}/fumetsu-no-anata-e-{s}-{ep2}-vostfr/', '', '9', 3),
+(10, 2, 1, 'Bleach', 'https://www.myutaku.com/media/anime/poster/74796.jpg?t=1741173301', 'https://voir-anime.to/anime/bleach/bleach-{ep3}-vostfr/', '', '154', 8),
+(11, 2, 2, 'Jujutsu Kaisen', NULL, 'https://www.scan-vf.net/jujutsu-kaisen/chapitre-{ep}', NULL, '175', NULL),
+(12, 1, 4, 'VoirAnime', NULL, 'https://voir-anime.to/', NULL, NULL, NULL),
+(13, 2, 2, 'Chainsow Man', NULL, 'https://sushiscan.net/chainsaw-man-chapitre-{ep}/', NULL, '52', NULL),
+(14, 1, 8, 'PapaduStream', NULL, 'https://papadustream.singles/', NULL, NULL, NULL),
+(15, 1, 8, 'PLR', NULL, 'https://sites.google.com/view/prl-series/accueil?authuser=0', NULL, NULL, NULL),
+(17, 1, 3, 'Franime', NULL, 'https://franime.fr/', NULL, NULL, NULL),
+(18, 1, 4, 'Vostfree', NULL, 'https://vostfree.in/', NULL, NULL, NULL),
+(19, 1, 7, 'Lelmanga', NULL, 'https://www.lelmanga.com/', NULL, NULL, NULL),
+(20, 1, 7, 'ScanVf', NULL, 'https://www.scan-vf.net/', NULL, NULL, NULL),
+(21, 1, 7, 'Shaeishu', NULL, 'https://mangamoins.shaeishu.co/', NULL, NULL, NULL),
+(22, 1, 7, 'Sushiscan', NULL, 'https://sushiscan.top', NULL, NULL, NULL),
+(23, 1, 5, 'PLR', NULL, 'https://sites.google.com/view/teamprl/', NULL, NULL, NULL),
+(24, 1, 5, 'Wiflix', NULL, 'https://flemmix.zip', NULL, NULL, NULL),
+(25, 1, 3, 'Netflix', NULL, 'https://www.netflix.com/browse', NULL, NULL, NULL),
+(26, 2, 10, 'The Boys', NULL, 'https://flemmix.farm/serie-en-streaming/35782-the-boys-saison-5.html', NULL, '1', 5),
+(27, 2, 1, 'Noble Reincarnation', NULL, 'https://voir-anime.to/anime/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power-{ep2}-vostfr/', NULL, '2', 1),
+(28, 1, 11, 'Audio To Text', NULL, 'https://editor.flixier.com/transcribe?fx_source=search&lang=en&fx_campaign=convert-audio-to-text&fx_medium=tools', 'Convertir les fichiers audio en textes', NULL, NULL),
+(29, 1, 11, 'Bootstrap Icons', NULL, 'https://icons.getbootstrap.com', 'Bibliothèque d\'icônes', NULL, NULL),
+(30, 1, 3, 'Prime Video', NULL, 'https://www.primevideo.com/', NULL, NULL, NULL),
+(31, 1, 11, 'Cleanup', NULL, 'https://cleanup.pictures/', 'Nettoyer des images', NULL, NULL),
+(32, 1, 11, 'DALL.E', NULL, 'https://labs.openai.com/', 'Générer des Images', NULL, NULL),
+(33, 1, 11, 'Durable', NULL, 'https://app.durable.co/dashboard', 'Générer de site web', NULL, NULL),
+(34, 1, 11, 'Fotor', NULL, 'https://www.fotor.com/', 'conceptions et éditions d\'images', NULL, NULL),
+(35, 1, 11, 'Krea.ai', NULL, 'https://www.krea.ai/apps/image/realtime', 'Générer des Images', NULL, NULL),
+(36, 1, 11, 'obfuscator', NULL, 'https://obfuscator.io/', 'crypter les scripts javascripts', NULL, NULL),
+(37, 2, 1, 'Tsugai', NULL, 'https://voir-anime.to/anime/yomi-no-tsugai/daemons-of-the-shadow-realm-{ep2}-vostfr/', NULL, '1', 1),
+(38, 2, 1, 'Classroom of the Elite', 'https://www.myutaku.com/media/anime/poster/13141.jpg', 'https://voir-anime.to/anime/classroom-of-the-elite-{s}/classroom-of-the-elite-{s}-{ep2}-vostfr/', NULL, '1', 3),
+(39, 2, 1, 'Re:Zero', NULL, 'https://voir-anime.to/anime/rezero-kara-hajimeru-isekai-seikatsu-s{s}/re-zero-kara-hajimeru-isekai-seikatsu-saison-{s}-{ep2}-vostfr/', NULL, '1', 3),
+(40, 2, 1, 'Dr. Stone', NULL, 'https://voir-anime.to/anime/dr-stone-{s}-science-future/dr-stone-{s}-{ep2}-vostfr/', NULL, '1', 4);
 
 TRUNCATE TABLE `migrations`;
 TRUNCATE TABLE `settings`;
 TRUNCATE TABLE `users`;
 INSERT INTO `users` (`id`, `username`, `status`, `status_message`, `active`, `last_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'UserFictif', NULL, NULL, 1, '2026-04-12 16:59:08', '2026-04-11 17:01:15', '2026-04-11 17:01:16', NULL),
-(2, 'Titiss', NULL, NULL, 1, '2026-04-13 10:30:26', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
+(2, 'Titiss', NULL, NULL, 1, '2026-04-13 11:08:12', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
+DROP TABLE IF EXISTS `cards_userfictif`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cards_userfictif`  AS SELECT `i`.`id` AS `id`, `i`.`id_user` AS `id_user`, `d`.`nom` AS `titre_division`, `i`.`titre` AS `titre`, `i`.`lien` AS `lien`, `i`.`description` AS `description`, `i`.`episode` AS `episode`, `i`.`saison` AS `saison` FROM (`item` `i` join `division` `d` on((`d`.`id` = `i`.`id_division`))) WHERE ((`d`.`nom` like '%Sites') OR (`d`.`nom` like 'Outils')) ;
 COMMIT;

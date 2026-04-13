@@ -38,6 +38,17 @@
         </div>
 
         <div class="form-group">
+            <label for="img" class="form-label">Image (URL) :</label>
+            <small>
+                💡 Astuce : Copie l'URL d'une image depuis le site de
+                <a href="https://www.myutaku.com/" target="_blank"
+                    style="color: #007bff; text-decoration: underline;">MyUtaku</a>
+            </small>
+            <input type=" text" name="img" class="form-control"
+                value="<?php echo htmlspecialchars($item['image'] ?? ''); ?>">
+        </div>
+
+        <div class="form-group">
             <label for="lien" class="form-label">Lien (URL) :</label>
             <small>
                 💡 Astuce : <b>{s}</b> = saison, <b>{ep}</b> = épisode normal (1). <br>

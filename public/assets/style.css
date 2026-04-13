@@ -574,6 +574,7 @@ select.form-control {
     top: 10%;
     right: 10%;
     width: 55px;
+    aspect-ratio: 2 / 3;
     height: auto;
     border-radius: var(--radius-md);
     object-fit: cover;

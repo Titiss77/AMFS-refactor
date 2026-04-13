@@ -1,21 +1,12 @@
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
-CREATE DATABASE IF NOT EXISTS `b13_39213320_database` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `b13_39213320_database`;
 
 DROP TABLE IF EXISTS `auth_groups_users`;
 CREATE TABLE `auth_groups_users` (
   `id` int UNSIGNED NOT NULL,
   `user_id` int UNSIGNED NOT NULL,
-  `group` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `group` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -23,12 +14,12 @@ DROP TABLE IF EXISTS `auth_identities`;
 CREATE TABLE `auth_identities` (
   `id` int UNSIGNED NOT NULL,
   `user_id` int UNSIGNED NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `secret` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `secret2` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `secret2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `expires` datetime DEFAULT NULL,
-  `extra` text COLLATE utf8mb4_general_ci,
+  `extra` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `force_reset` tinyint(1) NOT NULL DEFAULT '0',
   `last_used_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -38,10 +29,10 @@ CREATE TABLE `auth_identities` (
 DROP TABLE IF EXISTS `auth_logins`;
 CREATE TABLE `auth_logins` (
   `id` int UNSIGNED NOT NULL,
-  `ip_address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_agent` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `id_type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `identifier` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `ip_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `user_agent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `identifier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `user_id` int UNSIGNED DEFAULT NULL,
   `date` datetime NOT NULL,
   `success` tinyint(1) NOT NULL
@@ -51,15 +42,15 @@ DROP TABLE IF EXISTS `auth_permissions_users`;
 CREATE TABLE `auth_permissions_users` (
   `id` int UNSIGNED NOT NULL,
   `user_id` int UNSIGNED NOT NULL,
-  `permission` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `permission` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 DROP TABLE IF EXISTS `auth_remember_tokens`;
 CREATE TABLE `auth_remember_tokens` (
   `id` int UNSIGNED NOT NULL,
-  `selector` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `hashedValidator` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `selector` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `hashedValidator` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `user_id` int UNSIGNED NOT NULL,
   `expires` datetime NOT NULL,
   `created_at` datetime NOT NULL,
@@ -69,14 +60,25 @@ CREATE TABLE `auth_remember_tokens` (
 DROP TABLE IF EXISTS `auth_token_logins`;
 CREATE TABLE `auth_token_logins` (
   `id` int UNSIGNED NOT NULL,
-  `ip_address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_agent` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `id_type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `identifier` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `ip_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `user_agent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `identifier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `user_id` int UNSIGNED DEFAULT NULL,
   `date` datetime NOT NULL,
   `success` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP VIEW IF EXISTS `cards_userfictif`;
+CREATE TABLE `cards_userfictif` (
+`description` text
+,`episode` varchar(10)
+,`id` int unsigned
+,`id_user` int unsigned
+,`lien` text
+,`saison` int
+,`titre` varchar(100)
+,`titre_division` varchar(50)
+);
 
 DROP TABLE IF EXISTS `division`;
 CREATE TABLE `division` (
@@ -97,6 +99,7 @@ CREATE TABLE `item` (
   `id_user` int UNSIGNED NOT NULL,
   `id_division` int UNSIGNED NOT NULL,
   `titre` varchar(100) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `lien` text,
   `description` text,
   `episode` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
@@ -106,10 +109,10 @@ CREATE TABLE `item` (
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
   `id` bigint UNSIGNED NOT NULL,
-  `version` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `class` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `group` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `namespace` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `version` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `class` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `group` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `namespace` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `time` int NOT NULL,
   `batch` int UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -117,11 +120,11 @@ CREATE TABLE `migrations` (
 DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
   `id` int NOT NULL,
-  `class` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `key` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `value` text COLLATE utf8mb4_general_ci,
-  `type` varchar(31) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'string',
-  `context` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `class` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `type` varchar(31) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'string',
+  `context` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -129,15 +132,19 @@ CREATE TABLE `settings` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int UNSIGNED NOT NULL,
-  `username` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status_message` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status_message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `last_active` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `cards_userfictif`;
+
+DROP VIEW IF EXISTS `cards_userfictif`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cards_userfictif`  AS SELECT `i`.`id` AS `id`, `i`.`id_user` AS `id_user`, `d`.`nom` AS `titre_division`, `i`.`titre` AS `titre`, `i`.`lien` AS `lien`, `i`.`description` AS `description`, `i`.`episode` AS `episode`, `i`.`saison` AS `saison` FROM (`item` `i` join `division` `d` on((`d`.`id` = `i`.`id_division`))) WHERE ((`d`.`nom` like '%Sites') OR (`d`.`nom` like 'Outils')) ;
 
 
 ALTER TABLE `auth_groups_users`
@@ -246,9 +253,4 @@ ALTER TABLE `division`
 ALTER TABLE `item`
   ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `item_ibfk_2` FOREIGN KEY (`id_division`) REFERENCES `division` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

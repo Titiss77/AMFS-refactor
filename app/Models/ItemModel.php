@@ -84,18 +84,18 @@ class ItemModel extends Model
         return $query->getRowArray();  // Equivalent de fetch(PDO::FETCH_ASSOC)
     }
 
-    public function createItem($id_user, $id_division, $titre, $lien, $description, $episode, $saison)
+    public function createItem($id_user, $id_division, $titre, $lien, $image, $description, $episode, $saison)
     {
-        $sql = 'INSERT INTO item (id_user, id_division, titre, lien, description, episode, saison) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO item (id_user, id_division, titre, lien, image, description, episode, saison) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
-        return $this->db->query($sql, [$id_user, $id_division, $titre, $lien, $description, $episode, $saison]);
+        return $this->db->query($sql, [$id_user, $id_division, $titre, $lien, $image, $description, $episode, $saison]);
     }
 
-    public function updateItem($id, $id_division, $titre, $lien, $description, $episode, $saison)
+    public function updateItem($id, $id_division, $titre, $lien, $image, $description, $episode, $saison)
     {
-        $sql = 'UPDATE item SET id_division = ?, titre = ?, lien = ?, description = ?, episode = ?, saison = ? WHERE id = ?';
+        $sql = 'UPDATE item SET id_division = ?, titre = ?, lien = ?, image = ?, description = ?, episode = ?, saison = ? WHERE id = ?';
 
-        return $this->db->query($sql, [$id_division, $titre, $lien, $description, $episode, $saison, $id]);
+        return $this->db->query($sql, [$id_division, $titre, $lien, $image, $description, $episode, $saison, $id]);
     }
 
     public function deleteItem($id)

@@ -47,6 +47,7 @@ class ItemController extends BaseController
             $id_division = $this->request->getPost('id_division') ?? 1;
 
             $lien = $this->request->getPost('lien') ?: null;
+            $image = $this->request->getPost('img') ?: null;
             $description = $this->request->getPost('description') ?: null;
             $saison = $this->request->getPost('saison') ?: null;
             $episode = $this->request->getPost('episode') ?: null;
@@ -59,11 +60,11 @@ class ItemController extends BaseController
                 // Verifier la propriété avant l'update
                 $existingItem = $this->model->getItemById($id);
                 if ($existingItem && (int) $existingItem['id_user'] === (int) $id_user) {
-                    $this->model->updateItem($id, $id_division, $titre, $lien, $description, $episode, $saison);
+                    $this->model->updateItem($id, $id_division, $titre, $lien, $image, $description, $episode, $saison);
                 }
             } else {
                 // Si pas d'ID, on crée la carte
-                $this->model->createItem($id_user, $id_division, $titre, $lien, $description, $episode, $saison);
+                $this->model->createItem($id_user, $id_division, $titre, $lien, $image, $description, $episode, $saison);
             }
 
             return redirect()->to('/');
