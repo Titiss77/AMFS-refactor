@@ -57,6 +57,12 @@
 
         <div class="form-group">
             <label for="img" class="form-label">Image (URL) :</label>
+            <small>
+                💡 Astuce : Si l'image automatiquene convient pas :
+                <a href="https://www.myutaku.com/" target="_blank"
+                    style="color: #007bff; text-decoration: underline;">MyUtaku</a><br>
+                Format : 400x600 (2:3) recommandé pour une meilleure qualité d'affichage. <br>
+            </small>
             <input type="text" id="img" name="image" class="form-control"
                 value="<?php echo htmlspecialchars($item->image ?? ''); ?>">
         </div>
