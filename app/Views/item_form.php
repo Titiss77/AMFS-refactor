@@ -90,34 +90,47 @@
 document.getElementById('btn-api-search').addEventListener('click', async function() {
     const titreInput = document.getElementById('titre').value;
     if (!titreInput) {
-        alert("Entre d'abord un titre d'anime !");
+        alert("Entre d'abord un titre !");
         return;
     }
 
     const statusTxt = document.getElementById('api-status');
     statusTxt.style.display = 'inline';
-    statusTxt.innerText = '⏳ Recherche...';
+    statusTxt.innerText = '⏳ Recherche en cours...';
+
+    // Il te faudra une clé API gratuite TMDB
+    const apiKey = '9774091bee3bd236f4438cd6d8caa8d8';
+
+    // On cherche dans les animes/séries (tv) en français
+    const url =
+        `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&language=fr-FR&query=${encodeURIComponent(titreInput)}&page=1`;
 
     try {
-        const response = await fetch(
-            `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(titreInput)}&limit=1`);
+        const response = await fetch(url);
         const data = await response.json();
 
-        if (data.data && data.data.length > 0) {
-            const anime = data.data[0];
-            document.getElementById('titre').value = anime.title;
-            document.getElementById('img').value = anime.images.jpg.large_image_url || anime.images.jpg
-                .image_url;
+        if (data.results && data.results.length > 0) {
+            const resultat = data.results[0]; // On prend le premier résultat
 
-            // Description (coupée proprement si trop longue pour ta BDD)
-            let desc = anime.synopsis ? anime.synopsis.substring(0, 50) + "..." : "";
+            // TMDB donne le nom en français
+            document.getElementById('titre').value = resultat.name || resultat.original_name;
+
+            // TMDB donne un chemin d'image partiel, il faut rajouter le début de l'URL
+            if (resultat.poster_path) {
+                document.getElementById('img').value =
+                    `https://image.tmdb.org/t/p/w500${resultat.poster_path}`;
+            }
+
+            // Le fameux synopsis EN FRANÇAIS ! (limité à 100 caractères pour ton exemple)
+            let desc = resultat.overview ? resultat.overview.substring(0, 100) + "..." : "";
             document.getElementById('description').value = desc;
 
-            statusTxt.innerText = '✅ Trouvé !';
+            statusTxt.innerText = '✅ Trouvé (en français) !';
         } else {
             statusTxt.innerText = '❌ Non trouvé';
         }
     } catch (e) {
+        console.error(e);
         statusTxt.innerText = 'Erreur API';
     }
 });
