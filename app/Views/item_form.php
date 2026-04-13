@@ -63,6 +63,11 @@
 
         <div class="form-group">
             <label for="lien" class="form-label">Lien (URL) :</label>
+            <small>
+                💡 Astuce : <b>{s}</b> = saison, <b>{ep}</b> = épisode normal (1). <br>
+                Utilise <b>{ep2}</b>, <b>{ep3}</b> ou <b>{ep4}</b> pour forcer les zéros (ex: <b>01</b>, <b>001</b>,
+                <b>0001</b>).
+            </small>
             <input type="text" name="lien" class="form-control"
                 value="<?php echo htmlspecialchars($item->lien ?? ''); ?>">
         </div>
