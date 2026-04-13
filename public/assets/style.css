@@ -259,6 +259,7 @@ details[open].division-section .cards-grid {
 
 .card-title {
     margin: 0 0 0.5rem 0;
+    max-width: 70%;
     color: var(--text-main);
     font-size: 1.15rem;
     font-weight: 600;
@@ -566,6 +567,16 @@ select.form-control {
     background-color: var(--success-bg);
     border: 1px solid #bbf7d0;
     color: var(--success-text);
+}
+
+.card-image {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 55px;
+    height: auto;
+    border-radius: var(--radius-md);
+    object-fit: cover;
 }
 
 /* =========================================

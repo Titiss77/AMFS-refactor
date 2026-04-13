@@ -63,17 +63,25 @@
                     <div class="card-body">
 
                         <h4 class="card-title"><?php echo htmlspecialchars($item['titre']); ?></h4>
+
+                        <?php if (!empty($item['image'])) { ?>
+                        <img src="<?php echo htmlspecialchars($item['image']); ?>"
+                            alt="<?php echo htmlspecialchars($item['titre']); ?>" class="card-image">
+                        <?php } ?>
+
                         <?php if (!empty($item['description'])) { ?>
                         <p class="card-desc"><?php echo htmlspecialchars($item['description']); ?></p>
                         <?php } ?>
 
                         <div class="card-badges">
                             <?php if (!empty($item['saison'])) { ?>
-                            <span class="badge badge-season">Saison <?php echo htmlspecialchars($item['saison']); ?></span>
+                            <span class="badge badge-season">Saison
+                                <?php echo htmlspecialchars($item['saison']); ?></span>
                             <?php } ?>
 
                             <?php if (!empty($item['episode'])) { ?>
-                            <span class="badge badge-episode">Ép. <?php echo htmlspecialchars($item['episode']); ?></span>
+                            <span class="badge badge-episode">Ép.
+                                <?php echo htmlspecialchars($item['episode']); ?></span>
                             <?php } ?>
                         </div>
 

@@ -1,4 +1,5 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -10,7 +11,7 @@ INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
 TRUNCATE TABLE `auth_identities`;
 INSERT INTO `auth_identities` (`id`, `user_id`, `type`, `name`, `secret`, `secret2`, `expires`, `extra`, `force_reset`, `last_used_at`, `created_at`, `updated_at`) VALUES
 (1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-04-12 16:58:55', '2026-04-11 17:01:16', '2026-04-12 16:58:55'),
-(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$zqJUMEtVBDWzxe6Orkj2XO9DpI34W94tIIWxude20vrz5wjSaHwKC', NULL, NULL, 0, '2026-04-12 16:24:47', '2026-04-11 17:02:38', '2026-04-12 16:24:47');
+(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$zqJUMEtVBDWzxe6Orkj2XO9DpI34W94tIIWxude20vrz5wjSaHwKC', NULL, NULL, 0, '2026-04-13 10:19:36', '2026-04-11 17:02:38', '2026-04-13 10:19:36');
 
 TRUNCATE TABLE `auth_logins`;
 INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identifier`, `user_id`, `date`, `success`) VALUES
@@ -46,7 +47,13 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identif
 (30, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 16:13:50', 1),
 (31, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-12 16:17:13', 1),
 (32, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 16:24:47', 1),
-(33, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-12 16:58:55', 1);
+(33, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-12 16:58:55', 1),
+(34, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 17:01:33', 1),
+(35, '5.49.246.18', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 17:46:21', 1),
+(36, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 21:06:31', 1),
+(37, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 21:06:43', 1),
+(38, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-12 21:06:53', 1),
+(39, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 10:19:36', 1);
 
 TRUNCATE TABLE `auth_permissions_users`;
 TRUNCATE TABLE `auth_remember_tokens`;
@@ -74,7 +81,7 @@ INSERT INTO `header` (`id`, `nom`) VALUES
 TRUNCATE TABLE `item`;
 INSERT INTO `item` (`id`, `id_user`, `id_division`, `titre`, `lien`, `description`, `episode`, `saison`) VALUES
 (1, 2, 1, 'Animé : One Piece', 'https://voir-anime.to/anime/one-piece/one-piece-{ep4}-vostfr/', NULL, '1141', 1),
-(2, 2, 2, 'Manga : One Piece', 'https://www.scan-vf.net/one_piece/chapitre-{ep}', NULL, '1178', NULL),
+(2, 2, 2, 'Manga : One Piece', 'https://www.scan-vf.net/one_piece/chapitre-{ep}', 'Sortie aux environs de 16 Avril.', '1180', NULL),
 (6, 2, 1, 'Farming Life', 'https://voir-anime.to/anime/isekai-nonbiri-nouka-{s}/isekai-nonbiri-nouka-{s}-{ep2}-vostfr/', '', '1', 2),
 (7, 2, 1, 'Frieren', 'https://voir-anime.to/anime/sousou-no-frieren-{s}/sousou-no-frieren-{s}-{ep1}-vostfr/', '', '3', 2),
 (8, 2, 1, 'Wind Breaker', 'https://voir-anime.to/anime/wind-breaker-{s}/wind-breaker-{s}-{ep2}-vostfr/', '', '9', 2),
@@ -104,15 +111,16 @@ INSERT INTO `item` (`id`, `id_user`, `id_division`, `titre`, `lien`, `descriptio
 (33, 1, 11, 'Durable', 'https://app.durable.co/dashboard', 'Générer de site web', NULL, NULL),
 (34, 1, 11, 'Fotor', 'https://www.fotor.com/', 'conceptions et éditions d\'images', NULL, NULL),
 (35, 1, 11, 'Krea.ai', 'https://www.krea.ai/apps/image/realtime', 'Générer des Images', NULL, NULL),
-(36, 1, 11, 'obfuscator', 'https://obfuscator.io/', 'crypter les scripts javascripts', NULL, NULL);
+(36, 1, 11, 'obfuscator', 'https://obfuscator.io/', 'crypter les scripts javascripts', NULL, NULL),
+(37, 2, 1, 'Tsugai', 'https://voir-anime.to/anime/yomi-no-tsugai/daemons-of-the-shadow-realm-{ep2}-vostfr/', NULL, '1', 1),
+(38, 2, 1, 'Classroom of the Elite', 'https://voir-anime.to/anime/classroom-of-the-elite-{s}/classroom-of-the-elite-{s}-{ep2}-vostfr/', NULL, '1', 3),
+(39, 2, 1, 'Re:Zero', 'https://voir-anime.to/anime/rezero-kara-hajimeru-isekai-seikatsu-s{s}/re-zero-kara-hajimeru-isekai-seikatsu-saison-{s}-{ep2}-vostfr/', NULL, '1', 3),
+(40, 2, 1, 'Dr. Stone', 'https://voir-anime.to/anime/dr-stone-{s}-science-future/dr-stone-{s}-{ep2}-vostfr/', NULL, '1', 4);
 
 TRUNCATE TABLE `migrations`;
 TRUNCATE TABLE `settings`;
 TRUNCATE TABLE `users`;
 INSERT INTO `users` (`id`, `username`, `status`, `status_message`, `active`, `last_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'UserFictif', NULL, NULL, 1, '2026-04-12 16:59:08', '2026-04-11 17:01:15', '2026-04-11 17:01:16', NULL),
-(2, 'Titiss', NULL, NULL, 1, '2026-04-12 16:48:31', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
-DROP TABLE IF EXISTS `cards_userfictif`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cards_userfictif`  AS SELECT `i`.`id` AS `id`, `i`.`id_user` AS `id_user`, `d`.`nom` AS `titre_division`, `i`.`titre` AS `titre`, `i`.`lien` AS `lien`, `i`.`description` AS `description`, `i`.`episode` AS `episode`, `i`.`saison` AS `saison` FROM (`item` `i` join `division` `d` on((`d`.`id` = `i`.`id_division`))) WHERE ((`d`.`nom` like '%Sites') OR (`d`.`nom` like 'Outils')) ;
+(2, 'Titiss', NULL, NULL, 1, '2026-04-13 10:30:26', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
 COMMIT;

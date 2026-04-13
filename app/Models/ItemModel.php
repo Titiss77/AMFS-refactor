@@ -15,6 +15,7 @@ class ItemModel extends Model
         'id_user',
         'id_division',
         'titre',
+        'image',
         'lien',
         'description',
         'episode',
