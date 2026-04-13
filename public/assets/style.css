@@ -249,12 +249,10 @@ details[open].division-section .cards-grid {
 }
 
 .card-link-block {
-    display: flex;
-    /* Modifié (était block) */
-    flex-direction: column;
-    /* Ajouté */
+    display: grid;
     color: inherit;
     flex-grow: 1;
+    grid-auto-flow: column;
 }
 
 .card-title {
@@ -570,9 +568,13 @@ select.form-control {
 }
 
 .card-image {
-    position: absolute;
-    top: 10%;
-    right: 10%;
+    width: 100%;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+}
+
+.image-view {
     width: 55px;
     aspect-ratio: 2 / 3;
     border-radius: var(--radius-md);

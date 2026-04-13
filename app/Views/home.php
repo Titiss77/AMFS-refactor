@@ -64,11 +64,6 @@
 
                         <h4 class="card-title"><?php echo htmlspecialchars($item['titre']); ?></h4>
 
-                        <?php if (!empty($item['image'])) { ?>
-                        <img src="<?php echo htmlspecialchars($item['image']); ?>"
-                            alt="<?php echo htmlspecialchars($item['titre']); ?>" class="card-image">
-                        <?php } ?>
-
                         <?php if (!empty($item['description'])) { ?>
                         <p class="card-desc"><?php echo htmlspecialchars($item['description']); ?></p>
                         <?php } ?>
@@ -84,8 +79,12 @@
                                 <?php echo htmlspecialchars($item['episode']); ?></span>
                             <?php } ?>
                         </div>
-
-
+                    </div>
+                    <div class="card-image">
+                        <?php if (!empty($item['image'])) { ?>
+                        <img src="<?php echo htmlspecialchars($item['image']); ?>"
+                            alt="<?php echo htmlspecialchars($item['titre']); ?>" class="image-view">
+                        <?php } ?>
                     </div>
                 </a>
 
