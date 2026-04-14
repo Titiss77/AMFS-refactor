@@ -63,6 +63,6 @@ class ItemModel extends Model
         return $groupedData;
     }
 
-    public function getDivisions() { return $this->db->table('division')->orderBy('nom', 'ASC')->get()->getResultArray(); }
+    public function getDivisions() { return $this->db->table('division')->orderBy('id', 'ASC')->get()->getResultArray(); }
     public function getHeaders() { return $this->db->table('header')->orderBy('id', 'ASC')->get()->getResultArray(); }
 }
