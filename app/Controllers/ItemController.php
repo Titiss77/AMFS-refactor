@@ -35,17 +35,46 @@ class ItemController extends BaseController
     public function save()
     {
         if ($this->request->is('post')) {
-            // ... validation et logique de sauvegarde inchangée ...
+            if (!auth()->loggedIn())
+                return redirect()->to('login');
+
+            // 1. Validation CI4
+            $rules = [
+                'titre' => 'required|max_length[100]',
+                'id_division' => 'required|numeric',
+                'status' => 'in_list[Aucun,À voir,En cours,En pause,Terminé]'
+            ];
+
+            if (!$this->validate($rules)) {
+                return redirect()->back()->withInput()->with('error', 'Erreur dans le formulaire.');
+            }
+
+            // 2. Traitement des données (LA CORRECTION EST ICI)
+            // On récupère tout ce qui vient du formulaire dans un tableau
+            $data = $this->request->getPost();
+
+            // On y injecte nos propres valeurs systèmes de façon sécurisée
+            $data['id_user'] = auth()->id();
+            $data['is_public'] = $this->request->getPost('is_public') ? 1 : 0;
+
+            // On instancie l'entité avec TOUTES les données d'un coup
+            $item = new Item($data);
+
+            $id = $this->request->getPost('id');
 
             // 3. Sauvegarde
-            $item = new Item($this->request->getPost());
-            // ... (ton code de sauvegarde existant) ...
-            $this->model->save($item);
+            if ($id) {
+                $existing = $this->model->find($id);
+                if ($existing && (int) $existing->id_user === (int) auth()->id()) {
+                    $this->model->save($item);
+                }
+            } else {
+                // L'ajout se fera avec le bon id_user désormais !
+                $this->model->save($item);
+            }
 
-            // 4. RÉSOLUTION : On récupère l'URL d'origine envoyée par le formulaire
+            // 4. Redirection avec ouverture du menu déroulant
             $backUrl = $this->request->getPost('redirect_url') ?: site_url('/');
-
-            // On ajoute les paramètres d'ouverture à l'URL d'origine
             $separator = (strpos($backUrl, '?') !== false) ? '&' : '?';
             return redirect()->to($backUrl . $separator . 'open=' . $item->id_division . '#div-' . $item->id_division);
         }
