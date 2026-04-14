@@ -2,6 +2,7 @@
     <h2 class="header-title"><?php echo isset($item) ? '✏️ Modifier la carte' : '+ Ajouter une carte'; ?></h2>
 
     <form action="<?php echo base_url('item/save'); ?>" method="POST">
+        <input type="hidden" name="redirect_url" value="<?= esc($redirect_url) ?>">
         <?php echo csrf_field(); ?>
         <input type="hidden" name="id" value="<?php echo isset($item) ? esc($item->id) : ''; ?>">
 

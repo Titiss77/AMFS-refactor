@@ -29,27 +29,22 @@
 <?php } ?>
 
 <?php } else { ?>
+<?php 
+// Lecture de l'URL au lieu de la session (Infaillible)
+$openDivision = $_GET['open'] ?? null; 
+?>
+
 <?php foreach ($groupedItems as $headerName => $divisions) { ?>
 <section class="header-section">
     <h2 class="header-title">
         <?php echo htmlspecialchars($headerName); ?>
     </h2>
 
-    <?php
-    // On récupère la division à ouvrir depuis la session (s'il y en a une)
-    $openDivision = session()->getFlashdata('open_division');
-    ?>
-
-    <?php
-    foreach ($divisions as $divisionName => $items) {
-        // On récupère l'id_division en regardant le premier item de cette liste
+    <?php foreach ($divisions as $divisionName => $items) { 
         $currentDivisionId = !empty($items) ? $items[0]->id_division : null;
-
-        // Si l'ID de la session correspond à l'ID de cette division, on ajoute l'attribut 'open'
         $isOpen = ($openDivision && $openDivision == $currentDivisionId) ? 'open' : '';
-        ?>
-
-    <details class="division-section" <?php echo $isOpen; ?>>
+    ?>
+    <details class="division-section" id="div-<?php echo $currentDivisionId; ?>" <?php echo $isOpen; ?>>
         <summary class="division-title">
             <span class="toggle-icon">&#x25B6;</span> <?php echo htmlspecialchars($divisionName); ?>
         </summary>

@@ -27,7 +27,7 @@
     <?php if (isset($headers) && !empty($headers)) { ?>
     <nav class="category-nav container">
         <?php foreach ($headers as $h) { ?>
-        <a href="<?php echo base_url('categorie/'.$h['id']); ?>"
+        <a href="<?php echo base_url('categorie/' . $h['id']); ?>"
             class="nav-tab <?php echo (isset($currentHeaderId) && $currentHeaderId == $h['id']) ? 'active' : ''; ?>">
             <?php echo esc($h['nom']); ?>
         </a>
@@ -37,6 +37,24 @@
     <main class="container">
         <?php echo view($view ?? 'home'); ?>
     </main>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. On récupère l'URL actuelle
+        const currentUrl = new URL(window.location.href);
+
+        // 2. On vérifie si l'URL contient notre paramètre "?open=" ou une ancre "#"
+        if (currentUrl.searchParams.has('open') || currentUrl.hash) {
+
+            // 3. On attend un tout petit peu (10 millisecondes) pour laisser 
+            // le temps au navigateur de faire son défilement (scroll) automatique vers l'ancre
+            setTimeout(() => {
+                // 4. On réécrit l'URL visible pour ne garder que le chemin propre (ex: /categorie/1)
+                window.history.replaceState({}, document.title, currentUrl.pathname);
+            }, 10);
+        }
+    });
+    </script>
 </body>
 
 </html>
