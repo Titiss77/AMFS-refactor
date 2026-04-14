@@ -75,8 +75,11 @@ class ItemController extends BaseController
     {
         if ($id !== null) {
             $item = $this->model->find($id);
+            
+            // Vérification des droits de l'utilisateur
             if ($item && (int) $item->id_user === (int) auth()->id()) {
-                $this->model->delete($id);
+                // Définition explicite du WHERE avant de supprimer
+                $this->model->where('id', $id)->delete();
             }
         }
         return redirect()->to('/');
