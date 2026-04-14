@@ -58,7 +58,7 @@ $openDivision = $_GET['open'] ?? null;
                     class="card-link-block">
                     <div class="card-body">
                         <h4 class="card-title"><?php echo htmlspecialchars($item->titre); ?></h4>
-                        <p style="font-size: 0.8rem; color: gray; margin: 0;">
+                        <p style="font-size: 0.8rem; color: gray; margin: 0;">Status :
                             <?php echo htmlspecialchars($item->status); ?></p>
 
                         <?php if (!empty($item->description)) { ?>
