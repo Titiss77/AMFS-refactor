@@ -7,7 +7,7 @@
         <input type="hidden" name="id" value="<?php echo isset($item) ? esc($item->id) : ''; ?>">
 
         <div style="text-align: right; margin-bottom: 10px;">
-            <button type="button" id="btn-api-search" class="btn btn-primary btn-sm">🔍 Auto-remplir l'Anime</button>
+            <button type="button" id="btn-api-search" class="btn btn-primary btn-sm">🔍 Auto-remplir</button>
             <small id="api-status" style="display:none; color: var(--success);"></small>
         </div>
 
