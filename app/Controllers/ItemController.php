@@ -35,8 +35,7 @@ class ItemController extends BaseController
     public function save()
     {
         if ($this->request->is('post')) {
-            if (!auth()->loggedIn())
-                return redirect()->to('login');
+            if (!auth()->loggedIn()) return redirect()->to('login');
 
             // 1. Validation CI4
             $rules = [
@@ -53,7 +52,7 @@ class ItemController extends BaseController
             $item = new Item($this->request->getPost());
             $item->id_user = auth()->id();
             $item->is_public = $this->request->getPost('is_public') ? 1 : 0;
-
+            
             $id = $this->request->getPost('id');
 
             // 3. Sauvegarde
@@ -66,7 +65,7 @@ class ItemController extends BaseController
                 $this->model->save($item);
             }
 
-            // Redirection vers l'accueil en demandant d'ouvrir la division modifiée
+            // 4. Redirection vers l'accueil AVEC l'id_division mémorisé
             return redirect()->to('/')->with('open_division', $item->id_division);
         }
     }
