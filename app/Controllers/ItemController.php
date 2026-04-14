@@ -67,7 +67,7 @@ class ItemController extends BaseController
                 $this->model->save($item);
             }
 
-            return redirect()->to('/');
+            return redirect()->back();
         }
     }
 
@@ -82,7 +82,7 @@ class ItemController extends BaseController
                 $this->model->where('id', $id)->delete();
             }
         }
-        return redirect()->to('/');
+        return redirect()->back();
     }
 
     public function incrementEpisode($id)
