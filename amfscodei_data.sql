@@ -1,4 +1,5 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -9,8 +10,8 @@ INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
 
 TRUNCATE TABLE `auth_identities`;
 INSERT INTO `auth_identities` (`id`, `user_id`, `type`, `name`, `secret`, `secret2`, `expires`, `extra`, `force_reset`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-04-13 11:29:48', '2026-04-11 17:01:16', '2026-04-13 11:29:48'),
-(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$zqJUMEtVBDWzxe6Orkj2XO9DpI34W94tIIWxude20vrz5wjSaHwKC', NULL, NULL, 0, '2026-04-13 15:21:23', '2026-04-11 17:02:38', '2026-04-13 15:21:23');
+(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-04-14 20:17:57', '2026-04-11 17:01:16', '2026-04-14 20:17:57'),
+(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$zqJUMEtVBDWzxe6Orkj2XO9DpI34W94tIIWxude20vrz5wjSaHwKC', NULL, NULL, 0, '2026-04-14 19:53:10', '2026-04-11 17:02:38', '2026-04-14 19:53:10');
 
 TRUNCATE TABLE `auth_logins`;
 INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identifier`, `user_id`, `date`, `success`) VALUES
@@ -59,23 +60,27 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identif
 (43, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 11:31:30', 1),
 (44, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 14:21:19', 1),
 (45, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 14:41:09', 1),
-(46, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 15:21:23', 1);
+(46, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 15:21:23', 1),
+(47, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 20:09:55', 1),
+(48, '5.49.246.18', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-13 21:39:18', 1),
+(49, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-04-14 19:53:10', 1),
+(50, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-04-14 20:17:57', 1);
 
 TRUNCATE TABLE `auth_permissions_users`;
 TRUNCATE TABLE `auth_remember_tokens`;
 TRUNCATE TABLE `auth_token_logins`;
 TRUNCATE TABLE `division`;
 INSERT INTO `division` (`id`, `id_header`, `nom`) VALUES
-(1, 1, 'Animés à voir'),
-(2, 1, 'Scans à lire'),
-(3, 3, 'General -> Sites'),
-(4, 3, 'Animés -> Sites'),
-(5, 3, 'Films -> Sites'),
-(7, 3, 'Scans -> Sites'),
-(8, 3, 'Séries -> Sites'),
-(9, 2, 'Films à voir'),
-(10, 2, 'Séries à voir'),
-(11, 5, 'Outils');
+(1, 1, 'Animés'),
+(2, 1, 'Mangas & Scans'),
+(3, 3, 'Généralistes'),
+(4, 3, 'Streaming Animés'),
+(5, 3, 'Streaming Films'),
+(7, 3, 'Lecture Scans'),
+(8, 3, 'Streaming Séries'),
+(9, 2, 'Films'),
+(10, 2, 'Séries'),
+(11, 5, 'Utilitaires Web');
 
 TRUNCATE TABLE `header`;
 INSERT INTO `header` (`id`, `nom`) VALUES
@@ -87,15 +92,15 @@ INSERT INTO `header` (`id`, `nom`) VALUES
 TRUNCATE TABLE `item`;
 INSERT INTO `item` (`id`, `id_user`, `is_public`, `id_division`, `titre`, `status`, `image`, `lien`, `description`, `episode`, `saison`, `ordre`) VALUES
 (1, 2, 0, 1, 'One Piece', 'En cours', 'https://image.tmdb.org/t/p/w500/l5menwH7JjOBbXjoftYdwMmsqmT.jpg', 'https://voir-anime.to/anime/one-piece/one-piece-{ep4}-vostfr/', 'Une aventure en haute mer légendaire et unique en son genre. Monkey D. Luffy est un jeune aventurier...', '1141', 1, 0),
-(2, 2, 0, 2, 'Manga : One Piece', 'À voir', 'https://www.myutaku.com/media/mangas/12.jpg', 'https://www.scan-vf.net/one_piece/chapitre-{ep}', 'Sortie : ~ 16 Avril', '1180', NULL, 0),
+(2, 2, 0, 2, 'One Piece', 'À voir', 'https://www.myutaku.com/media/mangas/12.jpg', 'https://www.scan-vf.net/one_piece/chapitre-{ep}', 'Sortie : ~ 16 Avril', '1180', 0, 0),
 (6, 2, 0, 1, 'Farming Life in Another World', 'À voir', 'https://image.tmdb.org/t/p/w500/mE4pE6NOV3AbvTUE3MkFMlfs12n.jpg', 'https://voir-anime.to/anime/isekai-nonbiri-nouka-{s}/isekai-nonbiri-nouka-{s}-{ep2}-vostfr/', 'Alors qu’il tente de sauver de la faillite l’entreprise dans laquelle il travaille, Hiruka Machio, 3...', '1', 2, 0),
 (7, 2, 0, 1, 'Frieren', 'À voir', 'https://image.tmdb.org/t/p/w500/j8K7vgF3Kp5T6EwJvez9B4it6CB.jpg', 'https://voir-anime.to/anime/sousou-no-frieren-{s}/sousou-no-frieren-{s}-{ep1}-vostfr/', 'L’elfe Frieren a vaincu le roi des démons aux côtés du groupe mené par le jeune héros Himmel. Après ...', '3', 2, 0),
 (8, 2, 0, 1, 'Wind Breaker', 'À voir', 'https://image.tmdb.org/t/p/w500/cciJ1sSUtbdamdhM01qUqkxgEEf.jpg', 'https://voir-anime.to/anime/wind-breaker-{s}/wind-breaker-{s}-{ep2}-vostfr/', 'Au lycée Fûrin, on n\'a pas la moyenne, mais on sait se battre ! Cet établissement a le pire taux de ...', '9', 2, 0),
 (9, 2, 0, 1, 'To Your Eternity', 'À voir', 'https://image.tmdb.org/t/p/w500/bohMYRVSIG68md0zQobyWbV4S8e.jpg', 'https://voir-anime.to/anime/fumetsu-no-anata-e-{s}/fumetsu-no-anata-e-{s}-{ep2}-vostfr/', 'Un garçon solitaire errant dans les régions arctiques de l\'Amérique du Nord rencontre un loup. Tous ...', '9', 3, 0),
-(10, 2, 0, 1, 'Bleach', 'À voir', 'https://image.tmdb.org/t/p/w500/e0kKmeM8R7Kersh5N2PPzIRNRhr.jpg', 'https://voir-anime.to/anime/bleach/bleach-{ep3}-vostfr/', 'Adolescent de quinze ans, Ichigo Kurosaki possède un don particulier : celui de voir les esprits. Un...', '154', 8, 0),
-(11, 2, 0, 2, 'Jujutsu Kaisen', 'À voir', 'https://www.myutaku.com/media/mangas/49948.jpg', 'https://www.scan-vf.net/jujutsu-kaisen/chapitre-{ep}', NULL, '175', NULL, 0),
+(10, 2, 0, 1, 'Bleach', 'À voir', 'https://www.myutaku.com/media/anime/poster/74796.jpg', 'https://voir-anime.to/anime/bleach/bleach-{ep3}-vostfr/', 'Adolescent de quinze ans, Ichigo Kurosaki possède un don particulier : celui de voir les esprits. Un...', '154', 8, 0),
+(11, 2, 0, 2, 'Jujutsu Kaisen', 'À voir', 'https://image.tmdb.org/t/p/w500/w2Shg7bI5WB7LINt1KxB7eihO8s.jpg', 'https://www.scan-vf.net/jujutsu-kaisen/chapitre-{ep}', 'Souffrance, regrets, humiliations... les sentiments négatifs que ressentent les humains se transform...', '175', 0, 0),
 (12, 1, 1, 4, 'VoirAnime', 'À voir', NULL, 'https://voir-anime.to/', NULL, NULL, NULL, 0),
-(13, 2, 0, 2, 'Chainsow Man', 'À voir', 'https://www.myutaku.com/media/mangas/52657.jpg', 'https://sushiscan.net/chainsaw-man-chapitre-{ep}/', NULL, '52', NULL, 0),
+(13, 2, 0, 2, 'Chainsaw Man', 'À voir', 'https://image.tmdb.org/t/p/w500/npdB6eFzizki0WaZ1OvKcJrWe97.jpg', 'https://sushiscan.net/chainsaw-man-chapitre-{ep}/', 'Denji est un adolescent qui vit avec son chien-démon-tronçonneuse, Pochita. À cause d’une énorme det...', '52', 0, 0),
 (14, 1, 1, 8, 'PapaduStream', 'À voir', NULL, 'https://papadustream.singles/', NULL, NULL, NULL, 0),
 (15, 1, 1, 8, 'PLR', 'À voir', NULL, 'https://sites.google.com/view/prl-series/accueil?authuser=0', NULL, NULL, NULL, 0),
 (17, 1, 1, 3, 'Franime', 'À voir', 'https://linktr.ee/og/image/franime.jpg', 'https://franime.fr/', NULL, NULL, NULL, 0),
@@ -111,7 +116,7 @@ INSERT INTO `item` (`id`, `id_user`, `is_public`, `id_division`, `titre`, `statu
 (27, 2, 0, 1, 'Noble Reincarnation', 'À voir', 'https://image.tmdb.org/t/p/w500/ggxUYlw7a3eVegnXDv8aCDiLccJ.jpg', 'https://voir-anime.to/anime/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power-{ep2}-vostfr/', 'En tant que treizième prince de la famille royale, Noah a toujours mené une vie paisible, loin des i...', '2', 1, 0),
 (28, 1, 1, 11, 'Audio To Text', 'À voir', NULL, 'https://editor.flixier.com/transcribe?fx_source=search&lang=en&fx_campaign=convert-audio-to-text&fx_medium=tools', 'Convertir les fichiers audio en textes', NULL, NULL, 0),
 (29, 1, 1, 11, 'Bootstrap Icons', 'À voir', NULL, 'https://icons.getbootstrap.com', 'Bibliothèque d\'icônes', NULL, NULL, 0),
-(30, 1, 1, 3, 'Prime Video', 'À voir', NULL, 'https://www.primevideo.com/', NULL, NULL, NULL, 0),
+(30, 1, 1, 3, 'Prime Video', 'Aucun', '', 'https://www.primevideo.com/', '', '', 0, 0),
 (31, 1, 1, 11, 'Cleanup', 'À voir', NULL, 'https://cleanup.pictures/', 'Nettoyer des images', NULL, NULL, 0),
 (32, 1, 1, 11, 'DALL.E', 'À voir', NULL, 'https://labs.openai.com/', 'Générer des Images', NULL, NULL, 0),
 (33, 1, 1, 11, 'Durable', 'À voir', NULL, 'https://app.durable.co/dashboard', 'Générer de site web', NULL, NULL, 0),
@@ -128,10 +133,6 @@ TRUNCATE TABLE `migrations`;
 TRUNCATE TABLE `settings`;
 TRUNCATE TABLE `users`;
 INSERT INTO `users` (`id`, `username`, `status`, `status_message`, `active`, `last_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'UserFictif', NULL, NULL, 1, '2026-04-13 11:30:15', '2026-04-11 17:01:15', '2026-04-11 17:01:16', NULL),
-(2, 'Titiss', NULL, NULL, 1, '2026-04-13 15:28:35', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
-DROP TABLE IF EXISTS `cards_userfictif`;
-
-DROP VIEW IF EXISTS `cards_userfictif`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cards_userfictif`  AS SELECT `i`.`id` AS `id`, `i`.`id_user` AS `id_user`, `d`.`nom` AS `titre_division`, `i`.`titre` AS `titre`, `i`.`lien` AS `lien`, `i`.`description` AS `description`, `i`.`episode` AS `episode`, `i`.`saison` AS `saison` FROM (`item` `i` join `division` `d` on((`d`.`id` = `i`.`id_division`))) WHERE ((`d`.`nom` like '%Sites') OR (`d`.`nom` like 'Outils')) ;
+(1, 'UserFictif', NULL, NULL, 1, '2026-04-14 20:23:32', '2026-04-11 17:01:15', '2026-04-11 17:01:16', NULL),
+(2, 'Titiss', NULL, NULL, 1, '2026-04-14 20:17:26', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL);
 COMMIT;
