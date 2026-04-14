@@ -35,8 +35,21 @@
         <?php echo htmlspecialchars($headerName); ?>
     </h2>
 
-    <?php foreach ($divisions as $divisionName => $items) { ?>
-    <details class="division-section">
+    <?php
+    // On récupère la division à ouvrir depuis la session (s'il y en a une)
+    $openDivision = session()->getFlashdata('open_division');
+    ?>
+
+    <?php
+    foreach ($divisions as $divisionName => $items) {
+        // On récupère l'id_division en regardant le premier item de cette liste
+        $currentDivisionId = !empty($items) ? $items[0]->id_division : null;
+
+        // Si l'ID de la session correspond à l'ID de cette division, on ajoute l'attribut 'open'
+        $isOpen = ($openDivision && $openDivision == $currentDivisionId) ? 'open' : '';
+        ?>
+
+    <details class="division-section" <?php echo $isOpen; ?>>
         <summary class="division-title">
             <span class="toggle-icon">&#x25B6;</span> <?php echo htmlspecialchars($divisionName); ?>
         </summary>
@@ -110,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             e.stopPropagation();
             const itemId = this.getAttribute('data-id');
-            fetch('<?php echo base_url("item/increment-episode/"); ?>' + itemId, {
+            fetch('<?php echo base_url('item/increment-episode/'); ?>' + itemId, {
                     method: 'POST',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',

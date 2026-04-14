@@ -1,11 +1,9 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Models\ItemModel;
 use App\Entities\Item;
+use App\Models\ItemModel;
 
 class ItemController extends BaseController
 {
@@ -37,7 +35,8 @@ class ItemController extends BaseController
     public function save()
     {
         if ($this->request->is('post')) {
-            if (!auth()->loggedIn()) return redirect()->to('login');
+            if (!auth()->loggedIn())
+                return redirect()->to('login');
 
             // 1. Validation CI4
             $rules = [
@@ -54,7 +53,7 @@ class ItemController extends BaseController
             $item = new Item($this->request->getPost());
             $item->id_user = auth()->id();
             $item->is_public = $this->request->getPost('is_public') ? 1 : 0;
-            
+
             $id = $this->request->getPost('id');
 
             // 3. Sauvegarde
@@ -67,7 +66,8 @@ class ItemController extends BaseController
                 $this->model->save($item);
             }
 
-            return redirect()->back();
+            // Redirection vers l'accueil en demandant d'ouvrir la division modifiée
+            return redirect()->to('/')->with('open_division', $item->id_division);
         }
     }
 
@@ -75,11 +75,17 @@ class ItemController extends BaseController
     {
         if ($id !== null) {
             $item = $this->model->find($id);
-            
+
             // Vérification des droits de l'utilisateur
             if ($item && (int) $item->id_user === (int) auth()->id()) {
+                // 1. On sauvegarde l'ID de la division AVANT de supprimer l'élément
+                $id_division = $item->id_division;
+
                 // Définition explicite du WHERE avant de supprimer
                 $this->model->where('id', $id)->delete();
+
+                // 2. On redirige en attachant l'ID de la division à ouvrir
+                return redirect()->back()->with('open_division', $id_division);
             }
         }
         return redirect()->back();
@@ -87,8 +93,9 @@ class ItemController extends BaseController
 
     public function incrementEpisode($id)
     {
-        if (!auth()->loggedIn()) return $this->response->setJSON(['success' => false]);
-        
+        if (!auth()->loggedIn())
+            return $this->response->setJSON(['success' => false]);
+
         $item = $this->model->find($id);
         if ($item && (int) $item->id_user === (int) auth()->id()) {
             $newEp = (string) ((int) $item->episode + 1);
