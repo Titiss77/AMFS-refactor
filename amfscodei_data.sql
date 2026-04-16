@@ -90,7 +90,8 @@ INSERT INTO `division` (`id`, `id_header`, `nom`) VALUES
 (7, 3, 'Lecture Mangas'),
 (8, 3, 'Streaming Films'),
 (9, 3, 'Streaming Séries'),
-(10, 5, 'Utilitaires Web');
+(10, 5, 'Utilitaires Web'),
+(11, 5, 'Autres');
 
 TRUNCATE TABLE `header`;
 INSERT INTO `header` (`id`, `nom`) VALUES
