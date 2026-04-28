@@ -29,9 +29,9 @@
 <?php } ?>
 
 <?php } else { ?>
-<?php 
-// Lecture de l'URL au lieu de la session (Infaillible)
-$openDivision = $_GET['open'] ?? null; 
+<?php
+    // Lecture de l'URL au lieu de la session (Infaillible)
+    $openDivision = $_GET['open'] ?? null;
 ?>
 
 <?php foreach ($groupedItems as $headerName => $divisions) { ?>
@@ -40,10 +40,11 @@ $openDivision = $_GET['open'] ?? null;
         <?php echo htmlspecialchars($headerName); ?>
     </h2>
 
-    <?php foreach ($divisions as $divisionName => $items) { 
+    <?php
+    foreach ($divisions as $divisionName => $items) {
         $currentDivisionId = !empty($items) ? $items[0]->id_division : null;
         $isOpen = ($openDivision && $openDivision == $currentDivisionId) ? 'open' : '';
-    ?>
+        ?>
     <details class="division-section" id="div-<?php echo $currentDivisionId; ?>" <?php echo $isOpen; ?>>
         <summary class="division-title">
             <span class="toggle-icon">&#x25B6;</span> <?php echo htmlspecialchars($divisionName); ?>
@@ -148,6 +149,12 @@ document.addEventListener('DOMContentLoaded', function() {
         Sortable.create(el, {
             animation: 150,
             ghostClass: 'bg-light',
+
+            // --- NOUVELLES LIGNES POUR LE MOBILE ---
+            delay: 200, // Temps d'appui nécessaire avant d'attraper (en millisecondes)
+            delayOnTouchOnly: true, // Applique ce délai UNIQUEMENT sur les écrans tactiles (sur PC, le clic reste instantané)
+            touchStartThreshold: 5, // Tolérance : permet au doigt de bouger de 5px sans annuler l'action (très utile car un doigt tremble toujours un peu)
+            // ---------------------------------------
 
             onEnd: function(evt) {
                 // 2. CORRECTION : On cherche la classe '.card' et non plus '.card-item'
