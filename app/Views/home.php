@@ -54,6 +54,8 @@
             <?php foreach ($items as $item) { ?>
             <div class="card fade-in searchable-card <?php echo $item->status === 'Terminé' ? 'status-completed' : ''; ?>"
                 data-id="<?= esc($item->id) ?>">
+                <div class="drag-handle" style="cursor: grab; text-align: center; color: #ccc; padding: 5px;">
+                    &#x2630; </div>
 
                 <a href="<?php echo htmlspecialchars($item->getFinalLink()); ?>" target="_blank"
                     class="card-link-block">
@@ -150,11 +152,10 @@ document.addEventListener('DOMContentLoaded', function() {
             animation: 150,
             ghostClass: 'bg-light',
 
-            // --- NOUVELLES LIGNES POUR LE MOBILE ---
-            delay: 200, // Temps d'appui nécessaire avant d'attraper (en millisecondes)
-            delayOnTouchOnly: true, // Applique ce délai UNIQUEMENT sur les écrans tactiles (sur PC, le clic reste instantané)
-            touchStartThreshold: 5, // Tolérance : permet au doigt de bouger de 5px sans annuler l'action (très utile car un doigt tremble toujours un peu)
-            // ---------------------------------------
+            // On dit à Sortable d'utiliser UNIQUEMENT l'élément avec la classe .drag-handle
+            handle: '.drag-handle',
+
+            // (Tu peux du coup retirer les options delay, delayOnTouchOnly, touchStartThreshold)
 
             onEnd: function(evt) {
                 // 2. CORRECTION : On cherche la classe '.card' et non plus '.card-item'
