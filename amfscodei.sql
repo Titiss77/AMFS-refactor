@@ -97,7 +97,6 @@ CREATE TABLE `item` (
   `description` text,
   `episode` varchar(10) DEFAULT NULL,
   `saison` int DEFAULT NULL,
-  `ordre` int NOT NULL DEFAULT '0',
   `position` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

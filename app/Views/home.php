@@ -49,7 +49,7 @@ $openDivision = $_GET['open'] ?? null;
             <span class="toggle-icon">&#x25B6;</span> <?php echo htmlspecialchars($divisionName); ?>
         </summary>
 
-        <div class="cards-grid" id="sortable-cards">
+        <div class="cards-grid sortable-grid">
             <?php foreach ($items as $item) { ?>
             <div class="card fade-in searchable-card <?php echo $item->status === 'Terminé' ? 'status-completed' : ''; ?>"
                 data-id="<?= esc($item->id) ?>">
@@ -140,41 +140,50 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    var el = document.getElementById('sortable-cards');
+    // 1. On sélectionne TOUTES les grilles (toutes les divisions) avec la classe
+    var grids = document.querySelectorAll('.sortable-grid');
 
-    // Initialiser SortableJS
-    var sortable = Sortable.create(el, {
-        animation: 150, // Animation fluide (ms)
-        ghostClass: 'bg-light', // Classe appliquée à l'élément qu'on déplace
+    grids.forEach(function(el) {
+        // Initialiser SortableJS pour chaque grille
+        Sortable.create(el, {
+            animation: 150,
+            ghostClass: 'bg-light',
 
-        // Événement déclenché quand on lâche la carte
-        onEnd: function(evt) {
-            // Récupérer le nouvel ordre des IDs
-            var itemEls = el.querySelectorAll('.card-item');
-            var newOrder = [];
-            itemEls.forEach(function(item) {
-                newOrder.push(item.getAttribute('data-id'));
-            });
+            onEnd: function(evt) {
+                // 2. CORRECTION : On cherche la classe '.card' et non plus '.card-item'
+                var itemEls = el.querySelectorAll('.card');
+                var newOrder = [];
 
-            // Envoyer le nouvel ordre au serveur via Fetch API
-            fetch('<?= base_url('/items/update-order') ?>', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest' // Important pour isAJAX() dans CI4
-                    },
-                    body: JSON.stringify({
-                        order: newOrder
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.success) {
-                        console.error('Erreur lors de la sauvegarde de l\'ordre.');
+                itemEls.forEach(function(item) {
+                    var id = item.getAttribute('data-id');
+                    if (id) {
+                        newOrder.push(id);
                     }
-                })
-                .catch(error => console.error('Erreur réseau:', error));
-        }
+                });
+
+                // 3. CORRECTION : Ajout des headers CSRF pour éviter l'erreur 403 de CodeIgniter
+                fetch('<?= base_url('/items/update-order') ?>', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            '<?= csrf_header() ?>': '<?= csrf_hash() ?>' // Indispensable !
+                        },
+                        body: JSON.stringify({
+                            order: newOrder
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.success) {
+                            console.error('Erreur lors de la sauvegarde de l\'ordre.');
+                        } else {
+                            console.log('Ordre sauvegardé avec succès !');
+                        }
+                    })
+                    .catch(error => console.error('Erreur réseau:', error));
+            }
+        });
     });
 });
 </script>

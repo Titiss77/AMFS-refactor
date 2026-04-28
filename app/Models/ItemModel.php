@@ -43,7 +43,7 @@ class ItemModel extends Model
         // Tri par ordre ajouté
         $builder->orderBy('h.id', 'ASC')
                 ->orderBy('d.id', 'ASC')
-                ->orderBy('i.ordre', 'ASC') 
+                ->orderBy('i.position', 'ASC') 
                 ->orderBy('i.titre', 'ASC');
 
         // On retourne des Objets Entity, pas des Array simples
