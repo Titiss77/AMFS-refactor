@@ -49,10 +49,10 @@ $openDivision = $_GET['open'] ?? null;
             <span class="toggle-icon">&#x25B6;</span> <?php echo htmlspecialchars($divisionName); ?>
         </summary>
 
-        <div class="cards-grid">
+        <div class="cards-grid" id="sortable-cards">
             <?php foreach ($items as $item) { ?>
-            <div
-                class="card fade-in searchable-card <?php echo $item->status === 'Terminé' ? 'status-completed' : ''; ?>">
+            <div class="card fade-in searchable-card <?php echo $item->status === 'Terminé' ? 'status-completed' : ''; ?>"
+                data-id="<?= esc($item->id) ?>">
 
                 <a href="<?php echo htmlspecialchars($item->getFinalLink()); ?>" target="_blank"
                     class="card-link-block">
@@ -107,6 +107,9 @@ $openDivision = $_GET['open'] ?? null;
 </section>
 <?php } ?>
 <?php } ?>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -133,6 +136,45 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
         });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var el = document.getElementById('sortable-cards');
+
+    // Initialiser SortableJS
+    var sortable = Sortable.create(el, {
+        animation: 150, // Animation fluide (ms)
+        ghostClass: 'bg-light', // Classe appliquée à l'élément qu'on déplace
+
+        // Événement déclenché quand on lâche la carte
+        onEnd: function(evt) {
+            // Récupérer le nouvel ordre des IDs
+            var itemEls = el.querySelectorAll('.card-item');
+            var newOrder = [];
+            itemEls.forEach(function(item) {
+                newOrder.push(item.getAttribute('data-id'));
+            });
+
+            // Envoyer le nouvel ordre au serveur via Fetch API
+            fetch('<?= base_url('/items/update-order') ?>', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest' // Important pour isAJAX() dans CI4
+                    },
+                    body: JSON.stringify({
+                        order: newOrder
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        console.error('Erreur lors de la sauvegarde de l\'ordre.');
+                    }
+                })
+                .catch(error => console.error('Erreur réseau:', error));
+        }
     });
 });
 </script>

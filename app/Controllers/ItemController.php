@@ -110,4 +110,27 @@ class ItemController extends BaseController
         }
         return $this->response->setJSON(['success' => false]);
     }
+
+    // Ajoute ceci dans app/Controllers/ItemController.php
+
+    public function updateOrder()
+    {
+        // Vérifier que la requête est bien en AJAX/JSON
+        if ($this->request->isAJAX()) {
+            $json = $this->request->getJSON();
+
+            if (isset($json->order) && is_array($json->order)) {
+                $itemModel = new \App\Models\ItemModel();
+
+                // On parcourt le tableau des IDs reçus et on met à jour leur position
+                foreach ($json->order as $index => $id) {
+                    $itemModel->update($id, ['position' => $index]);
+                }
+
+                return $this->response->setJSON(['success' => true]);
+            }
+        }
+
+        return $this->response->setStatusCode(400)->setJSON(['error' => 'Invalid request']);
+    }
 }

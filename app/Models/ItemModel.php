@@ -17,7 +17,7 @@ class ItemModel extends Model
     // Nouveaux champs autorisés
     protected $allowedFields = [
         'id_user', 'is_public', 'id_division', 'titre', 'status', 'ordre',
-        'image', 'lien', 'description', 'episode', 'saison'
+        'image', 'lien', 'description', 'episode', 'saison', 'position'
     ];
 
     public function getItemsGroupedByHeaderAndDivision($userId = null, $headerId = null)

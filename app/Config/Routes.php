@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 use CodeIgniter\Router\RouteCollection;
 
@@ -8,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
 
 // Pages publiques (accessibles sans être connecté)
 $routes->get('/', 'HomeController::index');
-$routes->get('categorie/(:num)', 'HomeController::categorie/$1'); // <-- DÉPLACÉ ICI
+$routes->get('categorie/(:num)', 'HomeController::categorie/$1');  // <-- DÉPLACÉ ICI
 
 // Routes protégées par l'authentification Shield
 $routes->group('', ['filter' => 'session'], static function ($routes): void {
@@ -17,6 +15,8 @@ $routes->group('', ['filter' => 'session'], static function ($routes): void {
     $routes->post('item/save', 'ItemController::save');
     $routes->get('item/delete/(:num)', 'ItemController::delete/$1');
     $routes->post('item/increment-episode/(:num)', 'ItemController::incrementEpisode/$1');
+    // Dans app/Config/Routes.php
+    $routes->post('/items/update-order', 'ItemController::updateOrder');
 });
 
 service('auth')->routes($routes);
