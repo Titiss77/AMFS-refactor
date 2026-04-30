@@ -1,46 +1,54 @@
 :root {
-    /* Palette de couleurs professionnelles */
-    --primary: #000000;
-    /* Indigo 600 */
-    --primary-hover: #000000;
-    --primary-light: #e0e7ff;
+    /* Palette de couleurs "Premium Frost" (Lumineux, épuré et luxueux) */
+    --primary: #4f46e5;
+    /* Indigo profond et élégant */
+    --primary-hover: #4338ca;
+    /* Indigo légèrement plus sombre au survol */
+    --primary-light: rgba(79, 70, 229, 0.1);
+    /* Halo subtil pour les focus */
 
-    --bg-body: #f8fafc;
-    /* Slate 50 */
+    --bg-body: #fcfcfd;
+    /* Fond presque blanc, très légèrement perlé */
     --bg-card: #ffffff;
+    /* Blanc pur pour détacher parfaitement les cartes */
 
-    --text-main: #0f172a;
-    /* Slate 900 */
-    --text-muted: #64748b;
-    /* Slate 500 */
-    --border-color: #e2e8f0;
-    /* Slate 200 */
+    --text-main: #09090b;
+    /* Noir doux (Zinc 950) pour une lisibilité parfaite */
+    --text-muted: #71717a;
+    /* Gris élégant (Zinc 500) pour la hiérarchie visuelle */
+    --border-color: #e4e4e7;
+    /* Bordures très fines et douces */
 
-    /* Couleurs de statut */
+    /* Couleurs de statut vibrantes mais adoucies par des fonds translucides */
     --success: #10b981;
-    --success-bg: #d1fae5;
-    --success-text: #065f46;
+    --success-bg: rgba(16, 185, 129, 0.1);
+    --success-text: #047857;
 
-    --info: #172a47;
-    --info-bg: #dbeafe;
-    --info-text: #000000;
+    --info: #3b82f6;
+    --info-bg: rgba(59, 130, 246, 0.1);
+    --info-text: #1d4ed8;
 
     --danger: #ef4444;
     --danger-hover: #dc2626;
-    --danger-bg: #fee2e2;
-    --danger-text: #991b1b;
+    --danger-bg: rgba(239, 68, 68, 0.1);
+    --danger-text: #b91c1c;
 
     --warning: #f59e0b;
     --warning-hover: #d97706;
 
-    /* Ombres douces en couches (Layered shadows) */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    --shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    /* Ombres "Aériennes" (très diffuses et douces) */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.08), 0 10px 20px rgba(79, 70, 229, 0.06);
 
-    /* Arrondis et Transitions */
-    --radius-md: 0.5rem;
-    --radius-lg: 1rem;
-    --radius-xl: 1.5rem;
-    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Arrondis luxueux et lisses */
+    --radius-md: 0.75rem;
+    /* 12px - Parfait pour les boutons et inputs */
+    --radius-lg: 1.25rem;
+    /* 20px - Superbe pour les cartes principales */
+    --radius-xl: 1.75rem;
+    /* 28px - Pour les grands conteneurs modaux */
+
+    /* Transitions fluides avec un léger effet de "rebond" (spring)[cite: 1] */
+    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
