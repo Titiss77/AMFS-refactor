@@ -57,6 +57,16 @@
         </div>
 
         <div class="form-group">
+            <label for="date_sortie" class="form-label">Date et heure de sortie</label>
+            <div style="display: grid; gap: 10px;">
+                <input type="datetime-local" id="date_sortie" name="date_sortie" class="form-control"
+                    value="<?php echo (isset($item) && $item->date_sortie) ? date('Y-m-d\TH:i', strtotime($item->date_sortie)) : ''; ?>">
+                <button type="button" class="btn btn-cancel"
+                    onclick="document.getElementById('date_sortie').value = '';">Ne pas définir</button>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label for="img" class="form-label">Image (URL) :</label>
             <small>
                 💡 Astuce : Si l'image automatiquene convient pas :
