@@ -56,6 +56,9 @@ class ItemController extends BaseController
             // On y injecte nos propres valeurs systèmes de façon sécurisée
             $data['id_user'] = auth()->id();
             $data['is_public'] = $this->request->getPost('is_public') ? 1 : 0;
+            
+            // Gestion de la date de sortie (convertit la chaîne vide en NULL)
+            $data['date_sortie'] = empty($this->request->getPost('date_sortie')) ? null : $this->request->getPost('date_sortie');
 
             // On instancie l'entité avec TOUTES les données d'un coup
             $item = new Item($data);

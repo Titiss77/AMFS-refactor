@@ -14,10 +14,9 @@ class ItemModel extends Model
     // On dit au Modèle d'utiliser notre Entity
     protected $returnType = \App\Entities\Item::class; 
 
-    // Nouveaux champs autorisés
     protected $allowedFields = [
         'id_user', 'is_public', 'id_division', 'titre', 'status', 'ordre',
-        'image', 'lien', 'description', 'episode', 'saison', 'position'
+        'image', 'lien', 'description', 'episode', 'saison', 'position', 'date_sortie'
     ];
 
     public function getItemsGroupedByHeaderAndDivision($userId = null, $headerId = null)

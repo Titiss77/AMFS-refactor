@@ -60,12 +60,38 @@
                 <a href="<?php echo htmlspecialchars($item->getFinalLink()); ?>" target="_blank"
                     class="card-link-block">
                     <div class="card-body">
-                        <h4 class="card-title"><?php echo htmlspecialchars($item->titre); ?></h4>
+
+                        <?php
+                        $isFuture = false;
+                        $dateSortieFormatted = '';
+                        $textColor = '';
+
+                        if (!empty($item->date_sortie)) {
+                            $dateSortie = new \DateTime($item->date_sortie);
+                            $now = new \DateTime();
+                            if ($dateSortie > $now) {
+                                $isFuture = true;
+                                $dateSortieFormatted = $dateSortie->format('d/m/Y à H:i');
+                                $textColor = 'color: red;';
+                            }
+                        }
+                        ?>
+
+                        <h4 class="card-title" style="<?php echo $textColor; ?>">
+                            <?php echo htmlspecialchars($item->titre); ?></h4>
+
+                        <?php if ($isFuture) { ?>
+                        <p class="card-date" style="<?php echo $textColor; ?>">
+                            ⏳ Suivant le : <?php echo $dateSortieFormatted; ?>
+                        </p>
+                        <?php } ?>
+
                         <p style="font-size: 0.8rem; color: gray; margin: 0;">Status :
                             <?php echo htmlspecialchars($item->status); ?></p>
 
                         <?php if (!empty($item->description)) { ?>
-                        <p class="card-desc"><?php echo htmlspecialchars($item->description); ?></p>
+                        <p class="card-desc">
+                            <?php echo htmlspecialchars($item->description); ?></p>
                         <?php } ?>
 
                         <div class="card-badges">
