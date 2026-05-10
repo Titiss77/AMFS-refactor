@@ -61,14 +61,19 @@
                     class="card-link-block">
                     <div class="card-body">
 
-                        <?php
+                        <?php 
                         $isFuture = false;
                         $dateSortieFormatted = '';
                         $textColor = '';
-
+                        
                         if (!empty($item->date_sortie)) {
-                            $dateSortie = new \DateTime($item->date_sortie);
-                            $now = new \DateTime();
+                            // On définit le fuseau horaire sur Paris
+                            $timezone = new \DateTimeZone('Europe/Paris');
+                            
+                            // On applique ce fuseau aux deux dates
+                            $dateSortie = new \DateTime($item->date_sortie, $timezone);
+                            $now = new \DateTime('now', $timezone);
+                            
                             if ($dateSortie > $now) {
                                 $isFuture = true;
                                 $dateSortieFormatted = $dateSortie->format('d/m/Y à H:i');
