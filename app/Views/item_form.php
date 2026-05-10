@@ -97,7 +97,7 @@
             </div>
             <div class="col-half">
                 <label for="episode" class="form-label">Épisode</label>
-                <input type="text" id="episode" name="episode" class="form-control"
+                <input type="number" id="episode" name="episode" class="form-control"
                     value="<?php echo isset($item) ? esc($item->episode) : ''; ?>">
             </div>
         </div>
