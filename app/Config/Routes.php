@@ -19,12 +19,13 @@ $routes->group('', ['filter' => 'session'], static function ($routes): void {
     $routes->post('/items/update-order', 'ItemController::updateOrder');
 });
 
-// Routes d'administration (protégées pour les groupes admin et superadmin)
+// Fin de votre fichier
+service('auth')->routes($routes);
+
+// AJOUTEZ CECI ICI, tout à la fin :
 $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function ($routes): void {
     $routes->get('users', 'Admin\UserController::index');
     $routes->get('users/edit/(:num)', 'Admin\UserController::edit/$1');
     $routes->post('users/update/(:num)', 'Admin\UserController::update/$1');
     $routes->get('users/delete/(:num)', 'Admin\UserController::delete/$1');
 });
-
-service('auth')->routes($routes);
