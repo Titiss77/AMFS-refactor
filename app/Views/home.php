@@ -9,6 +9,9 @@
     <a href="<?php echo base_url('register'); ?>" class="btn btn-primary">Créer un compte</a>
 </div>
 <?php } else { ?>
+<?php if (auth()->user()->inGroup('admin')) { ?>
+<a href="<?php echo base_url('admin/users'); ?>" class="btn btn-warning">Gérer les utilisateurs</a>
+<?php } ?>
 <div class="actions-container">
     <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>
 </div>
@@ -61,19 +64,19 @@
                     class="card-link-block">
                     <div class="card-body">
 
-                        <?php 
+                        <?php
                         $isFuture = false;
                         $dateSortieFormatted = '';
                         $textColor = '';
-                        
+
                         if (!empty($item->date_sortie)) {
                             // On définit le fuseau horaire sur Paris
                             $timezone = new \DateTimeZone('Europe/Paris');
-                            
+
                             // On applique ce fuseau aux deux dates
                             $dateSortie = new \DateTime($item->date_sortie, $timezone);
                             $now = new \DateTime('now', $timezone);
-                            
+
                             if ($dateSortie > $now) {
                                 $isFuture = true;
                                 $dateSortieFormatted = $dateSortie->format('d/m/Y à H:i');
