@@ -62,11 +62,6 @@
                     <button type="submit" class="btn btn-primary btn-block"><?php echo lang('Auth.login'); ?></button>
                 </div>
 
-                <?php if (setting('Auth.allowMagicLinkLogins')) { ?>
-                <p class="text-center"><?php echo lang('Auth.forgotPassword'); ?> <a
-                        href="<?php echo url_to('magic-link'); ?>"><?php echo lang('Auth.useMagicLink'); ?></a></p>
-                <?php } ?>
-
                 <?php if (setting('Auth.allowRegistration')) { ?>
                 <p class="text-center"><?php echo lang('Auth.needAccount'); ?> <a
                         href="<?php echo url_to('register'); ?>"><?php echo lang('Auth.register'); ?></a></p>
