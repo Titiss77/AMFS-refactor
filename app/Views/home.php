@@ -10,7 +10,7 @@
 </div>
 <?php } else { ?>
 <?php if (auth()->user()->inGroup('admin')) { ?>
-<a href="<?php echo base_url('admin/users'); ?>" class="btn btn-warning">Gérer les utilisateurs</a>
+<a href="<?php echo base_url('users'); ?>" class="btn btn-warning">Gérer les utilisateurs</a>
 <?php } ?>
 <div class="actions-container">
     <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>

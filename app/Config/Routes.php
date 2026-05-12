@@ -23,7 +23,7 @@ $routes->group('', ['filter' => 'session'], static function ($routes): void {
 service('auth')->routes($routes);
 
 // AJOUTEZ CECI ICI, tout à la fin :
-$routes->group('admin', ['filter' => 'group:admin'], static function ($routes): void {
+$routes->group('', ['filter' => 'group:admin'], static function ($routes): void {
     $routes->get('users', 'Admin\UserController::index');
     $routes->get('users/edit/(:num)', 'Admin\UserController::edit/$1');
     $routes->post('users/update/(:num)', 'Admin\UserController::update/$1');
