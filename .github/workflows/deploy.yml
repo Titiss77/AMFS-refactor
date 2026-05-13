@@ -29,6 +29,7 @@ jobs:
             **/.git*
             **/.git*/**
             **/.github/**
+            !**/.gitignore
             tests/** # <-- Ignore tous les tests locaux (très lourd)
             user_guide_src/** # <-- Ignore la documentation de CI4
             phpunit.xml.dist
