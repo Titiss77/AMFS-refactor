@@ -21,15 +21,13 @@ class ItemController extends BaseController
             'divisions' => $this->model->getDivisions(),
             'item' => null,
             'view' => 'item_form',
-            // On mémorise la page précédente (Referer) pour le retour
             'redirect_url' => $this->request->getUserAgent()->getReferrer() ?? site_url('/')
         ];
 
         if ($id !== null) {
             $data['item'] = $this->model->find($id);
-            // ... reste du code inchangé ...
         }
-        return view('layout', $data);
+        return view('item_form', $data);
     }
 
     public function save()

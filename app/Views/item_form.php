@@ -1,3 +1,5 @@
+<?= $this->extend('layout') ?>
+<?= $this->section('content') ?>
 <div class="form-container card">
     <h2 class="header-title"><?php echo isset($item) ? '✏️ Modifier la carte' : '+ Ajouter une carte'; ?></h2>
 
@@ -161,3 +163,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+<?= $this->endSection() ?>

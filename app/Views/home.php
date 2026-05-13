@@ -1,3 +1,6 @@
+<?= $this->extend('layout') ?>
+<?= $this->section('content') ?>
+
 <?php if (!auth()->loggedIn()) { ?>
 
 <div class="empty-state shadow-card">
@@ -229,3 +232,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<?= $this->endSection() ?>

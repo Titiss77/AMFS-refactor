@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -13,13 +11,11 @@ class HomeController extends BaseController
         $model = new ItemModel();
         $headers = $model->getHeaders();
 
-        // Redirection automatique vers le premier onglet s'il existe
         if (!empty($headers)) {
-            return redirect()->to('categorie/'.$headers[0]['id']);
+            return redirect()->to('categorie/' . $headers[0]['id']);
         }
 
-        // Si aucune catégorie n'existe en base de données
-        return view('layout', ['headers' => [], 'groupedItems' => [], 'view' => 'home']);
+        return view('home', ['headers' => [], 'groupedItems' => []]);
     }
 
     public function categorie($headerId)
@@ -27,17 +23,13 @@ class HomeController extends BaseController
         $model = new ItemModel();
         $userId = auth()->loggedIn() ? auth()->id() : null;
 
-        // On récupère toutes les catégories pour construire le menu
         $headers = $model->getHeaders();
-
-        // On récupère les items UNIQUEMENT pour la catégorie sélectionnée
         $groupedItems = $model->getItemsGroupedByHeaderAndDivision($userId, $headerId);
 
-        return view('layout', [
+        return view('home', [
             'headers' => $headers,
             'groupedItems' => $groupedItems,
-            'currentHeaderId' => $headerId,  // Permet de savoir quel onglet colorer
-            'view' => 'home',
+            'currentHeaderId' => $headerId,
         ]);
     }
 }
