@@ -24,5 +24,13 @@ $routes->group('', ['filter' => 'session'], static function ($routes): void {
     $routes->get('users/delete/(:num)', 'Admin\UserController::delete/$1');
 });
 
+// Routes pour l'administration des utilisateurs
+$routes->group('admin/users', ['namespace' => 'App\Controllers\Admin'], static function ($routes) {
+    $routes->get('/', 'UserController::index');
+    $routes->get('edit/(:num)', 'UserController::edit/$1');
+    $routes->post('update/(:num)', 'UserController::update/$1'); // POST pour la soumission du formulaire
+    $routes->get('delete/(:num)', 'UserController::delete/$1');
+});
+
 
 service('auth')->routes($routes);

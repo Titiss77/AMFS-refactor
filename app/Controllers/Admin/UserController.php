@@ -10,9 +10,9 @@ class UserController extends BaseController
     {
         // Récupère le UserModel de Shield
         $users = auth()->getProvider();
-        
+
         $data = [
-            'users' => $users->findAll(),
+            'users' => $users->where('id !=', 0)->findAll(),
             'title' => 'Gestion des utilisateurs'
         ];
 
@@ -30,9 +30,9 @@ class UserController extends BaseController
 
         $data = [
             'user' => $user,
-            'title' => 'Modifier l\'utilisateur',
+            'title' => "Modifier l'utilisateur",
             // On récupère les groupes configurés dans AuthGroups
-            'availableGroups' => config('AuthGroups')->groups 
+            'availableGroups' => config('AuthGroups')->groups
         ];
 
         return view('admin/users/edit', $data);
@@ -47,12 +47,17 @@ class UserController extends BaseController
             return redirect()->to('admin/users')->with('error', 'Utilisateur introuvable.');
         }
 
-        // Met à jour le rôle (groupe) de l'utilisateur
+        // 1. Mise à jour du nom d'utilisateur (Username)
+        $user->fill([
+            'username' => $this->request->getPost('username')
+        ]);
+        $users->save($user);
+
+        // 2. Mise à jour du Rôle (Groupe)
         $newGroup = $this->request->getPost('group');
-        
         if ($newGroup) {
-            // syncGroups supprime les anciens groupes et applique le nouveau
-            $user->syncGroups($newGroup); 
+            // syncGroups remplace les anciens rôles par le nouveau
+            $user->syncGroups($newGroup);
         }
 
         return redirect()->to('admin/users')->with('message', 'Utilisateur mis à jour avec succès.');
@@ -61,14 +66,22 @@ class UserController extends BaseController
     public function delete($id)
     {
         $users = auth()->getProvider();
-        
+
         // Empêcher l'admin de se supprimer lui-même
         if ($id == auth()->id()) {
             return redirect()->to('admin/users')->with('error', 'Vous ne pouvez pas supprimer votre propre compte.');
         }
 
-        $users->delete($id, true); // Le `true` force la suppression définitive (hard delete)
+        // 1. Réassigner toutes les cartes de cet utilisateur à l'utilisateur 0
+        $itemModel = new \App\Models\ItemModel();
+        $itemModel
+            ->where('id_user', $id)
+            ->set(['id_user' => 0])
+            ->update();
 
-        return redirect()->to('admin/users')->with('message', 'Utilisateur supprimé.');
+        // 2. Supprimer définitivement l'utilisateur
+        $users->delete($id, true);  // Le `true` force la suppression définitive (hard delete)
+
+        return redirect()->to('admin/users')->with('message', 'Utilisateur supprimé et ses cartes ont été archivées avec succès.');
     }
 }
