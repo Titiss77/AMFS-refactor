@@ -12,7 +12,7 @@
 
 <body>
     <header class="main-header">
-        <h1>AMFS test</h1>
+        <h1><a href=" <?php echo base_url('/'); ?>">AMFS</a></h1>
 
         <div class="user-nav">
             <?php if (auth()->loggedIn()) { ?>
