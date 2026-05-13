@@ -1,4 +1,4 @@
-name: Deploy to ByetHost FTP
+name: Deploiement vers ByetHost FTP
 
 # Cette action se déclenche à chaque push sur la branche "main"
 # (remplacez "main" par "master" si votre branche principale s'appelle master)
@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           # Dossier de destination sur votre hébergeur (souvent htdocs)
-          server-dir: amfs.22web.org/htdocs/
+          server-dir: amfs.is-best.net/htdocs/
           # Fichiers et dossiers à NE PAS envoyer
           exclude: |
             **/.git*
