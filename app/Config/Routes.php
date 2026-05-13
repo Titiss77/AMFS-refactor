@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use CodeIgniter\Router\RouteCollection;
 
@@ -17,7 +19,6 @@ $routes->group('', ['filter' => 'session'], static function ($routes): void {
     $routes->post('item/increment-episode/(:num)', 'ItemController::incrementEpisode/$1');
     $routes->post('/items/update-order', 'ItemController::updateOrder');
 
-    
     $routes->get('users', 'Admin\UserController::index');
     $routes->get('users/edit/(:num)', 'Admin\UserController::edit/$1');
     $routes->post('users/update/(:num)', 'Admin\UserController::update/$1');
@@ -25,12 +26,11 @@ $routes->group('', ['filter' => 'session'], static function ($routes): void {
 });
 
 // Routes pour l'administration des utilisateurs
-$routes->group('admin/users', ['namespace' => 'App\Controllers\Admin'], static function ($routes) {
+$routes->group('admin/users', ['namespace' => 'App\Controllers\Admin'], static function ($routes): void {
     $routes->get('/', 'UserController::index');
     $routes->get('edit/(:num)', 'UserController::edit/$1');
     $routes->post('update/(:num)', 'UserController::update/$1'); // POST pour la soumission du formulaire
     $routes->get('delete/(:num)', 'UserController::delete/$1');
 });
-
 
 service('auth')->routes($routes);

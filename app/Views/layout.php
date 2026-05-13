@@ -27,7 +27,7 @@
     <?php if (isset($headers) && !empty($headers)) { ?>
     <nav class="category-nav container">
         <?php foreach ($headers as $h) { ?>
-        <a href="<?php echo base_url('categorie/' . $h['id']); ?>"
+        <a href="<?php echo base_url('categorie/'.$h['id']); ?>"
             class="nav-tab <?php echo (isset($currentHeaderId) && $currentHeaderId == $h['id']) ? 'active' : ''; ?>">
             <?php echo esc($h['nom']); ?>
         </a>
@@ -35,7 +35,7 @@
     </nav>
     <?php } ?>
     <main class="container">
-        <?= $this->renderSection('content') ?>
+        <?php echo $this->renderSection('content'); ?>
     </main>
 
     <script>

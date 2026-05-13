@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -12,7 +14,7 @@ class HomeController extends BaseController
         $headers = $model->getHeaders();
 
         if (!empty($headers)) {
-            return redirect()->to('categorie/' . $headers[0]['id']);
+            return redirect()->to('categorie/'.$headers[0]['id']);
         }
 
         return view('home', ['headers' => [], 'groupedItems' => []]);

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -21,26 +23,28 @@ class ItemController extends BaseController
             'divisions' => $this->model->getDivisions(),
             'item' => null,
             'view' => 'item_form',
-            'redirect_url' => $this->request->getUserAgent()->getReferrer() ?? site_url('/')
+            'redirect_url' => $this->request->getUserAgent()->getReferrer() ?? site_url('/'),
         ];
 
-        if ($id !== null) {
+        if (null !== $id) {
             $data['item'] = $this->model->find($id);
         }
+
         return view('item_form', $data);
     }
 
     public function save()
     {
         if ($this->request->is('post')) {
-            if (!auth()->loggedIn())
+            if (!auth()->loggedIn()) {
                 return redirect()->to('login');
+            }
 
             // 1. Validation CI4
             $rules = [
                 'titre' => 'required|max_length[100]',
                 'id_division' => 'required|numeric',
-                'status' => 'in_list[Aucun,À voir,En cours,En pause,Terminé]'
+                'status' => 'in_list[Aucun,À voir,En cours,En pause,Terminé]',
             ];
 
             if (!$this->validate($rules)) {
@@ -54,7 +58,7 @@ class ItemController extends BaseController
             // On y injecte nos propres valeurs systèmes de façon sécurisée
             $data['id_user'] = auth()->id();
             $data['is_public'] = $this->request->getPost('is_public') ? 1 : 0;
-            
+
             // Gestion de la date de sortie (convertit la chaîne vide en NULL)
             $data['date_sortie'] = empty($this->request->getPost('date_sortie')) ? null : $this->request->getPost('date_sortie');
 
@@ -76,14 +80,15 @@ class ItemController extends BaseController
 
             // 4. Redirection avec ouverture du menu déroulant
             $backUrl = $this->request->getPost('redirect_url') ?: site_url('/');
-            $separator = (strpos($backUrl, '?') !== false) ? '&' : '?';
-            return redirect()->to($backUrl . $separator . 'open=' . $item->id_division . '#div-' . $item->id_division);
+            $separator = (str_contains($backUrl, '?')) ? '&' : '?';
+
+            return redirect()->to($backUrl.$separator.'open='.$item->id_division.'#div-'.$item->id_division);
         }
     }
 
     public function delete($id = null)
     {
-        if ($id !== null) {
+        if (null !== $id) {
             $item = $this->model->find($id);
             if ($item && (int) $item->id_user === (int) auth()->id()) {
                 $id_div = $item->id_division;
@@ -91,24 +96,29 @@ class ItemController extends BaseController
 
                 // On repart d'où on vient (Referer direct car pas de formulaire)
                 $backUrl = $this->request->getUserAgent()->getReferrer() ?: site_url('/');
-                $separator = (strpos($backUrl, '?') !== false) ? '&' : '?';
-                return redirect()->to($backUrl . $separator . 'open=' . $id_div . '#div-' . $id_div);
+                $separator = (str_contains($backUrl, '?')) ? '&' : '?';
+
+                return redirect()->to($backUrl.$separator.'open='.$id_div.'#div-'.$id_div);
             }
         }
+
         return redirect()->back();
     }
 
     public function incrementEpisode($id)
     {
-        if (!auth()->loggedIn())
+        if (!auth()->loggedIn()) {
             return $this->response->setJSON(['success' => false]);
+        }
 
         $item = $this->model->find($id);
         if ($item && (int) $item->id_user === (int) auth()->id()) {
             $newEp = (string) ((int) $item->episode + 1);
             $this->model->update($id, ['episode' => $newEp]);
+
             return $this->response->setJSON(['success' => true, 'new_episode' => $newEp]);
         }
+
         return $this->response->setJSON(['success' => false]);
     }
 
@@ -121,7 +131,7 @@ class ItemController extends BaseController
             $json = $this->request->getJSON();
 
             if (isset($json->order) && is_array($json->order)) {
-                $itemModel = new \App\Models\ItemModel();
+                $itemModel = new ItemModel();
 
                 // On parcourt le tableau des IDs reçus et on met à jour leur position
                 foreach ($json->order as $index => $id) {

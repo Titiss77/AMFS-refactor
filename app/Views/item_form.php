@@ -1,10 +1,10 @@
-<?= $this->extend('layout') ?>
-<?= $this->section('content') ?>
+<?php echo $this->extend('layout'); ?>
+<?php echo $this->section('content'); ?>
 <div class="form-container card">
     <h2 class="header-title"><?php echo isset($item) ? '✏️ Modifier la carte' : '+ Ajouter une carte'; ?></h2>
 
     <form action="<?php echo base_url('item/save'); ?>" method="POST">
-        <input type="hidden" name="redirect_url" value="<?= esc($redirect_url) ?>">
+        <input type="hidden" name="redirect_url" value="<?php echo esc($redirect_url); ?>">
         <?php echo csrf_field(); ?>
         <input type="hidden" name="id" value="<?php echo isset($item) ? esc($item->id) : ''; ?>">
 
@@ -34,13 +34,13 @@
                 <label for="status" class="form-label">Statut</label>
                 <select id="status" name="status" class="form-control">
                     <?php $currentStatus = isset($item) ? $item->status : 'Aucun'; ?>
-                    <option value="Aucun" <?php echo $currentStatus == 'Aucun' ? 'selected' : ''; ?>>Aucun</option>
-                    <option value="À voir" <?php echo $currentStatus == 'À voir' ? 'selected' : ''; ?>>À voir</option>
-                    <option value="En cours" <?php echo $currentStatus == 'En cours' ? 'selected' : ''; ?>>En cours
+                    <option value="Aucun" <?php echo 'Aucun' == $currentStatus ? 'selected' : ''; ?>>Aucun</option>
+                    <option value="À voir" <?php echo 'À voir' == $currentStatus ? 'selected' : ''; ?>>À voir</option>
+                    <option value="En cours" <?php echo 'En cours' == $currentStatus ? 'selected' : ''; ?>>En cours
                     </option>
-                    <option value="En pause" <?php echo $currentStatus == 'En pause' ? 'selected' : ''; ?>>En pause
+                    <option value="En pause" <?php echo 'En pause' == $currentStatus ? 'selected' : ''; ?>>En pause
                     </option>
-                    <option value="Terminé" <?php echo $currentStatus == 'Terminé' ? 'selected' : ''; ?>>Terminé
+                    <option value="Terminé" <?php echo 'Terminé' == $currentStatus ? 'selected' : ''; ?>>Terminé
                     </option>
                 </select>
             </div>
@@ -48,7 +48,7 @@
 
         <div class="form-group">
             <input type="checkbox" id="is_public" name="is_public" value="1"
-                <?php echo (isset($item) && $item->is_public == 1) ? 'checked' : ''; ?>>
+                <?php echo (isset($item) && 1 == $item->is_public) ? 'checked' : ''; ?>>
             <label for="is_public" class="form-label" style="display:inline;">Rendre ce lien visible au public</label>
         </div>
 
@@ -163,4 +163,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-<?= $this->endSection() ?>
+<?php echo $this->endSection(); ?>

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\ItemModel;
 
 class UserController extends BaseController
 {
@@ -13,7 +16,7 @@ class UserController extends BaseController
 
         $data = [
             'users' => $users->where('id !=', 0)->findAll(),
-            'title' => 'Gestion des utilisateurs'
+            'title' => 'Gestion des utilisateurs',
         ];
 
         return view('admin/users/index', $data);
@@ -32,7 +35,7 @@ class UserController extends BaseController
             'user' => $user,
             'title' => "Modifier l'utilisateur",
             // On récupère les groupes configurés dans AuthGroups
-            'availableGroups' => config('AuthGroups')->groups
+            'availableGroups' => config('AuthGroups')->groups,
         ];
 
         return view('admin/users/edit', $data);
@@ -49,7 +52,7 @@ class UserController extends BaseController
 
         // 1. Mise à jour du nom d'utilisateur (Username)
         $user->fill([
-            'username' => $this->request->getPost('username')
+            'username' => $this->request->getPost('username'),
         ]);
         $users->save($user);
 
@@ -73,11 +76,12 @@ class UserController extends BaseController
         }
 
         // 1. Réassigner toutes les cartes de cet utilisateur à l'utilisateur 0
-        $itemModel = new \App\Models\ItemModel();
+        $itemModel = new ItemModel();
         $itemModel
             ->where('id_user', $id)
             ->set(['id_user' => 0])
-            ->update();
+            ->update()
+        ;
 
         // 2. Supprimer définitivement l'utilisateur
         $users->delete($id, true);  // Le `true` force la suppression définitive (hard delete)

@@ -1,5 +1,5 @@
-<?= $this->extend('layout') ?>
-<?= $this->section('content') ?>
+<?php echo $this->extend('layout'); ?>
+<?php echo $this->section('content'); ?>
 
 <?php if (!auth()->loggedIn()) { ?>
 
@@ -38,7 +38,7 @@
 <?php
     // Lecture de l'URL au lieu de la session (Infaillible)
     $openDivision = $_GET['open'] ?? null;
-?>
+    ?>
 
 <?php foreach ($groupedItems as $headerName => $divisions) { ?>
 <section class="header-section">
@@ -47,10 +47,10 @@
     </h2>
 
     <?php
-    foreach ($divisions as $divisionName => $items) {
-        $currentDivisionId = !empty($items) ? $items[0]->id_division : null;
-        $isOpen = ($openDivision && $openDivision == $currentDivisionId) ? 'open' : '';
-        ?>
+        foreach ($divisions as $divisionName => $items) {
+            $currentDivisionId = !empty($items) ? $items[0]->id_division : null;
+            $isOpen = ($openDivision && $openDivision == $currentDivisionId) ? 'open' : '';
+            ?>
     <details class="division-section" id="div-<?php echo $currentDivisionId; ?>" <?php echo $isOpen; ?>>
         <summary class="division-title">
             <span class="toggle-icon">&#x25B6;</span> <?php echo htmlspecialchars($divisionName); ?>
@@ -58,8 +58,8 @@
 
         <div class="cards-grid sortable-grid">
             <?php foreach ($items as $item) { ?>
-            <div class="card fade-in searchable-card <?php echo $item->status === 'Terminé' ? 'status-completed' : ''; ?>"
-                data-id="<?= esc($item->id) ?>">
+            <div class="card fade-in searchable-card <?php echo 'Terminé' === $item->status ? 'status-completed' : ''; ?>"
+                data-id="<?php echo esc($item->id); ?>">
                 <div class="drag-handle" style="cursor: grab; text-align: center; color: #ccc; padding: 5px;">
                     &#x2630; </div>
 
@@ -68,25 +68,25 @@
                     <div class="card-body">
 
                         <?php
-                        $isFuture = false;
-                        $dateSortieFormatted = '';
-                        $textColor = '';
+                            $isFuture = false;
+                $dateSortieFormatted = '';
+                $textColor = '';
 
-                        if (!empty($item->date_sortie)) {
-                            // On définit le fuseau horaire sur Paris
-                            $timezone = new \DateTimeZone('Europe/Paris');
+                if (!empty($item->date_sortie)) {
+                    // On définit le fuseau horaire sur Paris
+                    $timezone = new DateTimeZone('Europe/Paris');
 
-                            // On applique ce fuseau aux deux dates
-                            $dateSortie = new \DateTime($item->date_sortie, $timezone);
-                            $now = new \DateTime('now', $timezone);
+                    // On applique ce fuseau aux deux dates
+                    $dateSortie = new DateTime($item->date_sortie, $timezone);
+                    $now = new DateTime('now', $timezone);
 
-                            if ($dateSortie > $now) {
-                                $isFuture = true;
-                                $dateSortieFormatted = $dateSortie->format('d/m/Y à H:i');
-                                $textColor = 'color: red;';
-                            }
-                        }
-                        ?>
+                    if ($dateSortie > $now) {
+                        $isFuture = true;
+                        $dateSortieFormatted = $dateSortie->format('d/m/Y à H:i');
+                        $textColor = 'color: red;';
+                    }
+                }
+                ?>
 
                         <h4 class="card-title" style="<?php echo $textColor; ?>">
                             <?php echo htmlspecialchars($item->titre); ?></h4>
@@ -133,9 +133,9 @@
 
                 <?php if (auth()->loggedIn() && (int) $item->id_user === (int) auth()->id()) { ?>
                 <div class="card-actions-bottom">
-                    <a href="<?php echo base_url('item/form/' . $item->id); ?>"
+                    <a href="<?php echo base_url('item/form/'.$item->id); ?>"
                         class="btn-icon btn-edit-sm">Modifier</a>
-                    <a href="<?php echo base_url('item/delete/' . $item->id); ?>" onclick="return confirm('Sûr ?');"
+                    <a href="<?php echo base_url('item/delete/'.$item->id); ?>" onclick="return confirm('Sûr ?');"
                         class="btn-icon btn-delete-sm">Supprimer</a>
                 </div>
                 <?php } ?>
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     method: 'POST',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
-                        '<?= csrf_header() ?>': '<?= csrf_hash() ?>'
+                        '<?php echo csrf_header(); ?>': '<?php echo csrf_hash(); ?>'
                     }
                 })
                 .then(res => res.json())
@@ -207,12 +207,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 // 3. CORRECTION : Ajout des headers CSRF pour éviter l'erreur 403 de CodeIgniter
-                fetch('<?= base_url('/items/update-order') ?>', {
+                fetch('<?php echo base_url('/items/update-order'); ?>', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-Requested-With': 'XMLHttpRequest',
-                            '<?= csrf_header() ?>': '<?= csrf_hash() ?>' // Indispensable !
+                            '<?php echo csrf_header(); ?>': '<?php echo csrf_hash(); ?>' // Indispensable !
                         },
                         body: JSON.stringify({
                             order: newOrder
@@ -232,4 +232,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-<?= $this->endSection() ?>
+<?php echo $this->endSection(); ?>
