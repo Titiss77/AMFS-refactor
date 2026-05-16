@@ -6,32 +6,42 @@ use CodeIgniter\Router\RouteCollection;
 
 // @var RouteCollection $routes
 
+// --------------------------------------------------------------------
 // Pages publiques (accessibles sans être connecté)
+// --------------------------------------------------------------------
 $routes->get('/', 'HomeController::index');
-$routes->get('categorie/(:num)', 'HomeController::categorie/$1');  // <-- DÉPLACÉ ICI
+$routes->get('categorie/(:num)', 'HomeController::categorie/$1');
 
-// Routes protégées par l'authentification Shield
+// --------------------------------------------------------------------
+// Routes protégées par session (Utilisateurs connectés normaux)
+// --------------------------------------------------------------------
 $routes->group('', ['filter' => 'session'], static function ($routes): void {
     $routes->get('item/form', 'ItemController::form');
     $routes->get('item/form/(:num)', 'ItemController::form/$1');
     $routes->post('item/save', 'ItemController::save');
+    
+    // Note : Transformer ce GET en POST ou DELETE renforcera la protection CSRF
     $routes->get('item/delete/(:num)', 'ItemController::delete/$1');
+    
     $routes->post('item/increment-episode/(:num)', 'ItemController::incrementEpisode/$1');
-    $routes->post('/items/update-order', 'ItemController::updateOrder');
-
-    $routes->get('users', 'Admin\UserController::index');
-    $routes->get('users/edit/(:num)', 'Admin\UserController::edit/$1');
-    $routes->post('users/update/(:num)', 'Admin\UserController::update/$1');
-    $routes->get('users/delete/(:num)', 'Admin\UserController::delete/$1');
+    $routes->post('items/update-order', 'ItemController::updateOrder');
 });
 
-// Routes pour l'administration des utilisateurs
-$routes->group('admin/users', ['namespace' => 'App\Controllers\Admin'], static function ($routes): void {
+// --------------------------------------------------------------------
+// Routes d'Administration (Restreintes par Session ET Rôle Shield)
+// --------------------------------------------------------------------
+// On applique le filtre Shield 'group' pour s'assurer que seuls les admins y accèdent.
+$routes->group('users', ['namespace' => 'App\Controllers\Admin', 'filter' => 'group:superadmin,admin'], static function ($routes): void {
     $routes->get('/', 'UserController::index');
     $routes->get('edit/(:num)', 'UserController::edit/$1');
-    $routes->post('update/(:num)', 'UserController::update/$1'); // POST pour la soumission du formulaire
+    $routes->post('update/(:num)', 'UserController::update/$1');
+    
+    // Note : Transformer ces actions sensibles en requêtes POST évitera les failles CSRF
     $routes->get('delete/(:num)', 'UserController::delete/$1');
     $routes->get('unban/(:num)', 'UserController::unban/$1');
 });
 
+// --------------------------------------------------------------------
+// Routes par défaut de Shield (Login, Register, etc.)
+// --------------------------------------------------------------------
 service('auth')->routes($routes);
