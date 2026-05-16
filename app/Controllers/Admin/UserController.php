@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
@@ -9,11 +11,12 @@ class UserController extends BaseController
 {
     public function index()
     {
-        // Récupère le UserModel de Shield
         $users = auth()->getProvider();
 
         $data = [
-            'users' => $users->where('id !=', 0)->findAll(),
+            // Implémentation de la pagination (20 par page) au lieu de findAll()
+            'users' => $users->where('id !=', 0)->paginate(20),
+            'pager' => $users->pager,
             'title' => 'Gestion des utilisateurs',
         ];
 
@@ -30,9 +33,8 @@ class UserController extends BaseController
         }
 
         $data = [
-            'user' => $user,
-            'title' => "Modifier l'utilisateur",
-            // On récupère les groupes configurés dans AuthGroups
+            'user'            => $user,
+            'title'           => "Modifier l'utilisateur",
             'availableGroups' => config('AuthGroups')->groups,
         ];
 
@@ -49,66 +51,69 @@ class UserController extends BaseController
             return redirect()->to('admin/users')->with('error', 'Utilisateur introuvable.');
         }
 
-        // 1. Protection contre l'élévation de privilèges : on ne touche pas à un SuperAdmin si on ne l'est pas
+        // Verrouillage de l'élévation de privilèges
         if ($user->inGroup('superadmin') && !$currentUser->inGroup('superadmin')) {
-            return redirect()->to('admin/users')->with('error', "Action non autorisée sur ce niveau d'accréditation.");
+            return redirect()->to('admin/users')->with('error', 'Accréditation insuffisante pour modifier cette cible.');
         }
 
-        // 2. Définition des règles de validation
-        // L'implosion des clés de config permet de valider que le groupe posté existe bien dynamiquement
+        // Génération dynamique des groupes autorisés pour la validation
         $availableGroups = implode(',', array_keys(config('AuthGroups')->groups));
+        
         $rules = [
             'username' => "required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username,id,{$id}]",
-            'group' => "permit_empty|in_list[{$availableGroups}]"
+            'group'    => "permit_empty|in_list[{$availableGroups}]"
         ];
 
         if (!$this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        // 3. Traitement sécurisé des données POST
+        // Injection des données validées
         $user->fill([
             'username' => $this->request->getPost('username'),
         ]);
 
         if (!$users->save($user)) {
-            return redirect()->back()->withInput()->with('error', 'Erreur technique lors de la sauvegarde.');
+            return redirect()->back()->withInput()->with('error', 'Échec de l\'enregistrement en base.');
         }
 
-        // 4. Attribution des rôles avec sécurité additionnelle
         $newGroup = $this->request->getPost('group');
         if ($newGroup) {
-            // Un admin normal ne peut pas nommer un autre utilisateur SuperAdmin
+            // Blocage de la distribution sauvage du rôle Super Admin
             if ($newGroup === 'superadmin' && !$currentUser->inGroup('superadmin')) {
-                return redirect()->to('admin/users')->with('error', "Vous n'avez pas les droits pour accorder le rôle Super Admin.");
+                return redirect()->to('admin/users')->with('error', 'Déploiement du grade Super Admin refusé.');
             }
-
-            // syncGroups écrase les anciens rôles. Idéal pour une logique "1 utilisateur = 1 rôle principal"
             $user->syncGroups($newGroup);
         }
 
-        return redirect()->to('admin/users')->with('message', 'Accréditations mises à jour avec succès.');
+        return redirect()->to('admin/users')->with('message', 'Paramètres utilisateurs synchronisés.');
     }
 
     public function delete($id)
     {
         $users = auth()->getProvider();
+        $user = $users->findById($id);
+        $currentUser = auth()->user();
 
-        // Empêcher l'admin de se supprimer lui-même
-        if ($id == auth()->id()) {
-            return redirect()->to('admin/users')->with('error', 'Vous ne pouvez pas supprimer votre propre compte.');
+        if (!$user) {
+            return redirect()->to('admin/users')->with('error', 'Utilisateur introuvable.');
         }
 
-        // 1. Réassigner toutes les cartes de cet utilisateur à l'utilisateur 0
+        if ($id == $currentUser->id) {
+            return redirect()->to('admin/users')->with('error', 'Auto-neutralisation impossible.');
+        }
+
+        if ($user->inGroup('superadmin') && !$currentUser->inGroup('superadmin')) {
+            return redirect()->to('admin/users')->with('error', 'Accréditation insuffisante pour interdire ce profil.');
+        }
+
+        // Réassignation des entités liées à l'utilisateur système (0)
         $itemModel = new ItemModel();
-        $itemModel
-            ->where('id_user', $id)
-            ->set(['id_user' => 0])
-            ->update();
+        $itemModel->where('id_user', $id)->set(['id_user' => 0])->update();
 
-        // 2. Supprimer définitivement l'utilisateur
-        $users->delete($id, true);  // Le `true` force la suppression définitive (hard delete)
+        // Application du bannissement Shield (Audit Trail)
+        $user->ban('Accès révoqué par l\'administration.');
 
-        return redirect()->to('admin/users')->with('message', 'Utilisateur supprimé et ses cartes ont été archivées avec succès.');
+        return redirect()->to('admin/users')->with('message', 'Profil verrouillé et ressources réattribuées.');
     }
 }

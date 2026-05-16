@@ -37,5 +37,6 @@
             <?php } ?>
         </tbody>
     </table>
+    <?= $pager->links() ?>
 </div>
 <?php echo $this->endSection(); ?>
