@@ -31,6 +31,7 @@ $routes->group('admin/users', ['namespace' => 'App\Controllers\Admin'], static f
     $routes->get('edit/(:num)', 'UserController::edit/$1');
     $routes->post('update/(:num)', 'UserController::update/$1'); // POST pour la soumission du formulaire
     $routes->get('delete/(:num)', 'UserController::delete/$1');
+    $routes->get('unban/(:num)', 'UserController::unban/$1');
 });
 
 service('auth')->routes($routes);

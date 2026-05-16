@@ -10,33 +10,51 @@
     <div class="alert alert-danger"><?php echo session('error'); ?></div>
     <?php } ?>
 
-    <table class="table table-bordered table-striped mt-3">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom d'utilisateur</th>
-                <th>Email</th>
-                <th>Rôle Actuel</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($users as $user) { ?>
-            <tr>
-                <td><?php echo $user->id; ?></td>
-                <td><?php echo esc($user->username); ?></td>
-                <td><?php echo esc($user->getIdentities()[0]->secret ?? 'N/A'); ?> </td>
-                <td><?php echo implode(', ', $user->getGroups()); ?></td>
-                <td>
-                    <a href="<?php echo base_url('admin/users/edit/'.$user->id); ?>"
-                        class="btn btn-sm btn-primary">Modifier</a>
-                    <a href="<?php echo base_url('admin/users/delete/'.$user->id); ?>" class="btn btn-sm btn-danger"
-                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
-                </td>
-            </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+    <div class="admin-table-container fade-in">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom d'utilisateur</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($users as $user): ?>
+                <tr class="<?= $user->isBanned() ? 'user-banned' : '' ?>">
+
+                    <td><?= esc($user->id) ?></td>
+                    <td><strong><?= esc($user->username) ?></strong></td>
+
+                    <td>
+                        <?php if ($user->isBanned()): ?>
+                        <span class="status-badge banned">Suspendu</span>
+                        <?php else: ?>
+                        <span class="status-badge active">Actif</span>
+                        <?php endif ?>
+                    </td>
+
+                    <td>
+                        <div class="action-links">
+                            <a href="<?= base_url('admin/users/edit/' . $user->id) ?>"
+                                class="btn-action btn-edit">Modifier</a>
+
+                            <?php if ($user->isBanned()): ?>
+                            <a href="<?= base_url('admin/users/unban/' . $user->id) ?>" class="btn-action btn-unban"
+                                onclick="return confirm('Réhabiliter cet utilisateur ?')">Débannir</a>
+                            <?php else: ?>
+                            <a href="<?= base_url('admin/users/delete/' . $user->id) ?>" class="btn-action btn-ban"
+                                onclick="return confirm('Suspendre ce compte ?')">Bannir</a>
+                            <?php endif ?>
+                        </div>
+                    </td>
+
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <?= $pager->links() ?>
 </div>
 <?php echo $this->endSection(); ?>

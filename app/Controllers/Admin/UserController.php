@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\ItemModel;
 
 class UserController extends BaseController
 {
@@ -14,7 +13,6 @@ class UserController extends BaseController
         $users = auth()->getProvider();
 
         $data = [
-            // Implémentation de la pagination (20 par page) au lieu de findAll()
             'users' => $users->where('id !=', 0)->paginate(20),
             'pager' => $users->pager,
             'title' => 'Gestion des utilisateurs',
@@ -51,12 +49,10 @@ class UserController extends BaseController
             return redirect()->to('admin/users')->with('error', 'Utilisateur introuvable.');
         }
 
-        // Verrouillage de l'élévation de privilèges
         if ($user->inGroup('superadmin') && !$currentUser->inGroup('superadmin')) {
             return redirect()->to('admin/users')->with('error', 'Accréditation insuffisante pour modifier cette cible.');
         }
 
-        // Génération dynamique des groupes autorisés pour la validation
         $availableGroups = implode(',', array_keys(config('AuthGroups')->groups));
         
         $rules = [
@@ -68,7 +64,6 @@ class UserController extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        // Injection des données validées
         $user->fill([
             'username' => $this->request->getPost('username'),
         ]);
@@ -79,7 +74,6 @@ class UserController extends BaseController
 
         $newGroup = $this->request->getPost('group');
         if ($newGroup) {
-            // Blocage de la distribution sauvage du rôle Super Admin
             if ($newGroup === 'superadmin' && !$currentUser->inGroup('superadmin')) {
                 return redirect()->to('admin/users')->with('error', 'Déploiement du grade Super Admin refusé.');
             }
@@ -89,6 +83,9 @@ class UserController extends BaseController
         return redirect()->to('admin/users')->with('message', 'Paramètres utilisateurs synchronisés.');
     }
 
+    /**
+     * Suspendre (bannir) un utilisateur sans toucher à ses cartes
+     */
     public function delete($id)
     {
         $users = auth()->getProvider();
@@ -107,13 +104,32 @@ class UserController extends BaseController
             return redirect()->to('admin/users')->with('error', 'Accréditation insuffisante pour interdire ce profil.');
         }
 
-        // Réassignation des entités liées à l'utilisateur système (0)
-        $itemModel = new ItemModel();
-        $itemModel->where('id_user', $id)->set(['id_user' => 0])->update();
-
-        // Application du bannissement Shield (Audit Trail)
+        // Bannissement via Shield. Les cartes restent associées à son id_user en base de données.
         $user->ban('Accès révoqué par l\'administration.');
 
-        return redirect()->to('admin/users')->with('message', 'Profil verrouillé et ressources réattribuées.');
+        return redirect()->to('admin/users')->with('message', 'Le profil a été suspendu avec succès. Ses cartes ont été conservées.');
+    }
+
+    /**
+     * Réhabiliter (débannir) un utilisateur
+     */
+    public function unban($id)
+    {
+        $users = auth()->getProvider();
+        $user = $users->findById($id);
+        $currentUser = auth()->user();
+
+        if (!$user) {
+            return redirect()->to('admin/users')->with('error', 'Utilisateur introuvable.');
+        }
+
+        if ($user->inGroup('superadmin') && !$currentUser->inGroup('superadmin')) {
+            return redirect()->to('admin/users')->with('error', 'Accréditation insuffisante pour réhabiliter ce profil.');
+        }
+
+        // Levée du bannissement via Shield
+        $user->unBan();
+
+        return redirect()->to('admin/users')->with('message', 'Le compte a été réhabilité. L\'utilisateur peut à nouveau se connecter et accorder ses cartes.');
     }
 }

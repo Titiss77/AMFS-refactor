@@ -715,3 +715,179 @@ select.form-control {
         text-align: center;
     }
 }
+
+/* =========================================
+   TABLEAU D'ADMINISTRATION
+   ========================================= */
+.admin-table-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+    margin-bottom: 2rem;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.admin-table th {
+    padding: 1.25rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-body);
+    /* Contraste subtil avec le fond des cartes */
+}
+
+.admin-table td {
+    padding: 1.25rem 1.5rem;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.admin-table tbody tr {
+    transition: var(--transition);
+}
+
+.admin-table tbody tr:hover {
+    background-color: var(--bg-body);
+}
+
+.admin-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Style spécifique pour les utilisateurs bannis */
+.admin-table tbody tr.user-banned td {
+    color: var(--text-muted);
+}
+
+.admin-table tbody tr.user-banned {
+    background-color: rgba(239, 68, 68, 0.02);
+    /* Teinte très subtile basée sur --danger */
+}
+
+/* =========================================
+   BADGES DE STATUT
+   ========================================= */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.status-badge.active {
+    background: var(--success-bg);
+    color: var(--success-text);
+}
+
+.status-badge.banned {
+    background: var(--danger-bg);
+    color: var(--danger-text);
+}
+
+/* =========================================
+   BOUTONS D'ACTION (Tableau)
+   ========================================= */
+.action-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.btn-edit {
+    background: var(--info-bg);
+    color: var(--info-text);
+}
+
+.btn-edit:hover {
+    background: var(--info);
+    color: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-ban {
+    background: var(--danger-bg);
+    color: var(--danger-text);
+}
+
+.btn-ban:hover {
+    background: var(--danger);
+    color: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-unban {
+    background: var(--success-bg);
+    color: var(--success-text);
+}
+
+.btn-unban:hover {
+    background: var(--success);
+    color: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+}
+
+/* =========================================
+   PAGINATION
+   ========================================= */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.pagination li a,
+.pagination li span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 0.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-main);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.pagination li a:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.pagination li.active a,
+.pagination li.active span {
+    background: var(--primary);
+    color: var(--bg-card);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
