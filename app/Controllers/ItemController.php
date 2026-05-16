@@ -107,41 +107,42 @@ class ItemController extends BaseController
 
     public function incrementEpisode($id)
     {
-        if (!auth()->loggedIn()) {
-            return $this->response->setJSON(['success' => false]);
-        }
+        $itemModel = new \App\Models\ItemModel();
+        $item = $itemModel->find($id);
 
-        $item = $this->model->find($id);
-        if ($item && (int) $item->id_user === (int) auth()->id()) {
-            $newEp = (string) ((int) $item->episode + 1);
-            $this->model->update($id, ['episode' => $newEp]);
+        if ($item) {
+            $newEpisode = (int)$item->episode + 1;
+            $itemModel->update($id, ['episode' => $newEpisode]);
 
-            return $this->response->setJSON(['success' => true, 'new_episode' => $newEp]);
-        }
-
-        return $this->response->setJSON(['success' => false]);
-    }
-
-    // Ajoute ceci dans app/Controllers/ItemController.php
-
-    public function updateOrder()
-    {
-        // Vérifier que la requête est bien en AJAX/JSON
-        if ($this->request->isAJAX()) {
-            $json = $this->request->getJSON();
-
-            if (isset($json->order) && is_array($json->order)) {
-                $itemModel = new ItemModel();
-
-                // On parcourt le tableau des IDs reçus et on met à jour leur position
-                foreach ($json->order as $index => $id) {
-                    $itemModel->update($id, ['position' => $index]);
-                }
-
-                return $this->response->setJSON(['success' => true]);
+            // Si la requête vient de JavaScript (AJAX/Fetch)
+            if ($this->request->isAJAX()) {
+                // On génère un nouveau token CSRF pour les futures requêtes
+                return $this->response->setJSON([
+                    'success' => true, 
+                    'new_episode' => $newEpisode,
+                    'csrf_token' => csrf_hash() 
+                ]);
             }
         }
+        return redirect()->back(); // Fallback si pas de JS
+    }
 
-        return $this->response->setStatusCode(400)->setJSON(['error' => 'Invalid request']);
+    // 2. Nouveau : Proxy sécurisé pour l'API TMDB
+    // Ajoute cette route dans ton Routes.php : $routes->get('api/tmdb/search', 'ItemController::searchTmdb');
+    public function searchTmdb()
+    {
+        $query = $this->request->getGet('q');
+        // Tu devras mettre TMDB_API_KEY=TaClef dans ton fichier .env
+        $apiKey = env('TMDB_API_KEY') ?? 'TA_CLEF_API_ICI'; 
+
+        $client = \Config\Services::curlrequest();
+        $url = "https://api.themoviedb.org/3/search/multi?query=" . urlencode($query) . "&api_key={$apiKey}&language=fr-FR";
+        
+        try {
+            $response = $client->get($url);
+            return $this->response->setJSON(json_decode($response->getBody()));
+        } catch (\Exception $e) {
+            return $this->response->setJSON(['error' => 'Impossible de contacter TMDB']);
+        }
     }
 }
