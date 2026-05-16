@@ -2,20 +2,20 @@
 <?php echo $this->section('content'); ?>
 
 <?php if (!auth()->loggedIn()) { ?>
-
 <div class="empty-state shadow-card">
     <h2>Bienvenue sur AMFS Dashboard</h2>
     <p style="color: var(--danger);">Seuls les Liens & Outils sont accessibles sans être connecté.</p>
     <p>Veuillez vous connecter ou créer un compte pour gérer et visualiser vos propres cartes.</p>
     <br>
-    <a href=" <?php echo base_url('login'); ?>" class="btn btn-primary">Se connecter</a>
+    <a href="<?php echo base_url('login'); ?>" class="btn btn-primary">Se connecter</a>
     <a href="<?php echo base_url('register'); ?>" class="btn btn-primary">Créer un compte</a>
 </div>
 <?php } else { ?>
-<?php if (auth()->user()->inGroup('admin')) { ?>
-<a href="<?php echo base_url('users'); ?>" class="btn btn-warning">Gérer les utilisateurs</a>
-<?php } ?>
 <div class="actions-container">
+    <?php if (auth()->user()->inGroup('admin')) { ?>
+    <a href="<?php echo base_url('users'); ?>" class="btn btn-warning" style="margin-right: 15px;">Gérer les
+        utilisateurs</a>
+    <?php } ?>
     <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>
 </div>
 <?php } ?>
@@ -35,10 +35,16 @@
 <?php } ?>
 
 <?php } else { ?>
+
+<div class="search-container" style="margin-bottom: 2rem;">
+    <input type="text" id="liveSearch" class="form-control" placeholder="Rechercher une œuvre... (titre, description)"
+        autocomplete="off">
+</div>
+
 <?php
     // Lecture de l'URL au lieu de la session (Infaillible)
     $openDivision = $_GET['open'] ?? null;
-    ?>
+?>
 
 <?php foreach ($groupedItems as $headerName => $divisions) { ?>
 <section class="header-section">
@@ -47,10 +53,10 @@
     </h2>
 
     <?php
-        foreach ($divisions as $divisionName => $items) {
-            $currentDivisionId = !empty($items) ? $items[0]->id_division : null;
-            $isOpen = ($openDivision && $openDivision == $currentDivisionId) ? 'open' : '';
-            ?>
+    foreach ($divisions as $divisionName => $items) {
+        $currentDivisionId = !empty($items) ? $items[0]->id_division : null;
+        $isOpen = ($openDivision && $openDivision == $currentDivisionId) ? 'open' : '';
+        ?>
     <details class="division-section" id="div-<?php echo $currentDivisionId; ?>" <?php echo $isOpen; ?>>
         <summary class="division-title">
             <span class="toggle-icon">&#x25B6;</span> <?php echo htmlspecialchars($divisionName); ?>
@@ -60,36 +66,40 @@
             <?php foreach ($items as $item) { ?>
             <div class="card fade-in searchable-card <?php echo 'Terminé' === $item->status ? 'status-completed' : ''; ?>"
                 data-id="<?php echo esc($item->id); ?>">
-                <div class="drag-handle" style="cursor: grab; text-align: center; color: #ccc; padding: 5px;">
-                    &#x2630; </div>
+
+                <div class="drag-handle" style="cursor: grab; text-align: center; color: #ccc; padding: 5px;"
+                    title="Déplacer cette carte">
+                    &#x2630;
+                </div>
 
                 <a href="<?php echo htmlspecialchars($item->getFinalLink()); ?>" target="_blank"
                     class="card-link-block">
                     <div class="card-body">
 
                         <?php
-                            $isFuture = false;
-                $dateSortieFormatted = '';
-                $textColor = '';
+                        $isFuture = false;
+                        $dateSortieFormatted = '';
+                        $textColor = '';
 
-                if (!empty($item->date_sortie)) {
-                    // On définit le fuseau horaire sur Paris
-                    $timezone = new DateTimeZone('Europe/Paris');
+                        if (!empty($item->date_sortie)) {
+                            // On définit le fuseau horaire sur Paris
+                            $timezone = new DateTimeZone('Europe/Paris');
 
-                    // On applique ce fuseau aux deux dates
-                    $dateSortie = new DateTime($item->date_sortie, $timezone);
-                    $now = new DateTime('now', $timezone);
+                            // On applique ce fuseau aux deux dates
+                            $dateSortie = new DateTime($item->date_sortie, $timezone);
+                            $now = new DateTime('now', $timezone);
 
-                    if ($dateSortie > $now) {
-                        $isFuture = true;
-                        $dateSortieFormatted = $dateSortie->format('d/m/Y à H:i');
-                        $textColor = 'color: red;';
-                    }
-                }
-                ?>
+                            if ($dateSortie > $now) {
+                                $isFuture = true;
+                                $dateSortieFormatted = $dateSortie->format('d/m/Y à H:i');
+                                $textColor = 'color: var(--danger);';  // Utilisation d'une variable CSS plutôt que "red" brut
+                            }
+                        }
+                        ?>
 
-                        <h4 class="card-title" style="<?php echo $textColor; ?>">
-                            <?php echo htmlspecialchars($item->titre); ?></h4>
+                        <h4 class="card-title search-target-title" style="<?php echo $textColor; ?>">
+                            <?php echo htmlspecialchars($item->titre); ?>
+                        </h4>
 
                         <?php if ($isFuture) { ?>
                         <p class="card-date" style="<?php echo $textColor; ?>">
@@ -97,12 +107,14 @@
                         </p>
                         <?php } ?>
 
-                        <p style="font-size: 0.8rem; color: gray; margin: 0;">Status :
-                            <?php echo htmlspecialchars($item->status); ?></p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Status :
+                            <?php echo htmlspecialchars($item->status); ?>
+                        </p>
 
                         <?php if (!empty($item->description)) { ?>
-                        <p class="card-desc">
-                            <?php echo htmlspecialchars($item->description); ?></p>
+                        <p class="card-desc search-target-desc">
+                            <?php echo htmlspecialchars($item->description); ?>
+                        </p>
                         <?php } ?>
 
                         <div class="card-badges">
@@ -126,16 +138,17 @@
                     <div class="card-image">
                         <?php if (!empty($item->image)) { ?>
                         <img src="<?php echo htmlspecialchars($item->image); ?>"
-                            alt="<?php echo htmlspecialchars($item->titre); ?>" class="image-view">
+                            alt="<?php echo htmlspecialchars($item->titre); ?>" class="image-view" loading="lazy">
                         <?php } ?>
                     </div>
                 </a>
 
                 <?php if (auth()->loggedIn() && (int) $item->id_user === (int) auth()->id()) { ?>
                 <div class="card-actions-bottom">
-                    <a href="<?php echo base_url('item/form/'.$item->id); ?>"
+                    <a href="<?php echo base_url('item/form/' . $item->id); ?>"
                         class="btn-icon btn-edit-sm">Modifier</a>
-                    <a href="<?php echo base_url('item/delete/'.$item->id); ?>" onclick="return confirm('Sûr ?');"
+                    <a href="<?php echo base_url('item/delete/' . $item->id); ?>"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette carte ?');"
                         class="btn-icon btn-delete-sm">Supprimer</a>
                 </div>
                 <?php } ?>
@@ -153,15 +166,40 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- 1. BOUTON +1 EPISODE (AJAX) ---
-    // (querySelectorAll ne plante pas même s'il ne trouve rien, donc c'est sécurisé par défaut)
+    // --- A. RECHERCHE EN DIRECT (LIVE SEARCH) ---
+    const searchInput = document.getElementById('liveSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.searchable-card');
+
+            cards.forEach(card => {
+                const titleEl = card.querySelector('.search-target-title');
+                const descEl = card.querySelector('.search-target-desc');
+
+                const title = titleEl ? titleEl.innerText.toLowerCase() : '';
+                const desc = descEl ? descEl.innerText.toLowerCase() : '';
+
+                if (title.includes(term) || desc.includes(term)) {
+                    card.style.display = 'flex'; // Respecte le layout flex de ta carte
+                } else {
+                    card.style.display = 'none'; // Masque la carte instantanément
+                }
+            });
+        });
+    }
+
+    // --- B. BOUTON +1 EPISODE (AJAX AVEC RETOUR VISUEL) ---
     const buttons = document.querySelectorAll('.btn-increment');
     buttons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation();
+            e.stopPropagation(); // Évite de cliquer accidentellement sur le lien principal
+
             const itemId = this.getAttribute('data-id');
-            fetch('<?php echo base_url('item/increment-episode/'); ?>' + itemId, {
+            const url = '<?php echo base_url('item/increment-episode/'); ?>' + itemId;
+
+            fetch(url, {
                     method: 'POST',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
@@ -171,31 +209,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        document.getElementById('ep-count-' + itemId).innerText = data
-                            .new_episode;
+                        const counterSpan = document.getElementById('ep-count-' + itemId);
+                        counterSpan.innerText = data.new_episode;
+
+                        // Petit effet visuel agréable (Pulse vert rapide)
+                        counterSpan.style.color = 'var(--success)';
+                        counterSpan.style.transform = 'scale(1.2)';
+                        counterSpan.style.display = 'inline-block';
+                        counterSpan.style.transition = 'all 0.3s ease';
+
+                        setTimeout(() => {
+                            counterSpan.style.color = '';
+                            counterSpan.style.transform = 'scale(1)';
+                        }, 600);
                     }
-                });
+                })
+                .catch(err => console.error("Erreur lors de l'incrémentation :", err));
         });
     });
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-    // 1. On sélectionne TOUTES les grilles (toutes les divisions) avec la classe
+    // --- C. DRAG AND DROP (SORTABLEJS) ---
     var grids = document.querySelectorAll('.sortable-grid');
-
     grids.forEach(function(el) {
-        // Initialiser SortableJS pour chaque grille
         Sortable.create(el, {
             animation: 150,
-            ghostClass: 'bg-light',
-
-            // On dit à Sortable d'utiliser UNIQUEMENT l'élément avec la classe .drag-handle
+            ghostClass: 'sortable-ghost', // Assure-toi d'avoir mis cette classe dans ton CSS (étape précédente)
             handle: '.drag-handle',
 
-            // (Tu peux du coup retirer les options delay, delayOnTouchOnly, touchStartThreshold)
-
             onEnd: function(evt) {
-                // 2. CORRECTION : On cherche la classe '.card' et non plus '.card-item'
                 var itemEls = el.querySelectorAll('.card');
                 var newOrder = [];
 
@@ -206,13 +247,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
 
-                // 3. CORRECTION : Ajout des headers CSRF pour éviter l'erreur 403 de CodeIgniter
-                fetch('<?php echo base_url('/items/update-order'); ?>', {
+                fetch('<?php echo base_url('items/update-order'); ?>', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-Requested-With': 'XMLHttpRequest',
-                            '<?php echo csrf_header(); ?>': '<?php echo csrf_hash(); ?>' // Indispensable !
+                            '<?php echo csrf_header(); ?>': '<?php echo csrf_hash(); ?>'
                         },
                         body: JSON.stringify({
                             order: newOrder
@@ -222,14 +262,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     .then(data => {
                         if (!data.success) {
                             console.error('Erreur lors de la sauvegarde de l\'ordre.');
-                        } else {
-                            console.log('Ordre sauvegardé avec succès !');
                         }
                     })
                     .catch(error => console.error('Erreur réseau:', error));
             }
         });
     });
+
 });
 </script>
 <?php echo $this->endSection(); ?>

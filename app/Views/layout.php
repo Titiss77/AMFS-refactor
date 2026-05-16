@@ -7,10 +7,15 @@
     <title>AMFS</title>
     <link rel="stylesheet" href="<?php echo base_url('assets/root.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/style.css'); ?>">
+    <meta name="csrf-token" content="<?= csrf_hash() ?>">
+    <meta name="csrf-header" content="<?= csrf_header() ?>">
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="<?php echo base_url('assets/script.js'); ?>"></script>
 </head>
 
 <body>
+    <div id="toast-container" class="toast-container"></div>
     <header class="main-header">
         <h1><a href=" <?php echo base_url('/'); ?>">AMFS</a></h1>
 

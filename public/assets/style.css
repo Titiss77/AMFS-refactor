@@ -891,3 +891,65 @@ select.form-control {
     border-color: var(--primary);
     box-shadow: var(--shadow-sm);
 }
+
+/* =========================================
+   NOTIFICATIONS (TOASTS)
+   ========================================= */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-hover);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: opacity 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.toast-success {
+    border-left-color: var(--success);
+    color: var(--success-text);
+}
+
+.toast-danger {
+    border-left-color: var(--danger);
+    color: var(--danger-text);
+}
+
+.toast-info {
+    border-left-color: var(--info);
+    color: var(--info-text);
+}
+
+/* =========================================
+   DRAG AND DROP (SORTABLE.JS)
+   ========================================= */
+.cards-grid {
+    /* Nécessaire pour que le drag and drop soit fluide */
+    min-height: 50px;
+}
+
+.sortable-ghost {
+    opacity: 0.4;
+    background-color: var(--primary-light);
+    border: 2px dashed var(--primary);
+    transform: scale(0.98);
+}
+
+.card {
+    cursor: grab;
+}
+
+.card:active {
+    cursor: grabbing;
+}

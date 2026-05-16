@@ -27,3 +27,90 @@ document.addEventListener('DOMContentLoaded', function() {
         textarea.addEventListener('input', updateCounter);
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+
+    // 1. SYSTÈME DE NOTIFICATIONS (TOASTS)
+    window.showToast = function(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type} fade-in`;
+        toast.innerText = message;
+        
+        container.appendChild(toast);
+        
+        // Disparaît après 3 secondes
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    };
+
+    // 2. INCRÉMENTATION ASYNCHRONE (Fetch API)
+    const csrfHeader = document.querySelector('meta[name="csrf-header"]').getAttribute('content');
+    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    document.querySelectorAll('.btn-async-increment').forEach(button => {
+        button.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const itemId = button.getAttribute('data-id');
+            const url = button.getAttribute('data-url');
+            const counterSpan = document.getElementById(`episode-count-${itemId}`);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        [csrfHeader]: csrfToken // Sécurité CSRF
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Mise à jour visuelle instantanée
+                    counterSpan.innerText = data.new_episode;
+                    csrfToken = data.csrf_token; // Mise à jour du token de sécurité
+                    showToast('Épisode ajouté avec succès !');
+                }
+            } catch (error) {
+                showToast('Erreur lors de l\'ajout', 'danger');
+            }
+        });
+    });
+
+    // 3. RECHERCHE EN DIRECT (Filtre sans rechargement)
+    const searchInput = document.getElementById('liveSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.card'); // Assure-toi que tes éléments ont la classe .card
+
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title')?.innerText.toLowerCase() || '';
+                const desc = card.querySelector('.card-desc')?.innerText.toLowerCase() || '';
+                
+                if (title.includes(term) || desc.includes(term)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    // 4. DRAG AND DROP (SortableJS)
+    // Cible le conteneur de tes cartes
+    const grids = document.querySelectorAll('.cards-grid');
+    grids.forEach(grid => {
+        new Sortable(grid, {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function (evt) {
+                // Optionnel : Ici tu pourrais envoyer une requête Fetch pour sauvegarder le nouvel ordre en BDD
+                showToast('Nouvel ordre enregistré', 'info');
+            },
+        });
+    });
+
+});

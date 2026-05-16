@@ -133,7 +133,7 @@ class ItemController extends BaseController
     {
         $query = $this->request->getGet('q');
         // Tu devras mettre TMDB_API_KEY=TaClef dans ton fichier .env
-        $apiKey = env('TMDB_API_KEY') ?? 'TA_CLEF_API_ICI'; 
+        $apiKey = env('TMDB_API_KEY') ?? 'ba55da0439797150ed58c4e524584823'; 
 
         $client = \Config\Services::curlrequest();
         $url = "https://api.themoviedb.org/3/search/multi?query=" . urlencode($query) . "&api_key={$apiKey}&language=fr-FR";
