@@ -28,10 +28,18 @@ class HomeController extends BaseController
         $headers = $model->getHeaders();
         $groupedItems = $model->getItemsGroupedByHeaderAndDivision($userId, $headerId);
 
+        // --- NOUVEAU : Compter les cartes en attente pour les admins ---
+        $pendingCount = 0;
+        if (auth()->loggedIn() && auth()->user()->inGroup('admin', 'superadmin')) {
+            $pendingCount = $model->where('is_public', 2)->countAllResults();
+        }
+        // ---------------------------------------------------------------
+
         return view('home', [
             'headers' => $headers,
             'groupedItems' => $groupedItems,
             'currentHeaderId' => $headerId,
+            'pendingCount' => $pendingCount, // On passe le compteur à la vue
         ]);
     }
 }

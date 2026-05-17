@@ -15,8 +15,16 @@
     <?php if (auth()->user()->inGroup('admin', 'superadmin')) { ?>
     <a href="<?php echo base_url('users'); ?>" class="btn btn-warning" style="margin-right: 15px;">Gérer les
         utilisateurs</a>
-    <a href="<?php echo base_url('items/pending'); ?>" class="btn btn-info" style="margin-right: 15px;">Cartes en
-        attente</a>
+
+    <a href="<?php echo base_url('items/pending'); ?>" class="btn btn-info" style="margin-right: 15px;">
+        Cartes en attente
+        <?php if (isset($pendingCount) && $pendingCount > 0) { ?>
+        <span
+            style="background-color: var(--danger, #dc3545); color: white; border-radius: 50%; padding: 2px 8px; font-size: 0.85rem; font-weight: bold; margin-left: 5px;">
+            <?php echo $pendingCount; ?>
+        </span>
+        <?php } ?>
+    </a>
     <?php } ?>
     <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>
 </div>

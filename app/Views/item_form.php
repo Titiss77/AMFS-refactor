@@ -50,6 +50,9 @@
             <input type="checkbox" id="is_public" name="is_public" value="1"
                 <?php echo (isset($item) && in_array($item->is_public, [1, 2])) ? 'checked' : ''; ?>>
             <label for="is_public" class="form-label" style="display:inline;">Rendre ce lien visible au public</label>
+            <small>
+                <br>❌ Attention : Si vous rendez ce lien public, attendez-vous à perdre l'épisode et la saison en cours.
+            </small>
         </div>
 
         <div class="form-group">
