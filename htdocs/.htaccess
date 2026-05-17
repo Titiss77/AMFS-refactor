@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Si le fichier ou le dossier demandé existe réellement dans ce htdocs, on le laisse passer
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Sinon, on capture le premier bloc de l'URL (le nom du projet) et on l'envoie à index.php
+RewriteRule ^([^/]+)/(.*)$ index.php?projet=$1 [QSA,L]
