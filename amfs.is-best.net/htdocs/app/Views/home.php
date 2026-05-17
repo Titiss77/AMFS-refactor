@@ -12,18 +12,27 @@
 </div>
 <?php } else { ?>
 <div class="actions-container">
+    <?php
+    // Calcul du total des éléments en attente pour les admins
+    $pendingTotal = 0;
+    if (auth()->loggedIn() && auth()->user()->inGroup('admin', 'superadmin')) {
+        $pendingItemsCount = model('App\Models\ItemModel')->where('is_public', 2)->countAllResults();
+        $pendingRevisionsCount = model('App\Models\ItemRevisionModel')->where('revision_status', 'pending')->countAllResults();
+        $pendingTotal = $pendingItemsCount + $pendingRevisionsCount;
+    }
+    ?>
     <?php if (auth()->user()->inGroup('admin', 'superadmin')) { ?>
     <a href="<?php echo base_url('users'); ?>" class="btn btn-warning" style="margin-right: 15px;">Gérer les
         utilisateurs</a>
 
     <a href="<?php echo base_url('items/pending'); ?>" class="btn btn-info" style="margin-right: 15px;">
         Cartes en attente
-        <?php if (isset($pendingCount) && $pendingCount > 0) { ?>
+        <?php if (isset($pendingTotal) && $pendingTotal > 0): ?>
         <span
-            style="background-color: var(--danger, #dc3545); color: white; border-radius: 50%; padding: 2px 8px; font-size: 0.85rem; font-weight: bold; margin-left: 5px;">
-            <?php echo $pendingCount; ?>
+            style="background-color: var(--danger, #dc3545); color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; margin-left: 5px; font-weight: bold;">
+            <?= $pendingTotal ?>
         </span>
-        <?php } ?>
+        <?php endif; ?>
     </a>
     <?php } ?>
     <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>
