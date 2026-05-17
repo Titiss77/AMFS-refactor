@@ -51,6 +51,8 @@ $routes->group('items', ['namespace' => 'App\Controllers\Admin', 'filter' => 'gr
     // --- NOUVELLES ROUTES POUR LE DRAFTING (RÉVISIONS) ---
     $routes->get('approve-revision/(:num)', 'ItemController::approveRevision/$1');
     $routes->get('reject-revision/(:num)', 'ItemController::rejectRevision/$1');
+
+    $routes->get('audit', 'AuditController::index');
 });
 
 // --------------------------------------------------------------------
