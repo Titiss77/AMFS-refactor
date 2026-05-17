@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           # Dossier de destination sur votre hébergeur (souvent htdocs)
-          server-dir: amfs.is-best.net/htdocs/
+          server-dir: /
           # Fichiers et dossiers à NE PAS envoyer
           exclude: |
             **/.git*
