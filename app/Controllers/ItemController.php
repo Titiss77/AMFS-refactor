@@ -118,7 +118,7 @@ class ItemController extends BaseController
             // Seul le propriétaire ou un admin peut supprimer
             if ($item && ((int) $item->id_user === (int) auth()->id() || $isAdmin)) {
                 $id_div = $item->id_division;
-                $this->model->where('id', $id)->delete();
+                $this->model->delete($id);
 
                 // On repart d'où on vient (Referer direct car pas de formulaire)
                 $backUrl = $this->request->getUserAgent()->getReferrer() ?: site_url('/');

@@ -25,7 +25,7 @@ class ItemModel extends Model
         'position'
     ];
     // Ajoute ces lignes pour le Soft Delete
-    protected $useSoftDeletes = true;
+    protected $useSoftDeletes = false;
     protected $deletedField = 'deleted_at';
 
     public function getItemsGroupedByHeaderAndDivision($userId = null, $headerId = null)
