@@ -77,7 +77,8 @@
             <div class="card fade-in searchable-card <?php echo 'Terminé' === $item->status ? 'status-completed' : ''; ?>"
                 data-id="<?php echo esc($item->id); ?>">
 
-                <div class="drag-handle" style="cursor: grab; text-align: center; color: #ccc; padding: 5px;"
+                <div class="drag-handle"
+                    style="cursor: grab; text-align: center; color: #ccc; padding: 5px; touch-action: none;"
                     title="Déplacer cette carte">
                     &#x2630;
                 </div>

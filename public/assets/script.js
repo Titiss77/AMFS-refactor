@@ -99,17 +99,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. DRAG AND DROP (SortableJS)
-    // Cible le conteneur de tes cartes
-    const grids = document.querySelectorAll('.cards-grid');
-    grids.forEach(grid => {
-        new Sortable(grid, {
+    // --- C. DRAG AND DROP (SORTABLEJS) ---
+    var grids = document.querySelectorAll('.sortable-grid');
+    grids.forEach(function(el) {
+        Sortable.create(el, {
             animation: 150,
             ghostClass: 'sortable-ghost',
-            onEnd: function (evt) {
-                // Optionnel : Ici tu pourrais envoyer une requête Fetch pour sauvegarder le nouvel ordre en BDD
-                showToast('Nouvel ordre enregistré', 'info');
-            },
+            handle: '.drag-handle',
+            
+            // --- LE CORRECTIF POUR MOBILE ---
+            delay: 200,             // Oblige à maintenir le doigt 200 millisecondes
+            delayOnTouchOnly: true, // Ce délai ne s'applique QUE sur les smartphones
+            // --------------------------------
+
+            onEnd: function(evt) {
+                // Si la position finale est identique à la position initiale, on annule
+                if (evt.oldIndex === evt.newIndex) {
+                    return; 
+                }
+
+                var itemEls = el.querySelectorAll('.card');
+                var newOrder = [];
+
+                itemEls.forEach(function(item) {
+                    var id = item.getAttribute('data-id');
+                    if (id) {
+                        newOrder.push(id);
+                    }
+                });
+
+                fetch('<?php echo base_url('items/update-order'); ?>', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            '<?php echo csrf_header(); ?>': '<?php echo csrf_hash(); ?>'
+                        },
+                        body: JSON.stringify({
+                            order: newOrder
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.success) {
+                            console.error('Erreur lors de la sauvegarde de l\'ordre.');
+                        } else {
+                            console.log('Ordre mis à jour avec succès');
+                        }
+                    })
+                    .catch(error => console.error('Erreur réseau:', error));
+            }
         });
     });
 
