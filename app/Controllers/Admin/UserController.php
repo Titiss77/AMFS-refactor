@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
@@ -25,15 +23,28 @@ class UserController extends BaseController
     {
         $users = auth()->getProvider();
         $user = $users->findById($id);
+        $currentUser = auth()->user();  // On récupère l'utilisateur actuellement connecté
 
         if (!$user) {
             return redirect()->to('users')->with('error', 'Utilisateur introuvable.');
         }
 
+        // 1. Un admin normal ne peut pas accéder à la page de modification d'un superadmin
+        if ($user->inGroup('superadmin') && !$currentUser->inGroup('superadmin')) {
+            return redirect()->to('users')->with('error', 'Accréditation insuffisante pour modifier cette cible.');
+        }
+
+        $availableGroups = config('AuthGroups')->groups;
+
+        // 2. Un admin normal ne peut pas voir ni attribuer le grade superadmin à quelqu'un
+        if (!$currentUser->inGroup('superadmin')) {
+            unset($availableGroups['superadmin']);
+        }
+
         $data = [
-            'user'            => $user,
-            'title'           => "Modifier l'utilisateur",
-            'availableGroups' => config('AuthGroups')->groups,
+            'user' => $user,
+            'title' => "Modifier l'utilisateur",
+            'availableGroups' => $availableGroups,
         ];
 
         return view('admin/users/edit', $data);
@@ -54,10 +65,10 @@ class UserController extends BaseController
         }
 
         $availableGroups = implode(',', array_keys(config('AuthGroups')->groups));
-        
+
         $rules = [
             'username' => "required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username,id,{$id}]",
-            'group'    => "permit_empty|in_list[{$availableGroups}]"
+            'group' => "permit_empty|in_list[{$availableGroups}]"
         ];
 
         if (!$this->validate($rules)) {
@@ -69,7 +80,7 @@ class UserController extends BaseController
         ]);
 
         if (!$users->save($user)) {
-            return redirect()->back()->withInput()->with('error', 'Échec de l\'enregistrement en base.');
+            return redirect()->back()->withInput()->with('error', "Échec de l'enregistrement en base.");
         }
 
         $newGroup = $this->request->getPost('group');
@@ -105,7 +116,7 @@ class UserController extends BaseController
         }
 
         // Bannissement via Shield. Les cartes restent associées à son id_user en base de données.
-        $user->ban('Accès révoqué par l\'administration.');
+        $user->ban("Accès révoqué par l'administration.");
 
         return redirect()->to('users')->with('message', 'Le profil a été suspendu avec succès. Ses cartes ont été conservées.');
     }
@@ -130,6 +141,6 @@ class UserController extends BaseController
         // Levée du bannissement via Shield
         $user->unBan();
 
-        return redirect()->to('users')->with('message', 'Le compte a été réhabilité. L\'utilisateur peut à nouveau se connecter et accorder ses cartes.');
+        return redirect()->to('users')->with('message', "Le compte a été réhabilité. L'utilisateur peut à nouveau se connecter et accorder ses cartes.");
     }
 }
