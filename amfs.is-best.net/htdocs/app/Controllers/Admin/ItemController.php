@@ -3,16 +3,17 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\AuditLogModel;  // Ajout de l'audit
 use App\Models\ItemModel;
 use App\Models\ItemRevisionModel;
+use App\Models\CronLogModel;
+use App\Models\AuditLogModel;
 
 class ItemController extends BaseController
 {
     public function pending()
     {
         helper('text');
-
+        
         $itemModel = new ItemModel();
         $revisionModel = new ItemRevisionModel();
 
@@ -23,13 +24,13 @@ class ItemController extends BaseController
             $changes = [];
 
             $fieldsToCompare = [
-                'titre' => 'Titre',
-                'status' => 'Statut',
-                'image' => 'Image / Couverture',
-                'lien' => 'Lien de visionnage/lecture',
+                'titre'       => 'Titre',
+                'status'      => 'Statut',
+                'image'       => 'Image / Couverture',
+                'lien'        => 'Lien de visionnage/lecture',
                 'description' => 'Description',
-                'episode' => 'Épisode',
-                'saison' => 'Saison',
+                'episode'     => 'Épisode',
+                'saison'      => 'Saison',
                 'date_sortie' => 'Date de sortie'
             ];
 
@@ -39,16 +40,16 @@ class ItemController extends BaseController
                     $newValue = $revision[$field] ?? '';
 
                     if ($field === 'date_sortie' && (!empty($oldValue) || !empty($newValue))) {
-                        $oldValue = $oldValue ? substr((string) $oldValue, 0, 10) : '';
-                        $newValue = $newValue ? substr((string) $newValue, 0, 10) : '';
+                        $oldValue = $oldValue ? substr((string)$oldValue, 0, 10) : '';
+                        $newValue = $newValue ? substr((string)$newValue, 0, 10) : '';
                     }
 
-                    if ((string) $oldValue !== (string) $newValue) {
+                    if ((string)$oldValue !== (string)$newValue) {
                         $changes[] = [
                             'field' => $field,
                             'label' => $label,
-                            'old' => $oldValue,
-                            'new' => $newValue
+                            'old'   => $oldValue,
+                            'new'   => $newValue
                         ];
                     }
                 }
@@ -70,8 +71,8 @@ class ItemController extends BaseController
         $item = $itemModel->find($id);
 
         if ($item) {
-            $itemModel->update($id, ['is_public' => 1]);
-
+            $itemModel->update($id, ['is_public' => 1]); 
+            
             $audit = new AuditLogModel();
             $audit->logAction('Modération : Approbation Carte', "Le SuperAdmin a validé la nouvelle publication de la carte ID {$id} ('{$item->titre}').");
         }
@@ -84,8 +85,8 @@ class ItemController extends BaseController
         $item = $itemModel->find($id);
 
         if ($item) {
-            $itemModel->update($id, ['is_public' => 0]);
-
+            $itemModel->update($id, ['is_public' => 0]); 
+            
             $audit = new AuditLogModel();
             $audit->logAction('Modération : Refus Carte', "Le SuperAdmin a refusé la publication de la carte ID {$id} ('{$item->titre}'). Rétrogradation en privé.");
         }
@@ -101,14 +102,15 @@ class ItemController extends BaseController
         $revision = $revisionModel->find($revisionId);
 
         if ($revision && $revision['revision_status'] === 'pending') {
+            
             $updateData = [
-                'titre' => $revision['titre'],
-                'status' => $revision['status'],
-                'image' => $revision['image'],
-                'lien' => $revision['lien'],
+                'titre'       => $revision['titre'],
+                'status'      => $revision['status'],
+                'image'       => $revision['image'],
+                'lien'        => $revision['lien'],
                 'description' => $revision['description'],
-                'episode' => $revision['episode'],
-                'saison' => $revision['saison'],
+                'episode'     => $revision['episode'],
+                'saison'      => $revision['saison'],
                 'date_sortie' => $revision['date_sortie'],
             ];
 
@@ -130,7 +132,7 @@ class ItemController extends BaseController
 
         if ($revision) {
             $revisionModel->update($revisionId, ['revision_status' => 'rejected']);
-
+            
             $audit = new AuditLogModel();
             $audit->logAction('Modération : Refus Draft', "Rejet du Draft ID {$revisionId} pour la carte ID {$revision['original_item_id']}. La version publique n'a pas été affectée.");
         }
@@ -139,13 +141,94 @@ class ItemController extends BaseController
 
     public function deadLinks()
     {
-        $cronLogModel = new \App\Models\CronLogModel();
-
+        $cronLogModel = new CronLogModel();
+        
         $data = [
-            // On récupère uniquement les lignes qui correspondent à de vrais liens cassés
             'deadItems' => $cronLogModel->where('item_id IS NOT NULL')->findAll()
         ];
 
         return view('admin/items/dead_links', $data);
+    }
+
+    /**
+     * NOUVEAUTÉ : Suppression d'une carte depuis le panneau d'administration
+     */
+    public function delete($id)
+    {
+        $itemModel = new ItemModel();
+        $item = $itemModel->find($id);
+
+        if ($item) {
+            $titre = $item->titre;
+            
+            // Suppression de la carte principale
+            $itemModel->delete($id);
+
+            // Nettoyage immédiat de son alerte de lien mort indexée
+            $cronLogModel = new CronLogModel();
+            $cronLogModel->where('item_id', $id)->delete();
+
+            // Journalisation de la suppression administrative
+            $audit = new AuditLogModel();
+            $audit->logAction('Modération : Suppression Carte', "Suppression définitive de la carte ID {$id} ('{$titre}') par l'administration depuis le rapport des erreurs 404.");
+
+            return redirect()->back()->with('message', "La carte '{$titre}' a été définitivement supprimée.");
+        }
+
+        return redirect()->back()->with('error', 'Carte introuvable.');
+    }
+    
+    /**
+     * NOUVEAUTÉ : Remplacement d'un nom de domaine en masse
+     */
+    public function bulkUpdateDomain()
+    {
+        if ($this->request->is('post')) {
+            $oldDomain = $this->request->getPost('old_domain');
+            $newDomain = $this->request->getPost('new_domain');
+
+            if (empty($oldDomain) || empty($newDomain)) {
+                return redirect()->back()->with('error', 'Les deux champs de domaine sont requis.');
+            }
+
+            // On supprime les slashs de fin potentiels pour éviter les erreurs de formatage (/anime)
+            $oldDomain = rtrim($oldDomain, '/');
+            $newDomain = rtrim($newDomain, '/');
+
+            $itemModel = new ItemModel();
+            
+            // On cherche toutes les cartes dont le lien contient l'ancien domaine
+            $itemsToUpdate = $itemModel->like('lien', $oldDomain)->findAll();
+
+            $count = 0;
+            $cronLogModel = new CronLogModel();
+
+            foreach ($itemsToUpdate as $item) {
+                // Remplacement dynamique uniquement sur la portion du domaine
+                $newLien = str_replace($oldDomain, $newDomain, $item->lien);
+                
+                // Mise à jour de la carte en base de données
+                $itemModel->update($item->id, [
+                    'lien' => $newLien,
+                    'link_status' => 'ok' // On retire le flag "dead"
+                ]);
+
+                // On supprime l'alerte correspondante dans les logs du Cron
+                $cronLogModel->where('item_id', $item->id)->delete();
+                $count++;
+            }
+
+            if ($count > 0) {
+                // Journalisation de sécurité
+                $audit = new AuditLogModel();
+                $audit->logAction('Maintenance : Remplacement en masse', "Migration du domaine '{$oldDomain}' vers '{$newDomain}' appliquée sur {$count} carte(s).");
+                
+                return redirect()->back()->with('message', "Succès : Le domaine a été remplacé sur {$count} carte(s). Les alertes ont été effacées.");
+            } else {
+                return redirect()->back()->with('error', "Aucune carte trouvée contenant le domaine '{$oldDomain}'.");
+            }
+        }
+        
+        return redirect()->back();
     }
 }

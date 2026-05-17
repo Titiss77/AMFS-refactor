@@ -51,11 +51,16 @@ $routes->group('items', ['namespace' => 'App\Controllers\Admin', 'filter' => 'gr
     $routes->get('approve/(:num)', 'ItemController::approve/$1');
     $routes->get('reject/(:num)', 'ItemController::reject/$1');
     
-    // --- NOUVELLES ROUTES POUR LE DRAFTING (RÉVISIONS) ---
+    // Drafting (Révisions)
     $routes->get('approve-revision/(:num)', 'ItemController::approveRevision/$1');
     $routes->get('reject-revision/(:num)', 'ItemController::rejectRevision/$1');
 
+    // Maintenance des liens & Suppression administrative
     $routes->get('dead-links', 'ItemController::deadLinks');
+    $routes->get('delete/(:num)', 'ItemController::delete/$1');
+
+    // NOUVELLE ROUTE : Remplacement de domaine en masse
+    $routes->post('bulk-update-domain', 'ItemController::bulkUpdateDomain');
 });
 
 $routes->group('audit', ['namespace' => 'App\Controllers\Admin', 'filter' => 'group:superadmin,admin'], static function ($routes): void {
