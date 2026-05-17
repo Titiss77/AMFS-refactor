@@ -35,8 +35,7 @@
                     <td><?= esc($item->description) ?></td>
                     <td>
                         <div class="action-links">
-                            <a href="<?= base_url('item/form/' . $item->id) ?>" target="_blank"
-                                class="btn-action btn-edit">Examiner</a>
+                            <a href="<?= base_url('item/form/' . $item->id) ?>" class="btn-action btn-edit">Examiner</a>
                             <a href="<?= base_url('items/approve/' . $item->id) ?>" class="btn-action"
                                 style="background:var(--success); color:white;">Valider</a>
                             <a href="<?= base_url('items/reject/' . $item->id) ?>" class="btn-action btn-ban"
