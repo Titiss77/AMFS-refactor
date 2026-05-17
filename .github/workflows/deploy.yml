@@ -1,7 +1,5 @@
 name: Deploiement vers ByetHost FTP
 
-# Cette action se déclenche à chaque push sur la branche "main"
-# (remplacez "main" par "master" si votre branche principale s'appelle master)
 on:
   push:
     branches:
@@ -22,16 +20,18 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
-          # Dossier de destination sur votre hébergeur (souvent htdocs)
           server-dir: /
-          # Fichiers et dossiers à NE PAS envoyer
+          
+          # 👇 AJOUTEZ CETTE LIGNE POUR DÉLOCALISER LE FICHIER DE SYNCHRO
+          state-name: htdocs/.ftp-deploy-sync-state.json
+          
           exclude: |
             **/.git*
             **/.git*/**
             **/.github/**
             !**/.gitignore
-            tests/** # <-- Ignore tous les tests locaux (très lourd)
-            user_guide_src/** # <-- Ignore la documentation de CI4
+            tests/**
+            user_guide_src/**
             phpunit.xml.dist
             .env
             spark
