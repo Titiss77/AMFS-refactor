@@ -54,12 +54,14 @@ class ItemController extends BaseController
             $id = $this->request->getPost('id');
             $isAdmin = auth()->user()->inGroup('admin', 'superadmin');
 
+            $isSuperAdmin = auth()->user()->inGroup('superadmin');
+
             // --- NOUVELLE LOGIQUE DE MODÉRATION ---
             $wantsPublic = $this->request->getPost('is_public');
 
             if ($wantsPublic) {
-                // Si c'est un admin, publication directe (1). Sinon, en inspection (2)
-                $data['is_public'] = $isAdmin ? 1 : 2;
+                // Si c'est un superadmin, publication directe (1). Sinon, en inspection (2)
+                $data['is_public'] = $isSuperAdmin ? 1 : 2;
             } else {
                 // Sinon elle reste ou devient privée (0)
                 $data['is_public'] = 0;
