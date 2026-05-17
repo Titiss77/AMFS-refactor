@@ -139,10 +139,11 @@ class ItemController extends BaseController
 
     public function deadLinks()
     {
-        $itemModel = new \App\Models\ItemModel();
-        
+        $cronLogModel = new \App\Models\CronLogModel();
+
         $data = [
-            'deadItems' => $itemModel->where('link_status', 'dead')->findAll()
+            // On récupère uniquement les lignes qui correspondent à de vrais liens cassés
+            'deadItems' => $cronLogModel->where('item_id IS NOT NULL')->findAll()
         ];
 
         return view('admin/items/dead_links', $data);

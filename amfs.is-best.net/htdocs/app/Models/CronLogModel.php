@@ -9,6 +9,13 @@ class CronLogModel extends Model
     protected $table = 'cron_logs';
     protected $primaryKey = 'id';
     protected $returnType = 'array';
-    protected $allowedFields = ['task_name', 'last_run'];
+    protected $allowedFields = [
+        'task_name', 
+        'last_run', 
+        'item_id', 
+        'titre', 
+        'url_testee', 
+        'code_erreur'
+    ];
     protected $useTimestamps = false;
 }
