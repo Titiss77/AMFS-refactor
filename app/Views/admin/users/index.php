@@ -37,14 +37,14 @@
 
                     <td>
                         <div class="action-links">
-                            <a href="<?= base_url('admin/users/edit/' . $user->id) ?>"
+                            <a href="<?= base_url('users/edit/' . $user->id) ?>"
                                 class="btn-action btn-edit">Modifier</a>
 
                             <?php if ($user->isBanned()): ?>
-                            <a href="<?= base_url('admin/users/unban/' . $user->id) ?>" class="btn-action btn-unban"
+                            <a href="<?= base_url('users/unban/' . $user->id) ?>" class="btn-action btn-unban"
                                 onclick="return confirm('Réhabiliter cet utilisateur ?')">Débannir</a>
                             <?php else: ?>
-                            <a href="<?= base_url('admin/users/delete/' . $user->id) ?>" class="btn-action btn-ban"
+                            <a href="<?= base_url('users/delete/' . $user->id) ?>" class="btn-action btn-ban"
                                 onclick="return confirm('Suspendre ce compte ?')">Bannir</a>
                             <?php endif ?>
                         </div>

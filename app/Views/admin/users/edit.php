@@ -14,7 +14,7 @@
     </div>
     <?php endif ?>
 
-    <form action="<?php echo base_url('admin/users/update/'.$user->id); ?>" method="POST">
+    <form action="<?php echo base_url('users/update/'.$user->id); ?>" method="POST">
         <?php echo csrf_field(); ?>
 
         <div class="mb-3">
@@ -36,7 +36,7 @@
 
         <div class="mt-4">
             <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
-            <a href="<?php echo base_url('admin/users'); ?>" class="btn btn-secondary">Retour</a>
+            <a href="<?php echo base_url('users'); ?>" class="btn btn-secondary">Retour</a>
         </div>
     </form>
 </div>

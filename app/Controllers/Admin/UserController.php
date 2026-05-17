@@ -27,7 +27,7 @@ class UserController extends BaseController
         $user = $users->findById($id);
 
         if (!$user) {
-            return redirect()->to('admin/users')->with('error', 'Utilisateur introuvable.');
+            return redirect()->to('users')->with('error', 'Utilisateur introuvable.');
         }
 
         $data = [
@@ -46,11 +46,11 @@ class UserController extends BaseController
         $currentUser = auth()->user();
 
         if (!$user) {
-            return redirect()->to('admin/users')->with('error', 'Utilisateur introuvable.');
+            return redirect()->to('users')->with('error', 'Utilisateur introuvable.');
         }
 
         if ($user->inGroup('superadmin') && !$currentUser->inGroup('superadmin')) {
-            return redirect()->to('admin/users')->with('error', 'Accréditation insuffisante pour modifier cette cible.');
+            return redirect()->to('users')->with('error', 'Accréditation insuffisante pour modifier cette cible.');
         }
 
         $availableGroups = implode(',', array_keys(config('AuthGroups')->groups));
@@ -75,12 +75,12 @@ class UserController extends BaseController
         $newGroup = $this->request->getPost('group');
         if ($newGroup) {
             if ($newGroup === 'superadmin' && !$currentUser->inGroup('superadmin')) {
-                return redirect()->to('admin/users')->with('error', 'Déploiement du grade Super Admin refusé.');
+                return redirect()->to('users')->with('error', 'Déploiement du grade Super Admin refusé.');
             }
             $user->syncGroups($newGroup);
         }
 
-        return redirect()->to('admin/users')->with('message', 'Paramètres utilisateurs synchronisés.');
+        return redirect()->to('users')->with('message', 'Paramètres utilisateurs synchronisés.');
     }
 
     /**
@@ -93,21 +93,21 @@ class UserController extends BaseController
         $currentUser = auth()->user();
 
         if (!$user) {
-            return redirect()->to('admin/users')->with('error', 'Utilisateur introuvable.');
+            return redirect()->to('users')->with('error', 'Utilisateur introuvable.');
         }
 
         if ($id == $currentUser->id) {
-            return redirect()->to('admin/users')->with('error', 'Auto-neutralisation impossible.');
+            return redirect()->to('users')->with('error', 'Auto-neutralisation impossible.');
         }
 
         if ($user->inGroup('superadmin') && !$currentUser->inGroup('superadmin')) {
-            return redirect()->to('admin/users')->with('error', 'Accréditation insuffisante pour interdire ce profil.');
+            return redirect()->to('users')->with('error', 'Accréditation insuffisante pour interdire ce profil.');
         }
 
         // Bannissement via Shield. Les cartes restent associées à son id_user en base de données.
         $user->ban('Accès révoqué par l\'administration.');
 
-        return redirect()->to('admin/users')->with('message', 'Le profil a été suspendu avec succès. Ses cartes ont été conservées.');
+        return redirect()->to('users')->with('message', 'Le profil a été suspendu avec succès. Ses cartes ont été conservées.');
     }
 
     /**
@@ -120,16 +120,16 @@ class UserController extends BaseController
         $currentUser = auth()->user();
 
         if (!$user) {
-            return redirect()->to('admin/users')->with('error', 'Utilisateur introuvable.');
+            return redirect()->to('users')->with('error', 'Utilisateur introuvable.');
         }
 
         if ($user->inGroup('superadmin') && !$currentUser->inGroup('superadmin')) {
-            return redirect()->to('admin/users')->with('error', 'Accréditation insuffisante pour réhabiliter ce profil.');
+            return redirect()->to('users')->with('error', 'Accréditation insuffisante pour réhabiliter ce profil.');
         }
 
         // Levée du bannissement via Shield
         $user->unBan();
 
-        return redirect()->to('admin/users')->with('message', 'Le compte a été réhabilité. L\'utilisateur peut à nouveau se connecter et accorder ses cartes.');
+        return redirect()->to('users')->with('message', 'Le compte a été réhabilité. L\'utilisateur peut à nouveau se connecter et accorder ses cartes.');
     }
 }
