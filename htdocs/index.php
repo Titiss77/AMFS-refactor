@@ -111,7 +111,7 @@ if (isset($_GET['projet']) && isset($projets[$_GET['projet']])) {
 <body>
 
     <div class="container">
-        <h1>Projets AMFS Détectés</h1>
+        <h1>Projets AMFS Détectés jsp</h1>
 
         <?php if (empty($projets)): ?>
         <p>Aucun dossier projet avec un sous-dossier <code>htdocs</code> n'a été trouvé.</p>
