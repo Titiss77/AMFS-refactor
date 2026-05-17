@@ -51,30 +51,53 @@ class ItemController extends BaseController
                 return redirect()->back()->withInput()->with('error', 'Erreur dans le formulaire.');
             }
 
-            // 2. Traitement des données (LA CORRECTION EST ICI)
-            // On récupère tout ce qui vient du formulaire dans un tableau
+            // 2. Traitement des données
             $data = $this->request->getPost();
+            $id = $this->request->getPost('id');
+            $isAdmin = auth()->user()->inGroup('admin', 'superadmin');
 
-            // On y injecte nos propres valeurs systèmes de façon sécurisée
-            $data['id_user'] = auth()->id();
-            $data['is_public'] = $this->request->getPost('is_public') ? 1 : 0;
+            // --- NOUVELLE LOGIQUE DE MODÉRATION ---
+            $wantsPublic = $this->request->getPost('is_public');
+
+            if ($wantsPublic) {
+                // Si c'est un admin, publication directe (1). Sinon, en inspection (2)
+                $data['is_public'] = $isAdmin ? 1 : 2;
+            } else {
+                // Sinon elle reste ou devient privée (0)
+                $data['is_public'] = 0; 
+            }
+            // --------------------------------------
 
             // Gestion de la date de sortie (convertit la chaîne vide en NULL)
             $data['date_sortie'] = empty($this->request->getPost('date_sortie')) ? null : $this->request->getPost('date_sortie');
 
+            // --- GESTION DU PROPRIÉTAIRE ---
+            $existing = null;
+            if ($id) {
+                $existing = $this->model->find($id);
+                if ($existing) {
+                    // On conserve le propriétaire original en cas de modification
+                    $data['id_user'] = $existing->id_user; 
+                }
+            } else {
+                // Nouvelle carte = l'utilisateur connecté est le propriétaire
+                $data['id_user'] = auth()->id(); 
+            }
+
             // On instancie l'entité avec TOUTES les données d'un coup
             $item = new Item($data);
 
-            $id = $this->request->getPost('id');
-
             // 3. Sauvegarde
             if ($id) {
-                $existing = $this->model->find($id);
-                if ($existing && (int) $existing->id_user === (int) auth()->id()) {
+                // Sécurité : Seul le propriétaire OU un admin peut modifier cette carte
+                $canEdit = $existing && ((int) $existing->id_user === (int) auth()->id() || $isAdmin);
+                
+                if ($canEdit) {
                     $this->model->save($item);
+                } else {
+                    return redirect()->back()->with('error', 'Vous n\'avez pas les droits pour modifier cette carte.');
                 }
             } else {
-                // L'ajout se fera avec le bon id_user désormais !
                 $this->model->save($item);
             }
 
@@ -90,7 +113,10 @@ class ItemController extends BaseController
     {
         if (null !== $id) {
             $item = $this->model->find($id);
-            if ($item && (int) $item->id_user === (int) auth()->id()) {
+            $isAdmin = auth()->user()->inGroup('admin', 'superadmin');
+
+            // Seul le propriétaire ou un admin peut supprimer
+            if ($item && ((int) $item->id_user === (int) auth()->id() || $isAdmin)) {
                 $id_div = $item->id_division;
                 $this->model->where('id', $id)->delete();
 
@@ -127,8 +153,6 @@ class ItemController extends BaseController
         return redirect()->back(); // Fallback si pas de JS
     }
 
-    // 2. Nouveau : Proxy sécurisé pour l'API TMDB
-    // Ajoute cette route dans ton Routes.php : $routes->get('api/tmdb/search', 'ItemController::searchTmdb');
     public function searchTmdb()
     {
         $query = $this->request->getGet('q');

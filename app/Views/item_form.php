@@ -48,7 +48,7 @@
 
         <div class="form-group">
             <input type="checkbox" id="is_public" name="is_public" value="1"
-                <?php echo (isset($item) && 1 == $item->is_public) ? 'checked' : ''; ?>>
+                <?php echo (isset($item) && in_array($item->is_public, [1, 2])) ? 'checked' : ''; ?>>
             <label for="is_public" class="form-label" style="display:inline;">Rendre ce lien visible au public</label>
         </div>
 

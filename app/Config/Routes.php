@@ -41,6 +41,12 @@ $routes->group('users', ['namespace' => 'App\Controllers\Admin', 'filter' => 'gr
     $routes->get('unban/(:num)', 'UserController::unban/$1');
 });
 
+$routes->group('items', ['namespace' => 'App\Controllers\Admin', 'filter' => 'group:superadmin,admin'], static function ($routes): void {
+    $routes->get('pending', 'ItemController::pending');
+    $routes->get('approve/(:num)', 'ItemController::approve/$1');
+    $routes->get('reject/(:num)', 'ItemController::reject/$1');
+});
+
 // --------------------------------------------------------------------
 // Routes par défaut de Shield (Login, Register, etc.)
 // --------------------------------------------------------------------

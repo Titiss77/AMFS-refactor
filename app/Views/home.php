@@ -12,9 +12,11 @@
 </div>
 <?php } else { ?>
 <div class="actions-container">
-    <?php if (auth()->user()->inGroup('admin')) { ?>
+    <?php if (auth()->user()->inGroup('admin', 'superadmin')) { ?>
     <a href="<?php echo base_url('users'); ?>" class="btn btn-warning" style="margin-right: 15px;">Gérer les
         utilisateurs</a>
+    <a href="<?php echo base_url('items/pending'); ?>" class="btn btn-info" style="margin-right: 15px;">Cartes en
+        attente</a>
     <?php } ?>
     <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>
 </div>
@@ -110,6 +112,12 @@
                         <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Status :
                             <?php echo htmlspecialchars($item->status); ?>
                         </p>
+                        <?php if ($item->is_public == 2 && auth()->loggedIn() && (int) $item->id_user === (int) auth()->id()) { ?>
+                        <div
+                            style="background-color: var(--warning, #ffc107); color: #000; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; display: inline-block; margin-top: 5px; margin-bottom: 5px;">
+                            ⏳ En cours d'inspection (Non public)
+                        </div>
+                        <?php } ?>
 
                         <?php if (!empty($item->description)) { ?>
                         <p class="card-desc search-target-desc">
