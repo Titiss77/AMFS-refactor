@@ -59,7 +59,7 @@
             <thead>
                 <tr>
                     <th>Carte Originale</th>
-                    <th>Nouvelles Informations (Aperçu)</th>
+                    <th>Modifications apportées</th>
                     <th>Modifié par</th>
                     <th>Actions</th>
                 </tr>
@@ -72,10 +72,54 @@
                         <small style="color: #666;">ID Original: <?= esc($revision['original_item_id']) ?></small>
                     </td>
                     <td>
-                        <strong>Nouveau titre :</strong> <?= esc($revision['titre']) ?><br>
-                        <strong>Statut :</strong> <?= esc($revision['status']) ?><br>
-                        <?php if(!empty($revision['description'])): ?>
-                        <small><?= esc(word_limiter($revision['description'], 10)) ?></small>
+                        <?php if (!empty($revision['changes'])): ?>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <?php foreach ($revision['changes'] as $change): ?>
+                            <li style="margin-bottom: 12px; border-bottom: 1px dashed #eee; padding-bottom: 8px;">
+                                <strong style="color: #444; font-size: 0.9em;"><?= esc($change['label']) ?>
+                                    :</strong><br>
+
+                                <?php if ($change['field'] === 'image'): ?>
+                                <div style="display: flex; gap: 15px; align-items: center; margin-top: 5px;">
+                                    <div style="text-align: center;">
+                                        <?php if (!empty($change['old'])): ?>
+                                        <img src="<?= esc($change['old']) ?>" alt="Ancienne"
+                                            style="max-height: 60px; border-radius: 4px; border: 1px solid #ddd; opacity: 0.5;">
+                                        <?php else: ?>
+                                        <span
+                                            style="color: #dc3545; font-size: 0.85em; text-decoration: line-through;">Aucune</span>
+                                        <?php endif; ?>
+                                        <div style="font-size: 0.75em; color: #999;">Ancienne</div>
+                                    </div>
+                                    <span style="font-weight: bold; color: #aaa; font-size: 1.2em;">➔</span>
+                                    <div style="text-align: center;">
+                                        <?php if (!empty($change['new'])): ?>
+                                        <img src="<?= esc($change['new']) ?>" alt="Nouvelle"
+                                            style="max-height: 60px; border-radius: 4px; border: 2px solid var(--success, #28a745);">
+                                        <?php else: ?>
+                                        <span
+                                            style="color: #28a745; font-weight: bold; font-size: 0.85em;">Supprimée</span>
+                                        <?php endif; ?>
+                                        <div style="font-size: 0.75em; color: #999;">Nouvelle</div>
+                                    </div>
+                                </div>
+                                <?php else: ?>
+                                <span
+                                    style="color: #dc3545; text-decoration: line-through; font-size: 0.9em; background-color: #fdf2f2; padding: 1px 4px; border-radius: 3px;">
+                                    <?= !empty($change['old']) ? esc($change['old']) : '<em>Vide</em>' ?>
+                                </span>
+                                <br>
+                                <span
+                                    style="color: #28a745; font-weight: bold; font-size: 0.95em; background-color: #f3faf4; padding: 1px 4px; border-radius: 3px; display: inline-block; margin-top: 2px;">
+                                    ➔ <?= !empty($change['new']) ? esc($change['new']) : '<em>Vide</em>' ?>
+                                </span>
+                                <?php endif; ?>
+                            </li>
+                            <?php endforeach; ?>
+                        </ul>
+                        <?php else: ?>
+                        <span style="color: #888; font-style: italic; font-size: 0.9em;">Aucun changement détecté sur
+                            les valeurs.</span>
                         <?php endif; ?>
                     </td>
                     <td>
