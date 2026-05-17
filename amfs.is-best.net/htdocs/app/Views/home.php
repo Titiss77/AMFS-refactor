@@ -130,10 +130,22 @@
                         <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Status :
                             <?php echo htmlspecialchars($item->status); ?>
                         </p>
-                        <?php if ($item->is_public == 2 && auth()->loggedIn() && (int) $item->id_user === (int) auth()->id()) { ?>
+                        <?php
+                        // Condition 1 : La carte est nouvelle et en attente d'inspection
+                        $isPendingNew = ($item->is_public == 2 && auth()->loggedIn() && (int) $item->id_user === (int) auth()->id());
+
+                        // Condition 2 : La carte est déjà publique mais a une modification en attente
+                        $hasPendingRevision = (isset($pendingRevisionIds) && in_array($item->id, $pendingRevisionIds));
+
+                        if ($isPendingNew || $hasPendingRevision) {
+                            ?>
                         <div
                             style="background-color: var(--warning, #ffc107); color: #000; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; display: inline-block; margin-top: 5px; margin-bottom: 5px;">
+                            <?php if ($isPendingNew) { ?>
                             ⏳ En cours d'inspection (Non public)
+                            <?php } else { ?>
+                            ⏳ Modification en attente de validation
+                            <?php } ?>
                         </div>
                         <?php } ?>
 

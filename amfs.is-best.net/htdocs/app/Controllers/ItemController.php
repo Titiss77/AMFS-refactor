@@ -93,9 +93,9 @@ class ItemController extends BaseController
                     return redirect()->back()->with('error', "Vous n'avez pas les droits pour modifier cette carte.");
                 }
 
-                // --- LOGIQUE DE DRAFTING ---
-                // Si la carte est DÉJÀ publique et que ce n'est PAS un superadmin qui modifie
-                if ($existing->is_public == 1 && !$isSuperAdmin) {
+                // --- LOGIQUE DE DRAFTING CORRIGÉE ---
+                // Si la carte est DÉJÀ publique, que l'utilisateur VEUT la garder publique, et n'est PAS superadmin
+                if ($existing->is_public == 1 && $data['is_public'] != 0 && !$isSuperAdmin) {
                     
                     $revisionModel = new ItemRevisionModel();
                     
@@ -119,9 +119,17 @@ class ItemController extends BaseController
                     return redirect()->to($backUrl . $separator . 'open=' . $existing->id_division . '#div-' . $existing->id_division)
                                      ->with('message', 'Votre modification a été soumise au SuperAdmin pour validation.');
                 } else {
-                    // C'est une carte privée OU c'est un superadmin -> Mise à jour directe
+                    // C'est une carte privée OU elle passe en privé OU c'est un superadmin -> Mise à jour directe
                     $item = new Item($data);
                     $this->model->save($item);
+
+                    // Si l'utilisateur a décidé de repasser sa carte en privé, on nettoie les révisions en attente
+                    if ($existing->is_public == 1 && $data['is_public'] == 0) {
+                        $revisionModel = new ItemRevisionModel();
+                        $revisionModel->where('original_item_id', $id)
+                                      ->where('revision_status', 'pending')
+                                      ->delete();
+                    }
                 }
 
             } else {
