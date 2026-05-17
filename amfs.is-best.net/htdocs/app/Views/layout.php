@@ -30,7 +30,7 @@
         <div class="user-nav">
             <?php if (auth()->loggedIn()) { ?>
             <?php if (auth()->user()->inGroup('admin', 'superadmin')) { ?>
-            <a href="<?php echo base_url('audit'); ?>" class="btn btn-warning" style="margin-right: 15px;">logs</a>
+            <a href="<?php echo base_url('audit'); ?>" style="color: #80808099; font-size: small;">logs</a>
             <?php } ?>
             <span class="welcome-text">👤 <?php echo esc(auth()->user()->username); ?></span>
             <a href="<?php echo base_url('logout'); ?>" class="btn-logout">Déconnexion</a>
