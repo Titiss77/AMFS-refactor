@@ -43,8 +43,14 @@ $routes->group('users', ['namespace' => 'App\Controllers\Admin', 'filter' => 'gr
 
 $routes->group('items', ['namespace' => 'App\Controllers\Admin', 'filter' => 'group:superadmin,admin'], static function ($routes): void {
     $routes->get('pending', 'ItemController::pending');
+    
+    // Gestion des nouvelles cartes
     $routes->get('approve/(:num)', 'ItemController::approve/$1');
     $routes->get('reject/(:num)', 'ItemController::reject/$1');
+    
+    // --- NOUVELLES ROUTES POUR LE DRAFTING (RÉVISIONS) ---
+    $routes->get('approve-revision/(:num)', 'ItemController::approveRevision/$1');
+    $routes->get('reject-revision/(:num)', 'ItemController::rejectRevision/$1');
 });
 
 // --------------------------------------------------------------------

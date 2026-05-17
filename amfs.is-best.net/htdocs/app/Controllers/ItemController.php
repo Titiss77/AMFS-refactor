@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Entities\Item;
 use App\Models\ItemModel;
+use App\Models\ItemRevisionModel;
 
 class ItemController extends BaseController
 {
@@ -53,10 +54,9 @@ class ItemController extends BaseController
             $data = $this->request->getPost();
             $id = $this->request->getPost('id');
             $isAdmin = auth()->user()->inGroup('admin', 'superadmin');
-
             $isSuperAdmin = auth()->user()->inGroup('superadmin');
 
-            // --- NOUVELLE LOGIQUE DE MODÉRATION ---
+            // --- NOUVELLE LOGIQUE DE MODÉRATION (Nouvelle carte) ---
             $wantsPublic = $this->request->getPost('is_public');
 
             if ($wantsPublic) {
@@ -66,46 +66,71 @@ class ItemController extends BaseController
                 // Sinon elle reste ou devient privée (0)
                 $data['is_public'] = 0;
             }
-            // --------------------------------------
 
-            // Gestion de la date de sortie (convertit la chaîne vide en NULL)
+            // Gestion de la date de sortie
             $data['date_sortie'] = empty($this->request->getPost('date_sortie')) ? null : $this->request->getPost('date_sortie');
 
-            // --- GESTION DU PROPRIÉTAIRE ---
+            // --- GESTION DU PROPRIÉTAIRE & DES RÉVISIONS ---
             $existing = null;
             if ($id) {
                 $existing = $this->model->find($id);
                 if ($existing) {
-                    // On conserve le propriétaire original en cas de modification
-                    $data['id_user'] = $existing->id_user;
+                    $data['id_user'] = $existing->id_user; // On conserve le propriétaire original
                 }
             } else {
-                // Nouvelle carte = l'utilisateur connecté est le propriétaire
-                $data['id_user'] = auth()->id();
+                $data['id_user'] = auth()->id(); // Nouvelle carte
             }
 
-            // On instancie l'entité avec TOUTES les données d'un coup
-            $item = new Item($data);
-
-            // 3. Sauvegarde
-            if ($id) {
-                // Sécurité : Seul le propriétaire OU un admin peut modifier cette carte
-                $canEdit = $existing && ((int) $existing->id_user === (int) auth()->id() || $isAdmin);
-
-                if ($canEdit) {
-                    $this->model->save($item);
-                } else {
-                    return redirect()->back()->with('error', "Vous n'avez pas les droits pour modifier cette carte.");
-                }
-            } else {
-                $this->model->save($item);
-            }
-
-            // 4. Redirection avec ouverture du menu déroulant
             $backUrl = $this->request->getPost('redirect_url') ?: site_url('/');
             $separator = (str_contains($backUrl, '?')) ? '&' : '?';
 
-            return redirect()->to($backUrl . $separator . 'open=' . $item->id_division . '#div-' . $item->id_division);
+            // 3. Sauvegarde ou mise en révision
+            if ($id) {
+                // Sécurité : Propriétaire ou admin
+                $canEdit = $existing && ((int) $existing->id_user === (int) auth()->id() || $isAdmin);
+
+                if (!$canEdit) {
+                    return redirect()->back()->with('error', "Vous n'avez pas les droits pour modifier cette carte.");
+                }
+
+                // --- LOGIQUE DE DRAFTING ---
+                // Si la carte est DÉJÀ publique et que ce n'est PAS un superadmin qui modifie
+                if ($existing->is_public == 1 && !$isSuperAdmin) {
+                    
+                    $revisionModel = new ItemRevisionModel();
+                    
+                    $revisionData = [
+                        'original_item_id' => $id,
+                        'id_user'          => auth()->id(), // Celui qui fait la modif
+                        'titre'            => $data['titre'],
+                        'status'           => $data['status'],
+                        'image'            => $data['image'] ?? $existing->image,
+                        'lien'             => $data['lien'] ?? null,
+                        'description'      => $data['description'] ?? null,
+                        'episode'          => $data['episode'] ?? null,
+                        'saison'           => empty($data['saison']) ? null : $data['saison'],
+                        'position'         => $existing->position, // on garde la position actuelle
+                        'date_sortie'      => $data['date_sortie'],
+                        'revision_status'  => 'pending'
+                    ];
+
+                    $revisionModel->save($revisionData);
+
+                    return redirect()->to($backUrl . $separator . 'open=' . $existing->id_division . '#div-' . $existing->id_division)
+                                     ->with('message', 'Votre modification a été soumise au SuperAdmin pour validation.');
+                } else {
+                    // C'est une carte privée OU c'est un superadmin -> Mise à jour directe
+                    $item = new Item($data);
+                    $this->model->save($item);
+                }
+
+            } else {
+                // Nouvelle carte
+                $item = new Item($data);
+                $this->model->save($item);
+            }
+
+            return redirect()->to($backUrl . $separator . 'open=' . $data['id_division'] . '#div-' . $data['id_division']);
         }
     }
 
@@ -120,7 +145,6 @@ class ItemController extends BaseController
                 $id_div = $item->id_division;
                 $this->model->delete($id);
 
-                // On repart d'où on vient (Referer direct car pas de formulaire)
                 $backUrl = $this->request->getUserAgent()->getReferrer() ?: site_url('/');
                 $separator = (str_contains($backUrl, '?')) ? '&' : '?';
 
@@ -133,16 +157,13 @@ class ItemController extends BaseController
 
     public function incrementEpisode($id)
     {
-        $itemModel = new \App\Models\ItemModel();
-        $item = $itemModel->find($id);
+        $item = $this->model->find($id);
 
         if ($item) {
             $newEpisode = (int) $item->episode + 1;
-            $itemModel->update($id, ['episode' => $newEpisode]);
+            $this->model->update($id, ['episode' => $newEpisode]);
 
-            // Si la requête vient de JavaScript (AJAX/Fetch)
             if ($this->request->isAJAX()) {
-                // On génère un nouveau token CSRF pour les futures requêtes
                 return $this->response->setJSON([
                     'success' => true,
                     'new_episode' => $newEpisode,
@@ -150,13 +171,12 @@ class ItemController extends BaseController
                 ]);
             }
         }
-        return redirect()->back();  // Fallback si pas de JS
+        return redirect()->back();
     }
 
     public function searchTmdb()
     {
         $query = $this->request->getGet('q');
-        // Tu devras mettre TMDB_API_KEY=TaClef dans ton fichier .env
         $apiKey = env('TMDB_API_KEY') ?? 'ba55da0439797150ed58c4e524584823';
 
         $client = \Config\Services::curlrequest();
@@ -172,22 +192,17 @@ class ItemController extends BaseController
 
     public function updateOrder()
     {
-        // On s'assure que c'est bien une requête AJAX (Fetch API)
         if ($this->request->isAJAX()) {
             $json = $this->request->getJSON();
 
-            // On vérifie qu'on a bien reçu le tableau "order"
             if (isset($json->order) && is_array($json->order)) {
                 $userId = auth()->id();
                 $isAdmin = auth()->user()->inGroup('admin', 'superadmin');
 
-                // On parcourt le tableau reçu (l'index correspond à la nouvelle position)
                 foreach ($json->order as $index => $itemId) {
                     $item = $this->model->find($itemId);
 
-                    // SÉCURITÉ : On vérifie que la carte existe ET que l'utilisateur en est le propriétaire (ou qu'il est admin)
                     if ($item && ((int) $item->id_user === (int) $userId || $isAdmin)) {
-                        // On met à jour la position de cet item en base de données
                         $this->model->update($itemId, ['position' => $index]);
                     }
                 }
@@ -195,7 +210,7 @@ class ItemController extends BaseController
                 return $this->response->setJSON([
                     'success' => true,
                     'message' => 'Ordre sauvegardé',
-                    'csrf_token' => csrf_hash()  // Renvoie le token CSRF pour les prochaines requêtes
+                    'csrf_token' => csrf_hash()
                 ]);
             }
         }
