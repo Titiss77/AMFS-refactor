@@ -5,6 +5,9 @@
     <h2>Journal d'Audit & Sécurité</h2>
     <p>Historique des actions récentes effectuées sur la plateforme.</p>
 
+    <a href="<?php echo base_url('items/dead-links'); ?>" class="btn btn-warning" style="margin-right: 15px;">Gérer les
+        liens morts</a>
+
     <div class="admin-table-container fade-in" style="margin-top: 20px;">
         <table class="admin-table" style="width: 100%; border-collapse: collapse;">
             <thead>
