@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -64,7 +62,7 @@ class ItemController extends BaseController
                 $data['is_public'] = $isAdmin ? 1 : 2;
             } else {
                 // Sinon elle reste ou devient privée (0)
-                $data['is_public'] = 0; 
+                $data['is_public'] = 0;
             }
             // --------------------------------------
 
@@ -77,11 +75,11 @@ class ItemController extends BaseController
                 $existing = $this->model->find($id);
                 if ($existing) {
                     // On conserve le propriétaire original en cas de modification
-                    $data['id_user'] = $existing->id_user; 
+                    $data['id_user'] = $existing->id_user;
                 }
             } else {
                 // Nouvelle carte = l'utilisateur connecté est le propriétaire
-                $data['id_user'] = auth()->id(); 
+                $data['id_user'] = auth()->id();
             }
 
             // On instancie l'entité avec TOUTES les données d'un coup
@@ -91,11 +89,11 @@ class ItemController extends BaseController
             if ($id) {
                 // Sécurité : Seul le propriétaire OU un admin peut modifier cette carte
                 $canEdit = $existing && ((int) $existing->id_user === (int) auth()->id() || $isAdmin);
-                
+
                 if ($canEdit) {
                     $this->model->save($item);
                 } else {
-                    return redirect()->back()->with('error', 'Vous n\'avez pas les droits pour modifier cette carte.');
+                    return redirect()->back()->with('error', "Vous n'avez pas les droits pour modifier cette carte.");
                 }
             } else {
                 $this->model->save($item);
@@ -105,7 +103,7 @@ class ItemController extends BaseController
             $backUrl = $this->request->getPost('redirect_url') ?: site_url('/');
             $separator = (str_contains($backUrl, '?')) ? '&' : '?';
 
-            return redirect()->to($backUrl.$separator.'open='.$item->id_division.'#div-'.$item->id_division);
+            return redirect()->to($backUrl . $separator . 'open=' . $item->id_division . '#div-' . $item->id_division);
         }
     }
 
@@ -124,7 +122,7 @@ class ItemController extends BaseController
                 $backUrl = $this->request->getUserAgent()->getReferrer() ?: site_url('/');
                 $separator = (str_contains($backUrl, '?')) ? '&' : '?';
 
-                return redirect()->to($backUrl.$separator.'open='.$id_div.'#div-'.$id_div);
+                return redirect()->to($backUrl . $separator . 'open=' . $id_div . '#div-' . $id_div);
             }
         }
 
@@ -137,36 +135,72 @@ class ItemController extends BaseController
         $item = $itemModel->find($id);
 
         if ($item) {
-            $newEpisode = (int)$item->episode + 1;
+            $newEpisode = (int) $item->episode + 1;
             $itemModel->update($id, ['episode' => $newEpisode]);
 
             // Si la requête vient de JavaScript (AJAX/Fetch)
             if ($this->request->isAJAX()) {
                 // On génère un nouveau token CSRF pour les futures requêtes
                 return $this->response->setJSON([
-                    'success' => true, 
+                    'success' => true,
                     'new_episode' => $newEpisode,
-                    'csrf_token' => csrf_hash() 
+                    'csrf_token' => csrf_hash()
                 ]);
             }
         }
-        return redirect()->back(); // Fallback si pas de JS
+        return redirect()->back();  // Fallback si pas de JS
     }
 
     public function searchTmdb()
     {
         $query = $this->request->getGet('q');
         // Tu devras mettre TMDB_API_KEY=TaClef dans ton fichier .env
-        $apiKey = env('TMDB_API_KEY') ?? 'ba55da0439797150ed58c4e524584823'; 
+        $apiKey = env('TMDB_API_KEY') ?? 'ba55da0439797150ed58c4e524584823';
 
         $client = \Config\Services::curlrequest();
-        $url = "https://api.themoviedb.org/3/search/multi?query=" . urlencode($query) . "&api_key={$apiKey}&language=fr-FR";
-        
+        $url = 'https://api.themoviedb.org/3/search/multi?query=' . urlencode($query) . "&api_key={$apiKey}&language=fr-FR";
+
         try {
             $response = $client->get($url);
             return $this->response->setJSON(json_decode($response->getBody()));
         } catch (\Exception $e) {
             return $this->response->setJSON(['error' => 'Impossible de contacter TMDB']);
         }
+    }
+
+    public function updateOrder()
+    {
+        // On s'assure que c'est bien une requête AJAX (Fetch API)
+        if ($this->request->isAJAX()) {
+            $json = $this->request->getJSON();
+
+            // On vérifie qu'on a bien reçu le tableau "order"
+            if (isset($json->order) && is_array($json->order)) {
+                $userId = auth()->id();
+                $isAdmin = auth()->user()->inGroup('admin', 'superadmin');
+
+                // On parcourt le tableau reçu (l'index correspond à la nouvelle position)
+                foreach ($json->order as $index => $itemId) {
+                    $item = $this->model->find($itemId);
+
+                    // SÉCURITÉ : On vérifie que la carte existe ET que l'utilisateur en est le propriétaire (ou qu'il est admin)
+                    if ($item && ((int) $item->id_user === (int) $userId || $isAdmin)) {
+                        // On met à jour la position de cet item en base de données
+                        $this->model->update($itemId, ['position' => $index]);
+                    }
+                }
+
+                return $this->response->setJSON([
+                    'success' => true,
+                    'message' => 'Ordre sauvegardé',
+                    'csrf_token' => csrf_hash()  // Renvoie le token CSRF pour les prochaines requêtes
+                ]);
+            }
+        }
+
+        return $this->response->setJSON([
+            'success' => false,
+            'error' => 'Requête invalide ou données manquantes.'
+        ]);
     }
 }
