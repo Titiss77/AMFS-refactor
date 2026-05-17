@@ -136,4 +136,15 @@ class ItemController extends BaseController
         }
         return redirect()->back()->with('error', 'La modification a été refusée.');
     }
+
+    public function deadLinks()
+    {
+        $itemModel = new \App\Models\ItemModel();
+        
+        $data = [
+            'deadItems' => $itemModel->where('link_status', 'dead')->findAll()
+        ];
+
+        return view('admin/items/dead_links', $data);
+    }
 }

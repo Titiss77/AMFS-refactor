@@ -64,7 +64,19 @@
             }, 10);
         }
     });
+
+    // Le script attend 5 secondes après le chargement total de la page 
+    // pour ne pas ralentir l'expérience de l'utilisateur, puis appelle le Cron.
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            fetch('<?= base_url('cron/run') ?>')
+                .catch(error => console.log('Tâche de fond ignorée.'));
+        }, 5000);
+    });
     </script>
+</body>
+
+</html>
 </body>
 
 </html>

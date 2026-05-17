@@ -20,6 +20,7 @@ class ItemModel extends Model
         'date_sortie', 
         'image', 
         'lien', 
+        'link_status',
         'saison', 
         'episode', 
         'position'

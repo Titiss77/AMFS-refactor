@@ -12,6 +12,9 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'HomeController::index');
 $routes->get('categorie/(:num)', 'HomeController::categorie/$1');
 
+// Route silencieuse pour la tâche de fond (Pseudo-Cron)
+$routes->get('cron/run', 'CronController::run');
+
 // --------------------------------------------------------------------
 // Routes protégées par session (Utilisateurs connectés normaux)
 // --------------------------------------------------------------------
@@ -52,7 +55,7 @@ $routes->group('items', ['namespace' => 'App\Controllers\Admin', 'filter' => 'gr
     $routes->get('approve-revision/(:num)', 'ItemController::approveRevision/$1');
     $routes->get('reject-revision/(:num)', 'ItemController::rejectRevision/$1');
 
-    
+    $routes->get('dead-links', 'ItemController::deadLinks');
 });
 
 $routes->group('audit', ['namespace' => 'App\Controllers\Admin', 'filter' => 'group:superadmin,admin'], static function ($routes): void {
