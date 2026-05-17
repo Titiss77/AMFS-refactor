@@ -11,6 +11,14 @@
     <meta name="csrf-header" content="<?= csrf_header() ?>">
 
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script>
+    // On passe les variables PHP au moteur JavaScript
+    const amfsConfig = {
+        updateOrderUrl: "<?php echo base_url('items/update-order'); ?>",
+        csrfHeader: "<?php echo csrf_header(); ?>",
+        csrfToken: "<?php echo csrf_hash(); ?>"
+    };
+    </script>
     <script src="<?php echo base_url('assets/script.js'); ?>"></script>
 </head>
 
@@ -32,7 +40,7 @@
     <?php if (isset($headers) && !empty($headers)) { ?>
     <nav class="category-nav container">
         <?php foreach ($headers as $h) { ?>
-        <a href="<?php echo base_url('categorie/'.$h['id']); ?>"
+        <a href="<?php echo base_url('categorie/' . $h['id']); ?>"
             class="nav-tab <?php echo (isset($currentHeaderId) && $currentHeaderId == $h['id']) ? 'active' : ''; ?>">
             <?php echo esc($h['nom']); ?>
         </a>

@@ -128,26 +128,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                fetch('<?php echo base_url('items/update-order'); ?>', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest',
-                            '<?php echo csrf_header(); ?>': '<?php echo csrf_hash(); ?>'
-                        },
-                        body: JSON.stringify({
-                            order: newOrder
-                        })
+                fetch(amfsConfig.updateOrderUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        // Utilisation des crochets pour définir une clé d'objet dynamique
+                        [amfsConfig.csrfHeader]: amfsConfig.csrfToken
+                    },
+                    body: JSON.stringify({
+                        order: newOrder
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.success) {
-                            console.error('Erreur lors de la sauvegarde de l\'ordre.');
-                        } else {
-                            console.log('Ordre mis à jour avec succès');
-                        }
-                    })
-                    .catch(error => console.error('Erreur réseau:', error));
+                })
             }
         });
     });
