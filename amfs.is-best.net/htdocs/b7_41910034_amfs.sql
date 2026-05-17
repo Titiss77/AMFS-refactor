@@ -8,6 +8,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 
+DROP TABLE IF EXISTS `audit_logs`;
+CREATE TABLE `audit_logs` (
+  `id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED DEFAULT NULL,
+  `action` varchar(100) NOT NULL,
+  `details` text,
+  `ip_address` varchar(45) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 DROP TABLE IF EXISTS `auth_groups_users`;
 CREATE TABLE `auth_groups_users` (
   `id` int UNSIGNED NOT NULL,
@@ -161,6 +171,10 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
+ALTER TABLE `audit_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
 ALTER TABLE `auth_groups_users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `auth_groups_users_user_id_foreign` (`user_id`);
@@ -217,6 +231,9 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 
+ALTER TABLE `audit_logs`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `auth_groups_users`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
@@ -241,6 +258,9 @@ ALTER TABLE `item`
 ALTER TABLE `item_revisions`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
+
+ALTER TABLE `audit_logs`
+  ADD CONSTRAINT `audit_logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 ALTER TABLE `division`
   ADD CONSTRAINT `division_ibfk_1` FOREIGN KEY (`id_header`) REFERENCES `header` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

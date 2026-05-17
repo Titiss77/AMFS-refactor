@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\AuditLogModel;  // Ajout de l'audit
 
 class UserController extends BaseController
 {
@@ -23,20 +24,20 @@ class UserController extends BaseController
     {
         $users = auth()->getProvider();
         $user = $users->findById($id);
-        $currentUser = auth()->user();  // On récupère l'utilisateur actuellement connecté
+        $currentUser = auth()->user();
 
         if (!$user) {
             return redirect()->to('users')->with('error', 'Utilisateur introuvable.');
         }
 
-        // 1. Un admin normal ne peut pas accéder à la page de modification d'un superadmin
         if ($user->inGroup('superadmin') && !$currentUser->inGroup('superadmin')) {
+            $audit = new AuditLogModel();
+            $audit->logAction('Alerte Sécurité', "L'admin ID {$currentUser->id} a tenté d'accéder à la page d'édition du SuperAdmin ID {$id}.");
             return redirect()->to('users')->with('error', 'Accréditation insuffisante pour modifier cette cible.');
         }
 
         $availableGroups = config('AuthGroups')->groups;
 
-        // 2. Un admin normal ne peut pas voir ni attribuer le grade superadmin à quelqu'un
         if (!$currentUser->inGroup('superadmin')) {
             unset($availableGroups['superadmin']);
         }
@@ -55,6 +56,7 @@ class UserController extends BaseController
         $users = auth()->getProvider();
         $user = $users->findById($id);
         $currentUser = auth()->user();
+        $audit = new AuditLogModel();
 
         if (!$user) {
             return redirect()->to('users')->with('error', 'Utilisateur introuvable.');
@@ -75,33 +77,43 @@ class UserController extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        $oldUsername = $user->username;
+        $newUsername = $this->request->getPost('username');
+
         $user->fill([
-            'username' => $this->request->getPost('username'),
+            'username' => $newUsername,
         ]);
 
         if (!$users->save($user)) {
             return redirect()->back()->withInput()->with('error', "Échec de l'enregistrement en base.");
         }
 
+        $logDetails = "Mise à jour du compte ID {$id}. ";
+        if ($oldUsername !== $newUsername) {
+            $logDetails .= "Pseudo: '{$oldUsername}' -> '{$newUsername}'. ";
+        }
+
         $newGroup = $this->request->getPost('group');
         if ($newGroup) {
             if ($newGroup === 'superadmin' && !$currentUser->inGroup('superadmin')) {
+                $audit->logAction('Alerte Sécurité', "Tentative d'élévation de privilèges vers SuperAdmin bloquée pour la cible ID {$id}.");
                 return redirect()->to('users')->with('error', 'Déploiement du grade Super Admin refusé.');
             }
             $user->syncGroups($newGroup);
+            $logDetails .= "Nouveau groupe de sécurité assigné: [{$newGroup}].";
         }
+
+        $audit->logAction('Modification Profil', $logDetails);
 
         return redirect()->to('users')->with('message', 'Paramètres utilisateurs synchronisés.');
     }
 
-    /**
-     * Suspendre (bannir) un utilisateur sans toucher à ses cartes
-     */
     public function delete($id)
     {
         $users = auth()->getProvider();
         $user = $users->findById($id);
         $currentUser = auth()->user();
+        $audit = new AuditLogModel();
 
         if (!$user) {
             return redirect()->to('users')->with('error', 'Utilisateur introuvable.');
@@ -115,20 +127,19 @@ class UserController extends BaseController
             return redirect()->to('users')->with('error', 'Accréditation insuffisante pour interdire ce profil.');
         }
 
-        // Bannissement via Shield. Les cartes restent associées à son id_user en base de données.
         $user->ban("Accès révoqué par l'administration.");
+
+        $audit->logAction('Sanction : Bannissement', "Le compte ID {$id} ('{$user->username}') a été suspendu de la plateforme.");
 
         return redirect()->to('users')->with('message', 'Le profil a été suspendu avec succès. Ses cartes ont été conservées.');
     }
 
-    /**
-     * Réhabiliter (débannir) un utilisateur
-     */
     public function unban($id)
     {
         $users = auth()->getProvider();
         $user = $users->findById($id);
         $currentUser = auth()->user();
+        $audit = new AuditLogModel();
 
         if (!$user) {
             return redirect()->to('users')->with('error', 'Utilisateur introuvable.');
@@ -138,8 +149,9 @@ class UserController extends BaseController
             return redirect()->to('users')->with('error', 'Accréditation insuffisante pour réhabiliter ce profil.');
         }
 
-        // Levée du bannissement via Shield
         $user->unBan();
+
+        $audit->logAction('Réhabilitation Compte', "Le bannissement du compte ID {$id} ('{$user->username}') a été levé.");
 
         return redirect()->to('users')->with('message', "Le compte a été réhabilité. L'utilisateur peut à nouveau se connecter et accorder ses cartes.");
     }

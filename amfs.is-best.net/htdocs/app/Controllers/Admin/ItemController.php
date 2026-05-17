@@ -3,14 +3,12 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\AuditLogModel;  // Ajout de l'audit
 use App\Models\ItemModel;
 use App\Models\ItemRevisionModel;
 
 class ItemController extends BaseController
 {
-    /**
-     * Affiche le tableau de bord des attentes (Nouvelles cartes + Révisions avec Diff)
-     */
     public function pending()
     {
         helper('text');
@@ -20,12 +18,10 @@ class ItemController extends BaseController
 
         $revisions = $revisionModel->getPendingRevisions();
 
-        // Analyse des différences pour chaque révision
         foreach ($revisions as &$revision) {
             $original = $itemModel->asArray()->find($revision['original_item_id']);
             $changes = [];
 
-            // Liste des champs à surveiller et leur équivalent lisible
             $fieldsToCompare = [
                 'titre' => 'Titre',
                 'status' => 'Statut',
@@ -42,13 +38,11 @@ class ItemController extends BaseController
                     $oldValue = $original[$field] ?? '';
                     $newValue = $revision[$field] ?? '';
 
-                    // Normalisation pour éviter les faux positifs sur les dates
                     if ($field === 'date_sortie' && (!empty($oldValue) || !empty($newValue))) {
                         $oldValue = $oldValue ? substr((string) $oldValue, 0, 10) : '';
                         $newValue = $newValue ? substr((string) $newValue, 0, 10) : '';
                     }
 
-                    // Si les chaînes sont différentes, on enregistre la modification
                     if ((string) $oldValue !== (string) $newValue) {
                         $changes[] = [
                             'field' => $field,
@@ -59,46 +53,50 @@ class ItemController extends BaseController
                     }
                 }
             }
-
             $revision['changes'] = $changes;
         }
 
         $data = [
-            // Nouvelles cartes avec le statut 2 (En inspection)
             'pendingItems' => $itemModel->where('is_public', 2)->findAll(),
-            // Modifications de cartes publiques enrichies des changements calculés
             'pendingRevisions' => $revisions
         ];
 
         return view('admin/items/pending', $data);
     }
 
-    // =========================================================================
-    // GESTION DES NOUVELLES CARTES (is_public = 2)
-    // =========================================================================
-
     public function approve($id)
     {
         $itemModel = new ItemModel();
-        $itemModel->update($id, ['is_public' => 1]);
+        $item = $itemModel->find($id);
+
+        if ($item) {
+            $itemModel->update($id, ['is_public' => 1]);
+
+            $audit = new AuditLogModel();
+            $audit->logAction('Modération : Approbation Carte', "Le SuperAdmin a validé la nouvelle publication de la carte ID {$id} ('{$item->titre}').");
+        }
         return redirect()->back()->with('message', 'Nouvelle carte validée ! Elle est désormais visible de tous.');
     }
 
     public function reject($id)
     {
         $itemModel = new ItemModel();
-        $itemModel->update($id, ['is_public' => 0]);
+        $item = $itemModel->find($id);
+
+        if ($item) {
+            $itemModel->update($id, ['is_public' => 0]);
+
+            $audit = new AuditLogModel();
+            $audit->logAction('Modération : Refus Carte', "Le SuperAdmin a refusé la publication de la carte ID {$id} ('{$item->titre}'). Rétrogradation en privé.");
+        }
         return redirect()->back()->with('error', "Nouvelle carte refusée. Elle est repassée en privé pour l'utilisateur.");
     }
-
-    // =========================================================================
-    // GESTION DES RÉVISIONS / DRAFTS (item_revisions)
-    // =========================================================================
 
     public function approveRevision($revisionId)
     {
         $revisionModel = new ItemRevisionModel();
         $itemModel = new ItemModel();
+        $audit = new AuditLogModel();
 
         $revision = $revisionModel->find($revisionId);
 
@@ -117,6 +115,8 @@ class ItemController extends BaseController
             $itemModel->update($revision['original_item_id'], $updateData);
             $revisionModel->update($revisionId, ['revision_status' => 'approved']);
 
+            $audit->logAction('Modération : Approbation Draft', "Validation du Draft ID {$revisionId}. Les données de la carte publique ID {$revision['original_item_id']} ('{$revision['titre']}') ont été écrasées avec succès.");
+
             return redirect()->back()->with('message', 'La modification a été fusionnée et est maintenant en ligne.');
         }
 
@@ -126,8 +126,14 @@ class ItemController extends BaseController
     public function rejectRevision($revisionId)
     {
         $revisionModel = new ItemRevisionModel();
-        $revisionModel->update($revisionId, ['revision_status' => 'rejected']);
+        $revision = $revisionModel->find($revisionId);
 
+        if ($revision) {
+            $revisionModel->update($revisionId, ['revision_status' => 'rejected']);
+
+            $audit = new AuditLogModel();
+            $audit->logAction('Modération : Refus Draft', "Rejet du Draft ID {$revisionId} pour la carte ID {$revision['original_item_id']}. La version publique n'a pas été affectée.");
+        }
         return redirect()->back()->with('error', 'La modification a été refusée.');
     }
 }

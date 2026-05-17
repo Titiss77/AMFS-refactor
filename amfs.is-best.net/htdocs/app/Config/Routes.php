@@ -52,9 +52,12 @@ $routes->group('items', ['namespace' => 'App\Controllers\Admin', 'filter' => 'gr
     $routes->get('approve-revision/(:num)', 'ItemController::approveRevision/$1');
     $routes->get('reject-revision/(:num)', 'ItemController::rejectRevision/$1');
 
-    $routes->get('audit', 'AuditController::index');
+    
 });
 
+$routes->group('audit', ['namespace' => 'App\Controllers\Admin', 'filter' => 'group:superadmin,admin'], static function ($routes): void {
+    $routes->get('/', 'AuditController::index');  
+});
 // --------------------------------------------------------------------
 // Routes par défaut de Shield (Login, Register, etc.)
 // --------------------------------------------------------------------

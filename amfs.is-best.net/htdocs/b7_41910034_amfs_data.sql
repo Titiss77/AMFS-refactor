@@ -8,6 +8,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 
+TRUNCATE TABLE `audit_logs`;
+INSERT INTO `audit_logs` (`id`, `user_id`, `action`, `details`, `ip_address`, `created_at`) VALUES
+(1, 2, 'Mise à jour Carte', 'Modification de la carte ID 23 (\'The Boys\'). Visibilité: Privée.', '127.0.0.1', '2026-05-17 21:57:53'),
+(2, 2, 'Modération : Approbation Carte', 'Le SuperAdmin a validé la nouvelle publication de la carte ID 23 (\'The Boys\').', '127.0.0.1', '2026-05-17 21:58:01'),
+(3, 2, 'Soumission Draft', 'L\'utilisateur a proposé une modification pour la carte publique ID 23 (\'The Boys\').', '127.0.0.1', '2026-05-17 21:58:22'),
+(4, 2, 'Modération : Refus Draft', 'Rejet du Draft ID 13 pour la carte ID 23. La version publique n\'a pas été affectée.', '127.0.0.1', '2026-05-17 21:58:30'),
+(5, 2, 'Mise à jour Carte', 'Modification de la carte ID 23 (\'The Boys\'). Visibilité: Privée.', '127.0.0.1', '2026-05-17 21:58:49'),
+(6, 2, 'Nettoyage Draft', 'Passage en privé de la carte ID 23 : Suppression automatique des drafts en attente.', '127.0.0.1', '2026-05-17 21:58:49');
+
 TRUNCATE TABLE `auth_groups_users`;
 INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
 (1, 1, 'superadmin', '2026-04-11 17:01:16'),
@@ -114,26 +123,12 @@ INSERT INTO `item` (`id`, `id_user`, `is_public`, `id_division`, `titre`, `statu
 (47, 2, 0, 11, 'Liens très privés', 'Aucun', '', 'https://prive.22web.org/', '', '', 0, 0, NULL, NULL);
 
 TRUNCATE TABLE `item_revisions`;
-INSERT INTO `item_revisions` (`id`, `original_item_id`, `id_user`, `titre`, `status`, `image`, `lien`, `description`, `episode`, `saison`, `position`, `date_sortie`, `revision_status`, `created_at`) VALUES
-(1, 23, 2, 'The Boys', 'En cours', 'https://image.tmdb.org/t/p/w500/4Tw8TB9ikrcgzJgR0LOvgfnXD74.jpg', 'https://papadustream.motorcycles/cat-series/action-s/2018-the-boys-t-88c/{s}-saison/{ep}-episode.html', 'Lorsque les super-héros abusent de leurs super-pouvoirs au lieu de les utiliser pour faire le bien, ... ouais d\'abord !', '8', 5, 0, NULL, 'rejected', '2026-05-17 20:56:01'),
-(2, 23, 2, 'The Boys', 'En cours', 'https://image.tmdb.org/t/p/w500/4Tw8TB9ikrcgzJgR0LOvgfnXD74.jpg', 'https://papadustream.motorcycles/cat-series/action-s/2018-the-boys-t-88c/{s}-saison/{ep}-episode.html', 'caca', '8', 5, 0, NULL, 'rejected', '2026-05-17 21:03:55'),
-(3, 23, 2, 'The Boys', 'En cours', 'https://image.tmdb.org/t/p/w500/4Tw8TB9ikrcgzJgR0LOvgfnXD74.jpg', 'https://papadustream.motorcycles/cat-series/action-s/2018-the-boys-t-88c/{s}-saison/{ep}-episode.html', 'Lorsque les super-héros abusent de leurs super-pouvoirs au lieu de les utiliser pour faire le bien, ... okay', '8', 5, 0, NULL, 'rejected', '2026-05-17 21:09:59'),
-(4, 23, 2, 'The Boys', 'En cours', 'https://image.tmdb.org/t/p/w500/4Tw8TB9ikrcgzJgR0LOvgfnXD74.jpg', 'https://papadustream.motorcycles/cat-series/action-s/2018-the-boys-t-88c/{s}-saison/{ep}-episode.html', 'Lorsque les super-héros abusent de leurs super-pouvoirs au lieu de les utiliser pour faire le bien, ...', '12', 5, 0, NULL, 'rejected', '2026-05-17 21:10:44'),
-(5, 23, 2, 'The Boys', 'En cours', 'https://image.tmdb.org/t/p/w500/4Tw8TB9ikrcgzJgR0LOvgfnXD74.jpg', 'https://papadustream.motorcycles/cat-series/action-s/2018-the-boys-t-88c/{s}-saison/{ep}-episode.html', 'Lorsque les super-héros abusent de leurs super-pouvoirs au lieu de les utiliser pour faire le bien, ... nan', '8', 5, 0, NULL, 'rejected', '2026-05-17 21:26:34'),
-(6, 23, 2, 'The Boys', 'En cours', 'https://image.tmdb.org/t/p/w500/4Tw8TB9ikrcgzJgR0LOvgfnXD74.jpg', 'https://papadustream.motorcycles/cat-series/action-s/2018-the-boys-t-88c/{s}-saison/{ep}-episode.html', 'Lorsque les super-héros abusent de leurs super-pouvoirs au lieu de les utiliser pour faire le bien, ...', '8', 5, 0, NULL, 'approved', '2026-05-17 21:28:00'),
-(7, 23, 2, 'The Boys', 'En cours', 'https://image.tmdb.org/t/p/w500/4Tw8TB9ikrcgzJgR0LOvgfnXD74.jpg', 'https://papadustream.motorcycles/cat-series/action-s/2018-the-boys-t-88c/{s}-saison/{ep}-episode.html', 'Lorsque les super-héros abusent de leurs super-pouvoirs au lieu de les utiliser pour faire le bien, ...', '8', 5, 0, NULL, 'rejected', '2026-05-17 21:28:29'),
-(8, 23, 2, 'The Boys', 'En cours', 'https://image.tmdb.org/t/p/w500/4Tw8TB9ikrcgzJgR0LOvgfnXD74.jpg', 'https://papadustream.motorcycles/cat-series/action-s/2018-the-boys-t-88c/{s}-saison/{ep}-episode.html', 'Lorsque les super-héros abusent de leurs super-pouvoirs au lieu de les utiliser pour faire le bien, ...v vrfsfes', '8', 5, 0, NULL, 'approved', '2026-05-17 21:33:04'),
-(9, 23, 2, 'The Boys', 'En cours', 'https://image.tmdb.org/t/p/w500/4Tw8TB9ikrcgzJgR0LOvgfnXD74.jpg', 'https://papadustream.motorcycles/cat-series/action-s/2018-the-boys-t-88c/{s}-saison/{ep}-episode.html', 'Lorsque les super-héros abusent de leurs super-pouvoirs au lieu de les utiliser pour faire le bien, ...', '8', 5, 0, NULL, 'approved', '2026-05-17 21:33:48'),
-(10, 23, 2, 'The Boys', 'En cours', 'https://image.tmdb.org/t/p/w500/4Tw8TB9ikrcgzJgR0LOvgfnXD74.jpg', 'https://papadustream.motorcycles/cat-series/action-s/2018-the-boys-t-88c/{s}-saison/{ep}-episode.html', 'Lorsque les super-héros abusent de leurs super-pouvoirs au lieu de les utiliser pour faire le bien, ... okay', '8', 5, 0, NULL, 'rejected', '2026-05-17 21:34:39'),
-(11, 23, 2, 'The Boys', 'En cours', 'Troll.jpg', 'https://papadustream.motorcycles/cat-series/action-s/2018-the-boys-t-88c/{s}-saison/{ep}-episode.html', 'Lorsque les super-héros abusent de leurs super-pouvoirs au lieu de les utiliser pour faire le bien, ... hehe', '12', 5, 0, NULL, 'rejected', '2026-05-17 21:41:17'),
-(12, 23, 2, 'The Sex', 'En cours', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkdyKDPJ4pF92dyr2W7HysL0eqd1gAMBwpWA&s', 'https://papadustream.motorcycles/cat-series/action-s/2018-the-boys-t-88c/{s}-saison/{ep}-episode.html', 'grosse bite', '', NULL, 0, NULL, 'rejected', '2026-05-17 21:44:07');
-
 TRUNCATE TABLE `migrations`;
 TRUNCATE TABLE `settings`;
 TRUNCATE TABLE `users`;
 INSERT INTO `users` (`id`, `username`, `status`, `status_message`, `active`, `last_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Super Admin', NULL, NULL, 1, '2026-05-17 21:42:47', '2026-04-11 17:01:15', '2026-05-17 12:39:43', NULL),
-(2, 'Titiss', NULL, NULL, 1, '2026-05-17 21:45:52', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL),
+(2, 'Titiss', NULL, NULL, 1, '2026-05-17 21:58:49', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL),
 (3, 'Seiko', NULL, NULL, 1, NULL, '2026-04-30 14:13:09', '2026-05-16 16:16:13', NULL);
 COMMIT;
 

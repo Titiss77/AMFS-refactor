@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Entities\Item;
+use App\Models\AuditLogModel;  // Ajout du modèle d'audit
 use App\Models\ItemModel;
 use App\Models\ItemRevisionModel;
 
@@ -39,7 +40,6 @@ class ItemController extends BaseController
                 return redirect()->to('login');
             }
 
-            // 1. Validation CI4
             $rules = [
                 'titre' => 'required|max_length[100]',
                 'id_division' => 'required|numeric',
@@ -50,92 +50,88 @@ class ItemController extends BaseController
                 return redirect()->back()->withInput()->with('error', 'Erreur dans le formulaire.');
             }
 
-            // 2. Traitement des données
             $data = $this->request->getPost();
             $id = $this->request->getPost('id');
             $isAdmin = auth()->user()->inGroup('admin', 'superadmin');
             $isSuperAdmin = auth()->user()->inGroup('superadmin');
+            $audit = new AuditLogModel();  // Initialisation de l'audit
 
-            // --- NOUVELLE LOGIQUE DE MODÉRATION (Nouvelle carte) ---
             $wantsPublic = $this->request->getPost('is_public');
-
             if ($wantsPublic) {
-                // Si c'est un superadmin, publication directe (1). Sinon, en inspection (2)
                 $data['is_public'] = $isSuperAdmin ? 1 : 2;
             } else {
-                // Sinon elle reste ou devient privée (0)
                 $data['is_public'] = 0;
             }
 
-            // Gestion de la date de sortie
             $data['date_sortie'] = empty($this->request->getPost('date_sortie')) ? null : $this->request->getPost('date_sortie');
 
-            // --- GESTION DU PROPRIÉTAIRE & DES RÉVISIONS ---
             $existing = null;
             if ($id) {
                 $existing = $this->model->find($id);
                 if ($existing) {
-                    $data['id_user'] = $existing->id_user; // On conserve le propriétaire original
+                    $data['id_user'] = $existing->id_user;
                 }
             } else {
-                $data['id_user'] = auth()->id(); // Nouvelle carte
+                $data['id_user'] = auth()->id();
             }
 
             $backUrl = $this->request->getPost('redirect_url') ?: site_url('/');
             $separator = (str_contains($backUrl, '?')) ? '&' : '?';
 
-            // 3. Sauvegarde ou mise en révision
             if ($id) {
-                // Sécurité : Propriétaire ou admin
                 $canEdit = $existing && ((int) $existing->id_user === (int) auth()->id() || $isAdmin);
 
                 if (!$canEdit) {
+                    $audit->logAction('Violation Accès', "Tentative non autorisée de modification sur la carte ID {$id}.");
                     return redirect()->back()->with('error', "Vous n'avez pas les droits pour modifier cette carte.");
                 }
 
-                // --- LOGIQUE DE DRAFTING CORRIGÉE ---
-                // Si la carte est DÉJÀ publique, que l'utilisateur VEUT la garder publique, et n'est PAS superadmin
                 if ($existing->is_public == 1 && $data['is_public'] != 0 && !$isSuperAdmin) {
-                    
                     $revisionModel = new ItemRevisionModel();
-                    
                     $revisionData = [
                         'original_item_id' => $id,
-                        'id_user'          => auth()->id(), // Celui qui fait la modif
-                        'titre'            => $data['titre'],
-                        'status'           => $data['status'],
-                        'image'            => $data['image'] ?? $existing->image,
-                        'lien'             => $data['lien'] ?? null,
-                        'description'      => $data['description'] ?? null,
-                        'episode'          => $data['episode'] ?? null,
-                        'saison'           => empty($data['saison']) ? null : $data['saison'],
-                        'position'         => $existing->position, // on garde la position actuelle
-                        'date_sortie'      => $data['date_sortie'],
-                        'revision_status'  => 'pending'
+                        'id_user' => auth()->id(),
+                        'titre' => $data['titre'],
+                        'status' => $data['status'],
+                        'image' => $data['image'] ?? $existing->image,
+                        'lien' => $data['lien'] ?? null,
+                        'description' => $data['description'] ?? null,
+                        'episode' => $data['episode'] ?? null,
+                        'saison' => empty($data['saison']) ? null : $data['saison'],
+                        'position' => $existing->position,
+                        'date_sortie' => $data['date_sortie'],
+                        'revision_status' => 'pending'
                     ];
 
                     $revisionModel->save($revisionData);
+                    $audit->logAction('Soumission Draft', "L'utilisateur a proposé une modification pour la carte publique ID {$id} ('{$existing->titre}').");
 
-                    return redirect()->to($backUrl . $separator . 'open=' . $existing->id_division . '#div-' . $existing->id_division)
-                                     ->with('message', 'Votre modification a été soumise au SuperAdmin pour validation.');
+                    return redirect()
+                        ->to($backUrl . $separator . 'open=' . $existing->id_division . '#div-' . $existing->id_division)
+                        ->with('message', 'Votre modification a été soumise au SuperAdmin pour validation.');
                 } else {
-                    // C'est une carte privée OU elle passe en privé OU c'est un superadmin -> Mise à jour directe
                     $item = new Item($data);
                     $this->model->save($item);
 
-                    // Si l'utilisateur a décidé de repasser sa carte en privé, on nettoie les révisions en attente
+                    $statutVisibility = $data['is_public'] == 1 ? 'Publique' : 'Privée';
+                    $audit->logAction('Mise à jour Carte', "Modification de la carte ID {$id} ('{$data['titre']}'). Visibilité: {$statutVisibility}.");
+
                     if ($existing->is_public == 1 && $data['is_public'] == 0) {
                         $revisionModel = new ItemRevisionModel();
-                        $revisionModel->where('original_item_id', $id)
-                                      ->where('revision_status', 'pending')
-                                      ->delete();
+                        $revisionModel
+                            ->where('original_item_id', $id)
+                            ->where('revision_status', 'pending')
+                            ->delete();
+                        $audit->logAction('Nettoyage Draft', "Passage en privé de la carte ID {$id} : Suppression automatique des drafts en attente.");
                     }
                 }
-
             } else {
-                // Nouvelle carte
                 $item = new Item($data);
                 $this->model->save($item);
+                $newId = $this->model->getInsertID();
+
+                $statutVisibility = $data['is_public'] == 2 ? 'En attente' : ($data['is_public'] == 1 ? 'Publique' : 'Privée');
+                $audit->logAction('Création Carte', "Création de la carte ID {$newId} ('{$data['titre']}'). Visibilité initiale: {$statutVisibility}.");
             }
 
             return redirect()->to($backUrl . $separator . 'open=' . $data['id_division'] . '#div-' . $data['id_division']);
@@ -148,10 +144,14 @@ class ItemController extends BaseController
             $item = $this->model->find($id);
             $isAdmin = auth()->user()->inGroup('admin', 'superadmin');
 
-            // Seul le propriétaire ou un admin peut supprimer
             if ($item && ((int) $item->id_user === (int) auth()->id() || $isAdmin)) {
                 $id_div = $item->id_division;
+                $titre = $item->titre;  // Sauvegarde le titre avant suppression
+
                 $this->model->delete($id);
+
+                $audit = new AuditLogModel();
+                $audit->logAction('Suppression Carte', "Suppression de la carte ID {$id} ('{$titre}').");
 
                 $backUrl = $this->request->getUserAgent()->getReferrer() ?: site_url('/');
                 $separator = (str_contains($backUrl, '?')) ? '&' : '?';
@@ -170,6 +170,9 @@ class ItemController extends BaseController
         if ($item) {
             $newEpisode = (int) $item->episode + 1;
             $this->model->update($id, ['episode' => $newEpisode]);
+
+            $audit = new AuditLogModel();
+            $audit->logAction('Incrémentation Rapide', "Mise à jour de la carte ID {$id} ('{$item->titre}') : Épisode passé à {$newEpisode}.");
 
             if ($this->request->isAJAX()) {
                 return $this->response->setJSON([
@@ -206,13 +209,20 @@ class ItemController extends BaseController
             if (isset($json->order) && is_array($json->order)) {
                 $userId = auth()->id();
                 $isAdmin = auth()->user()->inGroup('admin', 'superadmin');
+                $count = 0;
 
                 foreach ($json->order as $index => $itemId) {
                     $item = $this->model->find($itemId);
 
                     if ($item && ((int) $item->id_user === (int) $userId || $isAdmin)) {
                         $this->model->update($itemId, ['position' => $index]);
+                        $count++;
                     }
+                }
+
+                if ($count > 0) {
+                    $audit = new AuditLogModel();
+                    $audit->logAction('Réorganisation', "L'utilisateur a modifié l'ordre d'affichage de {$count} carte(s).");
                 }
 
                 return $this->response->setJSON([
