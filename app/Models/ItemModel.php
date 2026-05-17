@@ -10,7 +10,20 @@ class ItemModel extends Model
     protected $table = 'item';
     protected $primaryKey = 'id';
     protected $returnType = \App\Entities\Item::class;
-    protected $allowedFields = ['id_user', 'id_division', 'id_category', 'title', 'status', 'image_url', 'link', 'description', 'season', 'episode', 'rating', 'created_at', 'updated_at'];
+    protected $allowedFields = [
+        'id_user', 
+        'id_division', 
+        'titre', 
+        'status', 
+        'is_public', 
+        'description', 
+        'date_sortie', 
+        'image', 
+        'lien', 
+        'saison', 
+        'episode', 
+        'position'
+    ];
     // Ajoute ces lignes pour le Soft Delete
     protected $useSoftDeletes = true;
     protected $deletedField = 'deleted_at';
