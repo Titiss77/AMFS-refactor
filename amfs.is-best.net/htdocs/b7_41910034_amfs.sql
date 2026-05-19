@@ -88,6 +88,10 @@ CREATE TABLE `auth_token_logins` (
 DROP TABLE IF EXISTS `cron_logs`;
 CREATE TABLE `cron_logs` (
   `id` int UNSIGNED NOT NULL,
+  `item_id` int UNSIGNED DEFAULT NULL,
+  `titre` varchar(100) DEFAULT NULL,
+  `url_testee` text,
+  `code_erreur` int DEFAULT NULL,
   `task_name` varchar(50) NOT NULL,
   `last_run` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -212,8 +216,7 @@ ALTER TABLE `auth_token_logins`
   ADD KEY `user_id` (`user_id`);
 
 ALTER TABLE `cron_logs`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `task_name` (`task_name`);
+  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `division`
   ADD PRIMARY KEY (`id`),
