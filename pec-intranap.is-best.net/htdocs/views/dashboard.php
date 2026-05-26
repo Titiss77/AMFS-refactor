@@ -25,35 +25,41 @@
             <button id="btnSync" class="btn-primary" onclick="lancerSync()">
                 🔄 Synchroniser avec la FFESSM
             </button>
-            -->
+            
 
             <button onclick="voirLogs()"
                 style="background: none; padding: 4px 10px; font-size: 0.8rem; color: var(--texte-secondaire);">
                 📜 Voir les dernières modifs
             </button>
-        </div>
-        <div id="pdfModal" class="modal">
-            <div class="modal-content" style="max-width: 500px; text-align: center;">
-                <span class="close-btn" onclick="closePdfModal()">&times;</span>
-                <h2 style="color: var(--couleur-principale); margin-bottom: 15px; font-size: 1.3rem;">📄 Convertir un
-                    PDF en CSV</h2>
-                <p style="color: var(--texte-secondaire); margin-bottom: 20px; font-size: 0.9rem;">
-                    Uploadez un fichier de résultats PDF. Il sera automatiquement converti et téléchargé au format CSV.
-                </p>
+            -->
 
-                <form action="convertisseur.php" method="post" enctype="multipart/form-data">
-                    <div style="margin-bottom: 20px; text-align: left;">
-                        <input type="file" name="pdf_file" accept="application/pdf" required
-                            style="width: 100%; padding: 10px; border: 1px dashed var(--bordure); border-radius: 5px; background: var(--fond-page);">
-                    </div>
-                    <button type="submit" name="convert" class="btn-success"
-                        style="width: 100%; padding: 12px; font-size: 1.1rem;">
-                        🚀 Convertir et Télécharger
-                    </button>
-                </form>
+            <div><button type="button" class="btn-primary" style="background-color: #007bff; color: white;"
+                    onclick="openPdfModal()">📄 Ajout via un pdf officiel</button></div>
+
+            <div id="pdfModal" class="modal">
+                <div class="modal-content" style="max-width: 500px; text-align: center;">
+                    <span class="close-btn" onclick="closePdfModal()">&times;</span>
+                    <h2 style="color: var(--couleur-principale); margin-bottom: 15px; font-size: 1.3rem;">📄 Convertir
+                        un
+                        PDF en CSV</h2>
+                    <p style="color: var(--texte-secondaire); margin-bottom: 20px; font-size: 0.9rem;">
+                        Uploadez un fichier de résultats PDF. Il sera automatiquement converti et téléchargé au format
+                        CSV.
+                    </p>
+
+                    <form action="convertisseur.php" method="post" enctype="multipart/form-data">
+                        <div style="margin-bottom: 20px; text-align: left;">
+                            <input type="file" name="pdf_file" accept="application/pdf" required
+                                style="width: 100%; padding: 10px; border: 1px dashed var(--bordure); border-radius: 5px; background: var(--fond-page);">
+                        </div>
+                        <button type="submit" name="convert" class="btn-success"
+                            style="width: 100%; padding: 12px; font-size: 1.1rem;">
+                            🚀 Convertir et Télécharger
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-
         <div id="progressContainer" style="display: none; width: 100%; margin: 15px 0; text-align: center;">
             <div
                 style="background-color: var(--fond-page); border-radius: 8px; overflow: hidden; height: 25px; border: 1px solid var(--bordure);">
@@ -93,8 +99,6 @@
         </div>
 
         <div class="actions-bar">
-            <div><button type="button" class="btn-primary" style="background-color: #007bff; color: white;"
-                    onclick="openPdfModal()">📄 Convertir PDF en CSV</button></div>
             <div><button type="button" class="btn-success" onclick="exporterCsv()">📥 Exporter en CSV</button></div>
             <div><button type="button" id="btnToggleStats" class="btn-info" onclick="toggleStats()">📊 Afficher les
                     Statistiques</button></div>
