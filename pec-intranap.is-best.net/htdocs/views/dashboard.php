@@ -31,10 +31,12 @@
                 style="background: none; padding: 4px 10px; font-size: 0.8rem; color: var(--texte-secondaire);">
                 📜 Voir les dernières modifs
             </button>
-            -->
+            
 
             <div><button type="button" class="btn-primary" style="background-color: #007bff; color: white;"
                     onclick="openPdfModal()">📄 Ajout via un pdf officiel</button></div>
+
+            -->
 
             <div id="pdfModal" class="modal">
                 <div class="modal-content" style="max-width: 500px; text-align: center;">
