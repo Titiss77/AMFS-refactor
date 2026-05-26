@@ -415,3 +415,21 @@ window.onclick = function (event) {
     if (event.target == logModal) { closeLogs(); }
     if (event.target == privacyModal) { closePrivacy(); }
 }
+
+// Fonctions pour gérer la modale PDF
+    function openPdfModal() {
+        document.getElementById('pdfModal').style.display = 'block';
+    }
+
+    function closePdfModal() {
+        document.getElementById('pdfModal').style.display = 'none';
+    }
+
+    // (Optionnel) Fermer la modale si on clique à l'extérieur
+    window.onclick = function(event) {
+        let pdfModal = document.getElementById('pdfModal');
+        // Si vous avez d'autres modales, vous pouvez les ajouter ici
+        if (event.target == pdfModal) {
+            pdfModal.style.display = "none";
+        }
+    }
