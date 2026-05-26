@@ -18,14 +18,15 @@ class PerformanceModel
 
     public function getPerformances($saison)
     {
+        // On prépare la condition pour la saison en utilisant l'alias p1
         $condition_saison = '';
         $params = [];
         if ('all' !== $saison) {
-            $condition_saison = 'AND p.saison = :saison';
+            $condition_saison = 'AND p1.saison = :saison';
             $params[':saison'] = $saison;
         }
 
-        // AJOUT : c.libelle AS categorie_libelle
+        // Requête corrigée avec l'alias p1 partout
         $sql = "
         SELECT n.id AS nageur_id, n.nom, n.prenom, n.date_naissance,
                c.nom_categorie AS categorie, c.libelle AS categorie_libelle,
@@ -37,14 +38,26 @@ class PerformanceModel
         JOIN categories c ON p1.categorie_id = c.id
         JOIN lieux l ON p1.lieu_id = l.id
         JOIN (
-            SELECT p.nageur_id, p.epreuve_id, MIN(p.temps) as min_temps
-            FROM performances p
-            WHERE 1=1 {$condition_saison}
-            GROUP BY p.nageur_id, p.epreuve_id
-        ) p2 ON p1.nageur_id = p2.nageur_id AND p1.epreuve_id = p2.epreuve_id AND p1.temps = p2.min_temps
-        WHERE 1=1 ".str_replace('p.', 'p1.', $condition_saison).'
+            SELECT nageur_id, epreuve_id, MIN(
+                CASE 
+                    WHEN temps LIKE '%:%' THEN (SUBSTRING_INDEX(temps, ':', 1) * 60 + SUBSTRING_INDEX(temps, ':', -1))
+                    ELSE CAST(temps AS DECIMAL(10,2))
+                END
+            ) as min_temps_sec
+            FROM performances
+            WHERE 1=1 " . ($saison !== 'all' ? "AND saison = :saison" : "") . "
+            GROUP BY nageur_id, epreuve_id
+        ) p2 ON p1.nageur_id = p2.nageur_id 
+             AND p1.epreuve_id = p2.epreuve_id 
+             AND (
+                CASE 
+                    WHEN p1.temps LIKE '%:%' THEN (SUBSTRING_INDEX(p1.temps, ':', 1) * 60 + SUBSTRING_INDEX(p1.temps, ':', -1))
+                    ELSE CAST(p1.temps AS DECIMAL(10,2))
+                END
+             ) = p2.min_temps_sec
+        WHERE 1=1 {$condition_saison}
         ORDER BY epreuve ASC, p1.temps ASC
-        ';
+        ";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);

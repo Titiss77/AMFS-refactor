@@ -160,21 +160,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['convert'])) {
                         continue;
                     }
 
-                    // 5. Gestion du temps final
+                    // ---------------------------------------------------------
+                    // 5. GESTION DU TEMPS NORMALISÉ (Format 00:00.00)
+                    // ---------------------------------------------------------
                     $temps_brut = trim(preg_replace('/\s+/', ' ', $m[6]));
                     $temps_array = explode(' ', $temps_brut);
                     $temps_final = '';
+
                     foreach ($temps_array as $t) {
                         if (preg_match('/^\d/', $t)) {
-                            $temps_final = $t;
+                            // Nettoyage des lettres parasites (MPF, IN, etc.)
+                            $t = preg_replace('/[a-zA-Z]+$/', '', $t);
+
+                            // Normalisation vers 00:00.00
+                            // Si le temps contient ':', c'est MM:SS.ms
+                            if (strpos($t, ':') !== false) {
+                                $parts = explode(':', $t);
+                                $minutes = str_pad($parts[0], 2, '0', STR_PAD_LEFT);
+                                // S'il manque les millisecondes après le point, on en rajoute
+                                $secParts = explode('.', $parts[1]);
+                                $secondes = str_pad($secParts[0], 2, '0', STR_PAD_LEFT);
+                                $ms = isset($secParts[1]) ? str_pad($secParts[1], 2, '0', STR_PAD_RIGHT) : '00';
+                                $temps_final = "$minutes:$secondes.$ms";
+                            }
+                            // Si pas de ':', c'est SS.ms (on ajoute 00: devant)
+                            else {
+                                $secParts = explode('.', $t);
+                                $secondes = str_pad($secParts[0], 2, '0', STR_PAD_LEFT);
+                                $ms = isset($secParts[1]) ? str_pad($secParts[1], 2, '0', STR_PAD_RIGHT) : '00';
+                                $temps_final = "00:$secondes.$ms";
+                            }
                         } else {
                             $statut = trim($statut . ' ' . $t);
                         }
                     }
-                    if (preg_match('/([a-zA-Z]+)$/', $temps_final, $rec)) {
-                        $temps_final = str_replace($rec[1], '', $temps_final);
-                        $statut = trim($statut . ' ' . $rec[1]);
-                    }
+                    // ---------------------------------------------------------
 
                     // --- 6. SÉPARATION NOM / PRÉNOM ---
                     // Les noms de famille sont en majuscules, les prénoms en minuscules ou capitalisés
