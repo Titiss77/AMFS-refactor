@@ -9,146 +9,29 @@ SET time_zone = "+00:00";
 
 
 TRUNCATE TABLE `audit_logs`;
-INSERT INTO `audit_logs` (`id`, `user_id`, `action`, `details`, `ip_address`, `created_at`) VALUES
-(1, 2, 'Mise à jour Carte', 'Modification de la carte ID 23 (\'The Boys\'). Visibilité: Privée.', '127.0.0.1', '2026-05-17 21:57:53'),
-(2, 2, 'Modération : Approbation Carte', 'Le SuperAdmin a validé la nouvelle publication de la carte ID 23 (\'The Boys\').', '127.0.0.1', '2026-05-17 21:58:01'),
-(3, 2, 'Soumission Draft', 'L\'utilisateur a proposé une modification pour la carte publique ID 23 (\'The Boys\').', '127.0.0.1', '2026-05-17 21:58:22'),
-(4, 2, 'Modération : Refus Draft', 'Rejet du Draft ID 13 pour la carte ID 23. La version publique n\'a pas été affectée.', '127.0.0.1', '2026-05-17 21:58:30'),
-(5, 2, 'Mise à jour Carte', 'Modification de la carte ID 23 (\'The Boys\'). Visibilité: Privée.', '127.0.0.1', '2026-05-17 21:58:49'),
-(6, 2, 'Nettoyage Draft', 'Passage en privé de la carte ID 23 : Suppression automatique des drafts en attente.', '127.0.0.1', '2026-05-17 21:58:49'),
-(7, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 46 (\'L\'Atelier des Sorciers\') : Épisode passé à 6.', '5.49.246.18', '2026-05-17 22:52:49'),
-(8, 1, 'Modification Profil', 'Mise à jour du compte ID 2. Nouveau groupe de sécurité assigné: [user].', '5.49.246.18', '2026-05-17 22:55:04'),
-(9, 1, 'Modification Profil', 'Mise à jour du compte ID 2. Nouveau groupe de sécurité assigné: [admin].', '5.49.246.18', '2026-05-17 22:56:01'),
-(10, 2, 'Mise à jour Carte', 'Modification de la carte ID 2 (\'One Piece\'). Visibilité: Privée.', '5.49.246.18', '2026-05-17 23:00:16'),
-(11, 2, 'Mise à jour Carte', 'Modification de la carte ID 40 (\'Modulo\'). Visibilité: Privée.', '5.49.246.18', '2026-05-17 23:05:35'),
-(12, 2, 'Mise à jour Carte', 'Modification de la carte ID 40 (\'모두의 연애\'). Visibilité: Privée.', '5.49.246.18', '2026-05-17 23:05:43'),
-(13, 2, 'Mise à jour Carte', 'Modification de la carte ID 40 (\'jjk\'). Visibilité: Privée.', '5.49.246.18', '2026-05-17 23:06:13'),
-(14, 2, 'Mise à jour Carte', 'Modification de la carte ID 40 (\'Jujutsu Kaisen Modulo\'). Visibilité: Privée.', '5.49.246.18', '2026-05-17 23:06:50'),
-(15, 2, 'Modération : Approbation Carte', 'Le SuperAdmin a validé la nouvelle publication de la carte ID 40 (\'Jujutsu Kaisen Modulo\').', '5.49.246.18', '2026-05-17 23:06:59'),
-(16, 2, 'Soumission Draft', 'L\'utilisateur a proposé une modification pour la carte publique ID 40 (\'Jujutsu Kaisen Modulo\').', '5.49.246.18', '2026-05-17 23:08:40'),
-(17, 2, 'Modération : Approbation Draft', 'Validation du Draft ID 1. Les données de la carte publique ID 40 (\'Jujutsu Kaisen Modulo\') ont été écrasées avec succès.', '5.49.246.18', '2026-05-17 23:08:54'),
-(18, 2, 'Mise à jour Carte', 'Modification de la carte ID 40 (\'Jujutsu Kaisen Modulo\'). Visibilité: Privée.', '5.49.246.18', '2026-05-17 23:09:11'),
-(19, 2, 'Nettoyage Draft', 'Passage en privé de la carte ID 40 : Suppression automatique des drafts en attente.', '5.49.246.18', '2026-05-17 23:09:11'),
-(20, 1, 'Mise à jour Carte', 'Modification de la carte ID 21 (\'Wiflix\'). Visibilité: Publique.', '5.49.246.18', '2026-05-17 23:09:39'),
-(21, 1, 'Mise à jour Carte', 'Modification de la carte ID 21 (\'Wiflix\'). Visibilité: Publique.', '5.49.246.18', '2026-05-17 23:09:48'),
-(22, 1, 'Mise à jour Carte', 'Modification de la carte ID 21 (\'Wiflix\'). Visibilité: Publique.', '5.49.246.18', '2026-05-17 23:09:59'),
-(23, 1, 'Mise à jour Carte', 'Modification de la carte ID 16 (\'Lelmanga\'). Visibilité: Publique.', '5.49.246.18', '2026-05-17 23:10:55'),
-(24, 1, 'Réorganisation', 'L\'utilisateur a modifié l\'ordre d\'affichage de 4 carte(s).', '5.49.246.18', '2026-05-17 23:13:21'),
-(25, 1, 'Mise à jour Carte', 'Modification de la carte ID 19 (\'Sushiscan\'). Visibilité: Publique.', '5.49.246.18', '2026-05-17 23:14:37'),
-(26, 1, 'Réorganisation', 'L\'utilisateur a modifié l\'ordre d\'affichage de 4 carte(s).', '5.49.246.18', '2026-05-17 23:14:50'),
-(27, NULL, 'Maintenance Système', 'Scan de liens en arrière-plan : 40 URLs testées, 10 lien(s) mort(s).', '127.0.0.1', '2026-05-17 23:30:31'),
-(28, 1, 'Mise à jour Carte', 'Modification de la carte ID 19 (\'Sushiscan\'). Visibilité: Publique.', '127.0.0.1', '2026-05-17 23:30:34'),
-(29, 2, 'Maintenance Système', 'Scan de liens en arrière-plan : 40 URLs testées, 11 lien(s) mort(s).', '127.0.0.1', '2026-05-17 23:33:02'),
-(30, 2, 'Maintenance Système', 'Scan de liens en arrière-plan : 40 URLs testées, 11 lien(s) mort(s).', '127.0.0.1', '2026-05-17 23:39:56'),
-(31, 2, 'Maintenance Système', 'Scan FORCÉ de liens : 40 URLs testées, 11 lien(s) mort(s).', '127.0.0.1', '2026-05-17 23:41:36'),
-(32, 2, 'Maintenance Système', 'Scan FORCÉ de liens : 40 URLs testées, 11 lien(s) mort(s).', '127.0.0.1', '2026-05-17 23:43:25'),
-(33, 2, 'Maintenance Système', 'Scan FORCÉ de liens : 40 URLs testées, 6 lien(s) mort(s).', '127.0.0.1', '2026-05-17 23:48:11'),
-(34, 2, 'Maintenance Système', 'Scan de liens en arrière-plan : 40 URLs vérifiées, 6 anomalie(s) enregistrée(s) dans les journaux.', '127.0.0.1', '2026-05-17 23:55:12'),
-(35, 2, 'Soumission Draft', 'L\'utilisateur a proposé une modification pour la carte publique ID 18 (\'Shaeishu\').', '127.0.0.1', '2026-05-18 00:04:17'),
-(36, 2, 'Soumission Draft', 'L\'utilisateur a proposé une modification pour la carte publique ID 19 (\'Sushiscan\').', '127.0.0.1', '2026-05-18 00:04:44'),
-(37, 2, 'Modération : Approbation Draft', 'Validation du Draft ID 2. Les données de la carte publique ID 18 (\'Mangamoins\') ont été écrasées avec succès.', '127.0.0.1', '2026-05-18 00:05:07'),
-(38, 2, 'Modération : Approbation Draft', 'Validation du Draft ID 3. Les données de la carte publique ID 19 (\'Sushiscan\') ont été écrasées avec succès.', '127.0.0.1', '2026-05-18 00:05:11'),
-(39, 1, 'Maintenance Système', 'Scan FORCÉ de liens : 40 URLs vérifiées, 5 anomalie(s) enregistrée(s) dans les journaux.', '127.0.0.1', '2026-05-18 00:11:32'),
-(40, 1, 'Modération : Suppression Carte', 'Suppression définitive de la carte ID 29 (\'DALL.E\') par l\'administration depuis le rapport des erreurs 404.', '127.0.0.1', '2026-05-18 00:12:06'),
-(41, 1, 'Maintenance Système', 'Scan FORCÉ de liens : 39 URLs vérifiées, 4 anomalie(s) enregistrée(s) dans les journaux.', '127.0.0.1', '2026-05-18 00:12:53'),
-(42, 1, 'Maintenance Système', 'Scan FORCÉ de liens : 39 URLs vérifiées, 1 anomalie(s) enregistrée(s).', '127.0.0.1', '2026-05-18 00:15:28'),
-(43, 2, 'Mise à jour Carte', 'Modification de la carte ID 11 (\'Chainsaw Man\'). Visibilité: Privée.', '127.0.0.1', '2026-05-18 00:19:53'),
-(44, 2, 'Maintenance Système', 'Scan FORCÉ de liens : 23 domaines uniques testés pour 39 cartes. 1 carte(s) impactée(s).', '127.0.0.1', '2026-05-18 00:20:35'),
-(45, 2, 'Maintenance Système', 'Scan de liens en arrière-plan : 23 domaines uniques testés pour 39 cartes. 1 carte(s) impactée(s).', '127.0.0.1', '2026-05-18 00:20:36'),
-(46, 2, 'Maintenance Système', 'Scan FORCÉ de liens : 23 domaines uniques testés pour 39 cartes. 1 carte(s) impactée(s).', '127.0.0.1', '2026-05-18 00:24:51'),
-(47, 2, 'Maintenance Système', 'Scan FORCÉ de liens : 23 domaines uniques testés pour 39 cartes. 1 carte(s) impactée(s).', '127.0.0.1', '2026-05-18 00:28:14'),
-(48, 2, 'Maintenance Système', 'Scan de liens en arrière-plan : 23 domaines uniques testés pour 39 cartes. 1 carte(s) impactée(s).', '127.0.0.1', '2026-05-18 00:28:15'),
-(49, 2, 'Maintenance : Remplacement en masse', 'Migration du domaine \'https://sushiscan.org\' vers \'https://sushiscan.net\' appliquée sur 1 carte(s).', '127.0.0.1', '2026-05-18 00:28:43'),
-(50, 1, 'Mise à jour Carte', 'Modification de la carte ID 19 (\'Sushiscan\'). Visibilité: Publique.', '127.0.0.1', '2026-05-18 00:30:18'),
-(51, 1, 'Maintenance Système', 'Scan FORCÉ de liens : 23 domaines uniques testés pour 39 cartes. 1 carte(s) impactée(s).', '127.0.0.1', '2026-05-18 00:30:51'),
-(52, 1, 'Maintenance Système', 'Scan de liens en arrière-plan : 23 domaines uniques testés pour 39 cartes. 1 carte(s) impactée(s).', '127.0.0.1', '2026-05-18 00:30:53'),
-(53, 1, 'Maintenance : Remplacement en masse', 'Migration du domaine \'https://sushiscan.org\' vers \'https://sushiscan.net\' appliquée sur 1 carte(s).', '127.0.0.1', '2026-05-18 00:34:56'),
-(54, 2, 'Mise à jour Carte', 'Modification de la carte ID 23 (\'The Boys\'). Visibilité: Privée.', '5.49.246.18', '2026-05-18 00:56:29'),
-(55, 2, 'Maintenance Système', 'Scan FORCÉ de liens : 23 domaines uniques testés pour 39 cartes. 1 carte(s) impactée(s).', '5.49.246.18', '2026-05-18 00:57:04'),
-(56, 2, 'Maintenance Système', 'Scan de liens en arrière-plan : 23 domaines uniques testés pour 39 cartes. 1 carte(s) impactée(s).', '5.49.246.18', '2026-05-18 00:57:10'),
-(57, 2, 'Maintenance : Remplacement en masse', 'Migration du domaine \'https://papadustream.motorcycles\' vers \'https://papadustream.marketing\' appliquée sur 1 carte(s).', '5.49.246.18', '2026-05-18 00:58:35'),
-(58, 2, 'Maintenance : Remplacement en masse', 'Migration du domaine \'https://papadustream.mo\' vers \'https://papadustream.marketing\' appliquée sur 1 carte(s).', '5.49.246.18', '2026-05-18 00:59:03'),
-(59, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 46 (\'L\'Atelier des Sorciers\') : Épisode passé à 7.', '5.49.246.18', '2026-05-18 16:29:01'),
-(60, 2, 'Mise à jour Carte', 'Modification de la carte ID 46 (\'L\'Atelier des Sorciers\'). Visibilité: Privée.', '5.49.246.18', '2026-05-18 16:50:58'),
-(61, 2, 'Mise à jour Carte', 'Modification de la carte ID 46 (\'L\'Atelier des Sorciers\'). Visibilité: Privée.', '5.49.246.18', '2026-05-18 16:51:24'),
-(62, 2, 'Mise à jour Carte', 'Modification de la carte ID 46 (\'L\'Atelier des Sorciers\'). Visibilité: Privée.', '5.49.246.18', '2026-05-18 22:31:30'),
-(63, 2, 'Mise à jour Carte', 'Modification de la carte ID 2 (\'One Piece\'). Visibilité: Privée.', '5.49.246.18', '2026-05-19 18:51:16'),
-(64, 2, 'Mise à jour Carte', 'Modification de la carte ID 2 (\'One Piece\'). Visibilité: Privée.', '5.49.246.18', '2026-05-19 18:52:41'),
-(65, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 35 (\'Classroom of the Elite\') : Épisode passé à 8.', '5.49.246.18', '2026-05-19 19:37:04'),
-(66, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 35 (\'Classroom of the Elite\') : Épisode passé à 9.', '5.49.246.18', '2026-05-19 22:04:02'),
-(67, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 35 (\'Classroom of the Elite\') : Épisode passé à 10.', '5.49.246.18', '2026-05-20 22:41:52'),
-(68, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 35 (\'Classroom of the Elite\') : Épisode passé à 11.', '104.28.42.18', '2026-05-29 05:29:16'),
-(69, 2, 'Mise à jour Carte', 'Modification de la carte ID 35 (\'Classroom of the Elite\'). Visibilité: Privée.', '104.28.42.18', '2026-05-29 05:29:44'),
-(70, 2, 'Mise à jour Carte', 'Modification de la carte ID 35 (\'Classroom of the Elite\'). Visibilité: Privée.', '104.28.42.18', '2026-05-29 05:29:54'),
-(71, 2, 'Suppression Carte', 'Suppression de la carte ID 23 (\'The Boys\').', '104.28.42.18', '2026-05-29 05:30:27'),
-(72, 2, 'Création Carte', 'Création de la carte ID 48 (\'Nemesis\'). Visibilité initiale: Privée.', '104.28.42.18', '2026-05-29 05:31:24'),
-(73, 2, 'Mise à jour Carte', 'Modification de la carte ID 48 (\'Nemesis\'). Visibilité: Privée.', '104.28.42.18', '2026-05-29 05:31:47'),
-(74, 2, 'Alerte Sécurité', 'L\'admin ID 2 a tenté d\'accéder à la page d\'édition du SuperAdmin ID 1.', '5.49.246.18', '2026-05-29 21:25:56'),
-(75, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 34 (\'Tsugai - Daemons of the Shadow Realm\') : Épisode passé à 9.', '5.49.246.18', '2026-05-29 22:03:18');
-
 TRUNCATE TABLE `auth_groups_users`;
 INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
 (1, 1, 'superadmin', '2026-04-11 17:01:16'),
 (3, 3, 'user', '2026-04-30 14:13:10'),
-(6, 2, 'admin', '2026-05-17 22:56:01'),
-(7, 0, 'user', '2026-05-29 22:04:09');
+(6, 2, 'admin', '2026-05-17 22:56:01');
 
 TRUNCATE TABLE `auth_identities`;
 INSERT INTO `auth_identities` (`id`, `user_id`, `type`, `name`, `secret`, `secret2`, `expires`, `extra`, `force_reset`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-05-29 22:09:09', '2026-04-11 17:01:16', '2026-05-29 22:09:09'),
+(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-05-29 22:17:38', '2026-04-11 17:01:16', '2026-05-29 22:17:38'),
 (2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$zqJUMEtVBDWzxe6Orkj2XO9DpI34W94tIIWxude20vrz5wjSaHwKC', NULL, NULL, 0, '2026-05-29 22:04:48', '2026-04-11 17:02:38', '2026-05-29 22:04:48'),
 (3, 2, 'magic-link', NULL, 'e3fc52dba64bd3b1958f', NULL, '2026-04-30 15:11:11', NULL, 0, NULL, '2026-04-30 14:11:11', '2026-04-30 14:11:11'),
-(4, 3, 'email_password', NULL, 'hugophilippe26@gmail.com', '$2y$12$9rKoqgP6n7E1vosN4EUWpu5L/lPLkyb9GrDKmIqJxQX9pzG/7drPG', NULL, NULL, 0, NULL, '2026-04-30 14:13:09', '2026-04-30 14:13:10'),
-(5, 0, 'email_password', NULL, 'nope', 'nope', NULL, NULL, 0, '2026-05-29 22:05:15', '2026-05-29 22:04:09', '2026-05-29 22:05:15');
+(4, 3, 'email_password', NULL, 'hugophilippe26@gmail.com', '$2y$12$9rKoqgP6n7E1vosN4EUWpu5L/lPLkyb9GrDKmIqJxQX9pzG/7drPG', NULL, NULL, 0, NULL, '2026-04-30 14:13:09', '2026-04-30 14:13:10');
 
 TRUNCATE TABLE `auth_logins`;
-INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identifier`, `user_id`, `date`, `success`) VALUES
-(1, '79.83.33.124', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-13 17:55:56', 1),
-(2, '79.83.33.124', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1', 'email_password', 'titisland@gmail.com', 1, '2026-05-13 17:56:16', 1),
-(3, '79.83.33.124', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-13 17:56:38', 1),
-(4, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-15 17:49:22', 1),
-(5, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-16 16:15:10', 1),
-(6, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-16 17:39:28', 1),
-(7, '79.83.33.192', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1', 'email_password', 'titisland@gmail.com', 1, '2026-05-16 18:02:02', 1),
-(8, '79.83.33.192', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1', 'email_password', 'titisland@gmail.com', 1, '2026-05-16 18:03:12', 1),
-(9, '79.83.33.192', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-16 18:04:03', 1),
-(10, '5.49.246.18', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-17 12:38:37', 1),
-(11, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-17 12:38:45', 1),
-(12, '5.49.246.18', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-17 12:40:05', 1),
-(13, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-17 12:42:38', 1),
-(14, '5.49.246.18', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-17 13:05:13', 1),
-(15, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-17 21:42:29', 1),
-(16, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-17 21:43:13', 1),
-(17, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-17 21:44:34', 1),
-(18, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-17 21:45:17', 1),
-(19, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-17 21:45:35', 1),
-(20, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-17 22:28:35', 1),
-(21, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-17 22:54:54', 1),
-(22, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-17 22:55:12', 1),
-(23, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-17 22:55:49', 1),
-(24, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-17 22:56:12', 1),
-(25, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-17 23:09:25', 1),
-(26, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-17 23:15:03', 1),
-(27, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-17 23:30:13', 1),
-(28, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-17 23:30:48', 1),
-(29, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-18 00:05:29', 1),
-(30, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-18 00:17:29', 1),
-(31, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-18 00:17:44', 1),
-(32, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-18 00:29:59', 1),
-(33, '5.49.246.18', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-18 00:53:57', 1),
-(34, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-18 16:04:28', 1),
-(35, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-05-29 22:04:48', 1),
-(36, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'mathisfrances111@gmail.com', 0, '2026-05-29 22:05:15', 1),
-(37, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-29 22:05:30', 1),
-(38, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-05-29 22:09:09', 1);
-
 TRUNCATE TABLE `auth_permissions_users`;
 TRUNCATE TABLE `auth_remember_tokens`;
+INSERT INTO `auth_remember_tokens` (`id`, `selector`, `hashedValidator`, `user_id`, `expires`, `created_at`, `updated_at`) VALUES
+(7, '39a90689a25075a2f5b37d15', '0269a260d3760f4c770e94c04030845a2883ab5d376903a0f137f5abeb3b9f98', 1, '2026-06-28 22:17:38', '2026-05-29 22:17:38', '2026-05-29 22:17:38');
+
 TRUNCATE TABLE `auth_token_logins`;
 TRUNCATE TABLE `cron_logs`;
 INSERT INTO `cron_logs` (`id`, `item_id`, `titre`, `url_testee`, `code_erreur`, `task_name`, `last_run`) VALUES
-(1, NULL, 'Aucun lien mort détecté', NULL, 200, 'check_dead_links', '2026-05-29 21:24:47'),
-(2, NULL, 'Aucun lien mort détecté', NULL, 200, 'check_dead_links', '2026-05-29 21:24:48');
+(1, NULL, 'Aucun lien mort détecté', NULL, 200, 'check_dead_links', '2026-05-29 22:28:58');
 
 TRUNCATE TABLE `division`;
 INSERT INTO `division` (`id`, `id_header`, `nom`) VALUES
@@ -214,19 +97,13 @@ INSERT INTO `item` (`id`, `id_user`, `is_public`, `id_division`, `titre`, `statu
 (48, 2, 0, 4, 'Nemesis', 'En cours', 'https://image.tmdb.org/t/p/w500/qjkp7DH7eSbLWLacjBqSV6TKz3Q.jpg', '', 'ok', 'Deux hommes situés de part et d\'autre de la loi, et illustre la réaction provoquée par la rencontre ...', '', 0, 0, NULL, NULL);
 
 TRUNCATE TABLE `item_revisions`;
-INSERT INTO `item_revisions` (`id`, `original_item_id`, `id_user`, `titre`, `status`, `image`, `lien`, `description`, `episode`, `saison`, `position`, `date_sortie`, `revision_status`, `created_at`) VALUES
-(1, 40, 2, 'Jujutsu Kaisen Modulo', 'À voir', 'https://www.myutaku.com/media/mangas/88950.jpg?1757883349', 'https://www.scan-vf.net/jujutsu-kaisen-modulo/chapitre-{ep}', 'Souffrance, regrets, humiliations... les sentiments négatifs que ressentent les humains se transform...', '5', NULL, 1, NULL, 'approved', '2026-05-17 14:08:39'),
-(2, 18, 2, 'Mangamoins', 'Aucun', '', 'https://mangamoins.com/', '', '', NULL, 3, NULL, 'approved', '2026-05-18 00:04:17'),
-(3, 19, 2, 'Sushiscan', 'Aucun', '', 'https://sushiscan.net', '', '', NULL, 1, NULL, 'approved', '2026-05-18 00:04:44');
-
 TRUNCATE TABLE `migrations`;
 TRUNCATE TABLE `settings`;
 TRUNCATE TABLE `users`;
 INSERT INTO `users` (`id`, `username`, `status`, `status_message`, `active`, `last_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(0, 'Test', NULL, NULL, 1, NULL, '2026-05-29 22:04:08', '2026-05-29 22:04:09', NULL),
 (1, 'Super Admin', NULL, NULL, 1, '2026-05-18 00:30:18', '2026-04-11 17:01:15', '2026-05-17 12:39:43', NULL),
 (2, 'Titiss', NULL, NULL, 1, '2026-05-29 22:03:18', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL),
-(3, 'Seiko', NULL, NULL, 1, NULL, '2026-04-30 14:13:09', '2026-05-16 16:16:13', NULL);
+(3, 'Seiko', NULL, NULL, 1, NULL, '2026-04-30 14:13:09', '2026-05-29 22:18:11', NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
