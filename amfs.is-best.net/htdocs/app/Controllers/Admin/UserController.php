@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
@@ -33,6 +35,7 @@ class UserController extends BaseController
         if ($user->inGroup('superadmin') && !$currentUser->inGroup('superadmin')) {
             $audit = new AuditLogModel();
             $audit->logAction('Alerte Sécurité', "L'admin ID {$currentUser->id} a tenté d'accéder à la page d'édition du SuperAdmin ID {$id}.");
+
             return redirect()->to('users')->with('error', 'Accréditation insuffisante pour modifier cette cible.');
         }
 
@@ -70,7 +73,7 @@ class UserController extends BaseController
 
         $rules = [
             'username' => "required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username,id,{$id}]",
-            'group' => "permit_empty|in_list[{$availableGroups}]"
+            'group' => "permit_empty|in_list[{$availableGroups}]",
         ];
 
         if (!$this->validate($rules)) {
@@ -95,8 +98,9 @@ class UserController extends BaseController
 
         $newGroup = $this->request->getPost('group');
         if ($newGroup) {
-            if ($newGroup === 'superadmin' && !$currentUser->inGroup('superadmin')) {
+            if ('superadmin' === $newGroup && !$currentUser->inGroup('superadmin')) {
                 $audit->logAction('Alerte Sécurité', "Tentative d'élévation de privilèges vers SuperAdmin bloquée pour la cible ID {$id}.");
+
                 return redirect()->to('users')->with('error', 'Déploiement du grade Super Admin refusé.');
             }
             $user->syncGroups($newGroup);

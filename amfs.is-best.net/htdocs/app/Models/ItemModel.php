@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -9,21 +11,21 @@ class ItemModel extends Model
 {
     protected $table = 'item';
     protected $primaryKey = 'id';
-    protected $returnType = \App\Entities\Item::class;
+    protected $returnType = Item::class;
     protected $allowedFields = [
-        'id_user', 
-        'id_division', 
-        'titre', 
-        'status', 
-        'is_public', 
-        'description', 
-        'date_sortie', 
-        'image', 
-        'lien', 
+        'id_user',
+        'id_division',
+        'titre',
+        'status',
+        'is_public',
+        'description',
+        'date_sortie',
+        'image',
+        'lien',
         'link_status',
-        'saison', 
-        'episode', 
-        'position'
+        'saison',
+        'episode',
+        'position',
     ];
     // Ajoute ces lignes pour le Soft Delete
     protected $useSoftDeletes = false;
@@ -37,7 +39,8 @@ class ItemModel extends Model
             ->select('h.nom AS header_nom, d.nom AS division_nom, i.*')
             ->join('division d', 'i.id_division = d.id')
             ->join('header h', 'd.id_header = h.id')
-            ->where('i.id_user !=', 0);  // EXCLURE L'UTILISATEUR 0 DE L'AFFICHAGE
+            ->where('i.id_user !=', 0)  // EXCLURE L'UTILISATEUR 0 DE L'AFFICHAGE
+        ;
 
         if (null === $userId) {
             $builder->where('i.is_public', 1);
@@ -46,7 +49,8 @@ class ItemModel extends Model
                 ->groupStart()
                 ->where('i.id_user', $userId)
                 ->orWhere('i.is_public', 1)
-                ->groupEnd();
+                ->groupEnd()
+            ;
         }
 
         if (null !== $headerId) {
@@ -58,7 +62,8 @@ class ItemModel extends Model
             ->orderBy('h.id', 'ASC')
             ->orderBy('d.id', 'ASC')
             ->orderBy('i.position', 'ASC')
-            ->orderBy('i.titre', 'ASC');
+            ->orderBy('i.titre', 'ASC')
+        ;
 
         // On retourne des Objets Entity, pas des Array simples
         $results = $builder->get()->getCustomResultObject(Item::class);

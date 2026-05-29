@@ -21,40 +21,40 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($users as $user): ?>
-                <tr class="<?= $user->isBanned() ? 'user-banned' : '' ?>">
+                <?php foreach ($users as $user) { ?>
+                <tr class="<?php echo $user->isBanned() ? 'user-banned' : ''; ?>">
 
-                    <td><?= esc($user->id) ?></td>
-                    <td><strong><?= esc($user->username) ?></strong></td>
+                    <td><?php echo esc($user->id); ?></td>
+                    <td><strong><?php echo esc($user->username); ?></strong></td>
 
                     <td>
-                        <?php if ($user->isBanned()): ?>
+                        <?php if ($user->isBanned()) { ?>
                         <span class="status-badge banned">Suspendu</span>
-                        <?php else: ?>
+                        <?php } else { ?>
                         <span class="status-badge active">Actif</span>
-                        <?php endif ?>
+                        <?php } ?>
                     </td>
 
                     <td>
                         <div class="action-links">
-                            <a href="<?= base_url('users/edit/' . $user->id) ?>"
+                            <a href="<?php echo base_url('users/edit/'.$user->id); ?>"
                                 class="btn-action btn-edit">Modifier</a>
 
-                            <?php if ($user->isBanned()): ?>
-                            <a href="<?= base_url('users/unban/' . $user->id) ?>" class="btn-action btn-unban"
+                            <?php if ($user->isBanned()) { ?>
+                            <a href="<?php echo base_url('users/unban/'.$user->id); ?>" class="btn-action btn-unban"
                                 onclick="return confirm('Réhabiliter cet utilisateur ?')">Débannir</a>
-                            <?php else: ?>
-                            <a href="<?= base_url('users/delete/' . $user->id) ?>" class="btn-action btn-ban"
+                            <?php } else { ?>
+                            <a href="<?php echo base_url('users/delete/'.$user->id); ?>" class="btn-action btn-ban"
                                 onclick="return confirm('Suspendre ce compte ?')">Bannir</a>
-                            <?php endif ?>
+                            <?php } ?>
                         </div>
                     </td>
 
                 </tr>
-                <?php endforeach; ?>
+                <?php } ?>
             </tbody>
         </table>
     </div>
-    <?= $pager->links() ?>
+    <?php echo $pager->links(); ?>
 </div>
 <?php echo $this->endSection(); ?>

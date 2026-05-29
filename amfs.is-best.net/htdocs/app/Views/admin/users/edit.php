@@ -4,15 +4,15 @@
 <div class="container mt-5">
     <h2>Modifier l'utilisateur : <?php echo esc($user->username); ?></h2>
 
-    <?php if (session()->has('errors')) : ?>
+    <?php if (session()->has('errors')) { ?>
     <div class="alert alert-danger">
         <ul>
-            <?php foreach (session('errors') as $error) : ?>
-            <li><?= esc($error) ?></li>
-            <?php endforeach ?>
+            <?php foreach (session('errors') as $error) { ?>
+            <li><?php echo esc($error); ?></li>
+            <?php } ?>
         </ul>
     </div>
-    <?php endif ?>
+    <?php } ?>
 
     <form action="<?php echo base_url('users/update/'.$user->id); ?>" method="POST">
         <?php echo csrf_field(); ?>

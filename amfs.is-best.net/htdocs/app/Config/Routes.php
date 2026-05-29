@@ -22,10 +22,10 @@ $routes->group('', ['filter' => 'session'], static function ($routes): void {
     $routes->get('item/form', 'ItemController::form');
     $routes->get('item/form/(:num)', 'ItemController::form/$1');
     $routes->post('item/save', 'ItemController::save');
-    
+
     // Note : Transformer ce GET en POST ou DELETE renforcera la protection CSRF
     $routes->get('item/delete/(:num)', 'ItemController::delete/$1');
-    
+
     $routes->post('item/increment-episode/(:num)', 'ItemController::incrementEpisode/$1');
     $routes->post('items/update-order', 'ItemController::updateOrder');
 });
@@ -38,7 +38,7 @@ $routes->group('users', ['namespace' => 'App\Controllers\Admin', 'filter' => 'gr
     $routes->get('/', 'UserController::index');
     $routes->get('edit/(:num)', 'UserController::edit/$1');
     $routes->post('update/(:num)', 'UserController::update/$1');
-    
+
     // Note : Transformer ces actions sensibles en requêtes POST évitera les failles CSRF
     $routes->get('delete/(:num)', 'UserController::delete/$1');
     $routes->get('unban/(:num)', 'UserController::unban/$1');
@@ -46,11 +46,11 @@ $routes->group('users', ['namespace' => 'App\Controllers\Admin', 'filter' => 'gr
 
 $routes->group('items', ['namespace' => 'App\Controllers\Admin', 'filter' => 'group:superadmin,admin'], static function ($routes): void {
     $routes->get('pending', 'ItemController::pending');
-    
+
     // Gestion des nouvelles cartes
     $routes->get('approve/(:num)', 'ItemController::approve/$1');
     $routes->get('reject/(:num)', 'ItemController::reject/$1');
-    
+
     // Drafting (Révisions)
     $routes->get('approve-revision/(:num)', 'ItemController::approveRevision/$1');
     $routes->get('reject-revision/(:num)', 'ItemController::rejectRevision/$1');
@@ -64,7 +64,7 @@ $routes->group('items', ['namespace' => 'App\Controllers\Admin', 'filter' => 'gr
 });
 
 $routes->group('audit', ['namespace' => 'App\Controllers\Admin', 'filter' => 'group:superadmin,admin'], static function ($routes): void {
-    $routes->get('/', 'AuditController::index');  
+    $routes->get('/', 'AuditController::index');
 });
 // --------------------------------------------------------------------
 // Routes par défaut de Shield (Login, Register, etc.)

@@ -16,14 +16,14 @@
         </button>
     </div>
 
-    <?php if (session()->has('message')): ?>
+    <?php if (session()->has('message')) { ?>
     <div class="alert alert-success" style="margin-bottom: 20px;"><?php echo session('message'); ?></div>
-    <?php endif ?>
-    <?php if (session()->has('error')): ?>
+    <?php } ?>
+    <?php if (session()->has('error')) { ?>
     <div class="alert alert-danger" style="margin-bottom: 20px;"><?php echo session('error'); ?></div>
-    <?php endif ?>
+    <?php } ?>
 
-    <?php if (!empty($deadItems)): ?>
+    <?php if (!empty($deadItems)) { ?>
     <div
         style="background: #f8f9fa; padding: 15px 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #dee2e6;">
         <h4 style="margin-top: 0; color: #333; display: flex; align-items: center; gap: 8px;">
@@ -34,9 +34,9 @@
             Entrez l'ancien et le nouveau domaine. Le système mettra à jour les liens en conservant les numéros de
             chapitres/épisodes.
         </p>
-        <form action="<?= base_url('items/bulk-update-domain') ?>" method="post"
+        <form action="<?php echo base_url('items/bulk-update-domain'); ?>" method="post"
             style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-            <?= csrf_field() ?>
+            <?php echo csrf_field(); ?>
             <input type="text" name="old_domain" placeholder="Ancien domaine (ex: https://site.net)" required
                 style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
             <span style="font-weight: bold; color: #888;">➔</span>
@@ -49,15 +49,15 @@
             </button>
         </form>
     </div>
-    <?php endif; ?>
+    <?php } ?>
 
-    <?php if (empty($deadItems)): ?>
+    <?php if (empty($deadItems)) { ?>
     <div class="empty-state"
         style="text-align: center; padding: 40px 0; color: #666; background: #fdfdfd; border-radius: 8px; border: 1px dashed #ddd;">
         <p style="font-size: 1.2em; margin: 0;">✅ Excellente nouvelle, tous les liens de streaming testés fonctionnent
             correctement !</p>
     </div>
-    <?php else: ?>
+    <?php } else { ?>
     <div class="admin-table-container fade-in">
         <table class="admin-table" style="width: 100%; border-collapse: collapse;">
             <thead>
@@ -68,30 +68,30 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($deadItems as $item): ?>
+                <?php foreach ($deadItems as $item) { ?>
                 <tr style="background-color: #fff8f8; border-bottom: 1px solid #eee;">
-                    <td style="padding: 12px;"><strong><?= esc($item['titre']) ?></strong></td>
+                    <td style="padding: 12px;"><strong><?php echo esc($item['titre']); ?></strong></td>
                     <td
                         style="padding: 12px; max-width: 400px; word-break: break-all; font-family: monospace; font-size: 0.85em; color: #dc3545;">
-                        <?= esc($item['url_testee']) ?>
+                        <?php echo esc($item['url_testee']); ?>
                     </td>
                     <td style="padding: 12px;">
                         <div class="action-links" style="display: flex; gap: 8px; flex-wrap: wrap;">
-                            <a href="<?= base_url('item/form/' . $item['item_id']) ?>"
+                            <a href="<?php echo base_url('item/form/'.$item['item_id']); ?>"
                                 class="btn-action btn-edit">Mettre à jour manuellement</a>
-                            <a href="<?= esc($item['url_testee']) ?>" target="_blank" class="btn-action"
+                            <a href="<?php echo esc($item['url_testee']); ?>" target="_blank" class="btn-action"
                                 style="background: #6c757d; color: white;">Tester</a>
-                            <a href="<?= base_url('items/delete/' . $item['item_id']) ?>" class="btn-action btn-ban"
+                            <a href="<?php echo base_url('items/delete/'.$item['item_id']); ?>" class="btn-action btn-ban"
                                 onclick="return confirm('⚠️ Êtes-vous sûr de vouloir supprimer définitivement cette carte ainsi que tout son historique ? Cette action est irréversible.')"
                                 style="background-color: #dc3545; color: white;">Supprimer la carte</a>
                         </div>
                     </td>
                 </tr>
-                <?php endforeach; ?>
+                <?php } ?>
             </tbody>
         </table>
     </div>
-    <?php endif; ?>
+    <?php } ?>
 </div>
 
 <script>
@@ -104,7 +104,7 @@ document.getElementById('btn-force-cron').addEventListener('click', function() {
         btn.style.opacity = '0.6';
         btn.innerHTML = '⏳ Analyse en cours... Veuillez patienter...';
 
-        fetch('<?= base_url('cron/run?force=1') ?>')
+        fetch('<?php echo base_url('cron/run?force=1'); ?>')
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'executed') {

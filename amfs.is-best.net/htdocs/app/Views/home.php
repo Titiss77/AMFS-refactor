@@ -27,12 +27,12 @@
 
     <a href="<?php echo base_url('items/pending'); ?>" class="btn btn-info" style="margin-right: 15px;">
         Cartes en attente
-        <?php if (isset($pendingTotal) && $pendingTotal > 0): ?>
+        <?php if (isset($pendingTotal) && $pendingTotal > 0) { ?>
         <span
             style="background-color: var(--danger, #dc3545); color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; margin-left: 5px; font-weight: bold;">
-            <?= $pendingTotal ?>
+            <?php echo $pendingTotal; ?>
         </span>
-        <?php endif; ?>
+        <?php } ?>
     </a>
     <?php } ?>
     <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>
@@ -63,7 +63,7 @@
 <?php
     // Lecture de l'URL au lieu de la session (Infaillible)
     $openDivision = $_GET['open'] ?? null;
-?>
+    ?>
 
 <?php foreach ($groupedItems as $headerName => $divisions) { ?>
 <section class="header-section">
@@ -72,10 +72,10 @@
     </h2>
 
     <?php
-    foreach ($divisions as $divisionName => $items) {
-        $currentDivisionId = !empty($items) ? $items[0]->id_division : null;
-        $isOpen = ($openDivision && $openDivision == $currentDivisionId) ? 'open' : '';
-        ?>
+        foreach ($divisions as $divisionName => $items) {
+            $currentDivisionId = !empty($items) ? $items[0]->id_division : null;
+            $isOpen = ($openDivision && $openDivision == $currentDivisionId) ? 'open' : '';
+            ?>
     <details class="division-section" id="div-<?php echo $currentDivisionId; ?>" <?php echo $isOpen; ?>>
         <summary class="division-title">
             <span class="toggle-icon">&#x25B6;</span> <?php echo htmlspecialchars($divisionName); ?>
@@ -97,25 +97,25 @@
                     <div class="card-body">
 
                         <?php
-                        $isFuture = false;
-                        $dateSortieFormatted = '';
-                        $textColor = '';
+                            $isFuture = false;
+                $dateSortieFormatted = '';
+                $textColor = '';
 
-                        if (!empty($item->date_sortie)) {
-                            // On définit le fuseau horaire sur Paris
-                            $timezone = new DateTimeZone('Europe/Paris');
+                if (!empty($item->date_sortie)) {
+                    // On définit le fuseau horaire sur Paris
+                    $timezone = new DateTimeZone('Europe/Paris');
 
-                            // On applique ce fuseau aux deux dates
-                            $dateSortie = new DateTime($item->date_sortie, $timezone);
-                            $now = new DateTime('now', $timezone);
+                    // On applique ce fuseau aux deux dates
+                    $dateSortie = new DateTime($item->date_sortie, $timezone);
+                    $now = new DateTime('now', $timezone);
 
-                            if ($dateSortie > $now) {
-                                $isFuture = true;
-                                $dateSortieFormatted = $dateSortie->format('d/m/Y à H:i');
-                                $textColor = 'color: var(--danger);';  // Utilisation d'une variable CSS plutôt que "red" brut
-                            }
-                        }
-                        ?>
+                    if ($dateSortie > $now) {
+                        $isFuture = true;
+                        $dateSortieFormatted = $dateSortie->format('d/m/Y à H:i');
+                        $textColor = 'color: var(--danger);';  // Utilisation d'une variable CSS plutôt que "red" brut
+                    }
+                }
+                ?>
 
                         <h4 class="card-title search-target-title" style="<?php echo $textColor; ?>">
                             <?php echo htmlspecialchars($item->titre); ?>
@@ -131,14 +131,14 @@
                             <?php echo htmlspecialchars($item->status); ?>
                         </p>
                         <?php
-                        // Condition 1 : La carte est nouvelle et en attente d'inspection
-                        $isPendingNew = ($item->is_public == 2 && auth()->loggedIn() && (int) $item->id_user === (int) auth()->id());
+                // Condition 1 : La carte est nouvelle et en attente d'inspection
+                $isPendingNew = (2 == $item->is_public && auth()->loggedIn() && (int) $item->id_user === (int) auth()->id());
 
-                        // Condition 2 : La carte est déjà publique mais a une modification en attente
-                        $hasPendingRevision = (isset($pendingRevisionIds) && in_array($item->id, $pendingRevisionIds));
+                // Condition 2 : La carte est déjà publique mais a une modification en attente
+                $hasPendingRevision = (isset($pendingRevisionIds) && in_array($item->id, $pendingRevisionIds));
 
-                        if ($isPendingNew || $hasPendingRevision) {
-                            ?>
+                if ($isPendingNew || $hasPendingRevision) {
+                    ?>
                         <div
                             style="background-color: var(--warning, #ffc107); color: #000; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; display: inline-block; margin-top: 5px; margin-bottom: 5px;">
                             <?php if ($isPendingNew) { ?>
@@ -183,9 +183,9 @@
 
                 <?php if (auth()->loggedIn() && (int) $item->id_user === (int) auth()->id()) { ?>
                 <div class="card-actions-bottom">
-                    <a href="<?php echo base_url('item/form/' . $item->id); ?>"
+                    <a href="<?php echo base_url('item/form/'.$item->id); ?>"
                         class="btn-icon btn-edit-sm">Modifier</a>
-                    <a href="<?php echo base_url('item/delete/' . $item->id); ?>"
+                    <a href="<?php echo base_url('item/delete/'.$item->id); ?>"
                         onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette carte ?');"
                         class="btn-icon btn-delete-sm">Supprimer</a>
                 </div>

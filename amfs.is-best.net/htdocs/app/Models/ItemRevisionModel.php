@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -21,14 +23,14 @@ class ItemRevisionModel extends Model
         'saison',
         'position',
         'date_sortie',
-        'revision_status'
+        'revision_status',
     ];
-    
+
     // Dates gérées automatiquement par la base (CURRENT_TIMESTAMP)
-    protected $useTimestamps = false; 
+    protected $useTimestamps = false;
 
     /**
-     * Récupère toutes les révisions en attente avec les infos de la carte originale
+     * Récupère toutes les révisions en attente avec les infos de la carte originale.
      */
     public function getPendingRevisions()
     {
@@ -38,6 +40,7 @@ class ItemRevisionModel extends Model
             ->join('item i', 'ir.original_item_id = i.id')
             ->where('ir.revision_status', 'pending')
             ->get()
-            ->getResultArray();
+            ->getResultArray()
+        ;
     }
 }

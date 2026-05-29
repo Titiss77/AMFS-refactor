@@ -20,39 +20,39 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if (empty($logs)): ?>
+                <?php if (empty($logs)) { ?>
                 <tr>
                     <td colspan="5" style="text-align: center; padding: 20px; color: #6c757d;">Aucun historique
                         disponible.</td>
                 </tr>
-                <?php else: ?>
-                <?php foreach ($logs as $log): ?>
+                <?php } else { ?>
+                <?php foreach ($logs as $log) { ?>
                 <tr style="border-bottom: 1px solid #eee;">
                     <td style="padding: 12px; font-size: 0.9em; color: #555;">
-                        <?= date('d/m/Y H:i:s', strtotime($log['created_at'])) ?>
+                        <?php echo date('d/m/Y H:i:s', strtotime($log['created_at'])); ?>
                     </td>
                     <td style="padding: 12px;">
-                        <?php if ($log['username']): ?>
+                        <?php if ($log['username']) { ?>
                         <span
                             style="background: var(--primary); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.85em;">
-                            <?= esc($log['username']) ?>
+                            <?php echo esc($log['username']); ?>
                         </span>
-                        <?php else: ?>
+                        <?php } else { ?>
                         <span style="color: #999; font-style: italic;">Système / Invité</span>
-                        <?php endif; ?>
+                        <?php } ?>
                     </td>
                     <td style="padding: 12px; font-weight: bold; color: #333;">
-                        <?= esc($log['action']) ?>
+                        <?php echo esc($log['action']); ?>
                     </td>
                     <td style="padding: 12px; font-size: 0.9em; color: #666;">
-                        <?= esc($log['details']) ?>
+                        <?php echo esc($log['details']); ?>
                     </td>
                     <td style="padding: 12px; font-size: 0.85em; font-family: monospace; color: #888;">
-                        <?= esc($log['ip_address']) ?>
+                        <?php echo esc($log['ip_address']); ?>
                     </td>
                 </tr>
-                <?php endforeach; ?>
-                <?php endif; ?>
+                <?php } ?>
+                <?php } ?>
             </tbody>
         </table>
     </div>
