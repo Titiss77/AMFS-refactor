@@ -1,68 +1,57 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    // ==========================================
+    // 0. COMPTEUR DE CARACTÈRES (Description)
+    // ==========================================
     const textarea = document.getElementById('description');
     const charCount = document.getElementById('char-count');
 
-    // On s'assure que les éléments existent sur la page pour éviter les erreurs JS
     if (textarea && charCount) {
         const maxLength = textarea.getAttribute('maxlength');
 
-        // Fonction qui calcule et affiche la longueur
         function updateCounter() {
             const currentLength = textarea.value.length;
             charCount.textContent = `${currentLength} / ${maxLength}`;
-
-            // Petit bonus UX : On met le texte en rouge si on atteint la limite
             if (currentLength >= maxLength) {
                 charCount.style.color = 'var(--danger)';
             } else {
                 charCount.style.color = 'var(--text-muted)';
             }
         }
-
-        // 1. Initialiser le compteur au chargement de la page 
-        // (Super important pour le mode "Modification" si la description n'est pas vide !)
         updateCounter();
-
-        // 2. Mettre à jour le compteur à chaque fois que l'utilisateur tape quelque chose
         textarea.addEventListener('input', updateCounter);
     }
-});
-document.addEventListener('DOMContentLoaded', () => {
 
+    // ==========================================
     // 1. SYSTÈME DE NOTIFICATIONS (TOASTS)
+    // ==========================================
     window.showToast = function(message, type = 'success') {
         const container = document.getElementById('toast-container');
+        if (!container) return; // Sécurité si le conteneur n'existe pas
+
         const toast = document.createElement('div');
         toast.className = `toast toast-${type} fade-in`;
         toast.innerText = message;
         
         container.appendChild(toast);
         
-        // Disparaît après 3 secondes
         setTimeout(() => {
             toast.style.opacity = '0';
             setTimeout(() => toast.remove(), 300);
         }, 3000);
     };
 
-    // 2. INCRÉMENTATION ASYNCHRONE (Fetch API)
-    const csrfHeader = document.querySelector('meta[name="csrf-header"]').getAttribute('content');
-    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-    // 1. On écoute la bonne classe : .btn-increment
+    // ==========================================
+    // 2. INCRÉMENTATION ASYNCHRONE (+1 Épisode)
+    // ==========================================
     document.querySelectorAll('.btn-increment').forEach(button => {
         button.addEventListener('click', async (e) => {
             e.preventDefault();
-            
-            // 2. LA LIGNE MAGIQUE : Empêche le clic de remonter et d'ouvrir le lien <a>
-            e.stopPropagation(); 
+            e.stopPropagation(); // Empêche la redirection vers le lien de la carte
 
             const itemId = button.getAttribute('data-id');
-            
-            // 3. On construit l'URL avec la configuration globale (pas besoin de data-url)
-            const url = amfsConfig.baseUrl + 'item/increment-episode/' + itemId;
-            
-            // 4. On cible le bon ID : ep-count-{id} (et non episode-count)
+            const baseUrl = amfsConfig.baseUrl.endsWith('/') ? amfsConfig.baseUrl : amfsConfig.baseUrl + '/';
+            const url = baseUrl + 'item/increment-episode/' + itemId;
             const counterSpan = document.getElementById(`ep-count-${itemId}`);
 
             try {
@@ -70,46 +59,56 @@ document.addEventListener('DOMContentLoaded', () => {
                     method: 'POST',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
-                        [csrfHeader]: csrfToken // Sécurité CSRF
+                        [amfsConfig.csrfHeader]: amfsConfig.csrfToken
                     }
                 });
+
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
 
                 const data = await response.json();
 
                 if (data.success) {
-                    // Mise à jour visuelle instantanée
                     counterSpan.innerText = data.new_episode;
-                    
-                    // Petit effet visuel agréable
                     counterSpan.style.color = 'var(--success)';
                     counterSpan.style.transform = 'scale(1.2)';
+                    
                     setTimeout(() => {
                         counterSpan.style.color = '';
                         counterSpan.style.transform = 'scale(1)';
                     }, 400);
 
-                    if(data.csrf_token) {
-                        csrfToken = data.csrf_token; // Mise à jour du token
+                    if (data.csrf_token) {
+                        amfsConfig.csrfToken = data.csrf_token; 
                     }
-                    showToast('Épisode ajouté avec succès !');
+                    
+                    if (typeof showToast === 'function') {
+                        showToast('Épisode ajouté avec succès !');
+                    }
+                } else {
+                    console.error("Erreur renvoyée par PHP :", data);
                 }
             } catch (error) {
-                console.error("Erreur Fetch:", error);
-                showToast('Erreur lors de l\'ajout', 'danger');
+                console.error("Échec de la requête Fetch :", error);
             }
         });
     });
 
-    // 3. RECHERCHE EN DIRECT (Filtre sans rechargement)
+    // ==========================================
+    // 3. RECHERCHE EN DIRECT (Live Search)
+    // ==========================================
     const searchInput = document.getElementById('liveSearch');
     if (searchInput) {
         searchInput.addEventListener('input', function(e) {
             const term = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.card'); // Assure-toi que tes éléments ont la classe .card
+            // Utilise la classe .searchable-card pour être sûr de cibler les bons éléments
+            const cards = document.querySelectorAll('.searchable-card, .card'); 
 
             cards.forEach(card => {
-                const title = card.querySelector('.card-title')?.innerText.toLowerCase() || '';
-                const desc = card.querySelector('.card-desc')?.innerText.toLowerCase() || '';
+                // On cherche dans les titres et descriptions
+                const title = card.querySelector('.card-title, .search-target-title')?.innerText.toLowerCase() || '';
+                const desc = card.querySelector('.card-desc, .search-target-desc')?.innerText.toLowerCase() || '';
                 
                 if (title.includes(term) || desc.includes(term)) {
                     card.style.display = 'flex';
@@ -120,54 +119,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- C. DRAG AND DROP (SORTABLEJS) ---
+    // ==========================================
+    // 4. DRAG AND DROP (SortableJS)
+    // ==========================================
     var grids = document.querySelectorAll('.sortable-grid');
-    grids.forEach(function(el) {
-        Sortable.create(el, {
-            animation: 150,
-            ghostClass: 'sortable-ghost',
-            handle: '.drag-handle',
-            
-            // --- LE CORRECTIF POUR MOBILE ---
-            delay: 200,             // Oblige à maintenir le doigt 200 millisecondes
-            delayOnTouchOnly: true, // Ce délai ne s'applique QUE sur les smartphones
-            // --------------------------------
+    if (typeof Sortable !== 'undefined') { // Sécurité si SortableJS n'est pas chargé
+        grids.forEach(function(el) {
+            Sortable.create(el, {
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                handle: '.drag-handle',
+                delay: 200,             
+                delayOnTouchOnly: true, 
+                onEnd: function(evt) {
+                    if (evt.oldIndex === evt.newIndex) return; 
 
-            onEnd: function(evt) {
-                // Si la position finale est identique à la position initiale, on annule
-                if (evt.oldIndex === evt.newIndex) {
-                    return; 
+                    var itemEls = el.querySelectorAll('.card');
+                    var newOrder = [];
+
+                    itemEls.forEach(function(item) {
+                        var id = item.getAttribute('data-id');
+                        if (id) newOrder.push(id);
+                    });
+
+                    fetch(amfsConfig.updateOrderUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            [amfsConfig.csrfHeader]: amfsConfig.csrfToken
+                        },
+                        body: JSON.stringify({ order: newOrder })
+                    }).catch(err => console.error("Erreur Drag&Drop:", err));
                 }
-
-                var itemEls = el.querySelectorAll('.card');
-                var newOrder = [];
-
-                itemEls.forEach(function(item) {
-                    var id = item.getAttribute('data-id');
-                    if (id) {
-                        newOrder.push(id);
-                    }
-                });
-
-                fetch(amfsConfig.updateOrderUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest',
-                        // Utilisation des crochets pour définir une clé d'objet dynamique
-                        [amfsConfig.csrfHeader]: amfsConfig.csrfToken
-                    },
-                    body: JSON.stringify({
-                        order: newOrder
-                    })
-                })
-            }
+            });
         });
-    });
+    }
 
-    // --- F. AUTO-REMPLISSAGE API (TMDb) ---
+    // ==========================================
+    // 5. AUTO-REMPLISSAGE API (TMDb)
+    // ==========================================
     const btnApiSearch = document.getElementById('btn-api-search');
-    if (btnApiSearch) { // On vérifie si on est bien sur la page du formulaire
+    if (btnApiSearch) {
         btnApiSearch.addEventListener('click', async function() {
             const titreInput = document.getElementById('titre').value;
             if (!titreInput) {
@@ -179,7 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
             statusTxt.style.display = 'inline';
             statusTxt.innerText = '⏳ Recherche en cours...';
 
-            const apiKey = '9774091bee3bd236f4438cd6d8caa8d8';
+            // Utilise la clé API depuis la configuration globale amfsConfig
+            const apiKey = amfsConfig.tmdbApiKey || '9774091bee3bd236f4438cd6d8caa8d8';
             const url = `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&language=fr-FR&query=${encodeURIComponent(titreInput)}&page=1`;
 
             try {
@@ -200,8 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     statusTxt.innerText = '✅ Trouvé (en français) !';
                     
-                    // Met à jour le compteur de caractères si la description a changé
-                    const textarea = document.getElementById('description');
                     if (textarea) {
                         textarea.dispatchEvent(new Event('input')); 
                     }
