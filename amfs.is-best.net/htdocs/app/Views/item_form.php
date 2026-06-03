@@ -113,4 +113,57 @@
         </div>
     </form>
 </div>
+<script>
+const apiKey = '9774091bee3bd236f4438cd6d8caa8d8';
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const btnApiSearch = document.getElementById('btn-api-search');
+
+    if (btnApiSearch) { // <-- VÉRIFICATION AJOUTÉE ICI
+        btnApiSearch.addEventListener('click', async function() {
+            const titreInput = document.getElementById('titre').value;
+            if (!titreInput) {
+                alert("Entre d'abord un titre !");
+                return;
+            }
+
+            const statusTxt = document.getElementById('api-status');
+            statusTxt.style.display = 'inline';
+            statusTxt.innerText = '⏳ Recherche en cours...';
+
+            const url =
+                `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&language=fr-FR&query=${encodeURIComponent(titreInput)}&page=1`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.results && data.results.length > 0) {
+                    const resultat = data.results[0];
+
+                    document.getElementById('titre').value = resultat.name || resultat
+                        .original_name;
+
+                    if (resultat.poster_path) {
+                        document.getElementById('img').value =
+                            `https://image.tmdb.org/t/p/w500${resultat.poster_path}`;
+                    }
+
+                    let desc = resultat.overview ? resultat.overview.substring(0, 100) + "..." : "";
+                    document.getElementById('description').value = desc;
+
+                    statusTxt.innerText = '✅ Trouvé (en français) !';
+                } else {
+                    statusTxt.innerText = '❌ Non trouvé';
+                }
+            } catch (e) {
+                console.error(e);
+                statusTxt.innerText = 'Erreur API';
+            }
+        });
+    }
+});
+</script>
 <?php echo $this->endSection(); ?>

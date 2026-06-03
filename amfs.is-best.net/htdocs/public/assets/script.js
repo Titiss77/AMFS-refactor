@@ -1,160 +1,147 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // --- A. RECHERCHE EN DIRECT (LIVE SEARCH) ---
-    const searchInput = document.getElementById('liveSearch');
-    if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
-            const term = e.target.value.toLowerCase().trim();
-            const cards = document.querySelectorAll('.searchable-card');
+    const textarea = document.getElementById('description');
+    const charCount = document.getElementById('char-count');
 
-            cards.forEach(card => {
-                const titleEl = card.querySelector('.search-target-title');
-                const descEl = card.querySelector('.search-target-desc');
+    // On s'assure que les éléments existent sur la page pour éviter les erreurs JS
+    if (textarea && charCount) {
+        const maxLength = textarea.getAttribute('maxlength');
 
-                const title = titleEl ? titleEl.innerText.toLowerCase() : '';
-                const desc = descEl ? descEl.innerText.toLowerCase() : '';
+        // Fonction qui calcule et affiche la longueur
+        function updateCounter() {
+            const currentLength = textarea.value.length;
+            charCount.textContent = `${currentLength} / ${maxLength}`;
 
-                if (title.includes(term) || desc.includes(term)) {
-                    card.style.display = 'flex'; 
-                } else {
-                    card.style.display = 'none'; 
-                }
-            });
-        });
+            // Petit bonus UX : On met le texte en rouge si on atteint la limite
+            if (currentLength >= maxLength) {
+                charCount.style.color = 'var(--danger)';
+            } else {
+                charCount.style.color = 'var(--text-muted)';
+            }
+        }
+
+        // 1. Initialiser le compteur au chargement de la page 
+        // (Super important pour le mode "Modification" si la description n'est pas vide !)
+        updateCounter();
+
+        // 2. Mettre à jour le compteur à chaque fois que l'utilisateur tape quelque chose
+        textarea.addEventListener('input', updateCounter);
     }
+});
+document.addEventListener('DOMContentLoaded', () => {
 
-    // --- B. BOUTON +1 EPISODE (AJAX) ---
-    const buttons = document.querySelectorAll('.btn-increment');
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
+    // 1. SYSTÈME DE NOTIFICATIONS (TOASTS)
+    window.showToast = function(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type} fade-in`;
+        toast.innerText = message;
+        
+        container.appendChild(toast);
+        
+        // Disparaît après 3 secondes
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    };
+
+    // 2. INCRÉMENTATION ASYNCHRONE (Fetch API)
+    const csrfHeader = document.querySelector('meta[name="csrf-header"]').getAttribute('content');
+    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    document.querySelectorAll('.btn-async-increment').forEach(button => {
+        button.addEventListener('click', async (e) => {
             e.preventDefault();
-            e.stopPropagation();
+            const itemId = button.getAttribute('data-id');
+            const url = button.getAttribute('data-url');
+            const counterSpan = document.getElementById(`episode-count-${itemId}`);
 
-            const itemId = this.getAttribute('data-id');
-            // Utilisation de l'URL de base dynamique via amfsConfig
-            const url = amfsConfig.baseUrl + 'item/increment-episode/' + itemId;
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        [csrfHeader]: csrfToken // Sécurité CSRF
+                    }
+                });
 
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    [amfsConfig.csrfHeader]: amfsConfig.csrfToken // Token dynamique
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
+                const data = await response.json();
+
                 if (data.success) {
-                    const counterSpan = document.getElementById('ep-count-' + itemId);
+                    // Mise à jour visuelle instantanée
                     counterSpan.innerText = data.new_episode;
-
-                    counterSpan.style.color = 'var(--success)';
-                    counterSpan.style.transform = 'scale(1.2)';
-                    counterSpan.style.display = 'inline-block';
-                    counterSpan.style.transition = 'all 0.3s ease';
-
-                    setTimeout(() => {
-                        counterSpan.style.color = '';
-                        counterSpan.style.transform = 'scale(1)';
-                    }, 600);
+                    csrfToken = data.csrf_token; // Mise à jour du token de sécurité
+                    showToast('Épisode ajouté avec succès !');
                 }
-            })
-            .catch(err => console.error("Erreur lors de l'incrémentation :", err));
+            } catch (error) {
+                showToast('Erreur lors de l\'ajout', 'danger');
+            }
         });
     });
 
-    // --- C. DRAG AND DROP (SORTABLEJS) ---
-    const grids = document.querySelectorAll('.sortable-grid');
-    if (typeof Sortable !== 'undefined') {
-        grids.forEach(function(el) {
-            Sortable.create(el, {
-                animation: 150,
-                ghostClass: 'sortable-ghost',
-                handle: '.drag-handle',
-                onEnd: function(evt) {
-                    var itemEls = el.querySelectorAll('.card');
-                    var newOrder = [];
+    // 3. RECHERCHE EN DIRECT (Filtre sans rechargement)
+    const searchInput = document.getElementById('liveSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.card'); // Assure-toi que tes éléments ont la classe .card
 
-                    itemEls.forEach(function(item) {
-                        var id = item.getAttribute('data-id');
-                        if (id) newOrder.push(id);
-                    });
-
-                    fetch(amfsConfig.updateOrderUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest',
-                            [amfsConfig.csrfHeader]: amfsConfig.csrfToken
-                        },
-                        body: JSON.stringify({ order: newOrder })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.success) console.error('Erreur lors de la sauvegarde de l\'ordre.');
-                    })
-                    .catch(error => console.error('Erreur réseau:', error));
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title')?.innerText.toLowerCase() || '';
+                const desc = card.querySelector('.card-desc')?.innerText.toLowerCase() || '';
+                
+                if (title.includes(term) || desc.includes(term)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
                 }
             });
         });
     }
 
-    // --- D. NETTOYAGE URL ---
-    const currentUrl = new URL(window.location.href);
-    if (currentUrl.searchParams.has('open') || currentUrl.hash) {
-        setTimeout(() => {
-            window.history.replaceState({}, document.title, currentUrl.pathname);
-        }, 10);
-    }
+    // --- C. DRAG AND DROP (SORTABLEJS) ---
+    var grids = document.querySelectorAll('.sortable-grid');
+    grids.forEach(function(el) {
+        Sortable.create(el, {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            handle: '.drag-handle',
+            
+            // --- LE CORRECTIF POUR MOBILE ---
+            delay: 200,             // Oblige à maintenir le doigt 200 millisecondes
+            delayOnTouchOnly: true, // Ce délai ne s'applique QUE sur les smartphones
+            // --------------------------------
 
-    // --- F. AUTO-REMPLISSAGE API (TMDb) ---
-    const btnApiSearch = document.getElementById('btn-api-search');
-    if (btnApiSearch) { // On vérifie si on est sur la page du formulaire
-        btnApiSearch.addEventListener('click', async function() {
-            const titreInput = document.getElementById('titre').value;
-            if (!titreInput) {
-                alert("Entre d'abord un titre !");
-                return;
-            }
-
-            const statusTxt = document.getElementById('api-status');
-            statusTxt.style.display = 'inline';
-            statusTxt.innerText = '⏳ Recherche en cours...';
-
-            // On utilise la clé stockée dans amfsConfig
-            const url = `https://api.themoviedb.org/3/search/tv?api_key=${amfsConfig.tmdbApiKey}&language=fr-FR&query=${encodeURIComponent(titreInput)}&page=1`;
-
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-
-                if (data.results && data.results.length > 0) {
-                    const resultat = data.results[0];
-
-                    document.getElementById('titre').value = resultat.name || resultat.original_name;
-
-                    if (resultat.poster_path) {
-                        document.getElementById('img').value = `https://image.tmdb.org/t/p/w500${resultat.poster_path}`;
-                    }
-
-                    let desc = resultat.overview ? resultat.overview.substring(0, 100) + "..." : "";
-                    document.getElementById('description').value = desc;
-
-                    statusTxt.innerText = '✅ Trouvé (en français) !';
-                } else {
-                    statusTxt.innerText = '❌ Non trouvé';
+            onEnd: function(evt) {
+                // Si la position finale est identique à la position initiale, on annule
+                if (evt.oldIndex === evt.newIndex) {
+                    return; 
                 }
-            } catch (e) {
-                console.error(e);
-                statusTxt.innerText = 'Erreur API';
+
+                var itemEls = el.querySelectorAll('.card');
+                var newOrder = [];
+
+                itemEls.forEach(function(item) {
+                    var id = item.getAttribute('data-id');
+                    if (id) {
+                        newOrder.push(id);
+                    }
+                });
+
+                fetch(amfsConfig.updateOrderUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        // Utilisation des crochets pour définir une clé d'objet dynamique
+                        [amfsConfig.csrfHeader]: amfsConfig.csrfToken
+                    },
+                    body: JSON.stringify({
+                        order: newOrder
+                    })
+                })
             }
         });
-    }
-});
+    });
 
-// --- E. CRON JOB INVISIBLE ---
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        if (typeof amfsConfig !== 'undefined' && amfsConfig.cronUrl) {
-            fetch(amfsConfig.cronUrl).catch(error => console.log('Tâche de fond ignorée.'));
-        }
-    }, 5000);
 });
