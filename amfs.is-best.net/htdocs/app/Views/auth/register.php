@@ -2,7 +2,7 @@
 
 <?php echo $this->section('title'); ?><?php echo lang('Auth.register'); ?> <?php echo $this->endSection(); ?>
 
-<?php echo $this->section('main'); ?>
+<?php echo $this->section('content'); ?>
 
 <div class="container d-flex justify-content-center p-5">
     <div class="card col-12 col-md-5 shadow-sm">

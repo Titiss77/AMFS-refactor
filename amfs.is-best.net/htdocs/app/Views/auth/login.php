@@ -2,7 +2,7 @@
 
 <?php echo $this->section('title'); ?><?php echo lang('Auth.login'); ?> <?php echo $this->endSection(); ?>
 
-<?php echo $this->section('main'); ?>
+<?php echo $this->section('content'); ?>
 
 <div class="container d-flex justify-content-center p-5">
     <div class="card col-12 col-md-5 shadow-sm">
@@ -51,8 +51,7 @@
                 <?php if (setting('Auth.sessionConfig')['allowRemembering']) { ?>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="checkbox" name="remember" class="form-check-input"
-                            <?php if (old('remember', true)) {
+                        <input type="checkbox" name="remember" class="form-check-input" <?php if (old('remember', true)) {
                                 echo 'checked';
                             } ?>>
                         <?php echo lang('Auth.rememberMe'); ?>
