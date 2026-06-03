@@ -90,7 +90,7 @@
                 Utilise <b>{ep2}</b>, <b>{ep3}</b> ou <b>{ep4}</b> pour forcer les zéros (ex: <b>01</b>, <b>001</b>,
                 <b>0001</b>).
             </small>
-            <input type="text" name="lien" class="form-control"
+            <input type="text" id="lien" name="lien" class="form-control"
                 value="<?php echo htmlspecialchars($item->lien ?? ''); ?>">
         </div>
 
