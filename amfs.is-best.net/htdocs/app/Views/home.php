@@ -63,7 +63,7 @@
 <?php
     // Lecture de l'URL au lieu de la session (Infaillible)
     $openDivision = $_GET['open'] ?? null;
-    ?>
+?>
 
 <?php foreach ($groupedItems as $headerName => $divisions) { ?>
 <section class="header-section">
@@ -72,10 +72,10 @@
     </h2>
 
     <?php
-        foreach ($divisions as $divisionName => $items) {
-            $currentDivisionId = !empty($items) ? $items[0]->id_division : null;
-            $isOpen = ($openDivision && $openDivision == $currentDivisionId) ? 'open' : '';
-            ?>
+    foreach ($divisions as $divisionName => $items) {
+        $currentDivisionId = !empty($items) ? $items[0]->id_division : null;
+        $isOpen = ($openDivision && $openDivision == $currentDivisionId) ? 'open' : '';
+        ?>
     <details class="division-section" id="div-<?php echo $currentDivisionId; ?>" <?php echo $isOpen; ?>>
         <summary class="division-title">
             <span class="toggle-icon">&#x25B6;</span> <?php echo htmlspecialchars($divisionName); ?>
@@ -97,25 +97,25 @@
                     <div class="card-body">
 
                         <?php
-                            $isFuture = false;
-                $dateSortieFormatted = '';
-                $textColor = '';
+                        $isFuture = false;
+                        $dateSortieFormatted = '';
+                        $textColor = '';
 
-                if (!empty($item->date_sortie)) {
-                    // On définit le fuseau horaire sur Paris
-                    $timezone = new DateTimeZone('Europe/Paris');
+                        if (!empty($item->date_sortie)) {
+                            // On définit le fuseau horaire sur Paris
+                            $timezone = new DateTimeZone('Europe/Paris');
 
-                    // On applique ce fuseau aux deux dates
-                    $dateSortie = new DateTime($item->date_sortie, $timezone);
-                    $now = new DateTime('now', $timezone);
+                            // On applique ce fuseau aux deux dates
+                            $dateSortie = new DateTime($item->date_sortie, $timezone);
+                            $now = new DateTime('now', $timezone);
 
-                    if ($dateSortie > $now) {
-                        $isFuture = true;
-                        $dateSortieFormatted = $dateSortie->format('d/m/Y à H:i');
-                        $textColor = 'color: var(--danger);';  // Utilisation d'une variable CSS plutôt que "red" brut
-                    }
-                }
-                ?>
+                            if ($dateSortie > $now) {
+                                $isFuture = true;
+                                $dateSortieFormatted = $dateSortie->format('d/m/Y à H:i');
+                                $textColor = 'color: var(--danger);';  // Utilisation d'une variable CSS plutôt que "red" brut
+                            }
+                        }
+                        ?>
 
                         <h4 class="card-title search-target-title" style="<?php echo $textColor; ?>">
                             <?php echo htmlspecialchars($item->titre); ?>
@@ -131,14 +131,14 @@
                             <?php echo htmlspecialchars($item->status); ?>
                         </p>
                         <?php
-                // Condition 1 : La carte est nouvelle et en attente d'inspection
-                $isPendingNew = (2 == $item->is_public && auth()->loggedIn() && (int) $item->id_user === (int) auth()->id());
+                        // Condition 1 : La carte est nouvelle et en attente d'inspection
+                        $isPendingNew = (2 == $item->is_public && auth()->loggedIn() && (int) $item->id_user === (int) auth()->id());
 
-                // Condition 2 : La carte est déjà publique mais a une modification en attente
-                $hasPendingRevision = (isset($pendingRevisionIds) && in_array($item->id, $pendingRevisionIds));
+                        // Condition 2 : La carte est déjà publique mais a une modification en attente
+                        $hasPendingRevision = (isset($pendingRevisionIds) && in_array($item->id, $pendingRevisionIds));
 
-                if ($isPendingNew || $hasPendingRevision) {
-                    ?>
+                        if ($isPendingNew || $hasPendingRevision) {
+                            ?>
                         <div
                             style="background-color: var(--warning, #ffc107); color: #000; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; display: inline-block; margin-top: 5px; margin-bottom: 5px;">
                             <?php if ($isPendingNew) { ?>
@@ -183,9 +183,8 @@
 
                 <?php if (auth()->loggedIn() && (int) $item->id_user === (int) auth()->id()) { ?>
                 <div class="card-actions-bottom">
-                    <a href="<?php echo base_url('item/form/'.$item->id); ?>"
-                        class="btn-icon btn-edit-sm">Modifier</a>
-                    <a href="<?php echo base_url('item/delete/'.$item->id); ?>"
+                    <a href="<?php echo base_url('item/form/' . $item->id); ?>" class="btn-icon btn-edit-sm">Modifier</a>
+                    <a href="<?php echo base_url('item/delete/' . $item->id); ?>"
                         onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette carte ?');"
                         class="btn-icon btn-delete-sm">Supprimer</a>
                 </div>
@@ -198,115 +197,4 @@
 </section>
 <?php } ?>
 <?php } ?>
-
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-
-    // --- A. RECHERCHE EN DIRECT (LIVE SEARCH) ---
-    const searchInput = document.getElementById('liveSearch');
-    if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
-            const term = e.target.value.toLowerCase().trim();
-            const cards = document.querySelectorAll('.searchable-card');
-
-            cards.forEach(card => {
-                const titleEl = card.querySelector('.search-target-title');
-                const descEl = card.querySelector('.search-target-desc');
-
-                const title = titleEl ? titleEl.innerText.toLowerCase() : '';
-                const desc = descEl ? descEl.innerText.toLowerCase() : '';
-
-                if (title.includes(term) || desc.includes(term)) {
-                    card.style.display = 'flex'; // Respecte le layout flex de ta carte
-                } else {
-                    card.style.display = 'none'; // Masque la carte instantanément
-                }
-            });
-        });
-    }
-
-    // --- B. BOUTON +1 EPISODE (AJAX AVEC RETOUR VISUEL) ---
-    const buttons = document.querySelectorAll('.btn-increment');
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation(); // Évite de cliquer accidentellement sur le lien principal
-
-            const itemId = this.getAttribute('data-id');
-            const url = '<?php echo base_url('item/increment-episode/'); ?>' + itemId;
-
-            fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        '<?php echo csrf_header(); ?>': '<?php echo csrf_hash(); ?>'
-                    }
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        const counterSpan = document.getElementById('ep-count-' + itemId);
-                        counterSpan.innerText = data.new_episode;
-
-                        // Petit effet visuel agréable (Pulse vert rapide)
-                        counterSpan.style.color = 'var(--success)';
-                        counterSpan.style.transform = 'scale(1.2)';
-                        counterSpan.style.display = 'inline-block';
-                        counterSpan.style.transition = 'all 0.3s ease';
-
-                        setTimeout(() => {
-                            counterSpan.style.color = '';
-                            counterSpan.style.transform = 'scale(1)';
-                        }, 600);
-                    }
-                })
-                .catch(err => console.error("Erreur lors de l'incrémentation :", err));
-        });
-    });
-
-    // --- C. DRAG AND DROP (SORTABLEJS) ---
-    var grids = document.querySelectorAll('.sortable-grid');
-    grids.forEach(function(el) {
-        Sortable.create(el, {
-            animation: 150,
-            ghostClass: 'sortable-ghost', // Assure-toi d'avoir mis cette classe dans ton CSS (étape précédente)
-            handle: '.drag-handle',
-
-            onEnd: function(evt) {
-                var itemEls = el.querySelectorAll('.card');
-                var newOrder = [];
-
-                itemEls.forEach(function(item) {
-                    var id = item.getAttribute('data-id');
-                    if (id) {
-                        newOrder.push(id);
-                    }
-                });
-
-                fetch('<?php echo base_url('items/update-order'); ?>', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest',
-                            '<?php echo csrf_header(); ?>': '<?php echo csrf_hash(); ?>'
-                        },
-                        body: JSON.stringify({
-                            order: newOrder
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.success) {
-                            console.error('Erreur lors de la sauvegarde de l\'ordre.');
-                        }
-                    })
-                    .catch(error => console.error('Erreur réseau:', error));
-            }
-        });
-    });
-
-});
-</script>
 <?php echo $this->endSection(); ?>
