@@ -49,12 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const csrfHeader = document.querySelector('meta[name="csrf-header"]').getAttribute('content');
     let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    document.querySelectorAll('.btn-async-increment').forEach(button => {
+    // 1. On écoute la bonne classe : .btn-increment
+    document.querySelectorAll('.btn-increment').forEach(button => {
         button.addEventListener('click', async (e) => {
             e.preventDefault();
+            
+            // 2. LA LIGNE MAGIQUE : Empêche le clic de remonter et d'ouvrir le lien <a>
+            e.stopPropagation(); 
+
             const itemId = button.getAttribute('data-id');
-            const url = button.getAttribute('data-url');
-            const counterSpan = document.getElementById(`episode-count-${itemId}`);
+            
+            // 3. On construit l'URL avec la configuration globale (pas besoin de data-url)
+            const url = amfsConfig.baseUrl + 'item/increment-episode/' + itemId;
+            
+            // 4. On cible le bon ID : ep-count-{id} (et non episode-count)
+            const counterSpan = document.getElementById(`ep-count-${itemId}`);
 
             try {
                 const response = await fetch(url, {
@@ -70,10 +79,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.success) {
                     // Mise à jour visuelle instantanée
                     counterSpan.innerText = data.new_episode;
-                    csrfToken = data.csrf_token; // Mise à jour du token de sécurité
+                    
+                    // Petit effet visuel agréable
+                    counterSpan.style.color = 'var(--success)';
+                    counterSpan.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        counterSpan.style.color = '';
+                        counterSpan.style.transform = 'scale(1)';
+                    }, 400);
+
+                    if(data.csrf_token) {
+                        csrfToken = data.csrf_token; // Mise à jour du token
+                    }
                     showToast('Épisode ajouté avec succès !');
                 }
             } catch (error) {
+                console.error("Erreur Fetch:", error);
                 showToast('Erreur lors de l\'ajout', 'danger');
             }
         });
