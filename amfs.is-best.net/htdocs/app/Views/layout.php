@@ -14,7 +14,7 @@
 
     <script>
     const amfsConfig = {
-        baseUrl: "<?= base_url() ?>", // Permet au JS de fonctionner sur n'importe quel domaine
+        baseUrl: "<?= base_url() ?>",
         updateOrderUrl: "<?= base_url('items/update-order') ?>",
         cronUrl: "<?= base_url('cron/run') ?>",
         csrfHeader: "<?= csrf_header() ?>",
@@ -23,7 +23,7 @@
     };
     </script>
 
-    <script src="<?= base_url('assets/script.js') ?>" defer></script>
+    <script src="<?= base_url('assets/script.js?v=' . time()) ?>" defer></script>
 </head>
 
 <body>
