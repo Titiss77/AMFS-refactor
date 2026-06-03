@@ -36,6 +36,7 @@ class Filters extends BaseFilters
         'forcehttps' => ForceHTTPS::class,
         'pagecache' => PageCache::class,
         'performance' => PerformanceMetrics::class,
+        'minifier'      => \App\Filters\HtmlMinifier::class,
     ];
 
     /**
@@ -69,17 +70,30 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, array<string, string>>>|array<string, list<string>>
      */
-    public array $globals = [
-        'before' => [
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
-        ],
-        'after' => [
-            // 'honeypot',
-            // 'secureheaders',
-        ],
-    ];
+    public array $globals = ENVIRONMENT === 'production'
+        ? [
+            'before' => [
+                // 'honeypot',
+                // 'csrf',
+                // 'invalidchars',
+            ],
+            'after' => [
+                // 'honeypot',
+                // 'secureheaders',
+                'minifier',
+            ],
+        ]
+        : [
+            'before' => [
+                // 'honeypot',
+                // 'csrf',
+                // 'invalidchars',
+            ],
+            'after' => [
+                // 'honeypot',
+                // 'secureheaders',
+            ],
+        ];
 
     /**
      * List of filter aliases that works on a
