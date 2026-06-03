@@ -14,12 +14,16 @@
     <script>
     // On passe les variables PHP au moteur JavaScript
     const amfsConfig = {
-        updateOrderUrl: "<?php echo base_url('items/update-order'); ?>",
-        csrfHeader: "<?php echo csrf_header(); ?>",
-        csrfToken: "<?php echo csrf_hash(); ?>"
+        baseUrl: "<?= base_url() ?>",
+        updateOrderUrl: "<?= base_url('items/update-order') ?>",
+        cronUrl: "<?= base_url('cron/run') ?>",
+        csrfHeader: "<?= csrf_header() ?>",
+        csrfToken: "<?= csrf_hash() ?>",
+        tmdbApiKey: "9774091bee3bd236f4438cd6d8caa8d8"
     };
     </script>
-    <script src="<?php echo base_url('assets/script.js'); ?>"></script>
+
+    <script src="<?= base_url('assets/script.js?v=' . time()) ?>" defer></script>
 </head>
 
 <body>
