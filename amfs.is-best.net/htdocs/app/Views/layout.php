@@ -12,13 +12,12 @@
 
     <script>
     window.amfsConfig = {
-        // On s'assure que l'URL de base se termine toujours par un slash pour éviter les bugs
-        baseUrl: "<?php echo rtrim(base_url(), '/') . '/'; ?>",
-        updateOrderUrl: "<?php echo base_url('items/update-order'); ?>",
-        cronUrl: "<?php echo base_url('cron/run'); ?>",
-        csrfHeader: "<?php echo csrf_header(); ?>",
-        csrfToken: "<?php echo csrf_hash(); ?>",
-        tmdbApiKey: "9774091bee3bd236f4438cd6d8caa8d8"
+        "baseUrl": "<?php echo rtrim(base_url(), '/') . '/'; ?>",
+        "updateOrderUrl": "<?php echo base_url('items/update-order'); ?>",
+        "cronUrl": "<?php echo base_url('cron/run'); ?>",
+        "csrfHeader": "<?php echo csrf_header(); ?>",
+        "csrfToken": "<?php echo csrf_hash(); ?>",
+        "tmdbApiKey": "9774091bee3bd236f4438cd6d8caa8d8"
     };
     </script>
 
