@@ -10,20 +10,21 @@
     <meta name="csrf-token" content="<?php echo csrf_hash(); ?>">
     <meta name="csrf-header" content="<?php echo csrf_header(); ?>">
 
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script>
-    // On passe les variables PHP au moteur JavaScript
-    const amfsConfig = {
-        baseUrl: "<?= base_url() ?>",
-        updateOrderUrl: "<?= base_url('items/update-order') ?>",
-        cronUrl: "<?= base_url('cron/run') ?>",
-        csrfHeader: "<?= csrf_header() ?>",
-        csrfToken: "<?= csrf_hash() ?>",
+    window.amfsConfig = {
+        // On s'assure que l'URL de base se termine toujours par un slash pour éviter les bugs
+        baseUrl: "<?php echo rtrim(base_url(), '/') . '/'; ?>",
+        updateOrderUrl: "<?php echo base_url('items/update-order'); ?>",
+        cronUrl: "<?php echo base_url('cron/run'); ?>",
+        csrfHeader: "<?php echo csrf_header(); ?>",
+        csrfToken: "<?php echo csrf_hash(); ?>",
         tmdbApiKey: "9774091bee3bd236f4438cd6d8caa8d8"
     };
     </script>
 
-    <script src="<?= base_url('assets/script.js?v=' . time()) ?>" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js" defer></script>
+
+    <script src="<?php echo base_url('assets/script.js?v=' . time()); ?>" defer></script>
 </head>
 
 <body>
@@ -47,7 +48,7 @@
     <?php if (isset($headers) && !empty($headers)) { ?>
     <nav class="category-nav container">
         <?php foreach ($headers as $h) { ?>
-        <a href="<?php echo base_url('categorie/'.$h['id']); ?>"
+        <a href="<?php echo base_url('categorie/' . $h['id']); ?>"
             class="nav-tab <?php echo (isset($currentHeaderId) && $currentHeaderId == $h['id']) ? 'active' : ''; ?>">
             <?php echo esc($h['nom']); ?>
         </a>
