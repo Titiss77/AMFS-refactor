@@ -23,15 +23,15 @@
     <div class="alert alert-danger" style="margin-bottom: 20px;"><?php echo session('error'); ?></div>
     <?php } ?>
 
-    <?php if (!empty($deadItems)) { ?>
     <div
         style="background: #f8f9fa; padding: 15px 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #dee2e6;">
         <h4 style="margin-top: 0; color: #333; display: flex; align-items: center; gap: 8px;">
-            🛠️ Migration de Domaine
+            🛠️ Migration Globale de Domaine
         </h4>
         <p style="font-size: 0.9em; color: #555; margin-bottom: 15px;">
             Un site a changé d'adresse (ex: <em>https://sushiscan.net</em> devient <em>https://sushiscan.fr</em>) ? <br>
-            Entrez l'ancien et le nouveau domaine. Le système mettra à jour les liens en conservant les numéros de
+            Entrez l'ancien et le nouveau domaine. Le système mettra à jour <strong>tous les liens</strong>
+            correspondants dans la base de données, qu'ils soient signalés morts ou non, en conservant les numéros de
             chapitres/épisodes.
         </p>
         <form action="<?php echo base_url('items/bulk-update-domain'); ?>" method="post"
@@ -49,7 +49,6 @@
             </button>
         </form>
     </div>
-    <?php } ?>
 
     <?php if (empty($deadItems)) { ?>
     <div class="empty-state"
@@ -81,7 +80,8 @@
                                 class="btn-action btn-edit">Mettre à jour manuellement</a>
                             <a href="<?php echo esc($item['url_testee']); ?>" target="_blank" class="btn-action"
                                 style="background: #6c757d; color: white;">Tester</a>
-                            <a href="<?php echo base_url('items/delete/'.$item['item_id']); ?>" class="btn-action btn-ban"
+                            <a href="<?php echo base_url('items/delete/'.$item['item_id']); ?>"
+                                class="btn-action btn-ban"
                                 onclick="return confirm('⚠️ Êtes-vous sûr de vouloir supprimer définitivement cette carte ainsi que tout son historique ? Cette action est irréversible.')"
                                 style="background-color: #dc3545; color: white;">Supprimer la carte</a>
                         </div>
@@ -99,7 +99,7 @@ document.getElementById('btn-force-cron').addEventListener('click', function() {
     const btn = this;
     if (confirm(
             'Lancer la vérification complète de tous les liens maintenant ? Cela peut prendre quelques dizaines de secondes.'
-            )) {
+        )) {
         btn.disabled = true;
         btn.style.opacity = '0.6';
         btn.innerHTML = '⏳ Analyse en cours... Veuillez patienter...';

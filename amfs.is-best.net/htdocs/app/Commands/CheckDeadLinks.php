@@ -12,19 +12,17 @@ class CheckDeadLinks extends BaseCommand
 {
     protected $group       = 'Maintenance';
     protected $name        = 'app:check-links';
-    protected $description = 'Vérifie les liens morts (404) de toutes les cartes. Exécution limitée à 1 fois par semaine.';
+    protected $description = 'Vérifie les liens morts (404) ou blacklistés de toutes les cartes. Exécution limitée à 1 fois par semaine.';
 
     public function run(array $params)
     {
         $cronModel = new CronLogModel();
         $lastRun = $cronModel->where('task_name', 'check_dead_links')->first();
 
-        // Vérification du délai d'une semaine (604800 secondes)
         if ($lastRun) {
             $lastRunDate = strtotime($lastRun['last_run']);
             $now = time();
             
-            // Si on force l'exécution via la commande "php spark app:check-links -f"
             $force = in_array('-f', $params);
 
             if (($now - $lastRunDate) < 604800 && !$force) {
@@ -37,42 +35,93 @@ class CheckDeadLinks extends BaseCommand
         CLI::write("Démarrage de la vérification des liens externes...", 'cyan');
 
         $itemModel = new ItemModel();
-        // On ne teste que les items qui ont un lien
         $items = $itemModel->where('lien !=', '')->where('lien IS NOT NULL')->findAll();
 
-        // Configuration du client HTTP (Timeout court, ne suit pas les erreurs pour les récupérer)
         $client = \Config\Services::curlrequest([
             'timeout' => 7,
             'http_errors' => false,
-            'allow_redirects' => true
+            // ATTENTION : On désactive le suivi automatique pour intercepter la destination de la redirection
+            'allow_redirects' => false 
         ]);
 
         $deadCount = 0;
         $totalChecked = 0;
 
+        $blacklist = [
+            'flemmix.zip',
+            'dlink9.com',
+            'domain is for sale',
+            'page not found',
+            'expired'
+        ];
+
         foreach ($items as $item) {
-            // 1. Formatage du lien : Remplacement des variables {ep} et {ep2} par l'épisode actuel
-            $ep = $item->episode ?: '1'; // S'il n'y a pas d'épisode, on teste avec 1
-            $ep2 = str_pad((string)$ep, 2, '0', STR_PAD_LEFT); // Format 01, 02...
+            $ep = $item->episode ?: '1';
+            $ep2 = str_pad((string)$ep, 2, '0', STR_PAD_LEFT);
             
             $urlToTest = str_replace(['{ep}', '{ep2}'], [$ep, $ep2], $item->lien);
             $totalChecked++;
 
-            try {
-                $response = $client->get($urlToTest);
-                $statusCode = $response->getStatusCode();
-            } catch (\Exception $e) {
-                // Domaine introuvable, timeout ou erreur DNS
-                $statusCode = 404; 
+            $isDead = false;
+            $statusLog = '';
+
+            // 1. Vérification immédiate de l'URL brute renseignée en base
+            foreach ($blacklist as $badWord) {
+                if (stripos($urlToTest, $badWord) !== false) {
+                    $isDead = true;
+                    $statusLog = 'Blacklist (URL source)';
+                    break;
+                }
             }
 
-            // Si c'est une erreur 404 ou une erreur serveur (500+)
-            if ($statusCode == 404 || $statusCode >= 500) {
-                CLI::write("[MORT] ({$statusCode}) : {$item->titre}", 'red');
+            // 2. Requête HTTP si l'URL semble saine
+            if (!$isDead) {
+                try {
+                    $response = $client->get($urlToTest);
+                    $statusCode = $response->getStatusCode();
+
+                    // Si c'est une redirection (301, 302, 307, 308)
+                    if ($statusCode >= 300 && $statusCode < 400) {
+                        $redirectUrl = $response->getHeaderLine('Location');
+                        
+                        foreach ($blacklist as $badWord) {
+                            if (stripos($redirectUrl, $badWord) !== false) {
+                                $isDead = true;
+                                $statusLog = "Blacklist (Redirigé vers {$badWord})";
+                                break;
+                            }
+                        }
+                    } 
+                    // Si la page charge directement en 200 OK
+                    elseif ($statusCode == 200) {
+                        $html = $response->getBody();
+                        foreach ($blacklist as $badWord) {
+                            if (stripos((string)$html, $badWord) !== false) {
+                                $isDead = true;
+                                $statusLog = "Blacklist (Mot clé '{$badWord}' dans le code)";
+                                break;
+                            }
+                        }
+                    } 
+                    // Si le serveur renvoie clairement une erreur
+                    elseif ($statusCode == 404 || $statusCode >= 500) {
+                        $isDead = true;
+                        $statusLog = "Erreur HTTP {$statusCode}";
+                    }
+                    
+                } catch (\Exception $e) {
+                    // CATCH : Les noms de domaines expirés provoquent souvent des erreurs DNS impossibles à résoudre
+                    $isDead = true;
+                    $statusLog = 'Timeout ou Erreur DNS (Domaine expiré ?)';
+                }
+            }
+
+            // 3. Application du statut en base de données
+            if ($isDead) {
+                CLI::write("[MORT] ({$statusLog}) : {$item->titre}", 'red');
                 $itemModel->update($item->id, ['link_status' => 'dead']);
                 $deadCount++;
             } else {
-                // Si le lien fonctionne à nouveau, on enlève le flag 'dead'
                 if ($item->link_status === 'dead') {
                     $itemModel->update($item->id, ['link_status' => 'ok']);
                     CLI::write("[RÉTABLI] : {$item->titre}", 'green');
@@ -80,17 +129,15 @@ class CheckDeadLinks extends BaseCommand
             }
         }
 
-        // Mise à jour de la date d'exécution dans la base
         if ($lastRun) {
             $cronModel->update($lastRun['id'], ['last_run' => date('Y-m-d H:i:s')]);
         } else {
             $cronModel->insert(['task_name' => 'check_dead_links', 'last_run' => date('Y-m-d H:i:s')]);
         }
 
-        // Trace dans l'Audit Trail
         if ($deadCount > 0) {
             $audit = new AuditLogModel();
-            $audit->logAction('Maintenance Système', "Scan de liens : {$totalChecked} URLs testées, {$deadCount} lien(s) mort(s) détecté(s) et flagué(s).");
+            $audit->logAction('Maintenance Système', "Scan de liens : {$totalChecked} URLs testées, {$deadCount} lien(s) mort(s) détecté(s).");
         }
 
         CLI::newLine();
