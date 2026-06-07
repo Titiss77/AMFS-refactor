@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
@@ -143,17 +141,6 @@ class ItemController extends BaseController
         return redirect()->back()->with('error', 'La modification a été refusée.');
     }
 
-    public function deadLinks()
-    {
-        $cronLogModel = new CronLogModel();
-
-        $data = [
-            'deadItems' => $cronLogModel->where('item_id IS NOT NULL')->findAll(),
-        ];
-
-        return view('admin/items/dead_links', $data);
-    }
-
     /**
      * NOUVEAUTÉ : Suppression d'une carte depuis le panneau d'administration.
      *
@@ -184,9 +171,40 @@ class ItemController extends BaseController
         return redirect()->back()->with('error', 'Carte introuvable.');
     }
 
-    /**
-     * NOUVEAUTÉ : Remplacement d'un nom de domaine en masse.
-     */
+    public function deadLinks()
+    {
+        $cronLogModel = new CronLogModel();
+        $itemModel = new ItemModel();
+
+        // 1. Récupérer tous les liens de la base de données
+        $items = $itemModel->asArray()->select('lien')->findAll();
+        $domains = [];
+
+        // 2. Extraire uniquement l'hôte (ex: sushiscan.net au lieu de https://sushiscan.net)
+        foreach ($items as $item) {
+            if (!empty($item['lien'])) {
+                $parsedUrl = parse_url($item['lien']);
+                if (isset($parsedUrl['host'])) {
+                    $domain = $parsedUrl['host'];
+
+                    if (!in_array($domain, $domains)) {
+                        $domains[] = $domain;
+                    }
+                }
+            }
+        }
+
+        // 3. Trier les domaines par ordre alphabétique
+        sort($domains);
+
+        $data = [
+            'deadItems' => $cronLogModel->where('item_id IS NOT NULL')->findAll(),
+            'domains' => $domains,
+        ];
+
+        return view('admin/items/dead_links', $data);
+    }
+
     public function bulkUpdateDomain()
     {
         if ($this->request->is('post')) {
@@ -197,35 +215,37 @@ class ItemController extends BaseController
                 return redirect()->back()->with('error', 'Les deux champs de domaine sont requis.');
             }
 
-            // On supprime les slashs de fin potentiels pour éviter les erreurs de formatage (/anime)
+            // Sécurité : On retire les protocoles et les slashs pour ne travailler que sur le domaine pur
+            $oldDomain = str_replace(['https://', 'http://'], '', $oldDomain);
+            $newDomain = str_replace(['https://', 'http://'], '', $newDomain);
+
             $oldDomain = rtrim($oldDomain, '/');
             $newDomain = rtrim($newDomain, '/');
 
             $itemModel = new ItemModel();
 
-            // On cherche toutes les cartes dont le lien contient l'ancien domaine
+            // Recherche de toutes les cartes contenant le domaine pur
             $itemsToUpdate = $itemModel->like('lien', $oldDomain)->findAll();
 
             $count = 0;
             $cronLogModel = new CronLogModel();
 
             foreach ($itemsToUpdate as $item) {
-                // Remplacement dynamique uniquement sur la portion du domaine
+                // Remplacement strict du nom de domaine dans l'URL complète
                 $newLien = str_replace($oldDomain, $newDomain, $item->lien);
 
-                // Mise à jour de la carte en base de données
+                // Mise à jour en base de données
                 $itemModel->update($item->id, [
                     'lien' => $newLien,
-                    'link_status' => 'ok', // On retire le flag "dead"
+                    'link_status' => 'ok',
                 ]);
 
-                // On supprime l'alerte correspondante dans les logs du Cron
+                // Suppression de l'alerte correspondante
                 $cronLogModel->where('item_id', $item->id)->delete();
                 ++$count;
             }
 
             if ($count > 0) {
-                // Journalisation de sécurité
                 $audit = new AuditLogModel();
                 $audit->logAction('Maintenance : Remplacement en masse', "Migration du domaine '{$oldDomain}' vers '{$newDomain}' appliquée sur {$count} carte(s).");
 

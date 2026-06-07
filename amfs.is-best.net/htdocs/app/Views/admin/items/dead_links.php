@@ -26,19 +26,25 @@
     <div
         style="background: #f8f9fa; padding: 15px 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #dee2e6;">
         <h4 style="margin-top: 0; color: #333; display: flex; align-items: center; gap: 8px;">
-            🛠️ Migration Globale de Domaine
+            🛠️ Migration de Domaine
         </h4>
         <p style="font-size: 0.9em; color: #555; margin-bottom: 15px;">
             Un site a changé d'adresse (ex: <em>https://sushiscan.net</em> devient <em>https://sushiscan.fr</em>) ? <br>
-            Entrez l'ancien et le nouveau domaine. Le système mettra à jour <strong>tous les liens</strong>
-            correspondants dans la base de données, qu'ils soient signalés morts ou non, en conservant les numéros de
-            chapitres/épisodes.
+            Sélectionnez l'ancien domaine et entrez la nouvelle adresse. Le système mettra à jour tous les liens
+            associés en conservant les structures de chapitres/épisodes.
         </p>
         <form action="<?php echo base_url('items/bulk-update-domain'); ?>" method="post"
             style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
             <?php echo csrf_field(); ?>
-            <input type="text" name="old_domain" placeholder="Ancien domaine (ex: https://site.net)" required
-                style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+
+            <select name="old_domain" required
+                style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; background-color: white;">
+                <option value="">-- Sélectionner l'ancien domaine --</option>
+                <?php foreach ($domains as $domain) { ?>
+                <option value="<?php echo esc($domain); ?>"><?php echo esc($domain); ?></option>
+                <?php } ?>
+            </select>
+
             <span style="font-weight: bold; color: #888;">➔</span>
             <input type="text" name="new_domain" placeholder="Nouveau domaine (ex: https://site.fr)" required
                 style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
