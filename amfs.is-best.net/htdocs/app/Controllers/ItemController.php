@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -92,6 +90,13 @@ class ItemController extends BaseController
 
                 if (1 == $existing->is_public && 0 != $data['is_public'] && !$isSuperAdmin) {
                     $revisionModel = new ItemRevisionModel();
+
+                    // 1. On cherche si une révision en attente existe déjà pour cette carte
+                    $existingRevision = $revisionModel
+                        ->where('original_item_id', $id)
+                        ->where('revision_status', 'pending')
+                        ->first();
+
                     $revisionData = [
                         'original_item_id' => $id,
                         'id_user' => auth()->id(),
@@ -107,13 +112,21 @@ class ItemController extends BaseController
                         'revision_status' => 'pending',
                     ];
 
+                    // 2. Si elle existe, on ajoute son ID au tableau de données.
+                    // Ainsi, CodeIgniter fera un UPDATE au lieu d'un INSERT.
+                    if ($existingRevision) {
+                        $revisionData['id'] = $existingRevision['id'];
+                    }
+
                     $revisionModel->save($revisionData);
-                    $audit->logAction('Soumission Draft', "L'utilisateur a proposé une modification pour la carte publique ID {$id} ('{$existing->titre}').");
+
+                    // Optionnel : adapter le message de log si c'est une mise à jour
+                    $actionLog = $existingRevision ? 'Mise à jour Draft' : 'Soumission Draft';
+                    $audit->logAction($actionLog, "L'utilisateur a proposé une modification pour la carte publique ID {$id} ('{$existing->titre}').");
 
                     return redirect()
-                        ->to($backUrl.$separator.'open='.$existing->id_division.'#div-'.$existing->id_division)
-                        ->with('message', 'Votre modification a été soumise au SuperAdmin pour validation.')
-                    ;
+                        ->to($backUrl . $separator . 'open=' . $existing->id_division . '#div-' . $existing->id_division)
+                        ->with('message', 'Votre modification a été soumise au SuperAdmin pour validation.');
                 }
                 $item = new Item($data);
                 $this->model->save($item);
@@ -126,8 +139,7 @@ class ItemController extends BaseController
                     $revisionModel
                         ->where('original_item_id', $id)
                         ->where('revision_status', 'pending')
-                        ->delete()
-                    ;
+                        ->delete();
                     $audit->logAction('Nettoyage Draft', "Passage en privé de la carte ID {$id} : Suppression automatique des drafts en attente.");
                 }
             } else {
@@ -139,7 +151,7 @@ class ItemController extends BaseController
                 $audit->logAction('Création Carte', "Création de la carte ID {$newId} ('{$data['titre']}'). Visibilité initiale: {$statutVisibility}.");
             }
 
-            return redirect()->to($backUrl.$separator.'open='.$data['id_division'].'#div-'.$data['id_division']);
+            return redirect()->to($backUrl . $separator . 'open=' . $data['id_division'] . '#div-' . $data['id_division']);
         }
     }
 
@@ -161,7 +173,7 @@ class ItemController extends BaseController
                 $backUrl = $this->request->getUserAgent()->getReferrer() ?: site_url('/');
                 $separator = (str_contains($backUrl, '?')) ? '&' : '?';
 
-                return redirect()->to($backUrl.$separator.'open='.$id_div.'#div-'.$id_div);
+                return redirect()->to($backUrl . $separator . 'open=' . $id_div . '#div-' . $id_div);
             }
         }
 
@@ -197,7 +209,7 @@ class ItemController extends BaseController
         $apiKey = env('TMDB_API_KEY') ?? 'ba55da0439797150ed58c4e524584823';
 
         $client = Services::curlrequest();
-        $url = 'https://api.themoviedb.org/3/search/multi?query='.urlencode($query)."&api_key={$apiKey}&language=fr-FR";
+        $url = 'https://api.themoviedb.org/3/search/multi?query=' . urlencode($query) . "&api_key={$apiKey}&language=fr-FR";
 
         try {
             $response = $client->get($url);
