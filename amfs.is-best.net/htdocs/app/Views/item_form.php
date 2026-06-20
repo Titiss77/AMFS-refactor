@@ -23,6 +23,8 @@
             <div class="col-half">
                 <label for="id_division" class="form-label">Division *</label>
                 <select id="id_division" name="id_division" class="form-control" required>
+                    <option value="" disabled <?php echo !isset($item) ? 'selected' : ''; ?>>-- Sélectionner --</option>
+
                     <?php foreach ($divisions as $div) { ?>
                     <option value="<?php echo esc($div['id']); ?>"
                         <?php echo (isset($item) && $item->id_division == $div['id']) ? 'selected' : ''; ?>>
