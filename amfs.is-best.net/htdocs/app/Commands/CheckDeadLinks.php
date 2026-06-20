@@ -39,9 +39,10 @@ class CheckDeadLinks extends BaseCommand
 
         $client = \Config\Services::curlrequest([
             'timeout' => 7,
+            'connect_timeout' => 5,     // NOUVEAU
+            'verify' => false,          // NOUVEAU CRUCIAL
             'http_errors' => false,
-            // ATTENTION : On désactive le suivi automatique pour intercepter la destination de la redirection
-            'allow_redirects' => false
+            'allow_redirects' => false  // Gardez false ici comme vous l'aviez fait
         ]);
 
         $deadCount = 0;

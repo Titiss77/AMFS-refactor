@@ -40,8 +40,10 @@ class CronController extends BaseController
 
         $client = Services::curlrequest([
             'timeout' => 10,
+            'connect_timeout' => 5,     // NOUVEAU : Force l'arrêt rapide si le DNS est introuvable
             'http_errors' => false,
             'allow_redirects' => true,
+            'verify' => false,          // NOUVEAU CRUCIAL : Ignore les erreurs HTTPS/SSL des sites morts
             'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
             'headers' => [
                 'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -98,7 +100,7 @@ class CronController extends BaseController
 
             // 4. Si le DOMAINE est mort, on flague la carte et on enregistre son LIEN COMPLET
             // AJOUT DU CODE 0 : Gère le DNS_PROBE_FINISHED_NXDOMAIN et les Timeouts
-            if ($statusCode === 0 || $statusCode == 404 || ($statusCode >= 500 && $statusCode != 503)) {
+            if ($statusCode === 0 || $statusCode == 403 || $statusCode == 404 || ($statusCode >= 500 && $statusCode != 503)) {
                 $itemModel->update($item->id, ['link_status' => 'dead']);
                 ++$deadCount;
 
