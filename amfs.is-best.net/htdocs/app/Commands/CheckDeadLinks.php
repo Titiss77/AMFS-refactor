@@ -39,10 +39,15 @@ class CheckDeadLinks extends BaseCommand
 
         $client = \Config\Services::curlrequest([
             'timeout' => 7,
-            'connect_timeout' => 5,     // NOUVEAU
-            'verify' => false,          // NOUVEAU CRUCIAL
+            'connect_timeout' => 5,
+            'verify' => false,
             'http_errors' => false,
-            'allow_redirects' => false  // Gardez false ici comme vous l'aviez fait
+            'allow_redirects' => false,
+            'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+            'headers' => [
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language' => 'fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7',
+            ],
         ]);
 
         $deadCount = 0;
@@ -109,10 +114,10 @@ class CheckDeadLinks extends BaseCommand
                             }
                         }
                     } 
-                    // Si le serveur renvoie clairement une erreur
-                    elseif ($statusCode == 404 || $statusCode >= 500) {
+                    // Si la page est clairement introuvable (On ignore les 403 et 5xx qui sont souvent des blocages Cloudflare)
+                    elseif ($statusCode === 404) {
                         $isDead = true;
-                        $statusLog = "Erreur HTTP {$statusCode}";
+                        $statusLog = "Erreur HTTP 404 (Introuvable)";
                     }
                     
                 } catch (\Throwable $e) {
