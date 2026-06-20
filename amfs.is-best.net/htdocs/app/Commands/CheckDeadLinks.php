@@ -2,16 +2,16 @@
 
 namespace App\Commands;
 
+use App\Models\AuditLogModel;
+use App\Models\CronLogModel;
+use App\Models\ItemModel;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use App\Models\ItemModel;
-use App\Models\CronLogModel;
-use App\Models\AuditLogModel;
 
 class CheckDeadLinks extends BaseCommand
 {
-    protected $group       = 'Maintenance';
-    protected $name        = 'app:check-links';
+    protected $group = 'Maintenance';
+    protected $name = 'app:check-links';
     protected $description = 'Vérifie les liens morts (404) ou blacklistés de toutes les cartes. Exécution limitée à 1 fois par semaine.';
 
     public function run(array $params)
@@ -22,17 +22,17 @@ class CheckDeadLinks extends BaseCommand
         if ($lastRun) {
             $lastRunDate = strtotime($lastRun['last_run']);
             $now = time();
-            
+
             $force = in_array('-f', $params);
 
             if (($now - $lastRunDate) < 604800 && !$force) {
-                CLI::write("La vérification a déjà eu lieu cette semaine (" . date('d/m/Y', $lastRunDate) . ").", 'yellow');
+                CLI::write('La vérification a déjà eu lieu cette semaine (' . date('d/m/Y', $lastRunDate) . ').', 'yellow');
                 CLI::write("Utilisez 'php spark app:check-links -f' pour forcer l'exécution.", 'yellow');
                 return;
             }
         }
 
-        CLI::write("Démarrage de la vérification des liens externes...", 'cyan');
+        CLI::write('Démarrage de la vérification des liens externes...', 'cyan');
 
         $itemModel = new ItemModel();
         $items = $itemModel->where('lien !=', '')->where('lien IS NOT NULL')->findAll();
@@ -41,7 +41,7 @@ class CheckDeadLinks extends BaseCommand
             'timeout' => 7,
             'http_errors' => false,
             // ATTENTION : On désactive le suivi automatique pour intercepter la destination de la redirection
-            'allow_redirects' => false 
+            'allow_redirects' => false
         ]);
 
         $deadCount = 0;
@@ -57,8 +57,8 @@ class CheckDeadLinks extends BaseCommand
 
         foreach ($items as $item) {
             $ep = $item->episode ?: '1';
-            $ep2 = str_pad((string)$ep, 2, '0', STR_PAD_LEFT);
-            
+            $ep2 = str_pad((string) $ep, 2, '0', STR_PAD_LEFT);
+
             $urlToTest = str_replace(['{ep}', '{ep2}'], [$ep, $ep2], $item->lien);
             $totalChecked++;
 
@@ -80,8 +80,13 @@ class CheckDeadLinks extends BaseCommand
                     $response = $client->get($urlToTest);
                     $statusCode = $response->getStatusCode();
 
+                    // Si erreur réseau (DNS_PROBE_FINISHED_NXDOMAIN renvoie souvent 0)
+                    if ($statusCode === 0) {
+                        $isDead = true;
+                        $statusLog = "Erreur Réseau/DNS (Hôte introuvable)";
+                    }
                     // Si c'est une redirection (301, 302, 307, 308)
-                    if ($statusCode >= 300 && $statusCode < 400) {
+                    elseif ($statusCode >= 300 && $statusCode < 400) {
                         $redirectUrl = $response->getHeaderLine('Location');
                         
                         foreach ($blacklist as $badWord) {
@@ -109,8 +114,8 @@ class CheckDeadLinks extends BaseCommand
                         $statusLog = "Erreur HTTP {$statusCode}";
                     }
                     
-                } catch (\Exception $e) {
-                    // CATCH : Les noms de domaines expirés provoquent souvent des erreurs DNS impossibles à résoudre
+                } catch (\Throwable $e) {
+                    // CATCH : On utilise \Throwable pour s'assurer d'attraper absolument toutes les erreurs
                     $isDead = true;
                     $statusLog = 'Timeout ou Erreur DNS (Domaine expiré ?)';
                 }

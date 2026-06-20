@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -79,7 +77,7 @@ class CronController extends BaseController
             }
 
             $scheme = $parsedUrl['scheme'] ?? 'https';
-            $domainToTest = $scheme.'://'.$parsedUrl['host'];
+            $domainToTest = $scheme . '://' . $parsedUrl['host'];
 
             ++$totalChecked;
             $statusCode = null;
@@ -91,14 +89,16 @@ class CronController extends BaseController
                 try {
                     $response = $client->get($domainToTest);
                     $statusCode = $response->getStatusCode();
-                } catch (\Exception $e) {
-                    $statusCode = 404;
+                } catch (\Throwable $e) {
+                    // On attrape les crashs réseau profonds et on définit le code sur 0
+                    $statusCode = 0;
                 }
                 $checkedDomains[$domainToTest] = $statusCode;
             }
 
             // 4. Si le DOMAINE est mort, on flague la carte et on enregistre son LIEN COMPLET
-            if (404 == $statusCode || ($statusCode >= 500 && 503 != $statusCode)) {
+            // AJOUT DU CODE 0 : Gère le DNS_PROBE_FINISHED_NXDOMAIN et les Timeouts
+            if ($statusCode === 0 || $statusCode == 404 || ($statusCode >= 500 && $statusCode != 503)) {
                 $itemModel->update($item->id, ['link_status' => 'dead']);
                 ++$deadCount;
 
@@ -107,7 +107,7 @@ class CronController extends BaseController
                     'last_run' => $currentTimestamp,
                     'item_id' => $item->id,
                     'titre' => $item->titre,
-                    'url_testee' => $urlToTest, // <-- CORRECTION : Affiche le vrai lien de la carte (ex: /chainsaw-man-chapitre-52)
+                    'url_testee' => $urlToTest,  // <-- CORRECTION : Affiche le vrai lien de la carte (ex: /chainsaw-man-chapitre-52)
                     'code_erreur' => $statusCode,
                 ]);
 
