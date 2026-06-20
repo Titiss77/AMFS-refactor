@@ -57,8 +57,10 @@
 
         <div class="form-group">
             <label for="description" class="form-label">Description</label>
-            <textarea id="description" name="description" class="form-control"
-                rows="1"><?php echo isset($item) ? esc($item->description) : ''; ?></textarea>
+            <textarea id="description" name="description" class="form-control" rows="1"
+                maxlength="107"><?php echo isset($item) ? esc($item->description) : ''; ?></textarea>
+            <small id="char-count"
+                style="display: block; text-align: right; margin-top: 5px; font-weight: bold;"></small>
         </div>
 
         <div class="form-group">
