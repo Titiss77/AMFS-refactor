@@ -39,9 +39,33 @@
         <div class="mb-3">
             <label for="new_password" class="form-label">Nouveau mot de passe <small class="text-muted">(laisser vide
                     pour conserver l'actuel)</small></label>
-            <input type="password" name="new_password" id="new_password" class="form-control"
-                autocomplete="new-password">
+            <div class="input-group">
+                <input type="password" name="new_password" id="new_password" class="form-control"
+                    autocomplete="new-password">
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                    Afficher le mdp
+                </button>
+            </div>
         </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('new_password');
+
+            if (togglePassword && passwordInput) {
+                togglePassword.addEventListener('click', function() {
+                    // Basculer le type entre 'password' et 'text'
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' :
+                        'password';
+                    passwordInput.setAttribute('type', type);
+
+                    // Modifier le texte du bouton en conséquence
+                    this.textContent = type === 'password' ? 'Afficher' : 'Masquer';
+                });
+            }
+        });
+        </script>
         <?php } ?>
 
         <div class="mt-4">

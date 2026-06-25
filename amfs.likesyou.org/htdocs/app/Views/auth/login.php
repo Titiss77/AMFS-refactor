@@ -33,18 +33,20 @@
 
                 <!-- Email -->
                 <div class="form-floating mb-3">
+                    <label for="floatingEmailInput"><?php echo lang('Auth.email'); ?></label>
                     <input type="email" class="form-control" id="floatingEmailInput" name="email" inputmode="email"
                         autocomplete="email" placeholder="<?php echo lang('Auth.email'); ?>"
                         value="<?php echo old('email'); ?>" required>
-                    <label for="floatingEmailInput"><?php echo lang('Auth.email'); ?></label>
+
                 </div>
 
                 <!-- Password -->
                 <div class="form-floating mb-3">
+                    <label for="floatingPasswordInput"><?php echo lang('Auth.password'); ?></label>
                     <input type="password" class="form-control" id="floatingPasswordInput" name="password"
                         inputmode="text" autocomplete="current-password"
                         placeholder="<?php echo lang('Auth.password'); ?>" required>
-                    <label for="floatingPasswordInput"><?php echo lang('Auth.password'); ?></label>
+
                 </div>
 
                 <!-- Remember me -->
