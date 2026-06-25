@@ -34,6 +34,16 @@
             </select>
         </div>
 
+        <?php /* NOUVEAU BLOC : Réservé au superadmin */ ?>
+        <?php if (auth()->user()->inGroup('superadmin')) { ?>
+        <div class="mb-3">
+            <label for="new_password" class="form-label">Nouveau mot de passe <small class="text-muted">(laisser vide
+                    pour conserver l'actuel)</small></label>
+            <input type="password" name="new_password" id="new_password" class="form-control"
+                autocomplete="new-password">
+        </div>
+        <?php } ?>
+
         <div class="mt-4">
             <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
             <a href="<?php echo base_url('users'); ?>" class="btn btn-secondary">Retour</a>

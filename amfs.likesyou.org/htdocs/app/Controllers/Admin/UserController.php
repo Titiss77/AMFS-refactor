@@ -71,9 +71,11 @@ class UserController extends BaseController
 
         $availableGroups = implode(',', array_keys(config('AuthGroups')->groups));
 
+        // Ajout de la règle de validation pour le mot de passe
         $rules = [
             'username' => "required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username,id,{$id}]",
             'group' => "permit_empty|in_list[{$availableGroups}]",
+            'new_password' => "permit_empty|min_length[8]", // Vous pouvez ajouter |strong_password si Shield est configuré pour
         ];
 
         if (!$this->validate($rules)) {
@@ -82,10 +84,19 @@ class UserController extends BaseController
 
         $oldUsername = $user->username;
         $newUsername = $this->request->getPost('username');
+        $newPassword = $this->request->getPost('new_password'); // Récupération du mdp
 
-        $user->fill([
+        // Préparation des données à mettre à jour
+        $fillData = [
             'username' => $newUsername,
-        ]);
+        ];
+
+        // Si le superadmin a saisi un mot de passe, on l'ajoute
+        if (!empty($newPassword) && $currentUser->inGroup('superadmin')) {
+            $fillData['password'] = $newPassword; // Shield va automatiquement le hasher
+        }
+
+        $user->fill($fillData);
 
         if (!$users->save($user)) {
             return redirect()->back()->withInput()->with('error', "Échec de l'enregistrement en base.");
@@ -94,6 +105,11 @@ class UserController extends BaseController
         $logDetails = "Mise à jour du compte ID {$id}. ";
         if ($oldUsername !== $newUsername) {
             $logDetails .= "Pseudo: '{$oldUsername}' -> '{$newUsername}'. ";
+        }
+        
+        // Journalisation de la réinitialisation du mot de passe
+        if (!empty($newPassword) && $currentUser->inGroup('superadmin')) {
+            $logDetails .= "Mot de passe réinitialisé par le SuperAdmin. ";
         }
 
         $newGroup = $this->request->getPost('group');
