@@ -13,9 +13,6 @@ jobs:
       - name: 🚚 Récupération du code
         uses: actions/checkout@v3
 
-      - name: 🔍 Debug - Lister les fichiers
-        run: ls -R
-        
       - name: 📦 Nettoyage du vendor (Production)
         # Remplace 'mathis.likesyou.org/htdocs' par le chemin réel si nécessaire
         working-directory: mathis.likesyou.org/htdocs
