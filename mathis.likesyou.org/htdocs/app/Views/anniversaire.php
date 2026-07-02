@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitation Anniversaire</title>
+    <title>Invitation troll</title>
     <style>
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -67,27 +67,39 @@
 
     .btn-yes {
         background-color: #4CAF50;
-        color: white;
     }
 
-    .btn-yes:hover {
-        background-color: #45a049;
+    .btn-admin-secret {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: #333;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.2s;
+        z-index: 100;
     }
 
-    .btn-no {
-        background-color: #f44336;
-        color: white;
-        position: relative;
+    .btn-admin-secret:hover {
+        background-color: #555;
     }
     </style>
 </head>
 
 <body>
+    <!-- LE BOUTON SECRET APPARAÎT ICI SEULEMENT SI L'IP EST AUTORISÉE -->
+    <?php if (isset($estAdmin) && $estAdmin): ?>
+    <a href="<?= base_url('troll/resultats') ?>" class="btn-admin-secret">⚙️ Voir les résultats</a>
+    <?php endif; ?>
 
     <div class="container">
-        <h1>Es-tu là pour mon anniversaire ?</h1>
+        <h1>Es-tu là pour mon troll ?</h1>
 
-        <form id="inviteForm" action="<?= base_url('anniversaire/confirmation') ?>" method="post">
+        <form id="inviteForm" action="<?= base_url('troll/confirmation') ?>" method="post">
 
             <!-- LE CHAMP CACHÉ MANQUANT EST ICI 👇 -->
             <input type="hidden" name="nom" value="<?= esc($nom) ?>">
@@ -171,7 +183,7 @@
         e.preventDefault();
         alert(
             "Erreur système 404 : La réponse 'Non' a été supprimée d'internet. Redirection vers le bon choix..."
-            );
+        );
         btnOui.click();
     });
     </script>
