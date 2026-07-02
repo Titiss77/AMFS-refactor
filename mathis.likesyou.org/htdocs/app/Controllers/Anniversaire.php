@@ -14,17 +14,19 @@ class Anniversaire extends BaseController
     public function confirmation()
     {
         $nom = $this->request->getPost('nom');
+        // Récupération du nombre de tentatives (casté en entier par sécurité)
+        $tentatives = (int) $this->request->getPost('tentatives_non');
 
         if (!empty($nom)) {
-            $inviteModel = new InviteModel();
+            $inviteModel = new \App\Models\InviteModel();
             
-            // On sauvegarde le grand gagnant
             $inviteModel->insert([
-                'nom'     => $nom,
-                'reponse' => 'Oui' // Toujours oui !
+                'nom'            => $nom,
+                'reponse'        => 'Oui',
+                'tentatives_non' => $tentatives // Enregistrement en base 👇
             ]);
 
-            return "Génial $nom ! C'est enregistré dans la base de données. Prépare-toi bien ! 🎉";
+            return "Génial $nom ! C'est enregistré. Tu as essayé de cliquer sur 'Non' $tentatives fois, bel effort ! 🎉";
         }
 
         return redirect()->to('/anniversaire');

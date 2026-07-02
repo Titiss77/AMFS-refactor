@@ -93,6 +93,9 @@
                 <input type="text" name="nom" id="nomInput" placeholder="Ton prénom..." required>
             </div>
 
+            <!-- Champ caché pour stocker le nombre de tentatives -->
+            <input type="hidden" name="tentatives_non" id="tentativesInput" value="0">
+
             <div class="buttons-container">
                 <button type="submit" class="btn btn-yes" id="btnOui">Oui !</button>
                 <button type="button" class="btn btn-no" id="btnNon" tabindex="-1">Non...</button>
@@ -105,8 +108,8 @@
     const btnOui = document.getElementById('btnOui');
     const nomInput = document.getElementById('nomInput');
     const form = document.getElementById('inviteForm');
+    const tentativesInput = document.getElementById('tentativesInput'); // Récupère le champ caché
 
-    // Textes trolls pour le bouton Non
     const phrasesTrolls = [
         "Tu es sûr ?",
         "Réfléchis bien...",
@@ -118,10 +121,9 @@
     let compteurEsquive = 0;
 
     btnNon.addEventListener('mouseover', function() {
-        // Vérifie d'abord s'il a rentré son prénom, sinon on le focus
         if (nomInput.value.trim() === '') {
             nomInput.focus();
-            return; // Ne fait pas fuir le bouton tant qu'il n'a pas mis son nom
+            return;
         }
 
         // 1. Déplacement aléatoire
@@ -131,23 +133,25 @@
         this.style.left = `${x}px`;
         this.style.top = `${y}px`;
 
-        // 2. Troll textuel
-        this.innerText = phrasesTrolls[compteurEsquive % phrasesTrolls.length];
-        compteurEsquive++;
+        // 2. Mise à jour du compteur et du champ caché
+        compteurEsquive++; // On incrémente
+        tentativesInput.value = compteurEsquive; // On met à jour la valeur envoyée en POST
 
-        // 3. Le bouton Oui devient énorme
+        // 3. Troll textuel
+        this.innerText = phrasesTrolls[compteurEsquive % phrasesTrolls.length];
+
+        // 4. Le bouton Oui devient énorme
         let currentYesSize = window.getComputedStyle(btnOui).fontSize;
         let currentYesPaddingX = window.getComputedStyle(btnOui).paddingLeft;
         let currentYesPaddingY = window.getComputedStyle(btnOui).paddingTop;
 
-        // Limite la taille pour ne pas casser tout l'écran, mais ça devient quand même gros !
         if (parseFloat(currentYesSize) < 60) {
             btnOui.style.fontSize = (parseFloat(currentYesSize) + 4) + 'px';
             btnOui.style.padding = (parseFloat(currentYesPaddingY) + 2) + 'px ' + (parseFloat(
                 currentYesPaddingX) + 6) + 'px';
         }
 
-        // 4. Le bouton Non rétrécit (jusqu'à une certaine limite pour rester visible)
+        // 5. Le bouton Non rétrécit
         let currentNoSize = window.getComputedStyle(this).fontSize;
         if (parseFloat(currentNoSize) > 8) {
             this.style.fontSize = (parseFloat(currentNoSize) - 1) + 'px';
@@ -155,7 +159,7 @@
         }
     });
 
-    // 5. Anti-Ninja : S'il arrive à cliquer dessus (ex: via tabulation ou script)
+    // Anti-Ninja
     btnNon.addEventListener('click', function(e) {
         e.preventDefault();
         if (nomInput.value.trim() === '') {
@@ -164,7 +168,7 @@
         } else {
             alert(
                 "Erreur système 404 : La réponse 'Non' a été supprimée d'internet. Redirection vers le bon choix...");
-            btnOui.click(); // Soumet le formulaire avec "Oui"
+            btnOui.click();
         }
     });
     </script>

@@ -6,7 +6,6 @@ use CodeIgniter\Database\Migration;
 
 class CreateInvitesTable extends Migration
 {
-    // Ajout de ": void" ici
     public function up(): void 
     {
         $this->forge->addField([
@@ -24,6 +23,11 @@ class CreateInvitesTable extends Migration
                 'constraint' => '10',
                 'default'    => 'Oui',
             ],
+            'tentatives_non' => [
+                'type'       => 'INT',
+                'unsigned'   => true,
+                'default'    => 0,
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
@@ -37,7 +41,6 @@ class CreateInvitesTable extends Migration
         $this->forge->createTable('invites');
     }
 
-    // Ajout de ": void" ici
     public function down(): void 
     {
         $this->forge->dropTable('invites');
