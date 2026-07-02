@@ -13,8 +13,9 @@ jobs:
       - name: 🚚 Récupération du code
         uses: actions/checkout@v3
 
-      # 👇 NOUVELLE ÉTAPE : On installe uniquement ce qui est nécessaire pour la production
       - name: 📦 Nettoyage du vendor (Production)
+        # On se déplace dans le dossier contenant ton projet avant de lancer composer
+        working-directory: htdocs
         run: composer install --no-dev --optimize-autoloader
 
       - name: 📂 Synchronisation FTP
