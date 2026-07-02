@@ -4,31 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitation troll</title>
+    <title>Invitation 💕</title>
+
+    <!-- Importation d'une police mignonne et arrondie -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
     <style>
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Quicksand', 'Segoe UI', Tahoma, sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
         margin: 0;
-        background-color: #f3f4f6;
+        /* Un beau dégradé rose/pêche en fond */
+        background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
         overflow: hidden;
     }
 
     .container {
         text-align: center;
-        background: white;
+        /* Fond légèrement transparent */
+        background: rgba(255, 255, 255, 0.95);
         padding: 50px;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border-radius: 30px;
+        /* Bords très arrondis */
+        /* Ombre rose douce */
+        box-shadow: 0 15px 35px rgba(255, 105, 180, 0.2);
+        border: 3px solid #ffe4e1;
         z-index: 10;
     }
 
     h1 {
-        margin-bottom: 20px;
-        color: #333;
+        margin-bottom: 25px;
+        /* Couleur rose fuchsia */
+        color: #ff1493;
+        font-weight: 700;
+        font-size: 2.2em;
+        text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.2);
     }
 
     .buttons-container {
@@ -37,77 +50,87 @@
         align-items: center;
         gap: 20px;
         position: relative;
-        min-height: 60px;
+        min-height: 70px;
     }
 
     .btn {
-        padding: 12px 30px;
+        padding: 15px 35px;
         font-size: 18px;
-        font-weight: bold;
+        font-weight: 700;
         border: none;
-        border-radius: 8px;
+        /* Bords en forme de pilule */
+        border-radius: 50px;
         cursor: pointer;
-        transition: all 0.2s ease;
+        /* Effet de transition rebondissant très fluide */
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        font-family: 'Quicksand', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
     .btn-yes {
-        background-color: #4CAF50;
+        /* Dégradé de couleurs chaudes pour le OUI */
+        background: linear-gradient(45deg, #ff0844 0%, #ffb199 100%);
         color: white;
+        box-shadow: 0 6px 15px rgba(255, 8, 68, 0.4);
     }
 
     .btn-yes:hover {
-        background-color: #45a049;
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(255, 8, 68, 0.6);
     }
 
     .btn-no {
-        background-color: #f44336;
+        /* Dégradé violet pastel pour le NON */
+        background: linear-gradient(45deg, #a18cd1 0%, #fbc2eb 100%);
         color: white;
         position: relative;
+        box-shadow: 0 6px 15px rgba(161, 140, 209, 0.4);
     }
 
-    /* Bouton Admin Secret */
+    /* Le Bouton Admin Secret Relooké */
     .btn-admin-secret {
         position: absolute;
         top: 20px;
         right: 20px;
-        background-color: #333;
+        background: #ff69b4;
         color: white;
-        padding: 8px 15px;
-        border-radius: 6px;
+        padding: 10px 20px;
+        border-radius: 30px;
         text-decoration: none;
+        font-weight: 700;
         font-size: 14px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: background-color 0.2s;
+        box-shadow: 0 4px 10px rgba(255, 105, 180, 0.4);
+        border: 2px solid white;
+        transition: all 0.2s ease;
         z-index: 100;
     }
 
     .btn-admin-secret:hover {
-        background-color: #555;
+        background: #ff1493;
+        transform: translateY(-2px) scale(1.05);
     }
     </style>
 </head>
 
 <body>
 
-    <!-- LE BOUTON SECRET APPARAÎT ICI SEULEMENT SI L'IP EST AUTORISÉE -->
+    <!-- BOUTON SECRET (Visible seulement si l'IP est autorisée) -->
     <?php if (isset($estAdmin) && $estAdmin): ?>
-    <a href="<?= base_url('troll/resultats') ?>" class="btn-admin-secret">⚙️ Voir les résultats</a>
+    <a href="<?= base_url('troll/resultats') ?>" class="btn-admin-secret">✨ Voir les résultats</a>
     <?php endif; ?>
 
     <div class="container">
-        <h1>Es-tu là pour mon troll ?</h1>
+        <h1>Es-tu là pour mon troll ? 💖</h1>
 
         <form id="inviteForm" action="<?= base_url('troll/confirmation') ?>" method="post">
 
-            <!-- Le prénom récupéré dans l'URL -->
             <input type="hidden" name="nom" value="<?= esc($nom) ?>">
-
-            <!-- Champ caché pour stocker le nombre de tentatives -->
             <input type="hidden" name="tentatives_non" id="tentativesInput" value="0">
 
             <div class="buttons-container">
-                <button type="submit" class="btn btn-yes" id="btnOui">Oui !</button>
-                <button type="button" class="btn btn-no" id="btnNon" tabindex="-1">Non...</button>
+                <button type="submit" class="btn btn-yes" id="btnOui">Oui ! 🥰</button>
+                <button type="button" class="btn btn-no" id="btnNon" tabindex="-1">Non... 🥺</button>
             </div>
         </form>
     </div>
@@ -118,24 +141,22 @@
     const form = document.getElementById('inviteForm');
     const tentativesInput = document.getElementById('tentativesInput');
 
+    // Phrases modifiées pour coller à la nouvelle ambiance !
     const phrasesTrolls = [
-        "Tu es sûr ?",
-        "Réfléchis bien...",
-        "Mauvaise réponse !",
-        "Allez, dis oui...",
-        "Tu vas rater ça ?",
-        "Clique sur le vert !"
+        "T'es sûr(e) ? 🥺",
+        "Mais euh... 💔",
+        "Trop lent(e) ! 🤭",
+        "Allez dis oui... ✨",
+        "Tu vas me manquer ! 😭",
+        "Clique sur le rose ! 💕"
     ];
     let compteurEsquive = 0;
 
-    // On crée une fonction unique pour faire fuir le bouton
     function faireFuirBouton(e) {
-        // Si c'est un écran tactile, on empêche le "clic" natif
         if (e.type === 'touchstart') {
             e.preventDefault();
         }
 
-        // 1. Déplacement aléatoire
         this.style.position = 'fixed';
         const margin = 20;
         const x = Math.random() * (window.innerWidth - this.clientWidth - margin * 2) + margin;
@@ -144,14 +165,10 @@
         this.style.left = `${x}px`;
         this.style.top = `${y}px`;
 
-        // 2. Mise à jour du compteur
         compteurEsquive++;
         tentativesInput.value = compteurEsquive;
-
-        // 3. Troll textuel
         this.innerText = phrasesTrolls[compteurEsquive % phrasesTrolls.length];
 
-        // 4. Le bouton Oui devient énorme
         let currentYesSize = window.getComputedStyle(btnOui).fontSize;
         let currentYesPaddingX = window.getComputedStyle(btnOui).paddingLeft;
         let currentYesPaddingY = window.getComputedStyle(btnOui).paddingTop;
@@ -162,7 +179,6 @@
                 'px';
         }
 
-        // 5. Le bouton Non rétrécit (limite 12px pour mobile)
         let currentNoSize = window.getComputedStyle(this).fontSize;
         if (parseFloat(currentNoSize) > 12) {
             this.style.fontSize = (parseFloat(currentNoSize) - 1) + 'px';
@@ -170,17 +186,14 @@
         }
     }
 
-    // On écoute le survol (PC) ET le toucher (Smartphones)
     btnNon.addEventListener('mouseover', faireFuirBouton);
     btnNon.addEventListener('touchstart', faireFuirBouton, {
         passive: false
     });
 
-    // Anti-Ninja
     btnNon.addEventListener('click', function(e) {
         e.preventDefault();
-        alert(
-            "Erreur système 404 : La réponse 'Non' a été supprimée d'internet. Redirection vers le bon choix...");
+        alert("Erreur système 404 : La méchanceté a été bloquée. Redirection vers l'amour et la joie... 💖");
         btnOui.click();
     });
     </script>
