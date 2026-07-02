@@ -25,11 +25,13 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
-          server-dir: /
+          # Remplace cette ligne par le dossier exact où se trouve ton site chez ByetHost
+          # Souvent c'est "htdocs" ou "public_html"
+          server-dir: htdocs/
           
-          state-name: htdocs/.ftp-deploy-sync-state.json
+          # Indique le chemin relatif vers ton fichier de suivi
+          state-name: .ftp-deploy-sync-state.json
           
-          # On ajoute aussi le dossier d'installation de base de Composer et d'autres fichiers inutiles
           exclude: |
             **/.git*
             **/.git*/**
