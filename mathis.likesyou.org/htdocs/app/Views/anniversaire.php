@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitation Anniversaire</title>
+    <title>Ptit form</title>
     <style>
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -171,7 +171,7 @@
         e.preventDefault();
         alert(
             "Erreur système 404 : La réponse 'Non' a été supprimée d'internet. Redirection vers le bon choix..."
-            );
+        );
         btnOui.click();
     });
     </script>
