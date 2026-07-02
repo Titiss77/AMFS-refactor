@@ -106,7 +106,7 @@
     const btnNon = document.getElementById('btnNon');
     const btnOui = document.getElementById('btnOui');
     const form = document.getElementById('inviteForm');
-    const tentativesInput = document.getElementById('tentativesInput'); // Récupère le champ caché
+    const tentativesInput = document.getElementById('tentativesInput');
 
     const phrasesTrolls = [
         "Tu es sûr ?",
@@ -118,19 +118,25 @@
     ];
     let compteurEsquive = 0;
 
-    btnNon.addEventListener('mouseover', function() {
+    // On crée une fonction unique pour faire fuir le bouton
+    function faireFuirBouton(e) {
+        // Si c'est un écran tactile, on empêche le "clic" natif de se déclencher
+        if (e.type === 'touchstart') {
+            e.preventDefault();
+        }
 
-
-        // 1. Déplacement aléatoire
+        // 1. Déplacement aléatoire (avec une petite marge pour ne pas sortir de l'écran mobile)
         this.style.position = 'fixed';
-        const x = Math.random() * (window.innerWidth - this.clientWidth);
-        const y = Math.random() * (window.innerHeight - this.clientHeight);
+        const margin = 20;
+        const x = Math.random() * (window.innerWidth - this.clientWidth - margin * 2) + margin;
+        const y = Math.random() * (window.innerHeight - this.clientHeight - margin * 2) + margin;
+
         this.style.left = `${x}px`;
         this.style.top = `${y}px`;
 
-        // 2. Mise à jour du compteur et du champ caché
-        compteurEsquive++; // On incrémente
-        tentativesInput.value = compteurEsquive; // On met à jour la valeur envoyée en POST
+        // 2. Mise à jour du compteur
+        compteurEsquive++;
+        tentativesInput.value = compteurEsquive;
 
         // 3. Troll textuel
         this.innerText = phrasesTrolls[compteurEsquive % phrasesTrolls.length];
@@ -142,26 +148,30 @@
 
         if (parseFloat(currentYesSize) < 60) {
             btnOui.style.fontSize = (parseFloat(currentYesSize) + 4) + 'px';
-            btnOui.style.padding = (parseFloat(currentYesPaddingY) + 2) + 'px ' + (parseFloat(
-                currentYesPaddingX) + 6) + 'px';
+            btnOui.style.padding = (parseFloat(currentYesPaddingY) + 2) + 'px ' + (parseFloat(currentYesPaddingX) + 6) +
+                'px';
         }
 
-        // 5. Le bouton Non rétrécit
+        // 5. Le bouton Non rétrécit (mais pas trop petit pour mobile !)
         let currentNoSize = window.getComputedStyle(this).fontSize;
-        if (parseFloat(currentNoSize) > 8) {
+        if (parseFloat(currentNoSize) > 12) { // Limite fixée à 12px au lieu de 8px pour les écrans de téléphone
             this.style.fontSize = (parseFloat(currentNoSize) - 1) + 'px';
             this.style.padding = '8px 15px';
         }
+    }
+
+    // On écoute le survol pour les PC ET le toucher pour les smartphones
+    btnNon.addEventListener('mouseover', faireFuirBouton);
+    btnNon.addEventListener('touchstart', faireFuirBouton, {
+        passive: false
     });
 
-    // Anti-Ninja
+    // Anti-Ninja (pour ceux qui trichent au clavier avec la touche Tab)
     btnNon.addEventListener('click', function(e) {
         e.preventDefault();
         alert(
             "Erreur système 404 : La réponse 'Non' a été supprimée d'internet. Redirection vers le bon choix..."
-        );
-
-        // C'est cette ligne qui manquait pour valider le troll !
+            );
         btnOui.click();
     });
     </script>
