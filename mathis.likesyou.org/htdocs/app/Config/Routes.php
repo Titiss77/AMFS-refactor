@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 use CodeIgniter\Router\RouteCollection;
 
-// app/Config/Routes.php
+// La route pour les résultats (à placer AVANT la route avec le segment)
+$routes->get('troll/resultats', 'Troll::resultats');
 
-// app/Config/Routes.php
-
-// 1. La route pour recevoir les données du formulaire (le clic sur "Oui")
-$routes->post('anniversaire/confirmation', 'Anniversaire::confirmation');
-
-// 2. Les routes pour afficher la page (Méthode 2)
-// Note : on place le post AVANT le get avec le (:segment) par précaution
-$routes->get('anniversaire/(:segment)', 'Anniversaire::index/$1');
-$routes->get('anniversaire', 'Anniversaire::index');
+$routes->post('troll/confirmation', 'Troll::confirmation');
+$routes->get('troll/(:segment)', 'Troll::index/$1');
+$routes->get('troll', 'Troll::index');

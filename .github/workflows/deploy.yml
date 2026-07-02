@@ -13,6 +13,10 @@ jobs:
       - name: 🚚 Récupération du code
         uses: actions/checkout@v3
 
+      # 👇 NOUVELLE ÉTAPE : On installe uniquement ce qui est nécessaire pour la production
+      - name: 📦 Nettoyage du vendor (Production)
+        run: composer install --no-dev --optimize-autoloader
+
       - name: 📂 Synchronisation FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
@@ -22,9 +26,9 @@ jobs:
           protocol: ftp
           server-dir: /
           
-          # 👇 AJOUTEZ CETTE LIGNE POUR DÉLOCALISER LE FICHIER DE SYNCHRO
           state-name: htdocs/.ftp-deploy-sync-state.json
           
+          # On ajoute aussi le dossier d'installation de base de Composer et d'autres fichiers inutiles
           exclude: |
             **/.git*
             **/.git*/**
@@ -37,3 +41,7 @@ jobs:
             spark
             README.md
             LICENSE
+            composer.json
+            composer.lock
+            vendor/phpunit/**
+            vendor/fakerphp/**
