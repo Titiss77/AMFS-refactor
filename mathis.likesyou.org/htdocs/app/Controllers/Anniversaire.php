@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\InviteModel;
+
 class Anniversaire extends BaseController
 {
     public function index()
@@ -11,7 +13,20 @@ class Anniversaire extends BaseController
 
     public function confirmation()
     {
-        // Tu pourras ajouter ici la logique pour sauvegarder la réponse en base de données
-        return "Génial ! Prépare-toi bien, on va fêter ça ! 🎉";
+        $nom = $this->request->getPost('nom');
+
+        if (!empty($nom)) {
+            $inviteModel = new InviteModel();
+            
+            // On sauvegarde le grand gagnant
+            $inviteModel->insert([
+                'nom'     => $nom,
+                'reponse' => 'Oui' // Toujours oui !
+            ]);
+
+            return "Génial $nom ! C'est enregistré dans la base de données. Prépare-toi bien ! 🎉";
+        }
+
+        return redirect()->to('/anniversaire');
     }
 }

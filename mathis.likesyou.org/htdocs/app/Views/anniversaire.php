@@ -15,7 +15,6 @@
         margin: 0;
         background-color: #f3f4f6;
         overflow: hidden;
-        /* Empêche l'apparition des barres de défilement quand le bouton part loin */
     }
 
     .container {
@@ -24,19 +23,36 @@
         padding: 50px;
         border-radius: 12px;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        /* Pour que le conteneur reste au dessus du bouton fuyard */
     }
 
     h1 {
-        margin-bottom: 40px;
+        margin-bottom: 20px;
         color: #333;
+    }
+
+    .input-group {
+        margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 80%;
+        max-width: 300px;
     }
 
     .buttons-container {
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 20px;
         position: relative;
-        /* Garde les boutons alignés initialement */
+        min-height: 60px;
+        /* Évite que le conteneur saute quand le bouton grandit */
     }
 
     .btn {
@@ -46,7 +62,7 @@
         border: none;
         border-radius: 8px;
         cursor: pointer;
-        transition: background-color 0.2s ease;
+        transition: all 0.2s ease;
     }
 
     .btn-yes {
@@ -61,8 +77,7 @@
     .btn-no {
         background-color: #f44336;
         color: white;
-        /* Une petite transition fluide pour le déplacement */
-        transition: top 0.2s ease, left 0.2s ease;
+        position: relative;
     }
     </style>
 </head>
@@ -72,11 +87,14 @@
     <div class="container">
         <h1>Es-tu là pour mon anniversaire ?</h1>
 
-        <form action="<?= base_url('anniversaire/confirmation') ?>" method="post">
-            <div class="buttons-container">
-                <button type="submit" class="btn btn-yes">Oui !</button>
+        <form id="inviteForm" action="<?= base_url('anniversaire/confirmation') ?>" method="post">
 
-                <!-- type="button" évite de soumettre le formulaire par erreur si on le clique -->
+            <div class="input-group">
+                <input type="text" name="nom" id="nomInput" placeholder="Ton prénom..." required>
+            </div>
+
+            <div class="buttons-container">
+                <button type="submit" class="btn btn-yes" id="btnOui">Oui !</button>
                 <button type="button" class="btn btn-no" id="btnNon" tabindex="-1">Non...</button>
             </div>
         </form>
@@ -84,19 +102,70 @@
 
     <script>
     const btnNon = document.getElementById('btnNon');
+    const btnOui = document.getElementById('btnOui');
+    const nomInput = document.getElementById('nomInput');
+    const form = document.getElementById('inviteForm');
 
-    // Détecte quand la souris passe sur le bouton
+    // Textes trolls pour le bouton Non
+    const phrasesTrolls = [
+        "Tu es sûr ?",
+        "Réfléchis bien...",
+        "Mauvaise réponse !",
+        "Allez, dis oui...",
+        "Tu vas rater ça ?",
+        "Clique sur le vert !"
+    ];
+    let compteurEsquive = 0;
+
     btnNon.addEventListener('mouseover', function() {
-        // Passe le bouton en 'fixed' pour qu'il puisse aller n'importe où sur l'écran
-        this.style.position = 'fixed';
+        // Vérifie d'abord s'il a rentré son prénom, sinon on le focus
+        if (nomInput.value.trim() === '') {
+            nomInput.focus();
+            return; // Ne fait pas fuir le bouton tant qu'il n'a pas mis son nom
+        }
 
-        // Calcule des coordonnées aléatoires en gardant le bouton dans la fenêtre
+        // 1. Déplacement aléatoire
+        this.style.position = 'fixed';
         const x = Math.random() * (window.innerWidth - this.clientWidth);
         const y = Math.random() * (window.innerHeight - this.clientHeight);
-
-        // Applique les nouvelles coordonnées
         this.style.left = `${x}px`;
         this.style.top = `${y}px`;
+
+        // 2. Troll textuel
+        this.innerText = phrasesTrolls[compteurEsquive % phrasesTrolls.length];
+        compteurEsquive++;
+
+        // 3. Le bouton Oui devient énorme
+        let currentYesSize = window.getComputedStyle(btnOui).fontSize;
+        let currentYesPaddingX = window.getComputedStyle(btnOui).paddingLeft;
+        let currentYesPaddingY = window.getComputedStyle(btnOui).paddingTop;
+
+        // Limite la taille pour ne pas casser tout l'écran, mais ça devient quand même gros !
+        if (parseFloat(currentYesSize) < 60) {
+            btnOui.style.fontSize = (parseFloat(currentYesSize) + 4) + 'px';
+            btnOui.style.padding = (parseFloat(currentYesPaddingY) + 2) + 'px ' + (parseFloat(
+                currentYesPaddingX) + 6) + 'px';
+        }
+
+        // 4. Le bouton Non rétrécit (jusqu'à une certaine limite pour rester visible)
+        let currentNoSize = window.getComputedStyle(this).fontSize;
+        if (parseFloat(currentNoSize) > 8) {
+            this.style.fontSize = (parseFloat(currentNoSize) - 1) + 'px';
+            this.style.padding = '8px 15px';
+        }
+    });
+
+    // 5. Anti-Ninja : S'il arrive à cliquer dessus (ex: via tabulation ou script)
+    btnNon.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (nomInput.value.trim() === '') {
+            alert("Mets d'abord ton prénom !");
+            nomInput.focus();
+        } else {
+            alert(
+                "Erreur système 404 : La réponse 'Non' a été supprimée d'internet. Redirection vers le bon choix...");
+            btnOui.click(); // Soumet le formulaire avec "Oui"
+        }
     });
     </script>
 </body>
