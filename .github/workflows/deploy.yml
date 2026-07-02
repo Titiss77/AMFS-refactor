@@ -36,7 +36,6 @@ jobs:
             **/.git*
             **/.git*/**
             **/.github/**
-            !**/.gitignore
             tests/**
             user_guide_src/**
             phpunit.xml.dist
@@ -48,3 +47,5 @@ jobs:
             composer.lock
             vendor/phpunit/**
             vendor/fakerphp/**
+            vendor/symfony/**  # Souvent inutile en production
+            vendor/mockery/**  # Inutile en production
