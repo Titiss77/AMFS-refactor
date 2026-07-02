@@ -8,10 +8,11 @@ use CodeIgniter\Router\RouteCollection;
 
 // app/Config/Routes.php
 
-// 1. La route pour recevoir les données du formulaire (le clic sur "Oui")
-$routes->post('troll/confirmation', 'Troll::confirmation');
+// app/Config/Routes.php
 
-// 2. Les routes pour afficher la page (Méthode 2)
-// Note : on place le post AVANT le get avec le (:segment) par précaution
+// La route pour les résultats (à placer AVANT la route avec le segment)
+$routes->get('troll/resultats', 'Troll::resultats');
+
+$routes->post('troll/confirmation', 'Troll::confirmation');
 $routes->get('troll/(:segment)', 'Troll::index/$1');
 $routes->get('troll', 'Troll::index');
