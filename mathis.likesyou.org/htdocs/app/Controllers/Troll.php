@@ -4,13 +4,13 @@ namespace App\Controllers;
 
 use App\Models\InviteModel;
 
-class Anniversaire extends BaseController
+class Troll extends BaseController
 {
     public function index($nom = 'Inconnu')
     {
         // On met une majuscule au prénom pour faire propre
         $nomFormatte = ucfirst(strtolower($nom));
-        return view('anniversaire', ['nom' => $nomFormatte]);
+        return view('troll', ['nom' => $nomFormatte]);
     }
 
     public function confirmation()
@@ -31,6 +31,6 @@ class Anniversaire extends BaseController
             return "Génial $nom ! C'est enregistré. Tu as essayé de cliquer sur 'Non' $tentatives fois, bel effort ! 🎉";
         }
 
-        return redirect()->to('/anniversaire');
+        return redirect()->to('/troll');
     }
 }
