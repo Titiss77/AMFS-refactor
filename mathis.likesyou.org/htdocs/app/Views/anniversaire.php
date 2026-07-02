@@ -89,9 +89,8 @@
 
         <form id="inviteForm" action="<?= base_url('anniversaire/confirmation') ?>" method="post">
 
-            <div class="input-group">
-                <input type="text" name="nom" id="nomInput" placeholder="Ton prénom..." required>
-            </div>
+            <!-- LE CHAMP CACHÉ MANQUANT EST ICI 👇 -->
+            <input type="hidden" name="nom" value="<?= esc($nom) ?>">
 
             <!-- Champ caché pour stocker le nombre de tentatives -->
             <input type="hidden" name="tentatives_non" id="tentativesInput" value="0">
@@ -106,7 +105,6 @@
     <script>
     const btnNon = document.getElementById('btnNon');
     const btnOui = document.getElementById('btnOui');
-    const nomInput = document.getElementById('nomInput');
     const form = document.getElementById('inviteForm');
     const tentativesInput = document.getElementById('tentativesInput'); // Récupère le champ caché
 
@@ -121,10 +119,7 @@
     let compteurEsquive = 0;
 
     btnNon.addEventListener('mouseover', function() {
-        if (nomInput.value.trim() === '') {
-            nomInput.focus();
-            return;
-        }
+
 
         // 1. Déplacement aléatoire
         this.style.position = 'fixed';
@@ -162,14 +157,12 @@
     // Anti-Ninja
     btnNon.addEventListener('click', function(e) {
         e.preventDefault();
-        if (nomInput.value.trim() === '') {
-            alert("Mets d'abord ton prénom !");
-            nomInput.focus();
-        } else {
-            alert(
-                "Erreur système 404 : La réponse 'Non' a été supprimée d'internet. Redirection vers le bon choix...");
-            btnOui.click();
-        }
+        alert(
+            "Erreur système 404 : La réponse 'Non' a été supprimée d'internet. Redirection vers le bon choix..."
+        );
+
+        // C'est cette ligne qui manquait pour valider le troll !
+        btnOui.click();
     });
     </script>
 </body>

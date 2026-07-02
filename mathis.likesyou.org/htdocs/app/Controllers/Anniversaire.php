@@ -6,9 +6,11 @@ use App\Models\InviteModel;
 
 class Anniversaire extends BaseController
 {
-    public function index()
+    public function index($nom = 'Inconnu')
     {
-        return view('anniversaire');
+        // On met une majuscule au prénom pour faire propre
+        $nomFormatte = ucfirst(strtolower($nom));
+        return view('anniversaire', ['nom' => $nomFormatte]);
     }
 
     public function confirmation()
@@ -23,7 +25,7 @@ class Anniversaire extends BaseController
             $inviteModel->insert([
                 'nom'            => $nom,
                 'reponse'        => 'Oui',
-                'tentatives_non' => $tentatives // Enregistrement en base 👇
+                'tentatives_non' => $tentatives  // Enregistrement en base
             ]);
 
             return "Génial $nom ! C'est enregistré. Tu as essayé de cliquer sur 'Non' $tentatives fois, bel effort ! 🎉";
