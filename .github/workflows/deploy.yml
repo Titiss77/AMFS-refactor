@@ -27,10 +27,10 @@ jobs:
           protocol: ftp
           # Remplace cette ligne par le dossier exact où se trouve ton site chez ByetHost
           # Souvent c'est "htdocs" ou "public_html"
-          server-dir: htdocs/
+          server-dir: /
           
           # Indique le chemin relatif vers ton fichier de suivi
-          state-name: .ftp-deploy-sync-state.json
+          state-name: htdocs/.ftp-deploy-sync-state.json
           
           exclude: |
             **/.git*
