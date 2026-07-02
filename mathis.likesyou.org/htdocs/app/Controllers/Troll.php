@@ -6,13 +6,13 @@ use App\Models\InviteModel;
 
 class Troll extends BaseController
 {
-    // 1. On centralise la vérification de l'IP ici
+    // On centralise la vérification de l'IP ici
     private function estAdmin(): bool
     {
         $ipsAutorisees = [
             '::1', 
             '127.0.0.1',
-            // 'TON.IP.PUBLIQUE.ICI'
+            // Ajoute ton IP publique ici quand le site sera en ligne
         ];
 
         return in_array($this->request->getIPAddress(), $ipsAutorisees, true);
@@ -22,7 +22,7 @@ class Troll extends BaseController
     {
         $nomFormatte = ucfirst(strtolower($nom));
         
-        // 2. On envoie l'information "est-ce un admin ?" à la vue
+        // On envoie l'information "est-ce un admin ?" à la vue
         return view('troll', [
             'nom'      => $nomFormatte,
             'estAdmin' => $this->estAdmin() 
@@ -51,7 +51,7 @@ class Troll extends BaseController
 
     public function resultats()
     {
-        // 3. On réutilise notre fonction ici pour sécuriser la page
+        // On réutilise notre fonction ici pour sécuriser la page des résultats
         if (!$this->estAdmin()) {
             $ipVisiteur = $this->request->getIPAddress();
             return $this->response->setStatusCode(403)
