@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitation 💕</title>
+    <title>Invitation</title>
 
     <!-- Importation d'une police mignonne et arrondie -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
@@ -81,11 +81,12 @@
     }
 
     .btn-no {
-        /* Dégradé violet pastel pour le NON */
         background: linear-gradient(45deg, #a18cd1 0%, #fbc2eb 100%);
         color: white;
         position: relative;
         box-shadow: 0 6px 15px rgba(161, 140, 209, 0.4);
+        /* On annule l'effet rebond pour le déplacement, on met un mouvement fluide (ease-out) */
+        transition: left 0.4s ease-out, top 0.4s ease-out, font-size 0.3s, padding 0.3s !important;
     }
 
     /* Le Bouton Admin Secret Relooké */
@@ -121,7 +122,7 @@
     <?php endif; ?>
 
     <div class="container">
-        <h1>Es-tu là pour mon troll ? 💖</h1>
+        <h1>Accepte-tu de me pardonner ? 🥺</h1>
 
         <form id="inviteForm" action="<?= base_url('troll/confirmation') ?>" method="post">
 
@@ -147,8 +148,7 @@
         "Mais euh... 💔",
         "Trop lent(e) ! 🤭",
         "Allez dis oui... ✨",
-        "Tu vas me manquer ! 😭",
-        "Clique sur le rose ! 💕"
+        "Clique sur le rose !"
     ];
     let compteurEsquive = 0;
 
@@ -157,18 +157,40 @@
             e.preventDefault();
         }
 
+        // Récupère la position X et Y de la souris (ou du doigt)
+        let cursorX = e.clientX || (e.touches && e.touches[0].clientX) || window.innerWidth / 2;
+        let cursorY = e.clientY || (e.touches && e.touches[0].clientY) || window.innerHeight / 2;
+
         this.style.position = 'fixed';
         const margin = 20;
-        const x = Math.random() * (window.innerWidth - this.clientWidth - margin * 2) + margin;
-        const y = Math.random() * (window.innerHeight - this.clientHeight - margin * 2) + margin;
+        let newX, newY;
+        let distance = 0;
+        let attempts = 0;
 
-        this.style.left = `${x}px`;
-        this.style.top = `${y}px`;
+        // Boucle magique : on cherche des coordonnées tant que le bouton 
+        // est à moins de 300 pixels de la souris (limité à 15 essais pour ne pas bloquer le navigateur)
+        while (distance < 300 && attempts < 15) {
+            newX = Math.random() * (window.innerWidth - this.clientWidth - margin * 2) + margin;
+            newY = Math.random() * (window.innerHeight - this.clientHeight - margin * 2) + margin;
 
+            // Théorème de Pythagore pour calculer la distance entre la souris et la future position
+            let dx = newX - cursorX;
+            let dy = newY - cursorY;
+            distance = Math.sqrt(dx * dx + dy * dy);
+
+            attempts++;
+        }
+
+        // Applique les nouvelles coordonnées
+        this.style.left = `${newX}px`;
+        this.style.top = `${newY}px`;
+
+        // Mise à jour du compteur
         compteurEsquive++;
         tentativesInput.value = compteurEsquive;
         this.innerText = phrasesTrolls[compteurEsquive % phrasesTrolls.length];
 
+        // Le bouton Oui grandit
         let currentYesSize = window.getComputedStyle(btnOui).fontSize;
         let currentYesPaddingX = window.getComputedStyle(btnOui).paddingLeft;
         let currentYesPaddingY = window.getComputedStyle(btnOui).paddingTop;
@@ -179,6 +201,7 @@
                 'px';
         }
 
+        // Le bouton Non rétrécit (limite 12px)
         let currentNoSize = window.getComputedStyle(this).fontSize;
         if (parseFloat(currentNoSize) > 12) {
             this.style.fontSize = (parseFloat(currentNoSize) - 1) + 'px';
