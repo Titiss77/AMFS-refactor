@@ -21,6 +21,8 @@ class Troll extends BaseController
 
     public function index($nom = 'Inconnu')
     {
+        dd($this->request->getIPAddress()); 
+        
         $nomFormatte = ucfirst(strtolower($nom));
         
         // On envoie l'information "est-ce un admin ?" à la vue
