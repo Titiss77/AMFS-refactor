@@ -12,7 +12,7 @@ class Troll extends BaseController
         $ipsAutorisees = [
             '::1', 
             '127.0.0.1',
-            '192.168.0.184', // Mon IP locale
+            '5.49.246.18', // Mon IP locale
             // Ajoute ton IP publique ici quand le site sera en ligne
         ];
 
@@ -21,7 +21,7 @@ class Troll extends BaseController
 
     public function index($nom = 'Inconnu')
     {
-        dd($this->request->getIPAddress()); 
+        //dd($this->request->getIPAddress()); 
         
         $nomFormatte = ucfirst(strtolower($nom));
         
