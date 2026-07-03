@@ -44,7 +44,11 @@ class Troll extends BaseController
                 'tentatives_non' => $tentatives
             ]);
 
-            return "Génial $nom ! C'est enregistré. Tu as essayé de cliquer sur 'Non' $tentatives fois, bel effort ! 🎉";
+            // ON MODIFIE ICI : On charge une vue en lui passant les données
+            return view('confirmation', [
+                'nom'        => $nom,
+                'tentatives' => $tentatives
+            ]);
         }
 
         return redirect()->to('/troll');
