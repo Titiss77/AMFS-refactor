@@ -13,6 +13,7 @@ class Troll extends BaseController
             '::1', 
             '127.0.0.1',
             '5.49.246.18', // Mon IP locale
+            '104.28.30.16',
             // Ajoute ton IP publique ici quand le site sera en ligne
         ];
 
