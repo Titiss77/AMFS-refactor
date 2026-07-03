@@ -12,6 +12,7 @@ class Troll extends BaseController
         $ipsAutorisees = [
             '::1', 
             '127.0.0.1',
+            '192.168.0.184', // Mon IP locale
             // Ajoute ton IP publique ici quand le site sera en ligne
         ];
 
