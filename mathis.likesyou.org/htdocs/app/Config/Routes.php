@@ -9,4 +9,4 @@ $routes->get('troll/resultats', 'Troll::resultats');
 
 $routes->post('troll/confirmation', 'Troll::confirmation');
 $routes->get('troll/(:segment)', 'Troll::index/$1');
-$routes->get('troll', 'Troll::index');
+$routes->get('/', 'Troll::index');
