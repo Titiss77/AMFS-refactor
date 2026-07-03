@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS `invites`;
 CREATE TABLE `invites` (
   `id` int UNSIGNED NOT NULL,
   `nom` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `question` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Accepte-tu de me pardonner ?',
   `reponse` varchar(10) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Oui',
   `tentatives_non` int UNSIGNED NOT NULL DEFAULT '0',
   `created_at` datetime DEFAULT NULL,
