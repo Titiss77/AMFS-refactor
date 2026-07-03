@@ -1,3 +1,5 @@
 /htdocs/.env
-htdocs/.php-cs-fixer.cache
-htdocs/writable
+/htdocs/.php-cs-fixer.cache
+/htdocs/writable/debugbar
+/htdocs/writable/session
+
