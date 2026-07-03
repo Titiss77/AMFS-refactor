@@ -11,7 +11,7 @@ class InviteModel extends Model
     protected $useAutoIncrement = true;
     
     // Champs autorisés lors de l'insertion
-    protected $allowedFields    = ['nom', 'reponse', 'tentatives_non']; 
+    protected $allowedFields = ['nom', 'question', 'reponse', 'tentatives_non'];
     
     protected $useTimestamps    = true;
 }

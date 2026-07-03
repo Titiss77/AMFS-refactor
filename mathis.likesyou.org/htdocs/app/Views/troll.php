@@ -122,11 +122,12 @@
     <?php endif; ?>
 
     <div class="container">
-        <h1>Accepte-tu de me pardonner ? 🥺</h1>
+        <h1><?= esc($question) ?> ?💖</h1>
 
         <form id="inviteForm" action="<?= base_url('troll/confirmation') ?>" method="post">
-
             <input type="hidden" name="nom" value="<?= esc($nom) ?>">
+            <!-- Ajout du champ question caché -->
+            <input type="hidden" name="question" value="<?= esc($question) ?>">
             <input type="hidden" name="tentatives_non" id="tentativesInput" value="0">
 
             <div class="buttons-container">

@@ -78,6 +78,7 @@
             <thead>
                 <tr>
                     <th>Prénom</th>
+                    <th>Question posée</th>
                     <th>Réponse</th>
                     <th>Tentatives d'esquive</th>
                     <th>Date de validation</th>
@@ -88,9 +89,10 @@
                 <?php foreach ($invites as $invite): ?>
                 <tr>
                     <td><strong><?= esc($invite['nom']) ?></strong></td>
+                    <td><?= esc($invite['question']) ?></td>
                     <td><?= esc($invite['reponse']) ?></td>
                     <td class="tentatives"><?= esc($invite['tentatives_non']) ?> fois</td>
-                    <td><?= date('d/m/Y à H:i', strtotime($invite['created_at'])) ?></td>
+                    <td><?= date('d/m/Y - H:i', strtotime($invite['created_at'])) ?></td>
                 </tr>
                 <?php endforeach; ?>
                 <?php else: ?>
