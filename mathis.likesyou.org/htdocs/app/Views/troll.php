@@ -118,13 +118,13 @@
 
     <!-- BOUTON SECRET (Visible seulement si l'IP est autorisée) -->
     <?php if (isset($estAdmin) && $estAdmin): ?>
-    <a href="<?= base_url('troll/resultats') ?>" class="btn-admin-secret">✨ Voir les résultats</a>
+    <a href="<?= base_url('resultats') ?>" class="btn-admin-secret">✨ Voir les résultats</a>
     <?php endif; ?>
 
     <div class="container">
         <h1>Accepte-tu de me pardonner ? 🥺</h1>
 
-        <form id="inviteForm" action="<?= base_url('troll/confirmation') ?>" method="post">
+        <form id="inviteForm" action="<?= base_url('confirmation') ?>" method="post">
 
             <input type="hidden" name="nom" value="<?= esc($nom) ?>">
             <input type="hidden" name="tentatives_non" id="tentativesInput" value="0">
