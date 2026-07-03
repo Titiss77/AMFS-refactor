@@ -47,7 +47,7 @@ jobs:
             composer.lock
             vendor/phpunit/**
             vendor/fakerphp/**
-            vendor/symfony/**  # Souvent inutile en production
-            vendor/mockery/**  # Inutile en production
+            vendor/symfony/**
+            vendor/mockery/**
 
-            **/sites_non_lances/**  # Si tu as des dossiers que tu ne veux pas déployer
+            *sites_non_lances
