@@ -2,6 +2,7 @@
 
 <?= $this->section('content') ?>
 
+<a href="<?php echo base_url('/'); ?>" class="btn btn-warning">Retour aux cartes</a>
 <div style="margin-bottom: 2.5rem;">
     <h2>Cartes intéressantes</h2>
     <p style="color: var(--text-muted);">Voici les cartes publiques qui ne viennent pas de l'admin.</p>
