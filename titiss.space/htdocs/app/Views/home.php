@@ -35,7 +35,8 @@
         <?php } ?>
     </a>
 
-    <a href="<?php echo base_url('items/check-to-global'); ?>" class="btn btn-success">Cartes interessantes</a>
+    <a href="<?php echo base_url('items/check-to-global'); ?>" class="btn btn-warning"
+        style="margin-right: 15px;">Autres publiques</a>
     <?php } ?>
     <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>
 </div>

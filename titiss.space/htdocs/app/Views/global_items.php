@@ -4,8 +4,7 @@
 
 <div style="margin-bottom: 2.5rem;">
     <h2>Cartes intéressantes</h2>
-    <p style="color: var(--text-muted);">Voici les cartes publiques qui ne viennent pas de l'admin qui sont
-        intéressantes.</p>
+    <p style="color: var(--text-muted);">Voici les cartes publiques qui ne viennent pas de l'admin.</p>
 </div>
 
 <div class="cards-grid">
@@ -18,6 +17,7 @@
                     <?= esc($item['titre']) ?>
                 </h3>
             </div>
+            <?php } ?>
         </div>
         <div class="card-actions-bottom">
             <a href="<?= base_url('item/turn/' . esc($item['id'])) ?>" class="btn-icon btn-edit-sm">
