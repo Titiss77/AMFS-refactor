@@ -29,6 +29,7 @@ $routes->group('', ['filter' => 'session'], static function ($routes): void {
     $routes->post('item/increment-episode/(:num)', 'ItemController::incrementEpisode/$1');
     $routes->post('items/update-order', 'ItemController::updateOrder');
     $routes->get('items/check-to-global', 'ItemController::checkToGlobal');
+    $routes->get('item/turn/(:num)', 'ItemController::turnToAdmin/$1');
 });
 
 // --------------------------------------------------------------------

@@ -97,7 +97,7 @@ class ItemModel extends Model
     }
 
     public function checkToGlobal(){
-        $command = "SELECT id_user, is_public, titre FROM `item` where id_division >= 5 AND id_division < 11 AND is_public =1;";
+        $command = "SELECT id, id_user, is_public, titre FROM `item` where id_division >= 5 AND id_division < 11 AND is_public =1;";
         return $this->db->query($command)->getResultArray();
     }
 }

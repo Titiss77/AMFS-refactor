@@ -229,6 +229,23 @@ class ItemController extends BaseController
 
         return view('global_items', $data);
     }
+    
+    public function turnToAdmin($id)
+    {
+        $item = $this->model->find($id);
+        $isAdmin = auth()->user()->inGroup('admin', 'superadmin');
+
+        if ($item && ((int) $item->id_user === (int) auth()->id() || $isAdmin)) {
+            $this->model->update($id, ['id_user' => 1]);
+
+            $audit = new AuditLogModel();
+            $audit->logAction('Transfert Carte', "La carte ID {$id} ('{$item->titre}') a été transférée à l'admin.");
+
+            return redirect()->back()->with('message', 'La carte a été transférée à l\'admin avec succès.');
+        }
+
+        return redirect()->back()->with('error', 'Vous n\'avez pas les droits pour effectuer cette action.');
+    }
 
     public function updateOrder()
     {
