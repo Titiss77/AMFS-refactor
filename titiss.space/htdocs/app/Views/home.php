@@ -36,7 +36,13 @@
     </a>
 
     <a href="<?php echo base_url('items/check-to-global'); ?>" class="btn btn-warning"
-        style="margin-right: 15px;">Autres publiques</a>
+        style="margin-right: 15px;">Autres publiques
+        <?php if (isset($toAdminCount) && $toAdminCount > 0) { ?>
+        <span
+            style="background-color: var(--danger, #dc3545); color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; margin-left: 5px; font-weight: bold;">
+            <?php echo $toAdminCount; ?>
+        </span>
+        <?php } ?></a>
     <?php } ?>
     <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>
 </div>
