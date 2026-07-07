@@ -28,18 +28,21 @@ window.showToast = function(message, type = 'success') {
 document.addEventListener('DOMContentLoaded', function() {
 
     // ==========================================
-    // 2. THEME SOMBRE (Dark Mode)
+    // THEME SOMBRE (Dark Mode)
     // ==========================================
     const themeToggleBtn = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme') || 'light';
-    const metaThemeColor = document.getElementById('meta-theme-color'); // <-- Ciblage de la balise
+    const metaThemeColor = document.getElementById('meta-theme-color');
     
     if (currentTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-bs-theme', 'dark'); // <-- Ajout pour Bootstrap 5
         if(themeToggleBtn) themeToggleBtn.innerHTML = '☀️ Clair';
-        if(metaThemeColor) metaThemeColor.setAttribute('content', '#09090b'); // <-- Couleur sombre
+        if(metaThemeColor) metaThemeColor.setAttribute('content', '#09090b');
     } else {
-        if(metaThemeColor) metaThemeColor.setAttribute('content', '#fcfcfd'); // <-- Couleur claire
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.setAttribute('data-bs-theme', 'light'); // <-- Ajout pour Bootstrap 5
+        if(metaThemeColor) metaThemeColor.setAttribute('content', '#fcfcfd');
     }
 
     if (themeToggleBtn) {
@@ -48,11 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
             let switchToTheme = theme === 'dark' ? 'light' : 'dark';
             
             document.documentElement.setAttribute('data-theme', switchToTheme);
+            document.documentElement.setAttribute('data-bs-theme', switchToTheme); // <-- Ajout pour Bootstrap 5
             localStorage.setItem('theme', switchToTheme);
             
             themeToggleBtn.innerHTML = switchToTheme === 'dark' ? '☀️ Clair' : '🌙 Sombre';
             
-            // <-- Mise à jour en temps réel de la couleur du navigateur
             if(metaThemeColor) {
                 metaThemeColor.setAttribute('content', switchToTheme === 'dark' ? '#09090b' : '#fcfcfd');
             }

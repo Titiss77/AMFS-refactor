@@ -9,6 +9,7 @@
     <script>
     if (localStorage.getItem('theme') === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-bs-theme', 'dark'); // <-- Ajout pour Bootstrap 5
     }
     </script>
 
@@ -82,15 +83,15 @@
         }
 
         // Interception des Flashdata de CodeIgniter 4 pour lancer des Toasts automatiquement
-        <?php if (session()->getFlashdata('success')) : ?>
+        <?php if (session()->getFlashdata('success')): ?>
         showToast("<?php echo esc(session()->getFlashdata('success')); ?>", "success");
         <?php endif ?>
 
-        <?php if (session()->getFlashdata('error')) : ?>
+        <?php if (session()->getFlashdata('error')): ?>
         showToast("<?php echo esc(session()->getFlashdata('error')); ?>", "danger");
         <?php endif ?>
 
-        <?php if (session()->getFlashdata('message')) : ?>
+        <?php if (session()->getFlashdata('message')): ?>
         showToast("<?php echo esc(session()->getFlashdata('message')); ?>", "info");
         <?php endif ?>
     });
