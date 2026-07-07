@@ -222,10 +222,12 @@ class ItemController extends BaseController
 
     public function checkToGlobal()
     {
-        $command = "SELECT * FROM `item` where id_division >= 5 AND id_division < 11 AND is_public =1";
-        //retourne les cartes qui sont publiques et dans les divisions 5 à 10
-        $query = $this->model->db->query($command);
-        $results = $query->getResult();
+
+        $data = [
+            'items' => $this->model->checkToGlobal(),
+        ];
+
+        return view('global_items', $data);
     }
 
     public function updateOrder()
