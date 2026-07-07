@@ -34,6 +34,8 @@
         </span>
         <?php } ?>
     </a>
+
+    <a href="<?php echo base_url('items/check-to-global'); ?>" class="btn btn-success">Cartes interessantes</a>
     <?php } ?>
     <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>
 </div>
@@ -46,7 +48,6 @@
     <p>Commencez par en ajouter une !</p>
     <br>
     <a href="<?php echo base_url('item/form'); ?>" class="btn btn-success">+ Ajouter une carte</a>
-    <a href="<?php echo base_url('items/turn-to-global'); ?>" class="btn btn-success">+ Cartes public</a>
 </div>
 <?php } else { ?>
 <div class="empty-state">
