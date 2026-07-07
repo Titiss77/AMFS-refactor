@@ -13,6 +13,8 @@ body {
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Pour le dark mode */
 }
 
 a {
@@ -41,6 +43,7 @@ a {
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .main-header .container {
@@ -68,6 +71,25 @@ a {
     font-weight: 500;
     color: var(--text-muted);
     font-size: 0.95rem;
+}
+
+/* Bouton Dark Mode */
+.btn-theme {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+}
+
+.btn-theme:hover {
+    background: var(--border-color);
 }
 
 /* =========================================
@@ -104,7 +126,7 @@ a {
 
 .nav-tab.active {
     background: var(--text-main);
-    color: var(--bg-card);
+    color: var(--bg-body);
     box-shadow: var(--shadow-sm);
 }
 
@@ -136,7 +158,6 @@ a {
     gap: 12px;
     cursor: pointer;
     list-style: none;
-    /* Cache la flèche native */
     padding: 0.75rem 0;
     transition: color 0.2s;
     user-select: none;
@@ -146,12 +167,10 @@ a {
     color: var(--primary);
 }
 
-/* Cache la flèche native pour Safari/Chrome */
 .division-title::-webkit-details-marker {
     display: none;
 }
 
-/* L'icône de flèche personnalisée - Rendu UI Premium */
 .toggle-icon {
     display: inline-flex;
     align-items: center;
@@ -173,11 +192,10 @@ a {
     box-shadow: var(--shadow-md);
 }
 
-/* Animation de la flèche quand ouvert */
 details[open].division-section .toggle-icon {
     transform: rotate(90deg);
     background: var(--primary);
-    color: var(--bg-body);
+    color: #fff;
     border-color: var(--primary);
 }
 
@@ -187,7 +205,6 @@ details[open].division-section .toggle-icon {
 .division-section .cards-grid {
     overflow: hidden;
     margin-top: 0;
-    /* Un peu de padding pour ne pas couper les ombres des cartes au survol */
     padding: 10px 10px 20px 10px;
     margin: -10px -10px 28px -10px;
 }
@@ -222,6 +239,8 @@ details[open].division-section .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
+    min-height: 50px;
+    /* Pour SortableJS */
 }
 
 .card {
@@ -233,6 +252,7 @@ details[open].division-section .cards-grid {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    cursor: grab;
 }
 
 .card:hover {
@@ -241,10 +261,13 @@ details[open].division-section .cards-grid {
     border-color: var(--primary-light);
 }
 
+.card:active {
+    cursor: grabbing;
+}
+
 .card-body {
     padding: 1.5rem;
     padding-right: 1rem;
-    /* On réduit légèrement l'espace entre le texte et l'image */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -258,11 +281,10 @@ details[open].division-section .cards-grid {
     top: 1.5rem;
     width: 85%;
     text-align: center;
-    }
+}
 
 .card-link-block {
     display: flex;
-    /* Remplace le grid par flex pour un meilleur contrôle */
     color: inherit;
     flex-grow: 1;
 }
@@ -293,9 +315,7 @@ details[open].division-section .cards-grid {
     gap: 8px;
     flex-wrap: wrap;
     margin-top: auto;
-    /* Modifié (était 15px) : Pousse l'élément tout en bas */
     padding-top: 15px;
-    /* Ajouté : Garde un espace visuel minimal avec la description */
 }
 
 .char-counter {
@@ -327,7 +347,6 @@ details[open].division-section .cards-grid {
     color: var(--info-text);
 }
 
-/* --- ACTIONS EN BAS DE CARTE --- */
 .card-actions-bottom {
     padding: 0.75rem 1.5rem;
     background: var(--bg-body);
@@ -336,22 +355,6 @@ details[open].division-section .cards-grid {
     justify-content: flex-end;
     gap: 16px;
     align-items: center;
-}
-
-body.dark-theme {
-    background-color: #121212;
-    color: #ffffff;
-}
-
-body.dark-theme .card {
-    background-color: #1e1e1e;
-    border: 1px solid #333;
-}
-
-body.dark-theme .form-control {
-    background-color: #2c2c2c;
-    color: white;
-    border-color: #444;
 }
 
 .status-completed {
@@ -378,7 +381,7 @@ body.dark-theme .form-control {
 }
 
 /* =========================================
-   BOUTONS GLOBAUX
+   BOUTONS GLOBAUX & ÉTATS DE CHARGEMENT
    ========================================= */
 .btn {
     display: inline-flex;
@@ -394,12 +397,13 @@ body.dark-theme .form-control {
     border: none;
     font-family: inherit;
     margin-bottom: 10px;
+    position: relative;
 }
 
 .btn-primary,
 .btn-success {
     background-color: var(--primary);
-    color: var(--bg-body);
+    color: #fff;
     box-shadow: var(--shadow-sm);
 }
 
@@ -409,14 +413,45 @@ body.dark-theme .form-control {
     box-shadow: var(--shadow-md);
 }
 
+/* Loader sur bouton */
+.btn.loading {
+    color: transparent !important;
+    pointer-events: none;
+}
+
+.btn.loading::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.btn-primary.loading::after {
+    border-top-color: #fff;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .btn-increment {
     background: none;
-    border: none;
+    border: 1px solid var(--danger-text);
     color: var(--danger-text);
     cursor: pointer;
     font-weight: bold;
     margin-left: 4px;
-    border: 1px solid var(--danger-text);
     border-radius: var(--radius-xl);
 }
 
@@ -431,13 +466,14 @@ body.dark-theme .form-control {
 
 .btn-register {
     background-color: var(--text-main);
-    color: var(--bg-card);
+    color: var(--bg-body);
     padding: 0.5rem 1.25rem;
     border-radius: var(--radius-md);
 }
 
 .btn-register:hover {
     background-color: var(--primary);
+    color: #fff;
 }
 
 .btn-logout {
@@ -458,11 +494,11 @@ body.dark-theme .form-control {
 }
 
 .btn-cancel:hover {
-    background-color: var(--bg-body);
+    background-color: var(--border-color);
 }
 
 /* =========================================
-   FORMULAIRES (Création / Modification / Login)
+   FORMULAIRES & INPUT MOT DE PASSE
    ========================================= */
 .form-container {
     max-width: 600px;
@@ -524,6 +560,35 @@ body.dark-theme .form-control {
     box-shadow: 0 0 0 4px var(--primary-light);
 }
 
+/* Input Mot de passe */
+.password-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    z-index: 10;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+}
+
+.password-toggle:hover {
+    color: var(--text-main);
+}
+
+/* Fix pour les floating labels CodeIgniter Shield */
+.form-floating .password-toggle {
+    top: 35px;
+    transform: none;
+}
+
 textarea.form-control {
     resize: vertical;
     min-height: 120px;
@@ -548,7 +613,6 @@ select.form-control {
     border-top: 1px solid var(--border-color);
 }
 
-/* CodeIgniter Shield Login Form fixes */
 .form-floating.mb-3 {
     margin-bottom: 1.5rem;
 }
@@ -589,7 +653,6 @@ select.form-control {
 
 .shadow-card {
     border: 1px solid var(--border-color);
-    border-style: solid;
     box-shadow: var(--shadow-md);
 }
 
@@ -603,33 +666,243 @@ select.form-control {
 
 .alert-danger {
     background-color: var(--danger-bg);
-    border: 1px solid #fecaca;
+    border: 1px solid rgba(239, 68, 68, 0.3);
     color: var(--danger-text);
 }
 
 .alert-success {
     background-color: var(--success-bg);
-    border: 1px solid #bbf7d0;
+    border: 1px solid rgba(16, 185, 129, 0.3);
     color: var(--success-text);
 }
 
 .card-image {
-    /* width: 100%; <- À supprimer pour éviter que le conteneur ne prenne trop de place */
     display: flex;
     align-items: center;
     justify-content: center;
     padding-right: 1.5rem;
-    /* Ajoute l'espace manquant à droite pour décoller l'image de la bordure */
     flex-shrink: 0;
-    /* Empêche l'image d'être écrasée si le titre est trop long */
 }
 
 .image-view {
     width: 65px;
-    /* (Optionnel) Je l'ai passée de 55px à 65px pour un rendu légèrement meilleur, à toi de voir ! */
     aspect-ratio: 2 / 3;
     border-radius: var(--radius-md);
     object-fit: cover;
+}
+
+/* =========================================
+   TABLEAU D'ADMINISTRATION
+   ========================================= */
+.admin-table-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+    margin-bottom: 2rem;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.admin-table th {
+    padding: 1.25rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-body);
+}
+
+.admin-table td {
+    padding: 1.25rem 1.5rem;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.admin-table tbody tr {
+    transition: var(--transition);
+}
+
+.admin-table tbody tr:hover {
+    background-color: var(--bg-body);
+}
+
+.admin-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tbody tr.user-banned td {
+    color: var(--text-muted);
+}
+
+.admin-table tbody tr.user-banned {
+    background-color: var(--danger-bg);
+}
+
+/* =========================================
+   BADGES DE STATUT & BOUTONS ACTION
+   ========================================= */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.status-badge.active {
+    background: var(--success-bg);
+    color: var(--success-text);
+}
+
+.status-badge.banned {
+    background: var(--danger-bg);
+    color: var(--danger-text);
+}
+
+.action-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.btn-edit {
+    background: var(--info-bg);
+    color: var(--info-text);
+}
+
+.btn-edit:hover {
+    background: var(--info);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-ban {
+    background: var(--danger-bg);
+    color: var(--danger-text);
+}
+
+.btn-ban:hover {
+    background: var(--danger);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-unban {
+    background: var(--success-bg);
+    color: var(--success-text);
+}
+
+.btn-unban:hover {
+    background: var(--success);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+}
+
+/* =========================================
+   PAGINATION
+   ========================================= */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.pagination li a,
+.pagination li span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 0.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-main);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.pagination li a:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.pagination li.active a,
+.pagination li.active span {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+/* =========================================
+   NOTIFICATIONS (TOASTS)
+   ========================================= */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    padding: 15px 25px;
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    color: var(--text-main);
+    box-shadow: var(--shadow-hover);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    border-left: 5px solid transparent;
+    transform: translateX(120%);
+    opacity: 0;
+}
+
+.toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast-success {
+    border-left-color: var(--success);
+}
+
+.toast-danger {
+    border-left-color: var(--danger);
+}
+
+.toast-info {
+    border-left-color: var(--info);
 }
 
 /* =========================================
@@ -676,6 +949,13 @@ select.form-control {
     animation-delay: 0.3s;
 }
 
+.sortable-ghost {
+    opacity: 0.4;
+    background-color: var(--primary-light);
+    border: 2px dashed var(--primary);
+    transform: scale(0.98);
+}
+
 @media (max-width: 768px) {
     .main-header .container {
         flex-direction: column;
@@ -701,255 +981,20 @@ select.form-control {
         margin: 1.5rem auto;
         border-radius: var(--radius-lg);
     }
+
     .main-header {
         padding: 12px 20px;
     }
+
     .main-header h1 {
         font-size: 1rem;
         display: flex;
         align-items: center;
         text-align: center;
     }
+
     .user-nav {
         font-size: smaller;
         text-align: center;
     }
-}
-
-/* =========================================
-   TABLEAU D'ADMINISTRATION
-   ========================================= */
-.admin-table-container {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    overflow-x: auto;
-    margin-bottom: 2rem;
-}
-
-.admin-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-}
-
-.admin-table th {
-    padding: 1.25rem 1.5rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 1px solid var(--border-color);
-    background: var(--bg-body);
-    /* Contraste subtil avec le fond des cartes */
-}
-
-.admin-table td {
-    padding: 1.25rem 1.5rem;
-    color: var(--text-main);
-    border-bottom: 1px solid var(--border-color);
-    vertical-align: middle;
-}
-
-.admin-table tbody tr {
-    transition: var(--transition);
-}
-
-.admin-table tbody tr:hover {
-    background-color: var(--bg-body);
-}
-
-.admin-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-/* Style spécifique pour les utilisateurs bannis */
-.admin-table tbody tr.user-banned td {
-    color: var(--text-muted);
-}
-
-.admin-table tbody tr.user-banned {
-    background-color: rgba(239, 68, 68, 0.02);
-    /* Teinte très subtile basée sur --danger */
-}
-
-/* =========================================
-   BADGES DE STATUT
-   ========================================= */
-.status-badge {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-}
-
-.status-badge.active {
-    background: var(--success-bg);
-    color: var(--success-text);
-}
-
-.status-badge.banned {
-    background: var(--danger-bg);
-    color: var(--danger-text);
-}
-
-/* =========================================
-   BOUTONS D'ACTION (Tableau)
-   ========================================= */
-.action-links {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-.btn-action {
-    padding: 0.4rem 0.8rem;
-    border-radius: var(--radius-md);
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: var(--transition);
-    text-decoration: none;
-}
-
-.btn-edit {
-    background: var(--info-bg);
-    color: var(--info-text);
-}
-
-.btn-edit:hover {
-    background: var(--info);
-    color: var(--bg-card);
-    box-shadow: var(--shadow-sm);
-}
-
-.btn-ban {
-    background: var(--danger-bg);
-    color: var(--danger-text);
-}
-
-.btn-ban:hover {
-    background: var(--danger);
-    color: var(--bg-card);
-    box-shadow: var(--shadow-sm);
-}
-
-.btn-unban {
-    background: var(--success-bg);
-    color: var(--success-text);
-}
-
-.btn-unban:hover {
-    background: var(--success);
-    color: var(--bg-card);
-    box-shadow: var(--shadow-sm);
-}
-
-/* =========================================
-   PAGINATION
-   ========================================= */
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 2rem 0;
-}
-
-.pagination li a,
-.pagination li span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 36px;
-    height: 36px;
-    padding: 0 0.5rem;
-    border-radius: var(--radius-md);
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-main);
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    transition: var(--transition);
-    text-decoration: none;
-}
-
-.pagination li a:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-    box-shadow: var(--shadow-sm);
-}
-
-.pagination li.active a,
-.pagination li.active span {
-    background: var(--primary);
-    color: var(--bg-card);
-    border-color: var(--primary);
-    box-shadow: var(--shadow-sm);
-}
-
-/* =========================================
-   NOTIFICATIONS (TOASTS)
-   ========================================= */
-.toast-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.toast {
-    padding: 12px 20px;
-    border-radius: var(--radius-md);
-    background: var(--bg-card);
-    box-shadow: var(--shadow-hover);
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: opacity 0.3s ease;
-    border-left: 4px solid transparent;
-}
-
-.toast-success {
-    border-left-color: var(--success);
-    color: var(--success-text);
-}
-
-.toast-danger {
-    border-left-color: var(--danger);
-    color: var(--danger-text);
-}
-
-.toast-info {
-    border-left-color: var(--info);
-    color: var(--info-text);
-}
-
-/* =========================================
-   DRAG AND DROP (SORTABLE.JS)
-   ========================================= */
-.cards-grid {
-    /* Nécessaire pour que le drag and drop soit fluide */
-    min-height: 50px;
-}
-
-.sortable-ghost {
-    opacity: 0.4;
-    background-color: var(--primary-light);
-    border: 2px dashed var(--primary);
-    transform: scale(0.98);
-}
-
-.card {
-    cursor: grab;
-}
-
-.card:active {
-    cursor: grabbing;
 }

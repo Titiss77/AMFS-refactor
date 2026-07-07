@@ -1,7 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // ==========================================
-    // 0. COMPTEUR DE CARACTÈRES (Description)
+    // 0. THEME SOMBRE (Dark Mode)
+    // ==========================================
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    
+    // Application au chargement
+    if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        if(themeToggleBtn) themeToggleBtn.innerHTML = '☀️ Clair';
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            let switchToTheme = theme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', switchToTheme);
+            localStorage.setItem('theme', switchToTheme);
+            
+            themeToggleBtn.innerHTML = switchToTheme === 'dark' ? '☀️ Clair' : '🌙 Sombre';
+        });
+    }
+
+    // ==========================================
+    // 1. COMPTEUR DE CARACTÈRES (Description)
     // ==========================================
     const textarea = document.getElementById('description');
     const charCount = document.getElementById('char-count');
@@ -23,31 +47,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 1. SYSTÈME DE NOTIFICATIONS (TOASTS)
+    // 2. SYSTÈME DE NOTIFICATIONS (TOASTS)
     // ==========================================
     window.showToast = function(message, type = 'success') {
         const container = document.getElementById('toast-container');
-        if (!container) return; // Sécurité si le conteneur n'existe pas
+        if (!container) return;
 
         const toast = document.createElement('div');
-        toast.className = `toast toast-${type} fade-in`;
+        toast.className = `toast toast-${type}`;
         toast.innerText = message;
         
         container.appendChild(toast);
         
+        // Animation d'entrée
+        setTimeout(() => toast.classList.add('show'), 100);
+        
+        // Animation de sortie
         setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 400); // Laisse le temps à la transition CSS
+        }, 4000);
     };
 
     // ==========================================
-    // 2. INCRÉMENTATION ASYNCHRONE (+1 Épisode)
+    // 3. INCRÉMENTATION ASYNCHRONE (+1 Épisode)
     // ==========================================
     document.querySelectorAll('.btn-increment').forEach(button => {
         button.addEventListener('click', async (e) => {
             e.preventDefault();
-            e.stopPropagation(); // Empêche la redirection vers le lien de la carte
+            e.stopPropagation();
 
             const itemId = button.getAttribute('data-id');
             const baseUrl = amfsConfig.baseUrl.endsWith('/') ? amfsConfig.baseUrl : amfsConfig.baseUrl + '/';
@@ -63,9 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
 
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
 
                 const data = await response.json();
 
@@ -79,13 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         counterSpan.style.transform = 'scale(1)';
                     }, 400);
 
-                    if (data.csrf_token) {
-                        amfsConfig.csrfToken = data.csrf_token; 
-                    }
-                    
-                    if (typeof showToast === 'function') {
-                        showToast('Épisode ajouté avec succès !');
-                    }
+                    if (data.csrf_token) amfsConfig.csrfToken = data.csrf_token; 
+                    if (typeof showToast === 'function') showToast('Épisode ajouté avec succès !', 'success');
                 } else {
                     console.error("Erreur renvoyée par PHP :", data);
                 }
@@ -96,17 +117,45 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ==========================================
-    // 3. RECHERCHE EN DIRECT (Live Search)
+    // 4. BOUTONS DE CHARGEMENT SUR FORMULAIRES
+    // ==========================================
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function() {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            // Empêche le chargement visuel si la validation HTML5 bloque
+            if (submitBtn && this.checkValidity()) {
+                submitBtn.classList.add('loading');
+            }
+        });
+    });
+
+    // ==========================================
+    // 5. TOGGLE VISIBILITÉ MOT DE PASSE
+    // ==========================================
+    document.querySelectorAll('.password-toggle').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const wrapper = this.closest('.password-wrapper');
+            const input = wrapper.querySelector('input');
+            if (input.type === 'password') {
+                input.type = 'text';
+                this.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                this.textContent = '👁️';
+            }
+        });
+    });
+
+    // ==========================================
+    // 6. RECHERCHE EN DIRECT (Live Search)
     // ==========================================
     const searchInput = document.getElementById('liveSearch');
     if (searchInput) {
         searchInput.addEventListener('input', function(e) {
             const term = e.target.value.toLowerCase();
-            // Utilise la classe .searchable-card pour être sûr de cibler les bons éléments
             const cards = document.querySelectorAll('.searchable-card, .card'); 
 
             cards.forEach(card => {
-                // On cherche dans les titres et descriptions
                 const title = card.querySelector('.card-title, .search-target-title')?.innerText.toLowerCase() || '';
                 const desc = card.querySelector('.card-desc, .search-target-desc')?.innerText.toLowerCase() || '';
                 
@@ -120,10 +169,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 4. DRAG AND DROP (SortableJS)
+    // 7. DRAG AND DROP (SortableJS)
     // ==========================================
     var grids = document.querySelectorAll('.sortable-grid');
-    if (typeof Sortable !== 'undefined') { // Sécurité si SortableJS n'est pas chargé
+    if (typeof Sortable !== 'undefined') {
         grids.forEach(function(el) {
             Sortable.create(el, {
                 animation: 150,
@@ -157,14 +206,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 5. AUTO-REMPLISSAGE API (TMDb)
+    // 8. AUTO-REMPLISSAGE API (TMDb)
     // ==========================================
     const btnApiSearch = document.getElementById('btn-api-search');
     if (btnApiSearch) {
         btnApiSearch.addEventListener('click', async function() {
             const titreInput = document.getElementById('titre').value;
             if (!titreInput) {
-                alert("Entre d'abord un titre !");
+                showToast("Entre d'abord un titre !", "danger");
                 return;
             }
 
@@ -172,7 +221,6 @@ document.addEventListener('DOMContentLoaded', function() {
             statusTxt.style.display = 'inline';
             statusTxt.innerText = '⏳ Recherche en cours...';
 
-            // Utilise la clé API depuis la configuration globale amfsConfig
             const apiKey = amfsConfig.tmdbApiKey || '9774091bee3bd236f4438cd6d8caa8d8';
             const url = `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&language=fr-FR&query=${encodeURIComponent(titreInput)}&page=1`;
 
@@ -192,11 +240,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     let desc = resultat.overview ? resultat.overview.substring(0, 100) + "..." : "";
                     document.getElementById('description').value = desc;
 
-                    statusTxt.innerText = '✅ Trouvé (en français) !';
-                    
-                    if (textarea) {
-                        textarea.dispatchEvent(new Event('input')); 
-                    }
+                    statusTxt.innerText = '✅ Trouvé !';
+                    if (textarea) textarea.dispatchEvent(new Event('input')); 
 
                 } else {
                     statusTxt.innerText = '❌ Non trouvé';

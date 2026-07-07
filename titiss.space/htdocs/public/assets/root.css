@@ -1,25 +1,16 @@
 :root {
     /* Palette de couleurs "Premium Frost" (Lumineux, épuré et luxueux) */
     --primary: #4f46e5;
-    /* Indigo profond et élégant */
     --primary-hover: #4338ca;
-    /* Indigo légèrement plus sombre au survol */
     --primary-light: rgba(79, 70, 229, 0.1);
-    /* Halo subtil pour les focus */
 
     --bg-body: #fcfcfd;
-    /* Fond presque blanc, très légèrement perlé */
     --bg-card: #ffffff;
-    /* Blanc pur pour détacher parfaitement les cartes */
 
     --text-main: #09090b;
-    /* Noir doux (Zinc 950) pour une lisibilité parfaite */
     --text-muted: #71717a;
-    /* Gris élégant (Zinc 500) pour la hiérarchie visuelle */
     --border-color: #e4e4e7;
-    /* Bordures très fines et douces */
 
-    /* Couleurs de statut vibrantes mais adoucies par des fonds translucides */
     --success: #10b981;
     --success-bg: rgba(16, 185, 129, 0.1);
     --success-text: #047857;
@@ -36,19 +27,33 @@
     --warning: #f59e0b;
     --warning-hover: #d97706;
 
-    /* Ombres "Aériennes" (très diffuses et douces) */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
     --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.08), 0 10px 20px rgba(79, 70, 229, 0.06);
 
-    /* Arrondis luxueux et lisses */
     --radius-md: 0.75rem;
-    /* 12px - Parfait pour les boutons et inputs */
     --radius-lg: 1.25rem;
-    /* 20px - Superbe pour les cartes principales */
     --radius-xl: 1.75rem;
-    /* 28px - Pour les grands conteneurs modaux */
 
-    /* Transitions fluides avec un léger effet de "rebond" (spring)[cite: 1] */
     --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* =========================================
+   THÈME SOMBRE (DARK MODE)
+   ========================================= */
+[data-theme="dark"] {
+    --bg-body: #09090b;
+    --bg-card: #18181b;
+
+    --text-main: #fcfcfd;
+    --text-muted: #a1a1aa;
+    --border-color: #27272a;
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.6), 0 10px 20px rgba(79, 70, 229, 0.1);
+
+    --success-text: #34d399;
+    --info-text: #60a5fa;
+    --danger-text: #f87171;
 }

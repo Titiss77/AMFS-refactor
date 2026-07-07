@@ -1,14 +1,12 @@
-<?php echo $this->extend('layout'); ?> <?php echo $this->section('content'); ?>
-<a href="<?php echo base_url('/'); ?>" class="btn btn-warning">Retour aux cartes</a>
-<div class="container mt-5">
-    <h2>Gestion des Utilisateurs</h2>
+<?php echo $this->extend('layout'); ?>
+<?php echo $this->section('content'); ?>
 
-    <?php if (session()->has('message')) { ?>
-    <div class="alert alert-success"><?php echo session('message'); ?></div>
-    <?php } ?>
-    <?php if (session()->has('error')) { ?>
-    <div class="alert alert-danger"><?php echo session('error'); ?></div>
-    <?php } ?>
+<div class="actions-container">
+    <a href="<?php echo base_url('/'); ?>" class="btn btn-cancel">← Retour aux cartes</a>
+</div>
+
+<div class="container">
+    <h2 style="margin-bottom: 2rem;">Gestion des Utilisateurs</h2>
 
     <div class="admin-table-container fade-in">
         <table class="admin-table">
@@ -55,6 +53,10 @@
             </tbody>
         </table>
     </div>
-    <?php echo $pager->links(); ?>
+
+    <div style="display:flex; justify-content:center;">
+        <?php echo $pager->links(); ?>
+    </div>
 </div>
+
 <?php echo $this->endSection(); ?>

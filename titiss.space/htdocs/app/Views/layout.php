@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AMFS</title>
+
+    <script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    </script>
+
     <link rel="stylesheet" href="<?php echo base_url('assets/root.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/style.css'); ?>">
     <meta name="csrf-token" content="<?php echo csrf_hash(); ?>">
@@ -22,16 +29,18 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js" defer></script>
-
     <script src="<?php echo base_url('assets/script.js?v=' . time()); ?>" defer></script>
 </head>
 
 <body>
     <div id="toast-container" class="toast-container"></div>
+
     <header class="main-header">
-        <h1><a href=" <?php echo base_url('/'); ?>">AMFS</a></h1>
+        <h1><a href="<?php echo base_url('/'); ?>" style="color:inherit;">AMFS</a></h1>
 
         <div class="user-nav">
+            <button id="theme-toggle" class="btn-theme">🌙 Sombre</button>
+
             <?php if (auth()->loggedIn()) { ?>
             <?php if (auth()->user()->inGroup('admin', 'superadmin')) { ?>
             <a href="<?php echo base_url('audit'); ?>" style="color: #80808099; font-size: small;">logs</a>
@@ -44,6 +53,7 @@
             <?php } ?>
         </div>
     </header>
+
     <?php if (isset($headers) && !empty($headers)) { ?>
     <nav class="category-nav container">
         <?php foreach ($headers as $h) { ?>
@@ -54,6 +64,7 @@
         <?php } ?>
     </nav>
     <?php } ?>
+
     <main class="container">
         <?php echo $this->renderSection('content'); ?>
     </main>
@@ -67,10 +78,22 @@
                 window.history.replaceState({}, document.title, currentUrl.pathname);
             }, 10);
         }
+
+        // Interception des Flashdata de CodeIgniter 4 pour lancer des Toasts automatiquement
+        <?php if (session()->getFlashdata('success')) : ?>
+        showToast("<?php echo esc(session()->getFlashdata('success')); ?>", "success");
+        <?php endif ?>
+
+        <?php if (session()->getFlashdata('error')) : ?>
+        showToast("<?php echo esc(session()->getFlashdata('error')); ?>", "danger");
+        <?php endif ?>
+
+        <?php if (session()->getFlashdata('message')) : ?>
+        showToast("<?php echo esc(session()->getFlashdata('message')); ?>", "info");
+        <?php endif ?>
     });
 
-    // Le script attend 5 secondes après le chargement total de la page
-    // pour ne pas ralentir l'expérience de l'utilisateur, puis appelle le Cron.
+    // Cron Job silencieux
     window.addEventListener('load', function() {
         setTimeout(function() {
             fetch('<?php echo base_url('cron/run'); ?>')
@@ -78,9 +101,6 @@
         }, 5000);
     });
     </script>
-</body>
-
-</html>
 </body>
 
 </html>
