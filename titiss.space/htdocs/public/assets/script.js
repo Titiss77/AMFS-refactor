@@ -1,12 +1,38 @@
+// ==========================================
+// 1. SYSTÈME DE NOTIFICATIONS (TOASTS) 
+// (Déclaré en dehors de DOMContentLoaded pour être disponible immédiatement)
+// ==========================================
+window.showToast = function(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerText = message;
+    
+    container.appendChild(toast);
+    
+    // Animation d'entrée
+    setTimeout(() => toast.classList.add('show'), 50);
+    
+    // Animation de sortie
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400); // Laisse le temps à la transition CSS
+    }, 4000);
+};
+
+// ==========================================
+// INITIALISATION DES ÉLÉMENTS DU DOM
+// ==========================================
 document.addEventListener('DOMContentLoaded', function() {
 
     // ==========================================
-    // 0. THEME SOMBRE (Dark Mode)
+    // 2. THEME SOMBRE (Dark Mode)
     // ==========================================
     const themeToggleBtn = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme') || 'light';
     
-    // Application au chargement
     if (currentTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         if(themeToggleBtn) themeToggleBtn.innerHTML = '☀️ Clair';
@@ -25,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 1. COMPTEUR DE CARACTÈRES (Description)
+    // 3. COMPTEUR DE CARACTÈRES (Description)
     // ==========================================
     const textarea = document.getElementById('description');
     const charCount = document.getElementById('char-count');
@@ -47,30 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 2. SYSTÈME DE NOTIFICATIONS (TOASTS)
-    // ==========================================
-    window.showToast = function(message, type = 'success') {
-        const container = document.getElementById('toast-container');
-        if (!container) return;
-
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        toast.innerText = message;
-        
-        container.appendChild(toast);
-        
-        // Animation d'entrée
-        setTimeout(() => toast.classList.add('show'), 100);
-        
-        // Animation de sortie
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 400); // Laisse le temps à la transition CSS
-        }, 4000);
-    };
-
-    // ==========================================
-    // 3. INCRÉMENTATION ASYNCHRONE (+1 Épisode)
+    // 4. INCRÉMENTATION ASYNCHRONE (+1 Épisode)
     // ==========================================
     document.querySelectorAll('.btn-increment').forEach(button => {
         button.addEventListener('click', async (e) => {
@@ -117,12 +120,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ==========================================
-    // 4. BOUTONS DE CHARGEMENT SUR FORMULAIRES
+    // 5. BOUTONS DE CHARGEMENT SUR FORMULAIRES
     // ==========================================
     document.querySelectorAll('form').forEach(form => {
         form.addEventListener('submit', function() {
             const submitBtn = this.querySelector('button[type="submit"]');
-            // Empêche le chargement visuel si la validation HTML5 bloque
             if (submitBtn && this.checkValidity()) {
                 submitBtn.classList.add('loading');
             }
@@ -130,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ==========================================
-    // 5. TOGGLE VISIBILITÉ MOT DE PASSE
+    // 6. TOGGLE VISIBILITÉ MOT DE PASSE
     // ==========================================
     document.querySelectorAll('.password-toggle').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -147,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ==========================================
-    // 6. RECHERCHE EN DIRECT (Live Search)
+    // 7. RECHERCHE EN DIRECT (Live Search)
     // ==========================================
     const searchInput = document.getElementById('liveSearch');
     if (searchInput) {
@@ -169,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 7. DRAG AND DROP (SortableJS)
+    // 8. DRAG AND DROP (SortableJS)
     // ==========================================
     var grids = document.querySelectorAll('.sortable-grid');
     if (typeof Sortable !== 'undefined') {
@@ -206,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 8. AUTO-REMPLISSAGE API (TMDb)
+    // 9. AUTO-REMPLISSAGE API (TMDb)
     // ==========================================
     const btnApiSearch = document.getElementById('btn-api-search');
     if (btnApiSearch) {
