@@ -1,84 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="utf-8">
-    <title><?php echo lang('Errors.pageNotFound'); ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Introuvable</title>
 
-    <style>
-        div.logo {
-            height: 200px;
-            width: 155px;
-            display: inline-block;
-            opacity: 0.08;
-            position: absolute;
-            top: 2rem;
-            left: 50%;
-            margin-left: -73px;
-        }
-        body {
-            height: 100%;
-            background: #fafafa;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            color: #777;
-            font-weight: 300;
-        }
-        h1 {
-            font-weight: lighter;
-            letter-spacing: normal;
-            font-size: 3rem;
-            margin-top: 0;
-            margin-bottom: 0;
-            color: #222;
-        }
-        .wrap {
-            max-width: 1024px;
-            margin: 5rem auto;
-            padding: 2rem;
-            background: #fff;
-            text-align: center;
-            border: 1px solid #efefef;
-            border-radius: 0.5rem;
-            position: relative;
-        }
-        pre {
-            white-space: normal;
-            margin-top: 1.5rem;
-        }
-        code {
-            background: #fafafa;
-            border: 1px solid #efefef;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            display: block;
-        }
-        p {
-            margin-top: 1.5rem;
-        }
-        .footer {
-            margin-top: 2rem;
-            border-top: 1px solid #efefef;
-            padding: 1em 2em 0 2em;
-            font-size: 85%;
-            color: #999;
-        }
-        a:active,
-        a:link,
-        a:visited {
-            color: #dd4814;
-        }
-    </style>
+    <link rel="stylesheet" href="<?= base_url('assets/root.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/style.css') ?>">
+
+    <script>
+    // Maintien du Dark Mode sur la page d'erreur
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    </script>
 </head>
-<body>
-    <div class="wrap">
-        <h1>404</h1>
 
-        <p>
-            <?php if (ENVIRONMENT !== 'production') { ?>
-                <?php echo nl2br(esc($message)); ?>
-            <?php } else { ?>
-                <?php echo lang('Errors.sorryCannotFind'); ?>
-            <?php } ?>
+<body
+    style="display: flex; align-items: center; justify-content: center; height: 100vh; background-color: var(--bg-body);">
+
+    <div class="empty-state shadow-card fade-in" style="max-width: 500px; padding: 3rem; margin-top: -10vh;">
+        <h1 style="font-size: 5rem; margin: 0; color: var(--primary); line-height: 1;">404</h1>
+
+        <h2 style="margin-top: 10px;">Oups ! Page introuvable.</h2>
+
+        <p style="color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.05rem;">
+            <?php if (ENVIRONMENT !== 'production') : ?>
+            <?= nl2br(esc($message)) ?>
+            <?php else : ?>
+            La page que vous recherchez n'existe pas, a été renommée ou est temporairement indisponible.
+            <?php endif; ?>
         </p>
+
+        <a href="<?= base_url('/') ?>" class="btn btn-primary" style="padding: 12px 24px; font-size: 1.1rem;">
+            Retourner à l'accueil
+        </a>
     </div>
+
 </body>
+
 </html>
