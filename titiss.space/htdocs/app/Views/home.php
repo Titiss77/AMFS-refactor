@@ -12,6 +12,11 @@
 </div>
 <?php } else { ?>
 <div class="actions-container">
+
+    <?php if (auth()->user()->inGroup('superadmin')) { ?>
+    <a href="<?php echo base_url('users'); ?>" class="btn btn-warning" style="margin-right: 15px;">Gérer les
+        utilisateurs</a>
+    <?php } ?>
     <?php
     // Calcul du total des éléments en attente pour les admins
     $pendingTotal = 0;
@@ -22,8 +27,6 @@
     }
     ?>
     <?php if (auth()->user()->inGroup('admin', 'superadmin')) { ?>
-    <a href="<?php echo base_url('users'); ?>" class="btn btn-warning" style="margin-right: 15px;">Gérer les
-        utilisateurs</a>
 
     <a href="<?php echo base_url('items/pending'); ?>" class="btn btn-info" style="margin-right: 15px;">
         Cartes en attente
