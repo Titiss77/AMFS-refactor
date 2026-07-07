@@ -126,7 +126,7 @@ class ItemController extends BaseController
 
                     return redirect()
                         ->to($backUrl . $separator . 'open=' . $existing->id_division . '#div-' . $existing->id_division)
-                        ->with('message', 'Votre modification a été soumise au SuperAdmin pour validation.');
+                        ->with('message', "Votre modification a été soumise au SuperAdmin pour validation.");
                 }
                 $item = new Item($data);
                 $this->model->save($item);
@@ -216,7 +216,7 @@ class ItemController extends BaseController
 
             return $this->response->setJSON(json_decode($response->getBody()));
         } catch (\Exception $e) {
-            return $this->response->setJSON(['error' => 'Impossible de contacter TMDB']);
+            return $this->response->setJSON(['error' => "Impossible de contacter TMDB"]);
         }
     }
 
@@ -241,10 +241,10 @@ class ItemController extends BaseController
             $audit = new AuditLogModel();
             $audit->logAction('Transfert Carte', "La carte ID {$id} ('{$item->titre}') a été transférée à l'admin.");
 
-            return redirect()->back()->with('message', 'La carte a été transférée à l\'admin avec succès.');
+            return redirect()->back()->with('message', "La carte a été transférée à l'admin avec succès.");
         }
 
-        return redirect()->back()->with('error', 'Vous n\'avez pas les droits pour effectuer cette action.');
+        return redirect()->back()->with('error', "Vous n'avez pas les droits pour effectuer cette action.");
     }
 
     public function updateOrder()
@@ -273,7 +273,7 @@ class ItemController extends BaseController
 
                 return $this->response->setJSON([
                     'success' => true,
-                    'message' => 'Ordre sauvegardé',
+                    'message' => "Ordre sauvegardé",
                     'csrf_token' => csrf_hash(),
                 ]);
             }
@@ -281,7 +281,7 @@ class ItemController extends BaseController
 
         return $this->response->setJSON([
             'success' => false,
-            'error' => 'Requête invalide ou données manquantes.',
+            'error' => "Requête invalide ou données manquantes.",
         ]);
     }
 }
