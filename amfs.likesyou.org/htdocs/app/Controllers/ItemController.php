@@ -220,6 +220,14 @@ class ItemController extends BaseController
         }
     }
 
+    public function turn_to_global()
+    {
+        $command = "SELECT * FROM `item` where id_division >= 5 AND id_division < 11 AND is_public =1";
+        //retourne les cartes qui sont publiques et dans les divisions 5 à 10
+        $query = $this->model->db->query($command);
+        $results = $query->getResult();
+    }
+
     public function updateOrder()
     {
         if ($this->request->isAJAX()) {
