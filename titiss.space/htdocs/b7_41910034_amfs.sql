@@ -125,7 +125,9 @@ CREATE TABLE `item` (
   `saison` int DEFAULT NULL,
   `position` int DEFAULT '0',
   `date_sortie` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL
+  `deleted_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `item_revisions`;

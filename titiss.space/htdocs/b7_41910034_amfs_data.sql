@@ -108,7 +108,11 @@ INSERT INTO `audit_logs` (`id`, `user_id`, `action`, `details`, `ip_address`, `c
 (95, 2, 'Mise à jour Carte', 'Modification de la carte ID 55 (\'BLACK TORCH\'). Visibilité: Privée.', '5.49.246.18', '2026-07-06 20:57:23'),
 (96, 2, 'Mise à jour Carte', 'Modification de la carte ID 55 (\'BLACK TORCH\'). Visibilité: Privée.', '5.49.246.18', '2026-07-06 20:57:36'),
 (97, 2, 'Mise à jour Carte', 'Modification de la carte ID 57 (\'Mushoku Tensei: Jobless Reincarnation\'). Visibilité: Privée.', '5.49.246.18', '2026-07-06 22:13:16'),
-(98, 2, 'Mise à jour Carte', 'Modification de la carte ID 57 (\'Mushoku Tensei: Jobless Reincarnation\'). Visibilité: Privée.', '5.49.246.18', '2026-07-06 22:13:30');
+(98, 2, 'Mise à jour Carte', 'Modification de la carte ID 57 (\'Mushoku Tensei: Jobless Reincarnation\'). Visibilité: Privée.', '5.49.246.18', '2026-07-06 22:13:30'),
+(99, 2, 'Transfert Carte', 'La carte ID 53 (\'Nakastream\') a été transférée à l\'admin.', '5.49.246.18', '2026-07-07 14:38:51'),
+(100, 1, 'Réhabilitation Compte', 'Le bannissement du compte ID 4 (\'User de test\') a été levé.', '5.49.246.18', '2026-07-07 14:51:18'),
+(101, 1, 'Sanction : Bannissement', 'Le compte ID 4 (\'User de test\') a été suspendu de la plateforme.', '5.49.246.18', '2026-07-07 15:33:52'),
+(102, 1, 'Modification Profil', 'Mise à jour du compte ID 2. Mot de passe réinitialisé par le SuperAdmin. Nouveau groupe de sécurité assigné: [admin].', '5.49.246.18', '2026-07-07 15:36:17');
 
 TRUNCATE TABLE `auth_groups_users`;
 INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
@@ -120,11 +124,11 @@ INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
 
 TRUNCATE TABLE `auth_identities`;
 INSERT INTO `auth_identities` (`id`, `user_id`, `type`, `name`, `secret`, `secret2`, `expires`, `extra`, `force_reset`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-06-25 12:19:36', '2026-04-11 17:01:16', '2026-06-25 12:19:36'),
-(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$zqJUMEtVBDWzxe6Orkj2XO9DpI34W94tIIWxude20vrz5wjSaHwKC', NULL, NULL, 0, '2026-07-03 16:59:39', '2026-04-11 17:02:38', '2026-07-03 16:59:39'),
+(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-07-07 15:33:41', '2026-04-11 17:01:16', '2026-07-07 15:33:41'),
+(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$jR6kxoQaf3XPl58gI5FP8.sfU4cOlTdj/zbZwwmhbJKoxR.frN.My', NULL, NULL, 0, '2026-07-07 15:36:40', '2026-04-11 17:02:38', '2026-07-07 15:36:40'),
 (3, 2, 'magic-link', NULL, 'e3fc52dba64bd3b1958f', NULL, '2026-04-30 15:11:11', NULL, 0, NULL, '2026-04-30 14:11:11', '2026-04-30 14:11:11'),
 (4, 3, 'email_password', NULL, 'hugophilippe26@gmail.com', '$2y$12$9rKoqgP6n7E1vosN4EUWpu5L/lPLkyb9GrDKmIqJxQX9pzG/7drPG', NULL, NULL, 0, NULL, '2026-04-30 14:13:09', '2026-04-30 14:13:10'),
-(5, 4, 'email_password', NULL, 'mathisfrances111@gmail.com', '$2y$12$q4NTrCKkkMj3kINlncokHuDcbgPaDT2SDDooXI0R5asUjUwjK1pem', NULL, NULL, 0, '2026-05-29 22:31:26', '2026-05-29 22:30:44', '2026-05-29 22:31:26'),
+(5, 4, 'email_password', NULL, 'mathisfrances111@gmail.com', '$2y$12$q4NTrCKkkMj3kINlncokHuDcbgPaDT2SDDooXI0R5asUjUwjK1pem', NULL, NULL, 0, '2026-07-07 14:51:37', '2026-05-29 22:30:44', '2026-07-07 14:51:37'),
 (6, 5, 'email_password', NULL, 'ambrefrances1@gmail.com', '$2y$12$AyjlWNvzet1MU5XhMJBDdeMjd9oGgFhKSGjIbtn3R25TWPeFUTfTG', NULL, NULL, 0, '2026-06-25 12:23:05', '2026-06-17 20:17:27', '2026-06-25 12:23:05');
 
 TRUNCATE TABLE `auth_logins`;
@@ -155,17 +159,19 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identif
 (24, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-01 23:46:27', 1),
 (25, '5.49.246.18', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1 OPT/6.6.1', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-02 17:36:12', 1),
 (26, '104.28.42.18', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-03 13:47:02', 1),
-(27, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-03 16:59:39', 1);
+(27, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-03 16:59:39', 1),
+(28, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-07-07 14:49:55', 1),
+(29, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'mathisfrances111@gmail.com', 4, '2026-07-07 14:51:37', 1),
+(30, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-07 14:52:04', 1),
+(31, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-07 15:33:30', 1),
+(32, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-07-07 15:33:41', 1),
+(33, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-07 15:36:40', 1);
 
 TRUNCATE TABLE `auth_permissions_users`;
 TRUNCATE TABLE `auth_remember_tokens`;
 INSERT INTO `auth_remember_tokens` (`id`, `selector`, `hashedValidator`, `user_id`, `expires`, `created_at`, `updated_at`) VALUES
 (28, '0c0a3d01723574cefa10d769', '85107563faa039ceec83fe361732ff72c9dbbc3ea47f2796dca37bd7ee1761b1', 5, '2026-08-05 15:40:16', '2026-06-25 12:23:05', '2026-07-06 15:40:16'),
-(29, '88fa420dab1bacf365bafa95', '48e3a03b294abd70b9fe37fe5ce389cc029f2d29f2a38bf98ca350677651efe4', 2, '2026-07-25 12:26:30', '2026-06-25 12:26:30', '2026-06-25 12:26:30'),
-(30, '084f343cc6ab453693e08528', 'f877ad81d60231f8463d02173b9da7aaa43fbb7e4a9ce41e172ae72532180740', 2, '2026-08-01 18:39:45', '2026-07-01 23:46:27', '2026-07-02 18:39:45'),
-(31, '6e90e873cba165966b3dcdac', '880326814113e93396c9c2137663896f4e280b272d4fc2443f1cc6d06ae79fe2', 2, '2026-08-02 13:43:11', '2026-07-02 17:36:12', '2026-07-03 13:43:11'),
-(32, '0857b2cd495b1274242eda3c', 'aa59fab707a1ef50b1ac26957aaef87a41f1a7954feba14d0c9b668f4760657a', 2, '2026-08-05 21:52:42', '2026-07-03 13:47:02', '2026-07-06 21:52:42'),
-(33, '12339a2919daaaf91d3d8fe8', '573bb73c177469d7511d35dfd65bb4f4715e4a8784bf86b3897bd3a61ca5b3bc', 2, '2026-08-06 13:01:13', '2026-07-03 16:59:39', '2026-07-07 13:01:13');
+(39, '439288b52c564adfbf874b4e', '43a6b1cc5877159bff24be46b21893ede6691a920a36c2b876e7d5d18d15b311', 2, '2026-08-06 15:36:40', '2026-07-07 15:36:40', '2026-07-07 15:36:40');
 
 TRUNCATE TABLE `auth_token_logins`;
 TRUNCATE TABLE `cron_logs`;
@@ -231,7 +237,7 @@ INSERT INTO `item` (`id`, `id_user`, `is_public`, `id_division`, `titre`, `statu
 (43, 2, 0, 1, 'Les Carnets de l\'apothicaire', 'Aucun', 'https://image.tmdb.org/t/p/w500/47pSay5Ao7SFeyQBZVkW5ifyhAZ.jpg', 'https://voir-anime.to/anime/the-apothecary-diaries/the-apothecary-diaries-{ep2}-vostfr/', 'ok', 'Formée dès son plus jeune âge par son père apothicaire, Mao Mao est un jour vendue comme servante au...', '1', 1, 11, NULL, NULL),
 (47, 2, 0, 11, 'Liens très privés', 'Aucun', '', 'https://prive.titiss.space', 'ok', '', '', 0, 0, NULL, NULL),
 (52, 2, 0, 2, 'Black Clover', 'À voir', 'https://image.tmdb.org/t/p/w500/p3rUhlE81nWxPqpPR8F2u7a01Tl.jpg', 'https://www.scan-vf.net/black-clover/chapitre-{ep}', 'ok', 'Dans un monde régi par la magie, Yuno et Asta ont grandi ensemble avec un seul but en tête : devenir...', '356', 0, 1, NULL, NULL),
-(53, 2, 1, 5, 'Nakastream', 'Aucun', '', 'https://nakastream.wiki/', 'ok', '', '', 0, 3, NULL, NULL),
+(53, 1, 1, 5, 'Nakastream', 'Aucun', '', 'https://nakastream.wiki/', 'ok', '', '', 0, 3, NULL, NULL),
 (54, 2, 0, 11, 'Site de troll', 'Aucun', '', 'https://mathis.likesyou.org/troll/amfs/Trouve-tu_le_site_interessant', 'ok', '', '', 0, 0, NULL, NULL),
 (55, 2, 0, 1, 'BLACK TORCH', 'À voir', 'https://image.tmdb.org/t/p/w500/qxPsSYAiNhFLETmFJZ0s5HWyYhr.jpg', 'https://voir-anime.to/anime/black-torch/black-torch-{ep2}-vostfr/', 'ok', 'Adolescent au grand cœur capable de communiquer avec le monde animal, Jiro est issu d\'une longue lig...', '2', 1, 1, '2026-07-11 18:00:00', NULL),
 (57, 2, 0, 1, 'Mushoku Tensei: Jobless Reincarnation', 'À voir', 'https://image.tmdb.org/t/p/w500/sviEqFIPJW5gFtuYy8XyE0Uscid.jpg', 'https://voir-anime.to/anime/mushoku-tensei-{s}/mushoku-tensei-{s}-{ep2}-vostfr/', 'ok', '« Ici, je vais me transcender ! » Un anonyme de 34 ans, célibataire endurci, reclus et au chômage se...', '2', 3, 0, '2026-07-12 18:00:00', NULL);
@@ -245,10 +251,10 @@ TRUNCATE TABLE `migrations`;
 TRUNCATE TABLE `settings`;
 TRUNCATE TABLE `users`;
 INSERT INTO `users` (`id`, `username`, `status`, `status_message`, `active`, `last_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Super Admin', NULL, NULL, 1, '2026-06-10 16:18:49', '2026-04-11 17:01:15', '2026-05-17 12:39:43', NULL),
-(2, 'Titiss', NULL, NULL, 1, '2026-07-07 13:02:19', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL),
+(1, 'Super Admin', NULL, NULL, 1, '2026-07-07 14:51:06', '2026-04-11 17:01:15', '2026-05-17 12:39:43', NULL),
+(2, 'Titiss', NULL, NULL, 1, '2026-07-07 19:07:20', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL),
 (3, 'Seiko', NULL, NULL, 1, NULL, '2026-04-30 14:13:09', '2026-05-29 22:18:11', NULL),
-(4, 'User de test', 'banned', 'Accès révoqué par l\'administration.', 1, NULL, '2026-05-29 22:30:44', '2026-05-30 01:06:02', NULL),
+(4, 'User de test', 'banned', 'Accès révoqué par l\'administration.', 1, NULL, '2026-05-29 22:30:44', '2026-07-07 15:33:52', NULL),
 (5, 'Ambre', NULL, NULL, 1, NULL, '2026-06-17 20:17:27', '2026-06-25 12:09:08', NULL);
 COMMIT;
 
