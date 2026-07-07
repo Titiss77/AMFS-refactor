@@ -42,8 +42,8 @@
    THÈME SOMBRE (DARK MODE)
    ========================================= */
 [data-theme="dark"] {
-    --bg-body: #09090b;
-    --bg-card: #18181b;
+    --bg-body: #18181b;
+    --bg-card: #1d1d21;
 
     --text-main: #fcfcfd;
     --text-muted: #a1a1aa;
