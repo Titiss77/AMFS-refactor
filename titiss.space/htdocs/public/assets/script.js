@@ -32,10 +32,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==========================================
     const themeToggleBtn = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme') || 'light';
+    const metaThemeColor = document.getElementById('meta-theme-color'); // <-- Ciblage de la balise
     
     if (currentTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         if(themeToggleBtn) themeToggleBtn.innerHTML = '☀️ Clair';
+        if(metaThemeColor) metaThemeColor.setAttribute('content', '#09090b'); // <-- Couleur sombre
+    } else {
+        if(metaThemeColor) metaThemeColor.setAttribute('content', '#fcfcfd'); // <-- Couleur claire
     }
 
     if (themeToggleBtn) {
@@ -47,6 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('theme', switchToTheme);
             
             themeToggleBtn.innerHTML = switchToTheme === 'dark' ? '☀️ Clair' : '🌙 Sombre';
+            
+            // <-- Mise à jour en temps réel de la couleur du navigateur
+            if(metaThemeColor) {
+                metaThemeColor.setAttribute('content', switchToTheme === 'dark' ? '#09090b' : '#fcfcfd');
+            }
         });
     }
 

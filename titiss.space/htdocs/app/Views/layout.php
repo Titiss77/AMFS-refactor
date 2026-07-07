@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/style.css'); ?>">
     <meta name="csrf-token" content="<?php echo csrf_hash(); ?>">
     <meta name="csrf-header" content="<?php echo csrf_header(); ?>">
+    <meta name="theme-color" content="#fcfcfd" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
 
     <script>
     window.amfsConfig = {
