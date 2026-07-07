@@ -96,8 +96,12 @@ class ItemModel extends Model
         return $this->db->table('header')->orderBy('id', 'ASC')->get()->getResultArray();
     }
 
-    public function checkToGlobal(){
-        $command = "SELECT id, id_user, is_public, titre FROM `item` where id_division >= 5 AND id_division < 11 AND is_public =1;";
-        return $this->db->query($command)->getResultArray();
+    public function checkToGlobal()
+    {
+        // On sélectionne TOUT (*) pour que getFinalLink(), status, etc. fonctionnent
+        $command = "SELECT * FROM `item` WHERE id_division >= 5 AND id_division < 11 AND is_public = 1;";
+        
+        // On force le résultat à être un tableau d'objets Entity\Item
+        return $this->db->query($command)->getCustomResultObject(Item::class);
     }
 }
