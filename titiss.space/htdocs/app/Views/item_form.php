@@ -81,14 +81,30 @@
 
         <div class="form-group">
             <label for="img" class="form-label">Image (URL) :</label>
-            <small>
-                💡 Astuce : Si l'image automatiquene convient pas :
+            <small style="display: block; margin-bottom: 10px; color: var(--text-muted);">
+                💡 <strong>Astuce :</strong> Si l'image automatique ne convient pas, cherchez sur
                 <a href="https://www.myutaku.com/" target="_blank"
-                    style="color: #007bff; text-decoration: underline;">MyUtaku</a><br>
-                Format : 400x600 (2:3) recommandé pour une meilleure qualité d'affichage. <br>
+                    style="color: var(--primary); text-decoration: underline; font-weight: 500;">MyUtaku</a>.<br>
+                Format recommandé : <strong>400x600 (Ratio 2:3)</strong>.
             </small>
-            <input type="text" id="img" name="image" class="form-control"
-                value="<?php echo htmlspecialchars($item->image ?? ''); ?>">
+
+            <div style="display: flex; gap: 15px; align-items: flex-start;">
+                <div style="flex-grow: 1;">
+                    <input type="text" id="img" name="image" class="form-control"
+                        value="<?php echo htmlspecialchars($item->image ?? ''); ?>"
+                        placeholder="https://exemple.com/image.jpg">
+                </div>
+
+                <div
+                    style="flex-shrink: 0; width: 80px; height: 120px; border: 2px dashed var(--border-color); border-radius: var(--radius-md); overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--bg-body); transition: var(--transition);">
+                    <img id="img-preview" src="<?php echo htmlspecialchars($item->image ?? ''); ?>" alt="Aperçu"
+                        style="width: 100%; height: 100%; object-fit: cover; display: <?php echo !empty($item->image) ? 'block' : 'none'; ?>;">
+                    <span id="img-placeholder"
+                        style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 5px; display: <?php echo empty($item->image) ? 'block' : 'none'; ?>;">
+                        Aperçu
+                    </span>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">

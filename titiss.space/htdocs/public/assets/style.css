@@ -308,6 +308,35 @@ details[open].division-section .cards-grid {
     color: var(--text-muted);
     line-height: 1.6;
     margin: 0;
+
+    /* --- NOUVEAU : Limite de 4 lignes avec défilement --- */
+    max-height: calc(1.6em * 3);
+    /* line-height (1.6) x 4 lignes */
+    overflow-y: auto;
+    /* Active le scroll vertical */
+    padding-right: 6px;
+    /* Évite que le texte colle à la scrollbar */
+    word-wrap: break-word;
+    /* Empêche les mots trop longs de déborder */
+}
+
+/* --- OPTIONNEL MAIS RECOMMANDÉ : Styliser la scrollbar des descriptions --- */
+.card-desc::-webkit-scrollbar {
+    width: 4px;
+    /* Scrollbar très fine */
+}
+
+.card-desc::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.card-desc::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 10px;
+}
+
+.card-desc::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-muted);
 }
 
 .card-badges {

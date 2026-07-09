@@ -344,7 +344,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         // 3. Action au clic : Remplir le formulaire
                         divItem.addEventListener('click', () => {
                             document.getElementById('titre').value = res.titre;
-                            if (res.imageLarge) document.getElementById('img').value = res.imageLarge;
+                            
+                            // --- MODIFICATION ICI ---
+                            const imgField = document.getElementById('img');
+                            if (res.imageLarge && imgField) {
+                                imgField.value = res.imageLarge;
+                                // Force la mise à jour de l'aperçu en direct
+                                imgField.dispatchEvent(new Event('input')); 
+                            }
+                            // ------------------------
+
                             if (res.description) document.getElementById('description').value = res.description;
                             
                             const inputLien = document.getElementById('lien');
@@ -368,6 +377,46 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error("Erreur Fetch API:", e);
                 statusTxt.innerText = 'Erreur serveur';
             }
+        });
+    }
+
+    // ==========================================
+    // 10. APERÇU EN DIRECT DE L'IMAGE
+    // ==========================================
+    const imgInput = document.getElementById('img');
+    const imgPreview = document.getElementById('img-preview');
+    const imgPlaceholder = document.getElementById('img-placeholder');
+
+    if (imgInput && imgPreview && imgPlaceholder) {
+        // Met à jour l'image à chaque frappe/collage
+        imgInput.addEventListener('input', function() {
+            const url = this.value.trim();
+            if (url) {
+                imgPreview.src = url;
+                imgPreview.style.display = 'block';
+                imgPlaceholder.style.display = 'none';
+            } else {
+                // Si le champ est vide, on remet le placeholder
+                imgPreview.style.display = 'none';
+                imgPlaceholder.style.display = 'block';
+                imgPlaceholder.innerText = 'Aperçu';
+                imgPlaceholder.style.color = 'var(--text-muted)';
+                imgPreview.src = '';
+            }
+        });
+        
+        // Gestion des erreurs (lien mort ou mauvaise image)
+        imgPreview.addEventListener('error', function() {
+            this.style.display = 'none';
+            imgPlaceholder.style.display = 'block';
+            imgPlaceholder.innerHTML = 'Erreur<br>❌';
+            imgPlaceholder.style.color = 'var(--danger)'; // Utilise votre variable rouge
+        });
+
+        // Réinitialise l'état d'erreur si une bonne image est chargée
+        imgPreview.addEventListener('load', function() {
+            imgPlaceholder.style.color = 'var(--text-muted)';
+            imgPlaceholder.innerText = 'Aperçu';
         });
     }
 
