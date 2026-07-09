@@ -66,6 +66,9 @@ class ItemController extends BaseController
 
             $data['date_sortie'] = empty($this->request->getPost('date_sortie')) ? null : $this->request->getPost('date_sortie');
 
+            $data['saison'] = ($this->request->getPost('saison') === '') ? null : $this->request->getPost('saison');
+            $data['episode'] = ($this->request->getPost('episode') === '') ? null : $this->request->getPost('episode');
+
             $existing = null;
             if ($id) {
                 $existing = $this->model->find($id);
@@ -106,7 +109,7 @@ class ItemController extends BaseController
                         'lien' => $data['lien'] ?? null,
                         'description' => $data['description'] ?? null,
                         'episode' => $data['episode'] ?? null,
-                        'saison' => empty($data['saison']) ? null : $data['saison'],
+                        'saison' => $data['saison'] ?? null,
                         'position' => $existing->position,
                         'date_sortie' => $data['date_sortie'],
                         'revision_status' => 'pending',
@@ -126,7 +129,7 @@ class ItemController extends BaseController
 
                     return redirect()
                         ->to($backUrl . $separator . 'open=' . $existing->id_division . '#div-' . $existing->id_division)
-                        ->with('message', "Votre modification a été soumise au SuperAdmin pour validation.");
+                        ->with('message', 'Votre modification a été soumise au SuperAdmin pour validation.');
                 }
                 $item = new Item($data);
                 $this->model->save($item);
@@ -209,7 +212,7 @@ class ItemController extends BaseController
     public function search()
     {
         $query = $this->request->getGet('q');
-        $type = $this->request->getGet('type'); // Attendus : 'film', 'serie', 'anime', 'manga', 'lien'
+        $type = $this->request->getGet('type');  // Attendus : 'film', 'serie', 'anime', 'manga', 'lien'
 
         if (empty($query)) {
             return $this->response->setJSON([]);
@@ -221,12 +224,12 @@ class ItemController extends BaseController
             // Détection et traitement automatique si la saisie est une URL directe
             if (filter_var($query, FILTER_VALIDATE_URL)) {
                 $metaData = $this->scrapeOpenGraph($query);
-                return $this->response->setJSON($metaData ? [$metaData] : ['error' => "Impossible de lire le lien."]);
+                return $this->response->setJSON($metaData ? [$metaData] : ['error' => 'Impossible de lire le lien.']);
             }
 
             // Gestion de la recherche littéraire et d'animation via Jikan API
             if ($type === 'manga' || $type === 'anime') {
-                $url = "https://api.jikan.moe/v4/{$type}?q=" . urlencode($query) . "&limit=5";
+                $url = "https://api.jikan.moe/v4/{$type}?q=" . urlencode($query) . '&limit=5';
                 $response = $client->get($url);
                 return $this->response->setJSON(json_decode($response->getBody()));
             }
@@ -237,9 +240,8 @@ class ItemController extends BaseController
             $response = $client->get($url);
 
             return $this->response->setJSON(json_decode($response->getBody()));
-
         } catch (\Exception $e) {
-            return $this->response->setJSON(['error' => "Erreur lors du traitement de la recherche unifiée."]);
+            return $this->response->setJSON(['error' => 'Erreur lors du traitement de la recherche unifiée.']);
         }
     }
 
@@ -257,15 +259,15 @@ class ItemController extends BaseController
         // Utilisation des entités HTML pour prévenir les anomalies d'encodage de caractères exotiques
         @$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
         $tags = $doc->getElementsByTagName('meta');
-        
+
         $data = [
-            'titre'       => '',
+            'titre' => '',
             'description' => '',
-            'image'       => '',
-            'lien'        => $url,
-            'is_link'     => true
+            'image' => '',
+            'lien' => $url,
+            'is_link' => true
         ];
-        
+
         foreach ($tags as $tag) {
             if ($tag->hasAttribute('property')) {
                 $property = $tag->getAttribute('property');
@@ -288,7 +290,7 @@ class ItemController extends BaseController
                 $data['titre'] = $titles->item(0)->nodeValue;
             }
         }
-        
+
         return $data;
     }
 
@@ -300,7 +302,7 @@ class ItemController extends BaseController
 
         return view('global_items', $data);
     }
-    
+
     public function turnToAdmin($id)
     {
         $item = $this->model->find($id);
@@ -344,7 +346,7 @@ class ItemController extends BaseController
 
                 return $this->response->setJSON([
                     'success' => true,
-                    'message' => "Ordre sauvegardé",
+                    'message' => 'Ordre sauvegardé',
                     'csrf_token' => csrf_hash(),
                 ]);
             }
@@ -352,7 +354,7 @@ class ItemController extends BaseController
 
         return $this->response->setJSON([
             'success' => false,
-            'error' => "Requête invalide ou données manquantes.",
+            'error' => 'Requête invalide ou données manquantes.',
         ]);
     }
 }
