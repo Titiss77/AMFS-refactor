@@ -25,7 +25,8 @@
         baseUrl: "<?php echo base_url(); ?>",
         csrfToken: "<?php echo csrf_hash(); ?>",
         csrfHeader: "<?php echo csrf_header(); ?>",
-        updateOrderUrl: "<?php echo base_url('item/updateOrder'); ?>"
+        // La ligne ci-dessous a été corrigée pour correspondre à vos routes
+        updateOrderUrl: "<?php echo base_url('items/update-order'); ?>"
     };
     </script>
 
