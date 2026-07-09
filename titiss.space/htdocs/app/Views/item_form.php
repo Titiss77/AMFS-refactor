@@ -82,9 +82,13 @@
         <div class="form-group">
             <label for="img" class="form-label">Image (URL) :</label>
             <small style="display: block; margin-bottom: 10px; color: var(--text-muted);">
-                💡 <strong>Astuce :</strong> Si l'image automatique ne convient pas, cherchez sur
-                <a href="https://www.myutaku.com/" target="_blank"
-                    style="color: var(--primary); text-decoration: underline; font-weight: 500;">MyUtaku</a>.<br>
+                💡 <strong>Astuce :</strong> Si l'image automatique ne convient pas, trouvez des affiches de haute
+                qualité sur
+                <a href="https://theposterdb.com/" target="_blank"
+                    style="color: var(--primary); text-decoration: underline; font-weight: 500;">TPDb (Films/Séries)</a>
+                ou
+                <a href="https://myanimelist.net/" target="_blank"
+                    style="color: var(--primary); text-decoration: underline; font-weight: 500;">MyAnimeList</a>.<br>
                 Format recommandé : <strong>400x600 (Ratio 2:3)</strong>.
             </small>
 
