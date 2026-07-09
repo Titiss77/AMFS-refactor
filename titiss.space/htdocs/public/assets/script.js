@@ -1,6 +1,5 @@
 // ==========================================
-// 1. SYSTÈME DE NOTIFICATIONS (TOASTS) 
-// (Déclaré en dehors de DOMContentLoaded pour être disponible immédiatement)
+// 1. SYSTEME DE NOTIFICATIONS (TOASTS) 
 // ==========================================
 window.showToast = function(message, type = 'success') {
     const container = document.getElementById('toast-container');
@@ -12,23 +11,21 @@ window.showToast = function(message, type = 'success') {
     
     container.appendChild(toast);
     
-    // Animation d'entrée
     setTimeout(() => toast.classList.add('show'), 50);
     
-    // Animation de sortie
     setTimeout(() => {
         toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 400); // Laisse le temps à la transition CSS
+        setTimeout(() => toast.remove(), 400);
     }, 4000);
 };
 
 // ==========================================
-// INITIALISATION DES ÉLÉMENTS DU DOM
+// INITIALISATION DES ELEMENTS DU DOM
 // ==========================================
 document.addEventListener('DOMContentLoaded', function() {
 
     // ==========================================
-    // THEME SOMBRE (Dark Mode)
+    // 2. THEME SOMBRE (Dark Mode)
     // ==========================================
     const themeToggleBtn = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme') || 'light';
@@ -37,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (currentTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         document.documentElement.setAttribute('data-bs-theme', 'dark');
-        if(themeToggleBtn) themeToggleBtn.innerHTML = '☀️ Clair';
+        if(themeToggleBtn) themeToggleBtn.innerHTML = 'Clair';
         if(metaThemeColor) metaThemeColor.setAttribute('content', '#09090b');
     } else {
         document.documentElement.setAttribute('data-theme', 'light');
@@ -54,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.documentElement.setAttribute('data-bs-theme', switchToTheme);
             localStorage.setItem('theme', switchToTheme);
             
-            themeToggleBtn.innerHTML = switchToTheme === 'dark' ? '☀️ Clair' : '🌙 Sombre';
+            themeToggleBtn.innerHTML = switchToTheme === 'dark' ? 'Clair' : 'Sombre';
             
             if(metaThemeColor) {
                 metaThemeColor.setAttribute('content', switchToTheme === 'dark' ? '#09090b' : '#fcfcfd');
@@ -63,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 3. COMPTEUR DE CARACTÈRES (Description)
+    // 3. COMPTEUR DE CARACTERES (Description)
     // ==========================================
     const textarea = document.getElementById('description');
     const charCount = document.getElementById('char-count');
@@ -85,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 4. INCRÉMENTATION ASYNCHRONE (+1 Épisode)
+    // 4. INCREMENTATION ASYNCHRONE (+1 Episode)
     // ==========================================
     document.querySelectorAll('.btn-increment').forEach(button => {
         button.addEventListener('click', async (e) => {
@@ -121,12 +118,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     }, 400);
 
                     if (data.csrf_token) amfsConfig.csrfToken = data.csrf_token; 
-                    if (typeof showToast === 'function') showToast('Épisode ajouté avec succès !', 'success');
+                    if (typeof showToast === 'function') showToast('Episode ajoute avec succes !', 'success');
                 } else {
-                    console.error("Erreur renvoyée par PHP :", data);
+                    console.error("Erreur renvoyee par PHP :", data);
                 }
             } catch (error) {
-                console.error("Échec de la requête Fetch :", error);
+                console.error("Echec de la requete Fetch :", error);
             }
         });
     });
@@ -144,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ==========================================
-    // 6. TOGGLE VISIBILITÉ MOT DE PASSE
+    // 6. TOGGLE VISIBILITE MOT DE PASSE
     // ==========================================
     document.querySelectorAll('.password-toggle').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -152,10 +149,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const input = wrapper.querySelector('input');
             if (input.type === 'password') {
                 input.type = 'text';
-                this.textContent = '🙈';
+                this.textContent = 'Cacher';
             } else {
                 input.type = 'password';
-                this.textContent = '👁️';
+                this.textContent = 'Voir';
             }
         });
     });
@@ -194,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 handle: '.drag-handle',
                 delay: 200,             
                 delayOnTouchOnly: true, 
-                onEnd: async function(evt) { // <-- Passage en 'async'
+                onEnd: async function(evt) {
                     if (evt.oldIndex === evt.newIndex) return; 
 
                     var itemEls = el.querySelectorAll('.card');
@@ -218,15 +215,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         const data = await response.json();
                         
-                        // --- NOUVEAU : Mise à jour du jeton de sécurité CSRF ---
                         if (data.csrf_token) {
                             amfsConfig.csrfToken = data.csrf_token;
-                        }
-                        // --------------------------------------------------------
-
-                        if (data.success && typeof showToast === 'function') {
-                             // Optionnel : Afficher un petit message si besoin
-                             // showToast("Ordre mis à jour", "success");
                         }
 
                     } catch (err) {
@@ -239,14 +229,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 9. AUTO-REMPLISSAGE UNIFIÉ (Avec Sélection)
+    // 9. AUTO-REMPLISSAGE UNIFIE (Avec Selection)
     // ==========================================
     const btnApiSearch = document.getElementById('btn-api-search');
-    const resultsContainer = document.getElementById('api-results-container'); // Nouveau conteneur
+    const resultsContainer = document.getElementById('api-results-container');
 
     if (btnApiSearch && resultsContainer) {
-        
-        // Fermer le menu si on clique ailleurs sur la page
         document.addEventListener('click', function(event) {
             if (!resultsContainer.contains(event.target) && event.target !== btnApiSearch && event.target.id !== 'titre') {
                 resultsContainer.style.display = 'none';
@@ -262,8 +250,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const statusTxt = document.getElementById('api-status');
             statusTxt.style.display = 'inline';
-            statusTxt.innerText = '⏳ Recherche en cours...';
-            resultsContainer.innerHTML = ''; // On vide les anciens résultats
+            statusTxt.innerText = 'Recherche en cours...';
+            resultsContainer.innerHTML = '';
             resultsContainer.style.display = 'none';
 
             let typeSelectionne = 'film';
@@ -289,63 +277,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (data.error) {
                     showToast(data.error, "danger");
-                    statusTxt.innerText = '❌ Erreur';
+                    statusTxt.innerText = 'Erreur';
                     return;
                 }
 
-                // --- AJOUT : On détecte la limite du champ description automatiquement ---
                 const descField = document.getElementById('description');
                 const maxDescLength = descField && descField.hasAttribute('maxlength') ? parseInt(descField.getAttribute('maxlength')) : 250;
-                const limitCut = maxDescLength > 3 ? maxDescLength - 3 : maxDescLength; // On garde 3 caractères pour les "..."
+                const limitCut = maxDescLength > 3 ? maxDescLength - 3 : maxDescLength;
 
                 let listeResultats = [];
 
-                // 1. Uniformisation des données selon l'API
                 if (data.data && data.data.length > 0) {
-                    // JIKAN API
                     listeResultats = data.data.map(item => ({
                         titre: item.title,
                         imageThumb: item.images?.jpg?.image_url || '',
                         imageLarge: item.images?.jpg?.large_image_url || item.images?.jpg?.image_url || '',
-                        // On utilise la limite dynamique ici
                         description: item.synopsis ? (item.synopsis.length > limitCut ? item.synopsis.substring(0, limitCut) + "..." : item.synopsis) : "",
                         info: (item.year || '') + ' - ' + (item.type || typeSelectionne).toUpperCase(),
                         lien: ''
                     }));
                 } else if (data.results && data.results.length > 0) {
-                    // TMDB API
                     listeResultats = data.results.map(item => ({
                         titre: item.title || item.name || item.original_name,
                         imageThumb: item.poster_path ? `https://image.tmdb.org/t/p/w200${item.poster_path}` : '',
                         imageLarge: item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : '',
-                        // On utilise la limite dynamique ici
                         description: item.overview ? (item.overview.length > limitCut ? item.overview.substring(0, limitCut) + "..." : item.overview) : "",
                         info: (item.release_date || item.first_air_date || '').substring(0,4) + ' - ' + (item.media_type || typeSelectionne).toUpperCase(),
                         lien: ''
                     }));
                 } else if (Array.isArray(data) && data.length > 0 && data[0].is_link) {
-                    // OPEN GRAPH
                     listeResultats = [{
                         titre: data[0].titre,
                         imageThumb: data[0].image,
                         imageLarge: data[0].image,
-                        // On utilise la limite dynamique ici
                         description: data[0].description ? (data[0].description.length > limitCut ? data[0].description.substring(0, limitCut) + "..." : data[0].description) : "",
                         info: "LIEN WEB",
                         lien: data[0].lien
                     }];
                 }
 
-                // 2. Affichage des résultats
                 if (listeResultats.length > 0) {
-                    statusTxt.innerText = `✅ ${listeResultats.length} résultat(s)`;
+                    statusTxt.innerText = `${listeResultats.length} resultat(s)`;
                     resultsContainer.style.display = 'block';
 
                     listeResultats.forEach(res => {
                         const divItem = document.createElement('div');
                         divItem.style.cssText = 'display: flex; align-items: center; padding: 10px; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: background 0.2s;';
                         
-                        // Effet de survol (Hover)
                         divItem.onmouseover = () => divItem.style.background = 'rgba(128, 128, 128, 0.1)';
                         divItem.onmouseout = () => divItem.style.background = 'transparent';
 
@@ -360,36 +338,32 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         `;
 
-                        // 3. Action au clic : Remplir le formulaire
                         divItem.addEventListener('click', () => {
                             document.getElementById('titre').value = res.titre;
                             
-                            // --- MODIFICATION ICI ---
                             const imgField = document.getElementById('img');
                             if (res.imageLarge && imgField) {
                                 imgField.value = res.imageLarge;
-                                // Force la mise à jour de l'aperçu en direct
                                 imgField.dispatchEvent(new Event('input')); 
                             }
-                            // ------------------------
 
                             if (res.description) document.getElementById('description').value = res.description;
                             
                             const inputLien = document.getElementById('lien');
                             if (res.lien && inputLien) inputLien.value = res.lien;
                             
-                            if (textarea) textarea.dispatchEvent(new Event('input')); // Met à jour le compteur
+                            if (textarea) textarea.dispatchEvent(new Event('input'));
                             
-                            resultsContainer.style.display = 'none'; // Cache la liste
-                            statusTxt.innerText = '✅ Sélectionné !';
-                            showToast("Formulaire mis à jour.", "success");
+                            resultsContainer.style.display = 'none';
+                            statusTxt.innerText = 'Selectionne !';
+                            showToast("Formulaire mis a jour.", "success");
                         });
 
                         resultsContainer.appendChild(divItem);
                     });
 
                 } else {
-                    statusTxt.innerText = '❌ Aucun résultat';
+                    statusTxt.innerText = 'Aucun resultat';
                     resultsContainer.style.display = 'none';
                 }
             } catch (e) {
@@ -407,7 +381,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const imgPlaceholder = document.getElementById('img-placeholder');
 
     if (imgInput && imgPreview && imgPlaceholder) {
-        // Met à jour l'image à chaque frappe/collage
         imgInput.addEventListener('input', function() {
             const url = this.value.trim();
             if (url) {
@@ -415,27 +388,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 imgPreview.style.display = 'block';
                 imgPlaceholder.style.display = 'none';
             } else {
-                // Si le champ est vide, on remet le placeholder
                 imgPreview.style.display = 'none';
                 imgPlaceholder.style.display = 'block';
-                imgPlaceholder.innerText = 'Aperçu';
+                imgPlaceholder.innerText = 'Apercu';
                 imgPlaceholder.style.color = 'var(--text-muted)';
                 imgPreview.src = '';
             }
         });
         
-        // Gestion des erreurs (lien mort ou mauvaise image)
         imgPreview.addEventListener('error', function() {
             this.style.display = 'none';
             imgPlaceholder.style.display = 'block';
-            imgPlaceholder.innerHTML = 'Erreur<br>❌';
-            imgPlaceholder.style.color = 'var(--danger)'; // Utilise votre variable rouge
+            imgPlaceholder.innerHTML = 'Erreur';
+            imgPlaceholder.style.color = 'var(--danger)'; 
         });
 
-        // Réinitialise l'état d'erreur si une bonne image est chargée
         imgPreview.addEventListener('load', function() {
             imgPlaceholder.style.color = 'var(--text-muted)';
-            imgPlaceholder.innerText = 'Aperçu';
+            imgPlaceholder.innerText = 'Apercu';
         });
     }
 
