@@ -274,6 +274,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
+                // --- AJOUT : On détecte la limite du champ description automatiquement ---
+                const descField = document.getElementById('description');
+                const maxDescLength = descField && descField.hasAttribute('maxlength') ? parseInt(descField.getAttribute('maxlength')) : 250;
+                const limitCut = maxDescLength > 3 ? maxDescLength - 3 : maxDescLength; // On garde 3 caractères pour les "..."
+
                 let listeResultats = [];
 
                 // 1. Uniformisation des données selon l'API
@@ -283,7 +288,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         titre: item.title,
                         imageThumb: item.images?.jpg?.image_url || '',
                         imageLarge: item.images?.jpg?.large_image_url || item.images?.jpg?.image_url || '',
-                        description: item.synopsis ? item.synopsis.substring(0, 200) + "..." : "",
+                        // On utilise la limite dynamique ici
+                        description: item.synopsis ? (item.synopsis.length > limitCut ? item.synopsis.substring(0, limitCut) + "..." : item.synopsis) : "",
                         info: (item.year || '') + ' - ' + (item.type || typeSelectionne).toUpperCase(),
                         lien: ''
                     }));
@@ -293,7 +299,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         titre: item.title || item.name || item.original_name,
                         imageThumb: item.poster_path ? `https://image.tmdb.org/t/p/w200${item.poster_path}` : '',
                         imageLarge: item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : '',
-                        description: item.overview ? item.overview.substring(0, 200) + "..." : "",
+                        // On utilise la limite dynamique ici
+                        description: item.overview ? (item.overview.length > limitCut ? item.overview.substring(0, limitCut) + "..." : item.overview) : "",
                         info: (item.release_date || item.first_air_date || '').substring(0,4) + ' - ' + (item.media_type || typeSelectionne).toUpperCase(),
                         lien: ''
                     }));
@@ -303,7 +310,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         titre: data[0].titre,
                         imageThumb: data[0].image,
                         imageLarge: data[0].image,
-                        description: data[0].description ? data[0].description.substring(0, 200) + "..." : "",
+                        // On utilise la limite dynamique ici
+                        description: data[0].description ? (data[0].description.length > limitCut ? data[0].description.substring(0, limitCut) + "..." : data[0].description) : "",
                         info: "LIEN WEB",
                         lien: data[0].lien
                     }];
