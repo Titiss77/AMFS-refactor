@@ -203,26 +203,97 @@ class ItemController extends BaseController
         return redirect()->back();
     }
 
-    public function searchTmdb()
+    /**
+     * Recherche unifiée Multi-API (TMDB, Jikan & Open Graph Scraper)
+     */
+    public function search()
     {
         $query = $this->request->getGet('q');
-        $apiKey = env('TMDB_API_KEY') ?? 'ba55da0439797150ed58c4e524584823';
+        $type = $this->request->getGet('type'); // Attendus : 'film', 'serie', 'anime', 'manga', 'lien'
+
+        if (empty($query)) {
+            return $this->response->setJSON([]);
+        }
 
         $client = Services::curlrequest();
-        $url = 'https://api.themoviedb.org/3/search/multi?query=' . urlencode($query) . "&api_key={$apiKey}&language=fr-FR";
 
         try {
+            // Détection et traitement automatique si la saisie est une URL directe
+            if (filter_var($query, FILTER_VALIDATE_URL)) {
+                $metaData = $this->scrapeOpenGraph($query);
+                return $this->response->setJSON($metaData ? [$metaData] : ['error' => "Impossible de lire le lien."]);
+            }
+
+            // Gestion de la recherche littéraire et d'animation via Jikan API
+            if ($type === 'manga' || $type === 'anime') {
+                $url = "https://api.jikan.moe/v4/{$type}?q=" . urlencode($query) . "&limit=5";
+                $response = $client->get($url);
+                return $this->response->setJSON(json_decode($response->getBody()));
+            }
+
+            // Fallback par défaut : TMDB pour le cinéma, les séries ou recherches globales
+            $apiKey = env('TMDB_API_KEY') ?? 'ba55da0439797150ed58c4e524584823';
+            $url = 'https://api.themoviedb.org/3/search/multi?query=' . urlencode($query) . "&api_key={$apiKey}&language=fr-FR";
             $response = $client->get($url);
 
             return $this->response->setJSON(json_decode($response->getBody()));
+
         } catch (\Exception $e) {
-            return $this->response->setJSON(['error' => "Impossible de contacter TMDB"]);
+            return $this->response->setJSON(['error' => "Erreur lors du traitement de la recherche unifiée."]);
         }
+    }
+
+    /**
+     * Extrait les balises Open Graph d'un site web externe pour l'auto-remplissage des liens
+     */
+    private function scrapeOpenGraph(string $url): ?array
+    {
+        $html = @file_get_contents($url);
+        if (!$html) {
+            return null;
+        }
+
+        $doc = new \DOMDocument();
+        // Utilisation des entités HTML pour prévenir les anomalies d'encodage de caractères exotiques
+        @$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        $tags = $doc->getElementsByTagName('meta');
+        
+        $data = [
+            'titre'       => '',
+            'description' => '',
+            'image'       => '',
+            'lien'        => $url,
+            'is_link'     => true
+        ];
+        
+        foreach ($tags as $tag) {
+            if ($tag->hasAttribute('property')) {
+                $property = $tag->getAttribute('property');
+                if ($property === 'og:title') {
+                    $data['titre'] = $tag->getAttribute('content');
+                }
+                if ($property === 'og:description') {
+                    $data['description'] = $tag->getAttribute('content');
+                }
+                if ($property === 'og:image') {
+                    $data['image'] = $tag->getAttribute('content');
+                }
+            }
+        }
+
+        // Stratégie de repli si le protocole Open Graph est absent de la cible
+        if (empty($data['titre'])) {
+            $titles = $doc->getElementsByTagName('title');
+            if ($titles->length > 0) {
+                $data['titre'] = $titles->item(0)->nodeValue;
+            }
+        }
+        
+        return $data;
     }
 
     public function checkToGlobal()
     {
-
         $data = [
             'items' => $this->model->checkToGlobal(),
         ];

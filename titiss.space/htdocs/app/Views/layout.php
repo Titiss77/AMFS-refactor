@@ -21,13 +21,11 @@
     <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
 
     <script>
-    window.amfsConfig = {
-        "baseUrl": "<?php echo rtrim(base_url(), '/') . '/'; ?>",
-        "updateOrderUrl": "<?php echo base_url('items/update-order'); ?>",
-        "cronUrl": "<?php echo base_url('cron/run'); ?>",
-        "csrfHeader": "<?php echo csrf_header(); ?>",
-        "csrfToken": "<?php echo csrf_hash(); ?>",
-        "tmdbApiKey": "9774091bee3bd236f4438cd6d8caa8d8"
+    const amfsConfig = {
+        baseUrl: "<?php echo base_url(); ?>",
+        csrfToken: "<?php echo csrf_hash(); ?>",
+        csrfHeader: "<?php echo csrf_header(); ?>",
+        updateOrderUrl: "<?php echo base_url('item/updateOrder'); ?>"
     };
     </script>
 

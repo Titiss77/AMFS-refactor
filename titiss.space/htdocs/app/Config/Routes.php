@@ -30,6 +30,7 @@ $routes->group('', ['filter' => 'session'], static function ($routes): void {
     $routes->post('items/update-order', 'ItemController::updateOrder');
     $routes->get('items/check-to-global', 'ItemController::checkToGlobal');
     $routes->get('item/turn/(:num)', 'ItemController::turnToAdmin/$1');
+    $routes->get('item/search', 'ItemController::search');
 });
 
 // --------------------------------------------------------------------
