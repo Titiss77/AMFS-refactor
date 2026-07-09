@@ -7,9 +7,10 @@
     <title>AMFS</title>
 
     <script>
+    /* Theme Sombre */
     if (localStorage.getItem('theme') === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        document.documentElement.setAttribute('data-bs-theme', 'dark'); // <-- Ajout pour Bootstrap 5
+        document.documentElement.setAttribute('data-bs-theme', 'dark'); /* Ajout pour Bootstrap 5 */
     }
     </script>
 
@@ -21,12 +22,14 @@
     <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
 
     <script>
-    const amfsConfig = {
-        baseUrl: "<?php echo base_url(); ?>",
-        csrfToken: "<?php echo csrf_hash(); ?>",
-        csrfHeader: "<?php echo csrf_header(); ?>",
-        // La ligne ci-dessous a été corrigée pour correspondre à vos routes
-        updateOrderUrl: "<?php echo base_url('items/update-order'); ?>"
+    /* Configuration Globale (Securisee contre la minification) */
+    window.amfsConfig = {
+        "baseUrl": "<?php echo rtrim(base_url(), '/') . '/'; ?>",
+        "updateOrderUrl": "<?php echo base_url('items/update-order'); ?>",
+        "cronUrl": "<?php echo base_url('cron/run'); ?>",
+        "csrfHeader": "<?php echo csrf_header(); ?>",
+        "csrfToken": "<?php echo csrf_hash(); ?>",
+        "tmdbApiKey": "9774091bee3bd236f4438cd6d8caa8d8"
     };
     </script>
 
@@ -81,25 +84,28 @@
             }, 10);
         }
 
-        // Interception des Flashdata de CodeIgniter 4 pour lancer des Toasts automatiquement
+        /* Interception des Flashdata de CodeIgniter 4 pour lancer des Toasts automatiquement */
         <?php if (session()->getFlashdata('success')): ?>
-        showToast("<?php echo esc(session()->getFlashdata('success')); ?>", "success");
+        if (typeof showToast === 'function') showToast("<?php echo esc(session()->getFlashdata('success')); ?>",
+            "success");
         <?php endif ?>
 
         <?php if (session()->getFlashdata('error')): ?>
-        showToast("<?php echo esc(session()->getFlashdata('error')); ?>", "danger");
+        if (typeof showToast === 'function') showToast("<?php echo esc(session()->getFlashdata('error')); ?>",
+            "danger");
         <?php endif ?>
 
         <?php if (session()->getFlashdata('message')): ?>
-        showToast("<?php echo esc(session()->getFlashdata('message')); ?>", "info");
+        if (typeof showToast === 'function') showToast("<?php echo esc(session()->getFlashdata('message')); ?>",
+            "info");
         <?php endif ?>
     });
 
-    // Cron Job silencieux
+    /* Cron Job silencieux */
     window.addEventListener('load', function() {
         setTimeout(function() {
             fetch('<?php echo base_url('cron/run'); ?>')
-                .catch(error => console.log('Tâche de fond ignorée.'));
+                .catch(error => console.log('Tache de fond ignoree.'));
         }, 5000);
     });
     </script>
