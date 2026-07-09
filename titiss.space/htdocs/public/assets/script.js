@@ -220,10 +220,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 9. AUTO-REMPLISSAGE UNIFIÉ (Multi-API & Open Graph)
+    // 9. AUTO-REMPLISSAGE UNIFIÉ (Avec Sélection)
     // ==========================================
     const btnApiSearch = document.getElementById('btn-api-search');
-    if (btnApiSearch) {
+    const resultsContainer = document.getElementById('api-results-container'); // Nouveau conteneur
+
+    if (btnApiSearch && resultsContainer) {
+        
+        // Fermer le menu si on clique ailleurs sur la page
+        document.addEventListener('click', function(event) {
+            if (!resultsContainer.contains(event.target) && event.target !== btnApiSearch && event.target.id !== 'titre') {
+                resultsContainer.style.display = 'none';
+            }
+        });
+
         btnApiSearch.addEventListener('click', async function() {
             const titreInput = document.getElementById('titre').value.trim();
             if (!titreInput) {
@@ -234,30 +244,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const statusTxt = document.getElementById('api-status');
             statusTxt.style.display = 'inline';
             statusTxt.innerText = '⏳ Recherche en cours...';
+            resultsContainer.innerHTML = ''; // On vide les anciens résultats
+            resultsContainer.style.display = 'none';
 
-            // 1. Déduction du type en fonction du menu déroulant "Division"
-            let typeSelectionne = 'film'; // fallback
+            let typeSelectionne = 'film';
             const divisionSelect = document.getElementById('id_division');
             if (divisionSelect && divisionSelect.selectedIndex >= 0) {
                 const divText = divisionSelect.options[divisionSelect.selectedIndex].text.toLowerCase();
-                
-                if (divText.includes('manga')) {
-                    typeSelectionne = 'manga';
-                } else if (divText.includes('anime') || divText.includes('animé')) {
-                    typeSelectionne = 'anime';
-                } else if (divText.includes('série') || divText.includes('serie')) {
-                    typeSelectionne = 'serie';
-                } else if (divText.includes('lien') || divText.includes('web') || divText.includes('autre')) {
-                    typeSelectionne = 'lien';
-                }
+                if (divText.includes('manga')) typeSelectionne = 'manga';
+                else if (divText.includes('anime') || divText.includes('animé')) typeSelectionne = 'anime';
+                else if (divText.includes('série') || divText.includes('serie')) typeSelectionne = 'serie';
+                else if (divText.includes('lien') || divText.includes('web') || divText.includes('autre')) typeSelectionne = 'lien';
             }
 
-            // 2. Si l'utilisateur colle directement une URL dans le champ titre, on force le type 'lien'
             if (titreInput.startsWith('http://') || titreInput.startsWith('https://')) {
                 typeSelectionne = 'lien';
             }
 
-            // Appel au contrôleur local CodeIgniter
             const baseUrl = amfsConfig.baseUrl.endsWith('/') ? amfsConfig.baseUrl : amfsConfig.baseUrl + '/';
             const url = `${baseUrl}item/search?q=${encodeURIComponent(titreInput)}&type=${typeSelectionne}`;
 
@@ -265,69 +268,97 @@ document.addEventListener('DOMContentLoaded', function() {
                 const response = await fetch(url);
                 const data = await response.json();
 
-                let resultat = null;
-                let finalTitle = '';
-                let finalImg = '';
-                let finalDesc = '';
-                let finalLink = '';
-
                 if (data.error) {
                     showToast(data.error, "danger");
                     statusTxt.innerText = '❌ Erreur';
                     return;
                 }
 
-                // --- GESTION DES DIFFÉRENTS FORMATS JSON DE RETOUR ---
+                let listeResultats = [];
 
-                // Format Jikan API (Mangas & Animes)
+                // 1. Uniformisation des données selon l'API
                 if (data.data && data.data.length > 0) {
-                    resultat = data.data[0];
-                    finalTitle = resultat.title;
-                    finalImg = resultat.images?.jpg?.large_image_url || resultat.images?.jpg?.image_url || '';
-                    finalDesc = resultat.synopsis ? resultat.synopsis.substring(0, 100) + "..." : "";
-                } 
-                // Format TMDB (Films & Séries)
-                else if (data.results && data.results.length > 0) {
-                    resultat = data.results[0];
-                    finalTitle = resultat.title || resultat.name || resultat.original_name;
-                    finalImg = resultat.poster_path ? `https://image.tmdb.org/t/p/w500${resultat.poster_path}` : '';
-                    finalDesc = resultat.overview ? resultat.overview.substring(0, 100) + "..." : "";
-                } 
-                // Format Scraper Open Graph (Liens web divers)
-                else if (Array.isArray(data) && data.length > 0 && data[0].is_link) {
-                    resultat = data[0];
-                    finalTitle = resultat.titre;
-                    finalImg = resultat.image;
-                    finalDesc = resultat.description ? resultat.description.substring(0, 100) + "..." : "";
-                    finalLink = resultat.lien;
+                    // JIKAN API
+                    listeResultats = data.data.map(item => ({
+                        titre: item.title,
+                        imageThumb: item.images?.jpg?.image_url || '',
+                        imageLarge: item.images?.jpg?.large_image_url || item.images?.jpg?.image_url || '',
+                        description: item.synopsis ? item.synopsis.substring(0, 200) + "..." : "",
+                        info: (item.year || '') + ' - ' + (item.type || typeSelectionne).toUpperCase(),
+                        lien: ''
+                    }));
+                } else if (data.results && data.results.length > 0) {
+                    // TMDB API
+                    listeResultats = data.results.map(item => ({
+                        titre: item.title || item.name || item.original_name,
+                        imageThumb: item.poster_path ? `https://image.tmdb.org/t/p/w200${item.poster_path}` : '',
+                        imageLarge: item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : '',
+                        description: item.overview ? item.overview.substring(0, 200) + "..." : "",
+                        info: (item.release_date || item.first_air_date || '').substring(0,4) + ' - ' + (item.media_type || typeSelectionne).toUpperCase(),
+                        lien: ''
+                    }));
+                } else if (Array.isArray(data) && data.length > 0 && data[0].is_link) {
+                    // OPEN GRAPH
+                    listeResultats = [{
+                        titre: data[0].titre,
+                        imageThumb: data[0].image,
+                        imageLarge: data[0].image,
+                        description: data[0].description ? data[0].description.substring(0, 200) + "..." : "",
+                        info: "LIEN WEB",
+                        lien: data[0].lien
+                    }];
                 }
 
-                // --- INJECTION DES RÉSULTATS DANS LE FORMULAIRE ---
-                if (resultat) {
-                    document.getElementById('titre').value = finalTitle || titreInput;
-                    if (finalImg) document.getElementById('img').value = finalImg;
-                    if (finalDesc) document.getElementById('description').value = finalDesc;
-                    
-                    // Si on a extrait un lien, on le place directement dans l'input correspondant
-                    const inputLien = document.getElementById('lien');
-                    if (finalLink && inputLien) {
-                        inputLien.value = finalLink;
-                    }
+                // 2. Affichage des résultats
+                if (listeResultats.length > 0) {
+                    statusTxt.innerText = `✅ ${listeResultats.length} résultat(s)`;
+                    resultsContainer.style.display = 'block';
 
-                    statusTxt.innerText = '✅ Trouvé !';
-                    
-                    // Met à jour le compteur de caractères manuellement car la valeur a été modifiée en JS
-                    if (textarea) textarea.dispatchEvent(new Event('input')); 
-                    
-                    showToast("Informations récupérées avec succès !", "success");
+                    listeResultats.forEach(res => {
+                        const divItem = document.createElement('div');
+                        divItem.style.cssText = 'display: flex; align-items: center; padding: 10px; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: background 0.2s;';
+                        
+                        // Effet de survol (Hover)
+                        divItem.onmouseover = () => divItem.style.background = 'rgba(128, 128, 128, 0.1)';
+                        divItem.onmouseout = () => divItem.style.background = 'transparent';
+
+                        const fallbackImg = 'https://via.placeholder.com/40x60?text=IMG';
+                        const imgSrc = res.imageThumb || fallbackImg;
+
+                        divItem.innerHTML = `
+                            <img src="${imgSrc}" alt="Affiche" style="width: 40px; height: 60px; object-fit: cover; border-radius: 4px; margin-right: 15px;">
+                            <div style="flex-grow: 1; overflow: hidden;">
+                                <strong style="display: block; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${res.titre}</strong>
+                                <small style="color: gray;">${res.info}</small>
+                            </div>
+                        `;
+
+                        // 3. Action au clic : Remplir le formulaire
+                        divItem.addEventListener('click', () => {
+                            document.getElementById('titre').value = res.titre;
+                            if (res.imageLarge) document.getElementById('img').value = res.imageLarge;
+                            if (res.description) document.getElementById('description').value = res.description;
+                            
+                            const inputLien = document.getElementById('lien');
+                            if (res.lien && inputLien) inputLien.value = res.lien;
+                            
+                            if (textarea) textarea.dispatchEvent(new Event('input')); // Met à jour le compteur
+                            
+                            resultsContainer.style.display = 'none'; // Cache la liste
+                            statusTxt.innerText = '✅ Sélectionné !';
+                            showToast("Formulaire mis à jour.", "success");
+                        });
+
+                        resultsContainer.appendChild(divItem);
+                    });
 
                 } else {
-                    statusTxt.innerText = '❌ Non trouvé';
+                    statusTxt.innerText = '❌ Aucun résultat';
+                    resultsContainer.style.display = 'none';
                 }
             } catch (e) {
-                console.error("Erreur Fetch API Unifiée:", e);
+                console.error("Erreur Fetch API:", e);
                 statusTxt.innerText = 'Erreur serveur';
-                showToast("Problème de communication avec le serveur.", "danger");
             }
         });
     }

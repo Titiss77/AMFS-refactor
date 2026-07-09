@@ -13,10 +13,14 @@
             <small id="api-status" style="display:none; color: var(--success);"></small>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" style="position: relative;">
             <label for="titre" class="form-label">Titre *</label>
             <input type="text" id="titre" name="titre" class="form-control"
                 value="<?php echo isset($item) ? esc($item->titre) : ''; ?>" required>
+
+            <div id="api-results-container"
+                style="display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 1000; background: var(--bg-card, #fff); border: 1px solid var(--border-color, #ccc); border-radius: 8px; max-height: 350px; overflow-y: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin-top: 5px;">
+            </div>
         </div>
 
         <div class="form-group row">
