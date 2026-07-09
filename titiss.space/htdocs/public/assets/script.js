@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 handle: '.drag-handle',
                 delay: 200,             
                 delayOnTouchOnly: true, 
-                onEnd: function(evt) {
+                onEnd: async function(evt) { // <-- Passage en 'async'
                     if (evt.oldIndex === evt.newIndex) return; 
 
                     var itemEls = el.querySelectorAll('.card');
@@ -205,15 +205,34 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (id) newOrder.push(id);
                     });
 
-                    fetch(amfsConfig.updateOrderUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest',
-                            [amfsConfig.csrfHeader]: amfsConfig.csrfToken
-                        },
-                        body: JSON.stringify({ order: newOrder })
-                    }).catch(err => console.error("Erreur Drag&Drop:", err));
+                    try {
+                        const response = await fetch(amfsConfig.updateOrderUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest',
+                                [amfsConfig.csrfHeader]: amfsConfig.csrfToken
+                            },
+                            body: JSON.stringify({ order: newOrder })
+                        });
+
+                        const data = await response.json();
+                        
+                        // --- NOUVEAU : Mise à jour du jeton de sécurité CSRF ---
+                        if (data.csrf_token) {
+                            amfsConfig.csrfToken = data.csrf_token;
+                        }
+                        // --------------------------------------------------------
+
+                        if (data.success && typeof showToast === 'function') {
+                             // Optionnel : Afficher un petit message si besoin
+                             // showToast("Ordre mis à jour", "success");
+                        }
+
+                    } catch (err) {
+                        console.error("Erreur Drag&Drop:", err);
+                        if (typeof showToast === 'function') showToast("Erreur lors de la sauvegarde de l'ordre", "danger");
+                    }
                 }
             });
         });
