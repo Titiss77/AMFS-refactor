@@ -614,7 +614,7 @@ details[open].division-section .cards-grid {
 
 /* Fix pour les floating labels CodeIgniter Shield */
 .form-floating .password-toggle {
-    top: 35px;
+    top: 40px;
     transform: none;
 }
 
