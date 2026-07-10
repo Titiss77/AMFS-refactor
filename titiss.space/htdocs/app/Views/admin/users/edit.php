@@ -35,17 +35,15 @@
 
         <?php /* BLOC : Réservé au superadmin */ ?>
         <?php if (auth()->user()->inGroup('superadmin')) { ?>
-        <div class="mb-3">
-            <label for="new_password" class="form-label">Nouveau mot de passe <small class="text-muted">(laisser vide
+
+        <div class="form-floating form-floating2 mb-3 password-wrapper">
+            <label for="password" class="form-label">Nouveau mot de passe <small class="text-muted">(laisser
+                    vide
                     pour conserver l'actuel)</small></label>
-            <div class="input-group">
-                <input type="password" name="new_password" id="new_password" class="form-control"
-                    autocomplete="new-password">
-                <button class="btn btn-outline-secondary" type="button" id="togglePassword"
-                    style="display: flex; align-items: center; justify-content: center; padding: 0.375rem 0.75rem;">
-                    <!-- Le SVG sera injecté ici par JavaScript -->
-                </button>
-            </div>
+            <input type="password" class="form-control" id="floatingPasswordInput" name="password" inputmode="text"
+                autocomplete="current-password" placeholder="<?php echo lang('Auth.password'); ?>" required>
+            <button type="button" class="password-toggle password-toggle2"
+                aria-label="Afficher le mot de passe"></button>
         </div>
 
         <script>
@@ -66,7 +64,7 @@
                 togglePassword.addEventListener('click', function() {
                     // Basculer le type entre 'password' et 'text'
                     const type = passwordInput.getAttribute('type') === 'password' ? 'text' :
-                    'password';
+                        'password';
                     passwordInput.setAttribute('type', type);
 
                     // Modifier l'icône du bouton en conséquence

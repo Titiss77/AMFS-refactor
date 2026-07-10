@@ -618,6 +618,11 @@ details[open].division-section .cards-grid {
     transform: none;
 }
 
+.form-floating2 .password-toggle2 {
+    top: 45px;
+    transform: none;
+}
+
 textarea.form-control {
     resize: vertical;
     min-height: 120px;
