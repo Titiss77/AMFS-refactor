@@ -167,10 +167,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const input = wrapper.querySelector('input');
             if (input.type === 'password') {
                 input.type = 'text';
-                this.textContent = 'Cacher';
+                this.textContent = '👁️';
             } else {
                 input.type = 'password';
-                this.textContent = 'Voir';
+                this.textContent = '🙈';
             }
         });
     });
