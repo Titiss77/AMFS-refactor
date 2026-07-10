@@ -57,7 +57,12 @@
                 <?php echo (isset($item) && in_array($item->is_public, [1, 2])) ? 'checked' : ''; ?>>
             <label for="is_public" class="form-label" style="display:inline;">Rendre ce lien visible au public</label>
             <small>
-                <br>❌ Attention : Si vous rendez ce lien public, attendez-vous à perdre l'épisode et la saison en cours.
+                <br><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
+                    class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2" />
+                </svg>
+                Attention : Si vous rendez ce lien public, attendez-vous à perdre l'épisode et la saison en cours.
             </small>
         </div>
 
@@ -82,7 +87,12 @@
         <div class="form-group">
             <label for="img" class="form-label">Image (URL) :</label>
             <small style="display: block; margin-bottom: 10px; color: var(--text-muted);">
-                💡 <strong>Astuce :</strong> Si l'image automatique ne convient pas, trouvez des affiches de haute
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="yellow"
+                    class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5" />
+                </svg>
+                <strong>Astuce :</strong> Si l'image automatique ne convient pas, trouvez des affiches de haute
                 qualité sur
                 <a href="https://theposterdb.com/" target="_blank"
                     style="color: var(--primary); text-decoration: underline; font-weight: 500;">TPDb (Films/Séries)</a>
@@ -113,8 +123,12 @@
 
         <div class="form-group">
             <label for="lien" class="form-label">Lien (URL) :</label>
-            <small>
-                💡 Astuce : <b>{s}</b> = saison, <b>{ep}</b> = épisode normal (1). <br>
+            <small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="yellow"
+                    class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5" />
+                </svg>
+                Astuce : <b>{s}</b> = saison, <b>{ep}</b> = épisode normal (1). <br>
                 Utilise <b>{ep2}</b>, <b>{ep3}</b> ou <b>{ep4}</b> pour forcer les zéros (ex: <b>01</b>, <b>001</b>,
                 <b>0001</b>).
             </small>
