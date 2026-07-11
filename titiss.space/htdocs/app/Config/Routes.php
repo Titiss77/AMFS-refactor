@@ -31,6 +31,8 @@ $routes->group('', ['filter' => 'session'], static function ($routes): void {
     $routes->get('items/check-to-global', 'ItemController::checkToGlobal');
     $routes->get('item/turn/(:num)', 'ItemController::turnToAdmin/$1');
     $routes->get('item/search', 'ItemController::search');
+
+    $routes->post('report/submit', 'ReportController::submit');
 });
 
 // --------------------------------------------------------------------

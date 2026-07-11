@@ -252,7 +252,6 @@ details[open].division-section .cards-grid {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    cursor: grab;
 }
 
 .card:hover {
@@ -988,6 +987,15 @@ select.form-control {
     background-color: var(--primary-light);
     border: 2px dashed var(--primary);
     transform: scale(0.98);
+}
+
+.btn-report-sm{
+    color: var(--warning);
+    position: relative;
+    right: 9rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 @media (max-width: 768px) {

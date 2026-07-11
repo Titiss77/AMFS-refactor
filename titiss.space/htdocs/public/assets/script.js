@@ -433,4 +433,59 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // ==========================================
+// SYSTEME DE SIGNALEMENT DE PROBLEME
+// ==========================================
+window.openReportModal = async function(button) {
+    const itemId = button.getAttribute('data-id');
+    
+    // Demander le type de problème
+    const type = prompt("Que souhaitez-vous signaler ?\nTapez 1 pour : Lien mort\nTapez 2 pour : Autre problème");
+    
+    if (!type) return; // Annulation
+    
+    let issueType = 'autre';
+    if (type === '1') issueType = 'lien_mort';
+    if (type === '2') issueType = 'bug';
+    
+    // Demander une description précise
+    const description = prompt("Pouvez-vous préciser le problème ? (Optionnel mais recommandé)");
+    
+    if (description === null) return; // Annulation
+
+    const baseUrl = amfsConfig.baseUrl.endsWith('/') ? amfsConfig.baseUrl : amfsConfig.baseUrl + '/';
+    const url = baseUrl + 'report/submit';
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                [amfsConfig.csrfHeader]: amfsConfig.csrfToken
+            },
+            body: JSON.stringify({
+                item_id: itemId,
+                type: issueType,
+                description: description.trim()
+            })
+        });
+
+        const data = await response.json();
+        
+        if (data.csrf_token) {
+            amfsConfig.csrfToken = data.csrf_token;
+        }
+
+        if (data.success) {
+            if (typeof showToast === 'function') showToast(data.message, 'success');
+        } else {
+            if (typeof showToast === 'function') showToast(data.error || 'Erreur lors de l\'envoi.', 'danger');
+        }
+    } catch (error) {
+        console.error("Erreur d'envoi du signalement:", error);
+        if (typeof showToast === 'function') showToast("Une erreur réseau est survenue.", "danger");
+    }
+};
+
 });
