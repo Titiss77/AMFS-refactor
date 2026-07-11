@@ -112,7 +112,55 @@ INSERT INTO `audit_logs` (`id`, `user_id`, `action`, `details`, `ip_address`, `c
 (99, 2, 'Transfert Carte', 'La carte ID 53 (\'Nakastream\') a été transférée à l\'admin.', '5.49.246.18', '2026-07-07 14:38:51'),
 (100, 1, 'Réhabilitation Compte', 'Le bannissement du compte ID 4 (\'User de test\') a été levé.', '5.49.246.18', '2026-07-07 14:51:18'),
 (101, 1, 'Sanction : Bannissement', 'Le compte ID 4 (\'User de test\') a été suspendu de la plateforme.', '5.49.246.18', '2026-07-07 15:33:52'),
-(102, 1, 'Modification Profil', 'Mise à jour du compte ID 2. Mot de passe réinitialisé par le SuperAdmin. Nouveau groupe de sécurité assigné: [admin].', '5.49.246.18', '2026-07-07 15:36:17');
+(102, 1, 'Modification Profil', 'Mise à jour du compte ID 2. Mot de passe réinitialisé par le SuperAdmin. Nouveau groupe de sécurité assigné: [admin].', '5.49.246.18', '2026-07-07 15:36:17'),
+(103, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 35 (\'Classroom of the Elite\') : Épisode passé à 5.', '5.49.246.18', '2026-07-07 19:15:44'),
+(104, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 35 (\'Classroom of the Elite\') : Épisode passé à 6.', '5.49.246.18', '2026-07-07 19:15:46'),
+(105, 2, 'Mise à jour Carte', 'Modification de la carte ID 35 (\'Classroom of the Elite\'). Visibilité: Privée.', '5.49.246.18', '2026-07-07 19:22:46'),
+(106, 2, 'Mise à jour Carte', 'Modification de la carte ID 35 (\'Classroom of the Elite\'). Visibilité: Privée.', '5.49.246.18', '2026-07-07 19:23:19'),
+(107, 2, 'Mise à jour Carte', 'Modification de la carte ID 57 (\'Mushoku Tensei: Jobless Reincarnation\'). Visibilité: Privée.', '5.49.246.18', '2026-07-07 19:29:09'),
+(108, 2, 'Création Carte', 'Création de la carte ID 58 (\'Game of Thrones\'). Visibilité initiale: Privée.', '5.49.246.18', '2026-07-07 19:31:19'),
+(109, 2, 'Mise à jour Carte', 'Modification de la carte ID 58 (\'Game of Thrones\'). Visibilité: Privée.', '5.49.246.18', '2026-07-07 19:32:01'),
+(110, 2, 'Mise à jour Carte', 'Modification de la carte ID 58 (\'Game of Thrones\'). Visibilité: Privée.', '5.49.246.18', '2026-07-07 19:32:15'),
+(111, 2, 'Suppression Carte', 'Suppression de la carte ID 58 (\'Game of Thrones\').', '5.49.246.18', '2026-07-07 19:32:21'),
+(112, 2, 'Création Carte', 'Création de la carte ID 59 (\'Vampire Diaries\'). Visibilité initiale: Privée.', '5.49.246.18', '2026-07-07 19:33:46'),
+(113, 2, 'Création Carte', 'Création de la carte ID 60 (\'The Originals\'). Visibilité initiale: Privée.', '5.49.246.18', '2026-07-07 19:35:06'),
+(114, 2, 'Mise à jour Carte', 'Modification de la carte ID 59 (\'Vampire Diaries\'). Visibilité: Privée.', '5.49.246.18', '2026-07-07 19:37:06'),
+(115, 2, 'Mise à jour Carte', 'Modification de la carte ID 60 (\'The Originals\'). Visibilité: Privée.', '5.49.246.18', '2026-07-07 19:37:39'),
+(116, 2, 'Création Carte', 'Création de la carte ID 61 (\'Ordre de diffusion TVD & The originals\'). Visibilité initiale: Privée.', '5.49.246.18', '2026-07-07 19:44:52'),
+(117, 2, 'Création Carte', 'Création de la carte ID 62 (\'Canal +\'). Visibilité initiale: En attente.', '5.49.246.18', '2026-07-07 19:47:56'),
+(118, 2, 'Modération : Approbation Carte', 'Le SuperAdmin a validé la nouvelle publication de la carte ID 62 (\'Canal +\').', '5.49.246.18', '2026-07-07 19:48:05'),
+(119, 2, 'Réorganisation', 'L\'utilisateur a modifié l\'ordre d\'affichage de 5 carte(s).', '5.49.246.18', '2026-07-07 19:48:20'),
+(120, 2, 'Transfert Carte', 'La carte ID 62 (\'Canal +\') a été transférée à l\'admin.', '5.49.246.18', '2026-07-07 19:48:24'),
+(121, 2, 'Mise à jour Carte', 'Modification de la carte ID 59 (\'Vampire Diaries\'). Visibilité: Privée.', '5.49.246.18', '2026-07-07 20:08:13'),
+(122, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 59 (\'Vampire Diaries\') : Épisode passé à 5.', '5.49.246.18', '2026-07-07 21:06:45'),
+(123, 2, 'Mise à jour Carte', 'Modification de la carte ID 61 (\'Ordre de diffusion TVD & The originals\'). Visibilité: Privée.', '5.49.246.18', '2026-07-07 21:55:39'),
+(124, 2, 'Mise à jour Carte', 'Modification de la carte ID 61 (\'Ordre de diffusion TVD & The originals\'). Visibilité: Privée.', '5.49.246.18', '2026-07-07 22:03:01'),
+(125, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 60 (\'The Originals\') : Épisode passé à 6.', '5.49.246.18', '2026-07-07 23:11:55'),
+(126, 1, 'Modification Profil', 'Mise à jour du compte ID 2. Mot de passe réinitialisé par le SuperAdmin. Nouveau groupe de sécurité assigné: [admin].', '104.28.42.14', '2026-07-08 11:17:44'),
+(127, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 59 (\'Vampire Diaries\') : Épisode passé à 6.', '104.28.40.24', '2026-07-08 12:06:23'),
+(128, 2, 'Mise à jour Carte', 'Modification de la carte ID 61 (\'Ordre de diffusion TVD & The originals\'). Visibilité: Privée.', '104.28.40.24', '2026-07-08 12:07:15'),
+(129, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 60 (\'The Originals\') : Épisode passé à 7.', '5.49.246.18', '2026-07-08 21:59:21'),
+(130, 2, 'Création Carte', 'Création de la carte ID 63 (\'The Protector\'). Visibilité initiale: Privée.', '5.49.246.18', '2026-07-09 21:18:46'),
+(131, 2, 'Suppression Carte', 'Suppression de la carte ID 63 (\'The Protector\').', '5.49.246.18', '2026-07-09 21:22:53'),
+(132, 2, 'Création Carte', 'Création de la carte ID 64 (\'Enola Holmes\'). Visibilité initiale: Privée.', '5.49.246.18', '2026-07-09 21:23:44'),
+(133, 2, 'Mise à jour Carte', 'Modification de la carte ID 64 (\'Enola Holmes 3\'). Visibilité: Privée.', '5.49.246.18', '2026-07-09 22:10:17'),
+(134, 2, 'Mise à jour Carte', 'Modification de la carte ID 64 (\'Enola Holmes 3\'). Visibilité: Privée.', '5.49.246.18', '2026-07-09 22:12:33'),
+(135, 2, 'Mise à jour Carte', 'Modification de la carte ID 64 (\'Enola Holmes 3\'). Visibilité: Privée.', '5.49.246.18', '2026-07-09 22:18:37'),
+(136, 2, 'Suppression Carte', 'Suppression de la carte ID 64 (\'Enola Holmes 3\').', '5.49.246.18', '2026-07-09 22:18:56'),
+(137, 2, 'Création Carte', 'Création de la carte ID 65 (\'Enola Holmes 3\'). Visibilité initiale: Privée.', '5.49.246.18', '2026-07-09 22:19:14'),
+(138, 2, 'Mise à jour Carte', 'Modification de la carte ID 65 (\'Enola Holmes 3\'). Visibilité: Privée.', '5.49.246.18', '2026-07-09 22:24:23'),
+(139, 2, 'Mise à jour Carte', 'Modification de la carte ID 65 (\'Enola Holmes 3\'). Visibilité: Privée.', '5.49.246.18', '2026-07-09 22:24:32'),
+(140, 2, 'Mise à jour Carte', 'Modification de la carte ID 65 (\'Enola Holmes 3\'). Visibilité: Privée.', '5.49.246.18', '2026-07-09 22:24:39'),
+(141, 2, 'Maintenance : Remplacement en masse', 'Migration du domaine \'papadustream.email\' vers \'papadustream.rentals\' appliquée sur 1 carte(s).', '5.49.246.18', '2026-07-09 22:26:04'),
+(142, 2, 'Création Carte', 'Création de la carte ID 66 (\'Le Protecteur d\'Istanbul\'). Visibilité initiale: Privée.', '5.49.246.18', '2026-07-09 22:29:20'),
+(143, 2, 'Mise à jour Carte', 'Modification de la carte ID 66 (\'Le Protecteur d\'Istanbul\'). Visibilité: Privée.', '5.49.246.18', '2026-07-09 22:30:07'),
+(144, 2, 'Incrémentation Rapide', 'Mise à jour de la carte ID 66 (\'Le Protecteur d\'Istanbul\') : Épisode passé à 3.', '5.49.246.18', '2026-07-09 22:31:08'),
+(145, 2, 'Mise à jour Carte', 'Modification de la carte ID 66 (\'Le Protecteur d\'Istanbul\'). Visibilité: Privée.', '5.49.246.18', '2026-07-09 22:31:14'),
+(146, 2, 'Réorganisation', 'L\'utilisateur a modifié l\'ordre d\'affichage de 4 carte(s).', '5.49.246.18', '2026-07-09 22:44:18'),
+(147, 2, 'Mise à jour Carte', 'Modification de la carte ID 35 (\'Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e 4th Season: 2-nensei-hen 1 Gakki\'). Visibilité: Privée.', '5.49.246.18', '2026-07-10 18:48:41'),
+(148, 2, 'Réorganisation', 'L\'utilisateur a modifié l\'ordre d\'affichage de 13 carte(s).', '5.49.246.18', '2026-07-10 18:48:47'),
+(149, 2, 'Mise à jour Carte', 'Modification de la carte ID 35 (\'Classroom of the Elite \'). Visibilité: Privée.', '5.49.246.18', '2026-07-10 18:49:22'),
+(150, 2, 'Mise à jour Carte', 'Modification de la carte ID 6 (\'Wind Breaker\'). Visibilité: Privée.', '5.49.246.18', '2026-07-10 18:49:52');
 
 TRUNCATE TABLE `auth_groups_users`;
 INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
@@ -124,8 +172,8 @@ INSERT INTO `auth_groups_users` (`id`, `user_id`, `group`, `created_at`) VALUES
 
 TRUNCATE TABLE `auth_identities`;
 INSERT INTO `auth_identities` (`id`, `user_id`, `type`, `name`, `secret`, `secret2`, `expires`, `extra`, `force_reset`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-07-07 15:33:41', '2026-04-11 17:01:16', '2026-07-07 15:33:41'),
-(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$jR6kxoQaf3XPl58gI5FP8.sfU4cOlTdj/zbZwwmhbJKoxR.frN.My', NULL, NULL, 0, '2026-07-07 15:36:40', '2026-04-11 17:02:38', '2026-07-07 15:36:40'),
+(1, 1, 'email_password', NULL, 'titisland@gmail.com', '$2y$12$fQQGOXUFz0cpRjQv6KEQKunD.NyN.foC2QF30zzcvm47qdRIHtW26', NULL, NULL, 0, '2026-07-08 11:18:31', '2026-04-11 17:01:16', '2026-07-08 11:18:31'),
+(2, 2, 'email_password', NULL, 'mathisfrances11@gmail.com', '$2y$12$MCy7X0OR/J0IAycNYTkrwOGAi2UygpbYVtakTyTZEOGJvE6b60BSa', NULL, NULL, 0, '2026-07-10 22:39:53', '2026-04-11 17:02:38', '2026-07-10 22:39:53'),
 (3, 2, 'magic-link', NULL, 'e3fc52dba64bd3b1958f', NULL, '2026-04-30 15:11:11', NULL, 0, NULL, '2026-04-30 14:11:11', '2026-04-30 14:11:11'),
 (4, 3, 'email_password', NULL, 'hugophilippe26@gmail.com', '$2y$12$9rKoqgP6n7E1vosN4EUWpu5L/lPLkyb9GrDKmIqJxQX9pzG/7drPG', NULL, NULL, 0, NULL, '2026-04-30 14:13:09', '2026-04-30 14:13:10'),
 (5, 4, 'email_password', NULL, 'mathisfrances111@gmail.com', '$2y$12$q4NTrCKkkMj3kINlncokHuDcbgPaDT2SDDooXI0R5asUjUwjK1pem', NULL, NULL, 0, '2026-07-07 14:51:37', '2026-05-29 22:30:44', '2026-07-07 14:51:37'),
@@ -165,18 +213,29 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `user_agent`, `id_type`, `identif
 (30, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-07 14:52:04', 1),
 (31, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-07 15:33:30', 1),
 (32, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'titisland@gmail.com', 1, '2026-07-07 15:33:41', 1),
-(33, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-07 15:36:40', 1);
+(33, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-07 15:36:40', 1),
+(34, '140.248.41.25', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15', 'email_password', 'mathisfrances11@gmail.com', NULL, '2026-07-08 11:13:47', 0),
+(35, '140.248.41.25', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15', 'email_password', 'mathisfrances11@gmail.com', NULL, '2026-07-08 11:13:57', 0),
+(36, '146.75.166.49', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15', 'email_password', 'mathisfrances11@gmail.com', NULL, '2026-07-08 11:15:28', 0),
+(37, '146.75.166.49', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15', 'email_password', 'titisland@gmail.com', 1, '2026-07-08 11:15:37', 1),
+(38, '146.75.166.49', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15', 'email_password', 'mathisfrances11@gmail.com', NULL, '2026-07-08 11:17:55', 0),
+(39, '104.28.42.14', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15', 'email_password', 'mathisfrances11@gmail.com', NULL, '2026-07-08 11:18:09', 0),
+(40, '146.75.166.49', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15', 'email_password', 'titisland@gmail.com', 1, '2026-07-08 11:18:31', 1),
+(41, '104.28.42.27', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-08 11:19:52', 1),
+(42, '5.49.246.18', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', 'email_password', 'mathisfrances11@gmail.com', 2, '2026-07-10 22:39:53', 1);
 
 TRUNCATE TABLE `auth_permissions_users`;
 TRUNCATE TABLE `auth_remember_tokens`;
 INSERT INTO `auth_remember_tokens` (`id`, `selector`, `hashedValidator`, `user_id`, `expires`, `created_at`, `updated_at`) VALUES
 (28, '0c0a3d01723574cefa10d769', '85107563faa039ceec83fe361732ff72c9dbbc3ea47f2796dca37bd7ee1761b1', 5, '2026-08-05 15:40:16', '2026-06-25 12:23:05', '2026-07-06 15:40:16'),
-(39, '439288b52c564adfbf874b4e', '43a6b1cc5877159bff24be46b21893ede6691a920a36c2b876e7d5d18d15b311', 2, '2026-08-06 15:36:40', '2026-07-07 15:36:40', '2026-07-07 15:36:40');
+(39, '439288b52c564adfbf874b4e', 'd5b6ab505de52b7ef2c2c7fc5129220c9f4ad0d8e5dcf7b1ff59469a80b7d26e', 2, '2026-08-09 22:39:34', '2026-07-07 15:36:40', '2026-07-10 22:39:34'),
+(42, '9564a5488216a8efafd42146', '9dce6cb90deaeb25b83fef3595555010cfe531d87ef9da58debac61644ae3ce1', 2, '2026-08-08 15:02:14', '2026-07-08 11:19:52', '2026-07-09 15:02:14'),
+(43, '845107a4e405668222a9a3e3', '403c8bb64661642c21527b1c4c34e65dc4d0ca52983e76756c09b0d83fd7877b', 2, '2026-08-10 12:55:44', '2026-07-10 22:39:53', '2026-07-11 12:55:44');
 
 TRUNCATE TABLE `auth_token_logins`;
 TRUNCATE TABLE `cron_logs`;
 INSERT INTO `cron_logs` (`id`, `item_id`, `titre`, `url_testee`, `code_erreur`, `task_name`, `last_run`) VALUES
-(1, NULL, 'Aucun lien mort détecté', NULL, 200, 'check_dead_links', '2026-07-06 22:18:33');
+(1, NULL, 'Aucun lien mort détecté', NULL, 200, 'check_dead_links', '2026-07-09 22:25:14');
 
 TRUNCATE TABLE `division`;
 INSERT INTO `division` (`id`, `id_header`, `nom`) VALUES
@@ -200,47 +259,56 @@ INSERT INTO `header` (`id`, `nom`) VALUES
 (5, 'Outils');
 
 TRUNCATE TABLE `item`;
-INSERT INTO `item` (`id`, `id_user`, `is_public`, `id_division`, `titre`, `status`, `image`, `lien`, `link_status`, `description`, `episode`, `saison`, `position`, `date_sortie`, `deleted_at`) VALUES
-(1, 2, 0, 1, 'One Piece', 'En cours', 'https://image.tmdb.org/t/p/w500/l5menwH7JjOBbXjoftYdwMmsqmT.jpg', 'https://voir-anime.to/anime/one-piece/one-piece-{ep4}-vostfr/', 'ok', 'Une aventure en haute mer légendaire et unique en son genre. Monkey D. Luffy est un jeune aventurier...', '1141', 1, 8, NULL, NULL),
-(2, 2, 0, 2, 'One Piece', 'Aucun', 'https://www.myutaku.com/media/mangas/12.jpg', 'https://www.scan-vf.net/one_piece/chapitre-{ep}', 'ok', 'Une aventure en haute mer légendaire et unique en son genre. Monkey D. Luffy est un jeune aventurier...', '1186', 0, 0, '2026-06-19 18:00:00', NULL),
-(5, 2, 0, 1, 'Frieren', 'Aucun', 'https://image.tmdb.org/t/p/w500/j8K7vgF3Kp5T6EwJvez9B4it6CB.jpg', 'https://voir-anime.to/anime/sousou-no-frieren-{s}/sousou-no-frieren-{s}-{ep2}-vostfr/', 'ok', 'L’elfe Frieren a vaincu le roi des démons aux côtés du groupe mené par le jeune héros Himmel. Après ...', '3', 2, 5, NULL, NULL),
-(6, 2, 0, 1, 'Wind Breaker', 'Aucun', 'https://image.tmdb.org/t/p/w500/cciJ1sSUtbdamdhM01qUqkxgEEf.jpg', 'https://voir-anime.to/anime/wind-breaker-{s}/wind-breaker-{s}-{ep2}-vostfr/', 'ok', 'Au lycée Fûrin, on n\'a pas la moyenne, mais on sait se battre ! Cet établissement a le pire taux de ...', '9', 2, 3, NULL, NULL),
-(7, 2, 0, 1, 'To Your Eternity', 'Aucun', 'https://image.tmdb.org/t/p/w500/bohMYRVSIG68md0zQobyWbV4S8e.jpg', 'https://voir-anime.to/anime/fumetsu-no-anata-e-{s}/fumetsu-no-anata-e-{s}-{ep2}-vostfr/', 'ok', 'Un garçon solitaire errant dans les régions arctiques de l\'Amérique du Nord rencontre un loup. Tous ...', '9', 3, 6, NULL, NULL),
-(8, 2, 0, 1, 'Bleach', 'En pause', 'https://www.myutaku.com/media/anime/poster/74796.jpg', 'https://voir-anime.to/anime/bleach/bleach-{ep3}-vostfr/', 'ok', 'Adolescent de quinze ans, Ichigo Kurosaki possède un don particulier : celui de voir les esprits. Un...', '154', 8, 10, NULL, NULL),
-(10, 1, 1, 6, 'VoirAnime', 'Aucun', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdYwTRt_o2nzbUEQuhIf36xoD7DC5rpxP6vg&s', 'https://voir-anime.to/', 'ok', '', '', 0, 0, NULL, NULL),
-(12, 1, 1, 9, 'PapaduStream', 'Aucun', '', 'https://papadustream.email/', 'ok', '', '', 0, 0, NULL, NULL),
-(13, 1, 1, 9, 'PLR', 'Aucun', NULL, 'https://sites.google.com/view/prl-series/accueil?authuser=0', 'ok', NULL, NULL, NULL, 0, NULL, NULL),
-(14, 1, 1, 6, 'Franime', 'Aucun', 'https://linktr.ee/og/image/franime.jpg', 'https://franime.fr/', 'ok', '', '', 0, 0, NULL, NULL),
-(16, 1, 1, 7, 'Lelmanga', 'Aucun', 'https://img.themesinfo.com/i/1/387/wordpress-theme-mangareader-q6z9a-m.jpg', 'https://www.lelmanga.com/', 'ok', '', '', 0, 2, NULL, NULL),
-(17, 1, 1, 7, 'ScanVf', 'Aucun', NULL, 'https://www.scan-vf.net/', 'ok', NULL, NULL, NULL, 0, NULL, NULL),
-(19, 1, 1, 7, 'Sushiscan', 'Aucun', '', 'https://sushiscan.net', 'ok', '', '', 0, 1, NULL, NULL),
-(20, 1, 1, 8, 'PLR', 'Aucun', NULL, 'https://sites.google.com/view/teamprl/', 'ok', NULL, NULL, NULL, 0, NULL, NULL),
-(21, 1, 1, 5, 'Wiflix', 'Aucun', '', 'https://go-fle.site', 'ok', '', '', 0, 2, NULL, NULL),
-(22, 1, 1, 5, 'Netflix', 'Aucun', 'https://images.ctfassets.net/4cd45et68cgf/Rx83JoRDMkYNlMC9MKzcB/2b14d5a59fc3937afd3f03191e19502d/Netflix-Symbol.png?w=700&h=456', 'https://www.netflix.com/browse', 'ok', '', '', 0, 0, NULL, NULL),
-(24, 2, 0, 1, 'Noble Reincarnation', 'Aucun', 'https://image.tmdb.org/t/p/w500/ggxUYlw7a3eVegnXDv8aCDiLccJ.jpg', 'https://voir-anime.to/anime/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power-{ep2}-vostfr/', 'ok', 'En tant que treizième prince de la famille royale, Noah a toujours mené une vie paisible, loin des i...', '2', 1, 7, NULL, NULL),
-(25, 1, 1, 10, 'Audio To Text', 'Aucun', NULL, 'https://editor.flixier.com/transcribe?fx_source=search&lang=en&fx_campaign=convert-audio-to-text&fx_medium=tools', 'ok', 'Convertir les fichiers audio en textes', NULL, NULL, 0, NULL, NULL),
-(26, 1, 1, 10, 'Bootstrap Icons', 'Aucun', NULL, 'https://icons.getbootstrap.com', 'ok', 'Bibliothèque d\'icônes', NULL, NULL, 0, NULL, NULL),
-(27, 1, 1, 5, 'Prime Video', 'Aucun', 'https://cdn.prod.website-files.com/63f46dc8ada663b2260ad042/651e7514b3a51ee790163981_Amazon%20-%20Prime%20Video%20(2).jpg', 'https://www.primevideo.com/', 'ok', '', '', 0, 1, NULL, NULL),
-(28, 1, 1, 10, 'ClipDrop', 'Aucun', '', 'https://clipdrop.co/', 'ok', 'Administrer des images', '', 0, 0, NULL, NULL),
-(30, 1, 1, 10, 'Durable', 'Aucun', '', 'https://app.durable.co/dashboard', 'ok', 'Générer des sites web', '', 0, 0, NULL, NULL),
-(31, 1, 1, 10, 'Fotor', 'Aucun', NULL, 'https://www.fotor.com/', 'ok', 'conceptions et éditions d\'images', NULL, NULL, 0, NULL, NULL),
-(32, 1, 1, 10, 'Krea.ai', 'Aucun', NULL, 'https://www.krea.ai/apps/image/realtime', 'ok', 'Générer des Images', NULL, NULL, 0, NULL, NULL),
-(33, 1, 1, 10, 'obfuscator', 'Aucun', NULL, 'https://obfuscator.io/', 'ok', 'crypter les scripts javascripts', NULL, NULL, 0, NULL, NULL),
-(34, 2, 0, 1, 'Tsugai - Daemons of the Shadow Realm', 'En cours', 'https://image.tmdb.org/t/p/w500/mNqW2jnAogZa0nJ94q1LUum8Hos.jpg', 'https://voir-anime.to/anime/yomi-no-tsugai/daemons-of-the-shadow-realm-{ep2}-vostfr/', 'ok', 'Yuru, le chasseur, vit séparé de sa sœur jumelle Asa, enfermée dans une prison pour satisfaire un ri...', '14', 1, 2, '2026-07-11 18:00:00', NULL),
-(35, 2, 0, 1, 'Classroom of the Elite', 'En cours', 'https://image.tmdb.org/t/p/w500/mmhx3dImdsfYpcFm3J1tlQt5IRN.jpg', 'https://voir-anime.to/anime/classroom-of-the-elite-{s}/classroom-of-the-elite-{s}-{ep2}-vostfr/', 'ok', 'Kiyotaka Ayanokôji intègre le prestigieux lycée de haut niveau de Tokyo où, une fois le diplôme en p...', '4', 4, 0, NULL, NULL),
-(36, 2, 0, 1, 'Re:ZERO', 'Aucun', 'https://image.tmdb.org/t/p/w500/ccG0ZfXOQ0834bIus4SwZrXtkyM.jpg', 'https://voir-anime.to/anime/rezero-kara-hajimeru-isekai-seikatsu-s{s}/re-zero-kara-hajimeru-isekai-seikatsu-saison-{s}-{ep2}-vostfr/', 'ok', 'Subaru Natsuki a basculé dans un monde fantastique où il fait la connaissance d’Émilia, une jeune fi...', '1', 3, 9, NULL, NULL),
-(37, 2, 0, 1, 'Dr. STONE', 'Aucun', 'https://image.tmdb.org/t/p/w500/dLlnzbDCblBXcJqFLXyvN43NIwp.jpg', 'https://voir-anime.to/anime/dr-stone-{s}-science-future/dr-stone-{s}-{ep2}-vostfr/', 'ok', 'Plusieurs milliers d\'années après un mystérieux phénomène qui a transformé toute l\'humanité en pierr...', '1', 4, 4, NULL, NULL),
-(38, 1, 1, 10, 'Gemini', 'Aucun', '', 'https://gemini.google.com/app?hl=fr', 'ok', '', '', 0, 0, NULL, NULL),
-(39, 2, 0, 11, 'Suivi des comptes', 'Aucun', '', 'https://summury.22web.org/suivi-comptes/index.php', 'ok', '', '', 0, 0, NULL, NULL),
-(40, 2, 0, 2, 'Jujutsu Kaisen Modulo', 'À voir', 'https://www.myutaku.com/media/mangas/88950.jpg?1757883349', 'https://www.scan-vf.net/jujutsu-kaisen-modulo/chapitre-{ep}', 'ok', 'Souffrance, regrets, humiliations... les sentiments négatifs que ressentent les humains se transform...', '5', 0, 2, NULL, NULL),
-(41, 2, 1, 11, 'LivesPalmes', 'Aucun', '', 'https://livepalmes.web.app/', 'ok', 'LivePalmes (FFESSM) : suivez la nage avec palmes en direct, consultez les records et les archives.', '', NULL, 0, NULL, NULL),
-(43, 2, 0, 1, 'Les Carnets de l\'apothicaire', 'Aucun', 'https://image.tmdb.org/t/p/w500/47pSay5Ao7SFeyQBZVkW5ifyhAZ.jpg', 'https://voir-anime.to/anime/the-apothecary-diaries/the-apothecary-diaries-{ep2}-vostfr/', 'ok', 'Formée dès son plus jeune âge par son père apothicaire, Mao Mao est un jour vendue comme servante au...', '1', 1, 11, NULL, NULL),
-(47, 2, 0, 11, 'Liens très privés', 'Aucun', '', 'https://prive.titiss.space', 'ok', '', '', 0, 0, NULL, NULL),
-(52, 2, 0, 2, 'Black Clover', 'À voir', 'https://image.tmdb.org/t/p/w500/p3rUhlE81nWxPqpPR8F2u7a01Tl.jpg', 'https://www.scan-vf.net/black-clover/chapitre-{ep}', 'ok', 'Dans un monde régi par la magie, Yuno et Asta ont grandi ensemble avec un seul but en tête : devenir...', '356', 0, 1, NULL, NULL),
-(53, 1, 1, 5, 'Nakastream', 'Aucun', '', 'https://nakastream.wiki/', 'ok', '', '', 0, 3, NULL, NULL),
-(54, 2, 0, 11, 'Site de troll', 'Aucun', '', 'https://mathis.likesyou.org/troll/amfs/Trouve-tu_le_site_interessant', 'ok', '', '', 0, 0, NULL, NULL),
-(55, 2, 0, 1, 'BLACK TORCH', 'À voir', 'https://image.tmdb.org/t/p/w500/qxPsSYAiNhFLETmFJZ0s5HWyYhr.jpg', 'https://voir-anime.to/anime/black-torch/black-torch-{ep2}-vostfr/', 'ok', 'Adolescent au grand cœur capable de communiquer avec le monde animal, Jiro est issu d\'une longue lig...', '2', 1, 1, '2026-07-11 18:00:00', NULL),
-(57, 2, 0, 1, 'Mushoku Tensei: Jobless Reincarnation', 'À voir', 'https://image.tmdb.org/t/p/w500/sviEqFIPJW5gFtuYy8XyE0Uscid.jpg', 'https://voir-anime.to/anime/mushoku-tensei-{s}/mushoku-tensei-{s}-{ep2}-vostfr/', 'ok', '« Ici, je vais me transcender ! » Un anonyme de 34 ans, célibataire endurci, reclus et au chômage se...', '2', 3, 0, '2026-07-12 18:00:00', NULL);
+INSERT INTO `item` (`id`, `id_user`, `is_public`, `id_division`, `titre`, `status`, `image`, `lien`, `link_status`, `description`, `episode`, `saison`, `position`, `date_sortie`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 2, 0, 1, 'One Piece', 'En cours', 'https://image.tmdb.org/t/p/w500/l5menwH7JjOBbXjoftYdwMmsqmT.jpg', 'https://voir-anime.to/anime/one-piece/one-piece-{ep4}-vostfr/', 'ok', 'Une aventure en haute mer légendaire et unique en son genre. Monkey D. Luffy est un jeune aventurier...', '1141', 1, 9, NULL, NULL, NULL, '2026-07-10 18:48:47'),
+(2, 2, 0, 2, 'One Piece', 'Aucun', 'https://www.myutaku.com/media/mangas/12.jpg', 'https://www.scan-vf.net/one_piece/chapitre-{ep}', 'ok', 'Une aventure en haute mer légendaire et unique en son genre. Monkey D. Luffy est un jeune aventurier...', '1186', 0, 0, '2026-06-19 18:00:00', NULL, NULL, NULL),
+(5, 2, 0, 1, 'Frieren', 'Aucun', 'https://image.tmdb.org/t/p/w500/j8K7vgF3Kp5T6EwJvez9B4it6CB.jpg', 'https://voir-anime.to/anime/sousou-no-frieren-{s}/sousou-no-frieren-{s}-{ep2}-vostfr/', 'ok', 'L’elfe Frieren a vaincu le roi des démons aux côtés du groupe mené par le jeune héros Himmel. Après ...', '3', 2, 6, NULL, NULL, NULL, '2026-07-10 18:48:47'),
+(6, 2, 0, 1, 'Wind Breaker', 'Aucun', 'https://cdn.myanimelist.net/images/anime/1526/148873l.jpg', 'https://voir-anime.to/anime/wind-breaker-{s}/wind-breaker-{s}-{ep2}-vostfr/', 'ok', 'Ever since Haruka Sakura joined Furin High School, where its students call themselves Bofurin and protect the town of Makochi, he has gained new friends despite his initial skepticism. Now starting to learn how to fight alongside his classmates an...', '9', 2, 4, NULL, NULL, NULL, '2026-07-10 18:49:52'),
+(7, 2, 0, 1, 'To Your Eternity', 'Aucun', 'https://image.tmdb.org/t/p/w500/bohMYRVSIG68md0zQobyWbV4S8e.jpg', 'https://voir-anime.to/anime/fumetsu-no-anata-e-{s}/fumetsu-no-anata-e-{s}-{ep2}-vostfr/', 'ok', 'Un garçon solitaire errant dans les régions arctiques de l\'Amérique du Nord rencontre un loup. Tous ...', '9', 3, 7, NULL, NULL, NULL, '2026-07-10 18:48:47'),
+(8, 2, 0, 1, 'Bleach', 'En pause', 'https://www.myutaku.com/media/anime/poster/74796.jpg', 'https://voir-anime.to/anime/bleach/bleach-{ep3}-vostfr/', 'ok', 'Adolescent de quinze ans, Ichigo Kurosaki possède un don particulier : celui de voir les esprits. Un...', '154', 8, 11, NULL, NULL, NULL, '2026-07-10 18:48:47'),
+(10, 1, 1, 6, 'VoirAnime', 'Aucun', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdYwTRt_o2nzbUEQuhIf36xoD7DC5rpxP6vg&s', 'https://voir-anime.to/', 'ok', '', '', 0, 0, NULL, NULL, NULL, NULL),
+(12, 1, 1, 9, 'PapaduStream', 'Aucun', '', 'https://papadustream.rentals/', 'ok', '', '', 0, 0, NULL, NULL, NULL, '2026-07-09 22:26:04'),
+(13, 1, 1, 9, 'PLR', 'Aucun', NULL, 'https://sites.google.com/view/prl-series/accueil?authuser=0', 'ok', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL),
+(14, 1, 1, 6, 'Franime', 'Aucun', 'https://linktr.ee/og/image/franime.jpg', 'https://franime.fr/', 'ok', '', '', 0, 0, NULL, NULL, NULL, NULL),
+(16, 1, 1, 7, 'Lelmanga', 'Aucun', 'https://img.themesinfo.com/i/1/387/wordpress-theme-mangareader-q6z9a-m.jpg', 'https://www.lelmanga.com/', 'ok', '', '', 0, 2, NULL, NULL, NULL, NULL),
+(17, 1, 1, 7, 'ScanVf', 'Aucun', NULL, 'https://www.scan-vf.net/', 'ok', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL),
+(19, 1, 1, 7, 'Sushiscan', 'Aucun', '', 'https://sushiscan.net', 'ok', '', '', 0, 1, NULL, NULL, NULL, NULL),
+(20, 1, 1, 8, 'PLR', 'Aucun', NULL, 'https://sites.google.com/view/teamprl/', 'ok', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL),
+(21, 1, 1, 5, 'Wiflix', 'Aucun', '', 'https://go-fle.site', 'ok', '', '', 0, 3, NULL, NULL, NULL, '2026-07-07 19:48:20'),
+(22, 1, 1, 5, 'Netflix', 'Aucun', 'https://images.ctfassets.net/4cd45et68cgf/Rx83JoRDMkYNlMC9MKzcB/2b14d5a59fc3937afd3f03191e19502d/Netflix-Symbol.png?w=700&h=456', 'https://www.netflix.com/browse', 'ok', '', '', 0, 0, NULL, NULL, NULL, '2026-07-07 19:48:20'),
+(24, 2, 0, 1, 'Noble Reincarnation', 'Aucun', 'https://image.tmdb.org/t/p/w500/ggxUYlw7a3eVegnXDv8aCDiLccJ.jpg', 'https://voir-anime.to/anime/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power/noble-reincarnation-born-blessed-so-ill-obtain-ultimate-power-{ep2}-vostfr/', 'ok', 'En tant que treizième prince de la famille royale, Noah a toujours mené une vie paisible, loin des i...', '2', 1, 8, NULL, NULL, NULL, '2026-07-10 18:48:47'),
+(25, 1, 1, 10, 'Audio To Text', 'Aucun', NULL, 'https://editor.flixier.com/transcribe?fx_source=search&lang=en&fx_campaign=convert-audio-to-text&fx_medium=tools', 'ok', 'Convertir les fichiers audio en textes', NULL, NULL, 0, NULL, NULL, NULL, NULL),
+(26, 1, 1, 10, 'Bootstrap Icons', 'Aucun', NULL, 'https://icons.getbootstrap.com', 'ok', 'Bibliothèque d\'icônes', NULL, NULL, 0, NULL, NULL, NULL, NULL),
+(27, 1, 1, 5, 'Prime Video', 'Aucun', 'https://cdn.prod.website-files.com/63f46dc8ada663b2260ad042/651e7514b3a51ee790163981_Amazon%20-%20Prime%20Video%20(2).jpg', 'https://www.primevideo.com/', 'ok', '', '', 0, 1, NULL, NULL, NULL, '2026-07-07 19:48:20'),
+(28, 1, 1, 10, 'ClipDrop', 'Aucun', '', 'https://clipdrop.co/', 'ok', 'Administrer des images', '', 0, 0, NULL, NULL, NULL, NULL),
+(30, 1, 1, 10, 'Durable', 'Aucun', '', 'https://app.durable.co/dashboard', 'ok', 'Générer des sites web', '', 0, 0, NULL, NULL, NULL, NULL),
+(31, 1, 1, 10, 'Fotor', 'Aucun', NULL, 'https://www.fotor.com/', 'ok', 'conceptions et éditions d\'images', NULL, NULL, 0, NULL, NULL, NULL, NULL),
+(32, 1, 1, 10, 'Krea.ai', 'Aucun', NULL, 'https://www.krea.ai/apps/image/realtime', 'ok', 'Générer des Images', NULL, NULL, 0, NULL, NULL, NULL, NULL),
+(33, 1, 1, 10, 'obfuscator', 'Aucun', NULL, 'https://obfuscator.io/', 'ok', 'crypter les scripts javascripts', NULL, NULL, 0, NULL, NULL, NULL, NULL),
+(34, 2, 0, 1, 'Tsugai - Daemons of the Shadow Realm', 'En cours', 'https://image.tmdb.org/t/p/w500/mNqW2jnAogZa0nJ94q1LUum8Hos.jpg', 'https://voir-anime.to/anime/yomi-no-tsugai/daemons-of-the-shadow-realm-{ep2}-vostfr/', 'ok', 'Yuru, le chasseur, vit séparé de sa sœur jumelle Asa, enfermée dans une prison pour satisfaire un ri...', '14', 1, 3, '2026-07-11 18:00:00', NULL, NULL, '2026-07-10 18:48:47'),
+(35, 2, 0, 1, 'Classroom of the Elite ', 'En cours', 'https://cdn.myanimelist.net/images/anime/1176/153626l.jpg', 'https://voir-anime.to/anime/classroom-of-the-elite-{s}/classroom-of-the-elite-{s}-{ep2}-vostfr/', 'ok', 'As soon as Kiyotaka Ayanokouji and the rest of Class D officially enter their second year at Tokyo Metropolitan Advanced Nurturing High School, they face their next special test: each second-year student will have to team up with a first-year stud...', '6', 4, 0, NULL, NULL, NULL, '2026-07-10 18:49:22'),
+(36, 2, 0, 1, 'Re:ZERO', 'Aucun', 'https://image.tmdb.org/t/p/w500/ccG0ZfXOQ0834bIus4SwZrXtkyM.jpg', 'https://voir-anime.to/anime/rezero-kara-hajimeru-isekai-seikatsu-s{s}/re-zero-kara-hajimeru-isekai-seikatsu-saison-{s}-{ep2}-vostfr/', 'ok', 'Subaru Natsuki a basculé dans un monde fantastique où il fait la connaissance d’Émilia, une jeune fi...', '1', 3, 10, NULL, NULL, NULL, '2026-07-10 18:48:47'),
+(37, 2, 0, 1, 'Dr. STONE', 'Aucun', 'https://image.tmdb.org/t/p/w500/dLlnzbDCblBXcJqFLXyvN43NIwp.jpg', 'https://voir-anime.to/anime/dr-stone-{s}-science-future/dr-stone-{s}-{ep2}-vostfr/', 'ok', 'Plusieurs milliers d\'années après un mystérieux phénomène qui a transformé toute l\'humanité en pierr...', '1', 4, 5, NULL, NULL, NULL, '2026-07-10 18:48:47'),
+(38, 1, 1, 10, 'Gemini', 'Aucun', '', 'https://gemini.google.com/app?hl=fr', 'ok', '', '', 0, 0, NULL, NULL, NULL, NULL),
+(39, 2, 0, 11, 'Suivi des comptes', 'Aucun', '', 'https://summury.22web.org/suivi-comptes/index.php', 'ok', '', '', 0, 0, NULL, NULL, NULL, NULL),
+(40, 2, 0, 2, 'Jujutsu Kaisen Modulo', 'À voir', 'https://www.myutaku.com/media/mangas/88950.jpg?1757883349', 'https://www.scan-vf.net/jujutsu-kaisen-modulo/chapitre-{ep}', 'ok', 'Souffrance, regrets, humiliations... les sentiments négatifs que ressentent les humains se transform...', '5', 0, 2, NULL, NULL, NULL, NULL),
+(41, 2, 1, 11, 'LivesPalmes', 'Aucun', '', 'https://livepalmes.web.app/', 'ok', 'LivePalmes (FFESSM) : suivez la nage avec palmes en direct, consultez les records et les archives.', '', NULL, 0, NULL, NULL, NULL, NULL),
+(43, 2, 0, 1, 'Les Carnets de l\'apothicaire', 'Aucun', 'https://image.tmdb.org/t/p/w500/47pSay5Ao7SFeyQBZVkW5ifyhAZ.jpg', 'https://voir-anime.to/anime/the-apothecary-diaries/the-apothecary-diaries-{ep2}-vostfr/', 'ok', 'Formée dès son plus jeune âge par son père apothicaire, Mao Mao est un jour vendue comme servante au...', '1', 1, 12, NULL, NULL, NULL, '2026-07-10 18:48:47'),
+(47, 2, 0, 11, 'Liens très privés', 'Aucun', '', 'https://prive.titiss.space', 'ok', '', '', 0, 0, NULL, NULL, NULL, NULL),
+(52, 2, 0, 2, 'Black Clover', 'À voir', 'https://image.tmdb.org/t/p/w500/p3rUhlE81nWxPqpPR8F2u7a01Tl.jpg', 'https://www.scan-vf.net/black-clover/chapitre-{ep}', 'ok', 'Dans un monde régi par la magie, Yuno et Asta ont grandi ensemble avec un seul but en tête : devenir...', '356', 0, 1, NULL, NULL, NULL, NULL),
+(53, 1, 1, 5, 'Nakastream', 'Aucun', '', 'https://nakastream.wiki/', 'ok', '', '', 0, 4, NULL, NULL, NULL, '2026-07-07 19:48:20'),
+(54, 2, 0, 11, 'Site de troll', 'Aucun', '', 'https://mathis.likesyou.org/troll/amfs/Trouve-tu_le_site_interessant', 'ok', '', '', 0, 0, NULL, NULL, NULL, NULL),
+(55, 2, 0, 1, 'BLACK TORCH', 'À voir', 'https://image.tmdb.org/t/p/w500/qxPsSYAiNhFLETmFJZ0s5HWyYhr.jpg', 'https://voir-anime.to/anime/black-torch/black-torch-{ep2}-vostfr/', 'ok', 'Adolescent au grand cœur capable de communiquer avec le monde animal, Jiro est issu d\'une longue lig...', '2', 1, 2, '2026-07-11 18:00:00', NULL, NULL, '2026-07-10 18:48:47'),
+(57, 2, 0, 1, 'Mushoku Tensei: Jobless Reincarnation', 'En cours', 'https://image.tmdb.org/t/p/w500/sviEqFIPJW5gFtuYy8XyE0Uscid.jpg', 'https://voir-anime.to/anime/mushoku-tensei-{s}/mushoku-tensei-{s}-{ep2}-vostfr/', 'ok', '« Ici, je vais me transcender ! » Un anonyme de 34 ans, célibataire endurci, reclus et au chômage se...', '2', 3, 1, '2026-07-12 18:00:00', NULL, NULL, '2026-07-10 18:48:47'),
+(58, 2, 0, 4, 'Game of Thrones', 'À voir', 'https://image.tmdb.org/t/p/w500/eRMfekBOnwyE9G0ffyEJIBOjX2n.jpg', 'https://nakastream.tv/player?title=Game%20of%20Thrones&id=339&poster=/eRMfekBOnwyE9G0ffyEJIBOjX2n.jpg&type=tv&season={s}&episode={ep}', 'ok', 'Il y a très longtemps, à une époque oubliée, une force a détruit l\'équilibre des saisons. Dans un pa...', '1', 1, 0, NULL, '2026-07-07 19:32:21', '2026-07-07 19:31:19', '2026-07-07 19:32:21'),
+(59, 2, 0, 4, 'Vampire Diaries', 'À voir', 'https://image.tmdb.org/t/p/w500/4RHhqEdI2VV5wHp0rLmKAg9t9h6.jpg', 'https://nakastream.tv/player?title=Vampire%20Diaries&id=1434&poster=/4RHhqEdI2VV5wHp0rLmKAg9t9h6.jpg&type=tv&season={s}&episode={ep}', 'ok', 'Quatre mois après le tragique accident de voiture qui a tué leurs parents, Elena Gilbert, 17 ans, et...', '6', 5, 2, NULL, NULL, '2026-07-07 19:33:46', '2026-07-09 22:44:18'),
+(60, 2, 0, 4, 'The Originals', 'À voir', 'https://image.tmdb.org/t/p/w500/keJOhJXGiLL54EW6QocbyvQGquA.jpg', 'https://nakastream.tv/player?title=The%20Originals&id=1438&poster=/keJOhJXGiLL54EW6QocbyvQGquA.jpg&type=tv&season={s}&episode={ep}', 'ok', 'Le vampire originel Klaus fait son retour au Vieux Carré, un quartier français de la Nouvelle Orléan...', '7', 1, 1, NULL, NULL, '2026-07-07 19:35:06', '2026-07-09 22:44:18'),
+(61, 2, 0, 4, 'Ordre de diffusion TVD & The originals', 'Aucun', '', 'https://drive.google.com/drive/folders/1fd1YxKtcuBG0xH5TnCoL2po_BS7aOYT_?usp=sharing', 'ok', 'Capture n°2', '', 0, 0, NULL, NULL, '2026-07-07 19:44:52', '2026-07-09 22:44:18'),
+(62, 1, 1, 5, 'Canal +', 'Aucun', '', 'https://www.canalplus.com/?from=pass', 'ok', '', '', 0, 2, NULL, NULL, '2026-07-07 19:47:56', '2026-07-07 19:48:24'),
+(63, 2, 0, 4, 'The Protector', 'En cours', 'https://image.tmdb.org/t/p/w500/v3cYsLksGX1baCYtn2AQa2R5HDR.jpg', '', 'ok', '', '', 0, 0, NULL, '2026-07-09 21:22:53', '2026-07-09 21:18:46', '2026-07-09 21:22:53'),
+(64, 2, 0, 3, 'Enola Holmes 3', 'Aucun', 'https://image.tmdb.org/t/p/w500/ncHImt9szlNQaNM2iY3vcgSdDp.jpg', 'https://nakastream.tv/player?title=Enola%20Holmes%203&id=8950&poster=/7kRYHH9H9PjBFwz1FprbHB2AAjI.jpg&type=movie', 'ok', 'La détective Enola Holmes poursuit ses aventures à Malte, où son projet de mariage se complique quand elle doit résoudre une périlleuse affaire liée à la disparition de Sherlock.', '', 0, 0, NULL, '2026-07-09 22:18:56', '2026-07-09 21:23:44', '2026-07-09 22:18:56'),
+(65, 2, 0, 3, 'Enola Holmes 3', 'Aucun', 'https://image.tmdb.org/t/p/w500/ncHImt9szlNQaNM2iY3vcgSdDp.jpg', 'https://nakastream.tv/player?title=Enola%20Holmes%203&id=8950&poster=/7kRYHH9H9PjBFwz1FprbHB2AAjI.jpg&type=movie', 'ok', 'La détective Enola Holmes poursuit ses aventures à Malte, où son projet de mariage se complique quand elle doit résoudre une périlleuse affaire liée à la disparition de Sherlock.', NULL, NULL, 0, NULL, NULL, '2026-07-09 22:19:14', '2026-07-09 22:24:39'),
+(66, 2, 0, 4, 'Le Protecteur d\'Istanbul', 'À voir', 'https://image.tmdb.org/t/p/w500/mj6z8wMzcYPt9pwJqHxy0Avlnum.jpg', 'https://papadustream.rentals/cat-series/drame-s/1287-le-protecteur-distanbul-c8a/{s}-saison/{ep}-episode.html', 'ok', 'Après avoir découvert ce qui le lie à un ancien ordre secret, un jeune homme de l\'Istanbul moderne entreprend de sauver la ville des griffes d\'un ennemi immortel.', '2', 3, 3, NULL, NULL, '2026-07-09 22:29:20', '2026-07-09 22:44:18');
 
 TRUNCATE TABLE `item_revisions`;
 INSERT INTO `item_revisions` (`id`, `original_item_id`, `id_user`, `titre`, `status`, `image`, `lien`, `description`, `episode`, `saison`, `position`, `date_sortie`, `revision_status`, `created_at`) VALUES
@@ -252,7 +320,7 @@ TRUNCATE TABLE `settings`;
 TRUNCATE TABLE `users`;
 INSERT INTO `users` (`id`, `username`, `status`, `status_message`, `active`, `last_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Super Admin', NULL, NULL, 1, '2026-07-07 14:51:06', '2026-04-11 17:01:15', '2026-05-17 12:39:43', NULL),
-(2, 'Titiss', NULL, NULL, 1, '2026-07-07 19:07:20', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL),
+(2, 'Titiss', NULL, NULL, 1, '2026-07-10 18:49:52', '2026-04-11 17:02:37', '2026-04-11 17:02:38', NULL),
 (3, 'Seiko', NULL, NULL, 1, NULL, '2026-04-30 14:13:09', '2026-05-29 22:18:11', NULL),
 (4, 'User de test', 'banned', 'Accès révoqué par l\'administration.', 1, NULL, '2026-05-29 22:30:44', '2026-07-07 15:33:52', NULL),
 (5, 'Ambre', NULL, NULL, 1, NULL, '2026-06-17 20:17:27', '2026-06-25 12:09:08', NULL);
