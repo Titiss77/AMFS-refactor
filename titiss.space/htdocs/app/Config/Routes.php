@@ -71,6 +71,12 @@ $routes->group('items', ['namespace' => 'App\Controllers\Admin', 'filter' => 'gr
 $routes->group('audit', ['namespace' => 'App\Controllers\Admin', 'filter' => 'group:superadmin,admin'], static function ($routes): void {
     $routes->get('/', 'AuditController::index');
 });
+
+$routes->group('reports', ['namespace' => 'App\Controllers\Admin', 'filter' => 'group:superadmin,admin'], static function ($routes): void {
+    $routes->get('/', 'ReportController::index');
+    $routes->get('resolve/(:num)', 'ReportController::resolve/$1');
+    $routes->get('delete/(:num)', 'ReportController::delete/$1');
+});
 // --------------------------------------------------------------------
 // Routes par défaut de Shield (Login, Register, etc.)
 // --------------------------------------------------------------------

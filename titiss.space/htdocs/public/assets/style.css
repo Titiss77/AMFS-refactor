@@ -991,8 +991,9 @@ select.form-control {
 
 .btn-report-sm{
     color: var(--warning);
-    position: relative;
-    right: 9rem;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
     background-color: transparent;
     border: none;
     cursor: pointer;
