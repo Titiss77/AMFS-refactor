@@ -24,7 +24,7 @@
     <script>
     /* Configuration Globale (Securisee contre la minification) */
     window.amfsConfig = {
-        "baseUrl": "<?php echo rtrim(base_url(), '/') . '/'; ?>",
+        "baseUrl": "<?php echo rtrim(base_url(), '/').'/'; ?>",
         "updateOrderUrl": "<?php echo base_url('items/update-order'); ?>",
         "cronUrl": "<?php echo base_url('cron/run'); ?>",
         "csrfHeader": "<?php echo csrf_header(); ?>",
@@ -37,7 +37,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
     </script>
-    <script src="<?php echo base_url('assets/script.js?v=' . time()); ?>" defer></script>
+    <script src="<?php echo base_url('assets/script.js?v='.time()); ?>" defer></script>
 </head>
 
 <body>
@@ -58,9 +58,9 @@
 
             <?php if (auth()->loggedIn()) { ?>
             <?php if (auth()->user()->inGroup('admin', 'superadmin')) { ?>
-            <?php 
+            <?php
                 // Calcul du total des signalements en attente
-                $pendingReportsTotal = model('App\Models\ReportModel')->where('status', 'pending')->countAllResults(); 
+                $pendingReportsTotal = model('App\Models\ReportModel')->where('status', 'pending')->countAllResults();
                 ?>
             <a href="<?php echo base_url('audit'); ?>"
                 style="color: #80808099; font-size: small; display: flex; align-items: center;">
@@ -92,7 +92,7 @@
     <?php if (isset($headers) && !empty($headers)) { ?>
     <nav class="category-nav container">
         <?php foreach ($headers as $h) { ?>
-        <a href="<?php echo base_url('categorie/' . $h['id']); ?>"
+        <a href="<?php echo base_url('categorie/'.$h['id']); ?>"
             class="nav-tab <?php echo (isset($currentHeaderId) && $currentHeaderId == $h['id']) ? 'active' : ''; ?>">
             <?php echo esc($h['nom']); ?>
         </a>
@@ -115,20 +115,20 @@
         }
 
         /* Interception des Flashdata de CodeIgniter 4 pour lancer des Toasts automatiquement */
-        <?php if (session()->getFlashdata('success')): ?>
+        <?php if (session()->getFlashdata('success')) { ?>
         if (typeof showToast === 'function') showToast("<?php echo esc(session()->getFlashdata('success')); ?>",
             "success");
-        <?php endif ?>
+        <?php } ?>
 
-        <?php if (session()->getFlashdata('error')): ?>
+        <?php if (session()->getFlashdata('error')) { ?>
         if (typeof showToast === 'function') showToast("<?php echo esc(session()->getFlashdata('error')); ?>",
             "danger");
-        <?php endif ?>
+        <?php } ?>
 
-        <?php if (session()->getFlashdata('message')): ?>
+        <?php if (session()->getFlashdata('message')) { ?>
         if (typeof showToast === 'function') showToast("<?php echo esc(session()->getFlashdata('message')); ?>",
             "info");
-        <?php endif ?>
+        <?php } ?>
     });
 
     /* Cron Job silencieux */

@@ -192,7 +192,7 @@
                         <?php } ?>
                     </div>
                 </a>
-                <?php if ($item->is_public == 1) { ?>
+                <?php if (1 == $item->is_public) { ?>
                 <button type="button" class="btn-report-sm" data-id="<?php echo esc($item->id); ?>"
                     onclick="openReportModal(this)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -66,8 +68,8 @@ class ItemController extends BaseController
 
             $data['date_sortie'] = empty($this->request->getPost('date_sortie')) ? null : $this->request->getPost('date_sortie');
 
-            $data['saison'] = ($this->request->getPost('saison') === '') ? null : $this->request->getPost('saison');
-            $data['episode'] = ($this->request->getPost('episode') === '') ? null : $this->request->getPost('episode');
+            $data['saison'] = ('' === $this->request->getPost('saison')) ? null : $this->request->getPost('saison');
+            $data['episode'] = ('' === $this->request->getPost('episode')) ? null : $this->request->getPost('episode');
 
             $existing = null;
             if ($id) {
@@ -98,7 +100,8 @@ class ItemController extends BaseController
                     $existingRevision = $revisionModel
                         ->where('original_item_id', $id)
                         ->where('revision_status', 'pending')
-                        ->first();
+                        ->first()
+                    ;
 
                     $revisionData = [
                         'original_item_id' => $id,
@@ -128,8 +131,9 @@ class ItemController extends BaseController
                     $audit->logAction($actionLog, "L'utilisateur a proposé une modification pour la carte publique ID {$id} ('{$existing->titre}').");
 
                     return redirect()
-                        ->to($backUrl . $separator . 'open=' . $existing->id_division . '#div-' . $existing->id_division)
-                        ->with('message', 'Votre modification a été soumise au SuperAdmin pour validation.');
+                        ->to($backUrl.$separator.'open='.$existing->id_division.'#div-'.$existing->id_division)
+                        ->with('message', 'Votre modification a été soumise au SuperAdmin pour validation.')
+                    ;
                 }
                 $item = new Item($data);
                 $this->model->save($item);
@@ -142,7 +146,8 @@ class ItemController extends BaseController
                     $revisionModel
                         ->where('original_item_id', $id)
                         ->where('revision_status', 'pending')
-                        ->delete();
+                        ->delete()
+                    ;
                     $audit->logAction('Nettoyage Draft', "Passage en privé de la carte ID {$id} : Suppression automatique des drafts en attente.");
                 }
             } else {
@@ -154,7 +159,7 @@ class ItemController extends BaseController
                 $audit->logAction('Création Carte', "Création de la carte ID {$newId} ('{$data['titre']}'). Visibilité initiale: {$statutVisibility}.");
             }
 
-            return redirect()->to($backUrl . $separator . 'open=' . $data['id_division'] . '#div-' . $data['id_division']);
+            return redirect()->to($backUrl.$separator.'open='.$data['id_division'].'#div-'.$data['id_division']);
         }
     }
 
@@ -176,7 +181,7 @@ class ItemController extends BaseController
                 $backUrl = $this->request->getUserAgent()->getReferrer() ?: site_url('/');
                 $separator = (str_contains($backUrl, '?')) ? '&' : '?';
 
-                return redirect()->to($backUrl . $separator . 'open=' . $id_div . '#div-' . $id_div);
+                return redirect()->to($backUrl.$separator.'open='.$id_div.'#div-'.$id_div);
             }
         }
 
@@ -207,7 +212,7 @@ class ItemController extends BaseController
     }
 
     /**
-     * Recherche unifiée Multi-API (TMDB, Jikan & Open Graph Scraper)
+     * Recherche unifiée Multi-API (TMDB, Jikan & Open Graph Scraper).
      */
     public function search()
     {
@@ -224,74 +229,27 @@ class ItemController extends BaseController
             // Détection et traitement automatique si la saisie est une URL directe
             if (filter_var($query, FILTER_VALIDATE_URL)) {
                 $metaData = $this->scrapeOpenGraph($query);
+
                 return $this->response->setJSON($metaData ? [$metaData] : ['error' => 'Impossible de lire le lien.']);
             }
 
             // Gestion de la recherche littéraire et d'animation via Jikan API
-            if ($type === 'manga' || $type === 'anime') {
-                $url = "https://api.jikan.moe/v4/{$type}?q=" . urlencode($query) . '&limit=5';
+            if ('manga' === $type || 'anime' === $type) {
+                $url = "https://api.jikan.moe/v4/{$type}?q=".urlencode($query).'&limit=5';
                 $response = $client->get($url);
+
                 return $this->response->setJSON(json_decode($response->getBody()));
             }
 
             // Fallback par défaut : TMDB pour le cinéma, les séries ou recherches globales
             $apiKey = env('TMDB_API_KEY') ?? 'ba55da0439797150ed58c4e524584823';
-            $url = 'https://api.themoviedb.org/3/search/multi?query=' . urlencode($query) . "&api_key={$apiKey}&language=fr-FR";
+            $url = 'https://api.themoviedb.org/3/search/multi?query='.urlencode($query)."&api_key={$apiKey}&language=fr-FR";
             $response = $client->get($url);
 
             return $this->response->setJSON(json_decode($response->getBody()));
         } catch (\Exception $e) {
             return $this->response->setJSON(['error' => 'Erreur lors du traitement de la recherche unifiée.']);
         }
-    }
-
-    /**
-     * Extrait les balises Open Graph d'un site web externe pour l'auto-remplissage des liens
-     */
-    private function scrapeOpenGraph(string $url): ?array
-    {
-        $html = @file_get_contents($url);
-        if (!$html) {
-            return null;
-        }
-
-        $doc = new \DOMDocument();
-        // Utilisation des entités HTML pour prévenir les anomalies d'encodage de caractères exotiques
-        @$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        $tags = $doc->getElementsByTagName('meta');
-
-        $data = [
-            'titre' => '',
-            'description' => '',
-            'image' => '',
-            'lien' => $url,
-            'is_link' => true
-        ];
-
-        foreach ($tags as $tag) {
-            if ($tag->hasAttribute('property')) {
-                $property = $tag->getAttribute('property');
-                if ($property === 'og:title') {
-                    $data['titre'] = $tag->getAttribute('content');
-                }
-                if ($property === 'og:description') {
-                    $data['description'] = $tag->getAttribute('content');
-                }
-                if ($property === 'og:image') {
-                    $data['image'] = $tag->getAttribute('content');
-                }
-            }
-        }
-
-        // Stratégie de repli si le protocole Open Graph est absent de la cible
-        if (empty($data['titre'])) {
-            $titles = $doc->getElementsByTagName('title');
-            if ($titles->length > 0) {
-                $data['titre'] = $titles->item(0)->nodeValue;
-            }
-        }
-
-        return $data;
     }
 
     public function checkToGlobal()
@@ -356,5 +314,54 @@ class ItemController extends BaseController
             'success' => false,
             'error' => 'Requête invalide ou données manquantes.',
         ]);
+    }
+
+    /**
+     * Extrait les balises Open Graph d'un site web externe pour l'auto-remplissage des liens.
+     */
+    private function scrapeOpenGraph(string $url): ?array
+    {
+        $html = @file_get_contents($url);
+        if (!$html) {
+            return null;
+        }
+
+        $doc = new \DOMDocument();
+        // Utilisation des entités HTML pour prévenir les anomalies d'encodage de caractères exotiques
+        @$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        $tags = $doc->getElementsByTagName('meta');
+
+        $data = [
+            'titre' => '',
+            'description' => '',
+            'image' => '',
+            'lien' => $url,
+            'is_link' => true,
+        ];
+
+        foreach ($tags as $tag) {
+            if ($tag->hasAttribute('property')) {
+                $property = $tag->getAttribute('property');
+                if ('og:title' === $property) {
+                    $data['titre'] = $tag->getAttribute('content');
+                }
+                if ('og:description' === $property) {
+                    $data['description'] = $tag->getAttribute('content');
+                }
+                if ('og:image' === $property) {
+                    $data['image'] = $tag->getAttribute('content');
+                }
+            }
+        }
+
+        // Stratégie de repli si le protocole Open Graph est absent de la cible
+        if (empty($data['titre'])) {
+            $titles = $doc->getElementsByTagName('title');
+            if ($titles->length > 0) {
+                $data['titre'] = $titles->item(0)->nodeValue;
+            }
+        }
+
+        return $data;
     }
 }

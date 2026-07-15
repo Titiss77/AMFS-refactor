@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
@@ -12,7 +14,7 @@ class AuditController extends BaseController
     {
         $auditModel = new AuditLogModel();
         $reportModel = new ReportModel();
-        
+
         $data = [
             // Récupère les 200 dernières actions pour éviter de surcharger la page
             'logs' => $auditModel->getRecentLogs(200),

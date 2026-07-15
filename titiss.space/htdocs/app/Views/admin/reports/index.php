@@ -52,7 +52,7 @@
                     );
                     ?>
                 <tr
-                    style="<?php echo $report['status'] === 'resolved' ? 'opacity: 0.6; background-color: #f8f9fa;' : ''; ?>">
+                    style="<?php echo 'resolved' === $report['status'] ? 'opacity: 0.6; background-color: #f8f9fa;' : ''; ?>">
                     <td><?php echo date('d/m/Y H:i', strtotime($report['created_at'])); ?></td>
                     <td>
                         <?php if ($report['username']) { ?>
@@ -72,7 +72,7 @@
                     </td>
                     <td style="max-width: 250px; font-size: 0.9em;"><?php echo esc($report['description']); ?></td>
                     <td>
-                        <?php if ($report['status'] === 'pending') { ?>
+                        <?php if ('pending' === $report['status']) { ?>
                         <span class="status-badge" style="background: var(--warning); color: #000;">En attente</span>
                         <?php } else { ?>
                         <span class="status-badge" style="background: var(--success); color: #fff;">Résolu</span>
@@ -80,7 +80,7 @@
                     </td>
                     <td>
                         <div class="action-links">
-                            <?php if ($report['status'] === 'pending' && $report['item_titre']) { ?>
+                            <?php if ('pending' === $report['status'] && $report['item_titre']) { ?>
                             <!-- Bouton "Tester le lien" -->
                             <a href="<?php echo htmlspecialchars($finalLink); ?>" target="_blank" class="btn-action"
                                 style="background: #6c757d; color: white;">Tester le lien</a>
@@ -91,7 +91,7 @@
                                 style="border: none; cursor: pointer; font-family: inherit;">Copier le lien</button>
 
                             <!-- Bouton "Résoudre" -->
-                            <a href="<?php echo base_url('reports/delete/' . $report['id']); ?>"
+                            <a href="<?php echo base_url('reports/delete/'.$report['id']); ?>"
                                 class="btn-action btn-unban"
                                 style="background: var(--success); color: white;">Résolu</a>
                             <?php } ?>

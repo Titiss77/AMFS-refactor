@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Models\ReportModel;
 use App\Models\AuditLogModel;
-use App\Models\ItemModel;
+use App\Models\ReportModel;
 
 class ReportController extends BaseController
 {
@@ -15,18 +16,18 @@ class ReportController extends BaseController
         }
 
         $json = $this->request->getJSON();
-        
+
         if (!isset($json->item_id) || !isset($json->type)) {
             return $this->response->setJSON(['success' => false, 'error' => 'Données incomplètes.']);
         }
 
         $reportModel = new ReportModel();
         $reportModel->insert([
-            'item_id'     => $json->item_id,
-            'user_id'     => auth()->loggedIn() ? auth()->id() : null,
-            'type'        => $json->type,
+            'item_id' => $json->item_id,
+            'user_id' => auth()->loggedIn() ? auth()->id() : null,
+            'type' => $json->type,
             'description' => $json->description ?? '',
-            'status'      => 'pending'
+            'status' => 'pending',
         ]);
 
         // Optionnel : Loguer l'action
@@ -36,7 +37,7 @@ class ReportController extends BaseController
         return $this->response->setJSON([
             'success' => true,
             'message' => 'Signalement envoyé avec succès.',
-            'csrf_token' => csrf_hash() // Renouvellement du token CSRF
+            'csrf_token' => csrf_hash(), // Renouvellement du token CSRF
         ]);
     }
 }

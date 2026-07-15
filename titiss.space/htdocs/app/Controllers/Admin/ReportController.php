@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
@@ -19,7 +21,8 @@ class ReportController extends BaseController
             ->join('users', 'reports.user_id = users.id', 'left')
             ->orderBy('reports.status', 'ASC')
             ->orderBy('reports.created_at', 'DESC')
-            ->findAll();
+            ->findAll()
+        ;
 
         return view('admin/reports/index', ['reports' => $reports]);
     }
@@ -46,8 +49,10 @@ class ReportController extends BaseController
         $reportModel = new ReportModel();
         if ($reportModel->find($id)) {
             $reportModel->delete($id);
+
             return redirect()->back()->with('message', 'Le signalement a été supprimé.');
         }
+
         return redirect()->back()->with('error', 'Signalement introuvable.');
     }
 }

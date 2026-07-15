@@ -37,17 +37,18 @@ class HomeController extends BaseController
 
             // --- NOUVEAU : Compte des cartes à passer en admin ---
             $toAdminCount = $model->where('id_division >=', 5)
-                                  ->where('id_division <', 11)
-                                  ->where('is_public', 1)
-                                  ->where('id_user !=', 1)
-                                  ->countAllResults();
+                ->where('id_division <', 11)
+                ->where('is_public', 1)
+                ->where('id_user !=', 1)
+                ->countAllResults()
+            ;
         }
 
         return view('home', [
             'headers' => $headers,
             'groupedItems' => $groupedItems,
             'currentHeaderId' => $headerId,
-            'pendingCount' => $pendingCount, 
+            'pendingCount' => $pendingCount,
             'toAdminCount' => $toAdminCount, // On passe ce nouveau compteur à la vue
         ]);
     }

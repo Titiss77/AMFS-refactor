@@ -45,7 +45,9 @@
                 <div class="form-check">
                     <label class="form-check-label">
                         <input type="checkbox" name="remember" class="form-check-input"
-                            <?php if (old('remember', true)) { echo 'checked'; } ?>>
+                            <?php if (old('remember', true)) {
+                                echo 'checked';
+                            } ?>>
                         <?php echo lang('Auth.rememberMe'); ?>
                     </label>
                 </div>

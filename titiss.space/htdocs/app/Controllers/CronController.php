@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -79,7 +81,7 @@ class CronController extends BaseController
             }
 
             $scheme = $parsedUrl['scheme'] ?? 'https';
-            $domainToTest = $scheme . '://' . $parsedUrl['host'];
+            $domainToTest = $scheme.'://'.$parsedUrl['host'];
 
             ++$totalChecked;
             $statusCode = null;
@@ -99,7 +101,7 @@ class CronController extends BaseController
             }
 
             // 4. Si le DOMAINE est mort, on flague la carte et on enregistre son LIEN COMPLET
-            if ($statusCode === 0 || $statusCode === 404) {
+            if (0 === $statusCode || 404 === $statusCode) {
                 $itemModel->update($item->id, ['link_status' => 'dead']);
                 ++$deadCount;
 

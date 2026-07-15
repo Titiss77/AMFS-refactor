@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Page Introuvable</title>
 
-    <link rel="stylesheet" href="<?= base_url('assets/root.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/style.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/root.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/style.css'); ?>">
 
     <script>
     // Maintien du Dark Mode sur la page d'erreur
@@ -26,14 +26,14 @@
         <h2 style="margin-top: 10px;">Oups ! Page introuvable.</h2>
 
         <p style="color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.05rem;">
-            <?php if (ENVIRONMENT !== 'production') : ?>
-            <?= nl2br(esc($message)) ?>
-            <?php else : ?>
+            <?php if (ENVIRONMENT !== 'production') { ?>
+            <?php echo nl2br(esc($message)); ?>
+            <?php } else { ?>
             La page que vous recherchez n'existe pas, a été renommée ou est temporairement indisponible.
-            <?php endif; ?>
+            <?php } ?>
         </p>
 
-        <a href="<?= base_url('/') ?>" class="btn btn-primary" style="padding: 12px 24px; font-size: 1.1rem;">
+        <a href="<?php echo base_url('/'); ?>" class="btn btn-primary" style="padding: 12px 24px; font-size: 1.1rem;">
             Retourner à l'accueil
         </a>
     </div>

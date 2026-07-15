@@ -75,7 +75,7 @@ class UserController extends BaseController
         $rules = [
             'username' => "required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username,id,{$id}]",
             'group' => "permit_empty|in_list[{$availableGroups}]",
-            'new_password' => "permit_empty|min_length[8]", // Vous pouvez ajouter |strong_password si Shield est configuré pour
+            'new_password' => 'permit_empty|min_length[8]', // Vous pouvez ajouter |strong_password si Shield est configuré pour
         ];
 
         if (!$this->validate($rules)) {
@@ -106,10 +106,10 @@ class UserController extends BaseController
         if ($oldUsername !== $newUsername) {
             $logDetails .= "Pseudo: '{$oldUsername}' -> '{$newUsername}'. ";
         }
-        
+
         // Journalisation de la réinitialisation du mot de passe
         if (!empty($newPassword) && $currentUser->inGroup('superadmin')) {
-            $logDetails .= "Mot de passe réinitialisé par le SuperAdmin. ";
+            $logDetails .= 'Mot de passe réinitialisé par le SuperAdmin. ';
         }
 
         $newGroup = $this->request->getPost('group');
