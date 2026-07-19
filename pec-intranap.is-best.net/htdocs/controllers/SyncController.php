@@ -250,18 +250,43 @@ class SyncController
                             $found_perf = false;
 
                             // ---------------------------------------------------------
-                            // 3. MISE À JOUR OU AJOUT DE LA LIGNE JSON
+                            // 3. MISE À JOUR OU AJOUT DE LA LIGNE JSON (Version Anti-doublons)
                             // ---------------------------------------------------------
-                            foreach ($perfs_ref as &$p) {
-                                if ($p['nageur_id'] == $nageur_id && $p['epreuve_id'] == $epreuve_id && $p['temps'] === $n['temps'] && $p['date_perf'] === ($n['date'] ?? '')) {
-                                    $found_perf = true;
-                                    if ($p['classement'] != $position_nationale) {
-                                        $p['classement'] = (string) $position_nationale;
-                                        $affectedRows = 2;  // Simule un UPDATE pour le journal d'activité
-                                        $json_updated = true;
-                                    }
+                            $found_key = null;
+
+                            // On cherche une correspondance stricte (Nageur + Épreuve + Date)
+                            foreach ($perfs_ref as $key => $p) {
+                                if ($p['nageur_id'] == $nageur_id &&
+                                        $p['epreuve_id'] == $epreuve_id &&
+                                        $p['date_perf'] === ($n['date'] ?? '')) {
+                                    $found_key = $key;
                                     break;
                                 }
+                            }
+
+                            if ($found_key !== null) {
+                                // Cas : Performance trouvée, on met à jour les données (temps + classement)
+                                $perfs_ref[$found_key]['temps'] = $n['temps'];
+                                $perfs_ref[$found_key]['classement'] = (string) $position_nationale;
+                                $perfs_ref[$found_key]['saison'] = (string) $saison;
+                                $json_updated = true;
+                                $affectedRows = 2;  // Signalement de mise à jour
+                            } else {
+                                // Cas : Performance absente, on ajoute
+                                $max_id++;
+                                $perfs_ref[] = [
+                                    'id' => (string) $max_id,
+                                    'nageur_id' => (string) $nageur_id,
+                                    'epreuve_id' => (string) $epreuve_id,
+                                    'categorie_id' => (string) $categorie_id,
+                                    'lieu_id' => (string) $lieu_id,
+                                    'saison' => (string) $saison,
+                                    'temps' => $n['temps'],
+                                    'date_perf' => $n['date'] ?? '',
+                                    'classement' => (string) $position_nationale
+                                ];
+                                $json_updated = true;
+                                $affectedRows = 1;  // Signalement d'insertion
                             }
 
                             // S'il s'agit d'une toute nouvelle performance, on l'injecte
