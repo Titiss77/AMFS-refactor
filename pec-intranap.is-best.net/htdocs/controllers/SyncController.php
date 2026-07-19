@@ -133,7 +133,7 @@ class SyncController
             ];
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             usleep(rand(800000, 2500000));
-            
+
             $response = curl_exec($ch);
             $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -148,12 +148,11 @@ class SyncController
                 $this->logger->warning('API_EMPTY', "L'API a renvoyé une page blanche pour $epreuve $cat_code (HTTP $http_code).");
             } else {
                 $donnees = json_decode($response, true);
-                
+
                 if (json_last_error() !== JSON_ERROR_NONE) {
                     $extrait = substr(trim($response), 0, 300);
                     $this->logger->error('API_JSON', "JSON invalide pour $epreuve $cat_code (HTTP $http_code). Extrait: " . $extrait);
                 } elseif (is_array($donnees)) {
-
                     // ---------------------------------------------------------
                     // 1. LECTURE DU FICHIER JSON DES PERFORMANCES EN MÉMOIRE
                     // ---------------------------------------------------------
@@ -175,8 +174,8 @@ class SyncController
                     // On détermine l'ID maximum existant pour générer les nouveaux inserts
                     $max_id = 0;
                     foreach ($perfs_ref as $p) {
-                        if (isset($p['id']) && (int)$p['id'] > $max_id) {
-                            $max_id = (int)$p['id'];
+                        if (isset($p['id']) && (int) $p['id'] > $max_id) {
+                            $max_id = (int) $p['id'];
                         }
                     }
                     $json_updated = false;
@@ -192,9 +191,9 @@ class SyncController
                             $vraie_position[$cat_nageur] = 0;
                             $dernier_temps[$cat_nageur] = null;
                         }
-                        
+
                         $compteur_lignes[$cat_nageur]++;
-                        
+
                         if ($n['temps'] !== $dernier_temps[$cat_nageur]) {
                             $vraie_position[$cat_nageur] = $compteur_lignes[$cat_nageur];
                             $dernier_temps[$cat_nageur] = $n['temps'];
@@ -206,7 +205,7 @@ class SyncController
                             $prenom_nageur = $n['prenom'] ?? '';
                             $nom_complet_1 = mb_strtolower($nom_nageur . ' ' . $prenom_nageur, 'UTF-8');
                             $nom_complet_2 = mb_strtolower($prenom_nageur . ' ' . $nom_nageur, 'UTF-8');
-                            
+
                             $est_blacklist = false;
                             foreach ($blacklist as $bl_nom) {
                                 if ($nom_complet_1 === $bl_nom || $nom_complet_2 === $bl_nom) {
@@ -257,8 +256,8 @@ class SyncController
                                 if ($p['nageur_id'] == $nageur_id && $p['epreuve_id'] == $epreuve_id && $p['temps'] === $n['temps'] && $p['date_perf'] === ($n['date'] ?? '')) {
                                     $found_perf = true;
                                     if ($p['classement'] != $position_nationale) {
-                                        $p['classement'] = (string)$position_nationale;
-                                        $affectedRows = 2; // Simule un UPDATE pour le journal d'activité
+                                        $p['classement'] = (string) $position_nationale;
+                                        $affectedRows = 2;  // Simule un UPDATE pour le journal d'activité
                                         $json_updated = true;
                                     }
                                     break;
@@ -269,17 +268,17 @@ class SyncController
                             if (!$found_perf) {
                                 $max_id++;
                                 $perfs_ref[] = [
-                                    'id' => (string)$max_id,
-                                    'nageur_id' => (string)$nageur_id,
-                                    'epreuve_id' => (string)$epreuve_id,
-                                    'categorie_id' => (string)$categorie_id,
-                                    'lieu_id' => (string)$lieu_id,
-                                    'saison' => (string)$saison,
+                                    'id' => (string) $max_id,
+                                    'nageur_id' => (string) $nageur_id,
+                                    'epreuve_id' => (string) $epreuve_id,
+                                    'categorie_id' => (string) $categorie_id,
+                                    'lieu_id' => (string) $lieu_id,
+                                    'saison' => (string) $saison,
                                     'temps' => $n['temps'],
                                     'date_perf' => $n['date'] ?? '',
-                                    'classement' => (string)$position_nationale
+                                    'classement' => (string) $position_nationale
                                 ];
-                                $affectedRows = 1; // Simule un INSERT
+                                $affectedRows = 1;  // Simule un INSERT
                                 $json_updated = true;
                             }
 
@@ -313,7 +312,11 @@ class SyncController
                     // 5. ÉCRITURE FINALE SUR LE DISQUE
                     // ---------------------------------------------------------
                     if ($json_updated) {
-                        file_put_contents($json_file, json_encode($json_content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+                        file_put_contents(
+                            $json_file,
+                            json_encode($json_content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
+                            LOCK_EX  // <-- Ajout du verrou exclusif ici
+                        );
                     }
                 }
             }
@@ -324,7 +327,6 @@ class SyncController
             }
 
             echo json_encode(['error' => false, 'message' => "Traitement de {$epreuve} ({$cat_nom}) terminé."]);
-
         } catch (Exception $e) {
             $this->logger->error('FATAL', 'Erreur sur ' . $epreuve . ' : ' . $e->getMessage());
             echo json_encode(['error' => true, 'message' => 'Erreur interne : ' . $e->getMessage()]);
@@ -342,7 +344,8 @@ class SyncController
     {
         echo 'data: ' . json_encode(['progress' => $progress, 'message' => $message, 'done' => $is_done, 'error' => $is_error]) . "\n\n";
         echo str_pad('', 4096) . "\n";
-        if (ob_get_level() > 0) ob_flush();
+        if (ob_get_level() > 0)
+            ob_flush();
         flush();
     }
 
@@ -360,7 +363,8 @@ class SyncController
         $stmt = $this->pdo->prepare('SELECT id FROM nageurs WHERE nom = ? AND prenom = ?');
         $stmt->execute([$nom, $prenom]);
         $nageur = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($nageur) return $nageur['id'];
+        if ($nageur)
+            return $nageur['id'];
 
         $stmt = $this->pdo->prepare('INSERT INTO nageurs (nom, prenom, genre, date_naissance) VALUES (?, ?, ?, ?)');
         $stmt->execute([$nom, $prenom, $genre, $date_naissance]);
