@@ -8,9 +8,8 @@ class SyncController
     private $token;
     private $url;
     private $club_cible;
-    private $log_file;  // Fichier pour l'interface web
-    private $logger;  // Fichier pour le débogage technique
-    private $sql_file;  // NOUVEAU : Fichier SQL
+    private $log_file;
+    private $logger;
 
     public function __construct()
     {
@@ -18,12 +17,22 @@ class SyncController
         $this->url = $_ENV['API_URL'] ?? '';
         $this->token = $_ENV['API_TOKEN'] ?? '';
         $this->club_cible = $_ENV['API_CLUB'] ?? '';
-
         $this->log_file = __DIR__ . '/../sync_modifications.log';
         $this->logger = new SyncLogger('sync_debug.log');
+    }
 
-        // NOUVEAU : Chemin vers le fichier SQL à la racine
-        $this->sql_file = __DIR__ . '/../ffessm_nap.sql';
+    /**
+     * Convertit un temps MM:SS en secondes (utilisé pour identifier le meilleur temps localement)
+     */
+    private function timeToSecondsSync($timeStr)
+    {
+        if (strpos($timeStr, ':') !== false) {
+            $parts = explode(':', str_replace(',', '.', $timeStr));
+            if (count($parts) === 2) {
+                return ($parts[0] * 60) + (float) $parts[1];
+            }
+        }
+        return (float) str_replace(',', '.', $timeStr);
     }
 
     public function syncData($token_recu = '')
@@ -50,7 +59,7 @@ class SyncController
         // Récupération des paramètres envoyés par le script JS
         $epreuve = $_GET['epreuve'] ?? '';
         $cat_code = $_GET['genre'] ?? '';
-        $etape = $_GET['etape'] ?? 'suite';  // 'debut', 'suite', ou 'fin'
+        $etape = $_GET['etape'] ?? 'suite';
         $saison = date('Y');
 
         if (empty($epreuve) || empty($cat_code)) {
@@ -63,6 +72,7 @@ class SyncController
             echo json_encode(['error' => true, 'message' => 'Genre invalide.']);
             return;
         }
+
         $cat_nom = $categories_genre[$cat_code];
 
         // Gestion des logs d'ouverture et de fermeture
@@ -70,21 +80,6 @@ class SyncController
             $this->writeToLog('--- DÉBUT DE SYNCHRONISATION ---');
             $this->logger->separator();
             $this->logger->info('START', '--- DÉBUT DE SYNCHRONISATION ---');
-
-            // DIAGNOSTIC : on logge une fois les capacités réelles de la libcurl du serveur
-            // (utile pour confirmer si le support Brotli/gzip est présent ou non).
-            $curl_v = curl_version();
-            $features = [];
-            if (defined('CURL_VERSION_LIBZ') && ($curl_v['features'] & CURL_VERSION_LIBZ)) {
-                $features[] = 'gzip/deflate';
-            }
-            if (defined('CURL_VERSION_BROTLI') && ($curl_v['features'] & CURL_VERSION_BROTLI)) {
-                $features[] = 'brotli';
-            }
-            $this->logger->info(
-                'CURL_INFO',
-                'libcurl ' . $curl_v['version'] . ' | SSL: ' . ($curl_v['ssl_version'] ?? 'N/A') . ' | Compressions supportées: ' . (empty($features) ? 'AUCUNE' : implode(', ', $features))
-            );
         }
 
         $this->logger->info('API_CALL', "Requete: $epreuve | $cat_code");
@@ -114,27 +109,15 @@ class SyncController
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url_complete);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-            // 1. Ignorer les erreurs de certificat SSL (très fréquent sur les hébergeurs mutualisés)
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-
-            // 2. Simuler un vrai navigateur avec une gestion des cookies
             $cookie_file = __DIR__ . '/../cookie_ffessm.txt';
             curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie_file);
             curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_file);
-
             curl_setopt($ch, CURLOPT_TIMEOUT, 15);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_REFERER, 'https://nap.ffessm.fr/index.php');
-
-            // 3. Un User-Agent encore plus standard et récent
             curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36');
-            // CORRECTIF : on laisse cURL négocier lui-même l'encodage qu'il sait décoder
-            // (chaîne vide = "Accept-Encoding" auto-généré selon les capacités réelles de la
-            // libcurl installée). Forcer 'br' (Brotli) causait un corps de réponse vide sur
-            // les hébergements mutualisés dont la libcurl n'a pas le support Brotli compilé,
-            // alors qu'en local (libcurl plus récente) ça fonctionnait.
             curl_setopt($ch, CURLOPT_ENCODING, '');
 
             $headers = [
@@ -149,14 +132,10 @@ class SyncController
                 'Cache-Control: no-cache'
             ];
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-            // 4. Ajouter un délai humain totalement aléatoire (entre 0.8 et 2.5 secondes)
-            // Cela évite que le pare-feu détecte 30 requêtes envoyées à la vitesse de la lumière
             usleep(rand(800000, 2500000));
-
+            
             $response = curl_exec($ch);
             $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            $content_encoding = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 
             if (curl_errno($ch)) {
                 $err = curl_error($ch);
@@ -165,15 +144,43 @@ class SyncController
             }
             curl_close($ch);
 
-            // Si page blanche ou erreur
             if ($response === false || trim($response) === '') {
-                $this->logger->warning('API_EMPTY', "L'API a renvoyé une page blanche pour $epreuve $cat_code (HTTP $http_code, Content-Type: " . ($content_encoding ?: 'N/A') . ').');
+                $this->logger->warning('API_EMPTY', "L'API a renvoyé une page blanche pour $epreuve $cat_code (HTTP $http_code).");
             } else {
                 $donnees = json_decode($response, true);
+                
                 if (json_last_error() !== JSON_ERROR_NONE) {
                     $extrait = substr(trim($response), 0, 300);
                     $this->logger->error('API_JSON', "JSON invalide pour $epreuve $cat_code (HTTP $http_code). Extrait: " . $extrait);
                 } elseif (is_array($donnees)) {
+
+                    // ---------------------------------------------------------
+                    // 1. LECTURE DU FICHIER JSON DES PERFORMANCES EN MÉMOIRE
+                    // ---------------------------------------------------------
+                    $json_file = __DIR__ . '/../perfs/performances.json';
+                    $json_content = file_exists($json_file) ? json_decode(file_get_contents($json_file), true) : [];
+                    $perfs_ref = &$json_content;
+
+                    // Détection si le JSON respecte le format d'export phpMyAdmin
+                    foreach ($json_content as $i => $item) {
+                        if (isset($item['type']) && $item['type'] === 'table' && isset($item['name']) && $item['name'] === 'performances') {
+                            if (!isset($json_content[$i]['data'])) {
+                                $json_content[$i]['data'] = [];
+                            }
+                            $perfs_ref = &$json_content[$i]['data'];
+                            break;
+                        }
+                    }
+
+                    // On détermine l'ID maximum existant pour générer les nouveaux inserts
+                    $max_id = 0;
+                    foreach ($perfs_ref as $p) {
+                        if (isset($p['id']) && (int)$p['id'] > $max_id) {
+                            $max_id = (int)$p['id'];
+                        }
+                    }
+                    $json_updated = false;
+
                     $compteur_lignes = [];
                     $vraie_position = [];
                     $dernier_temps = [];
@@ -185,13 +192,13 @@ class SyncController
                             $vraie_position[$cat_nageur] = 0;
                             $dernier_temps[$cat_nageur] = null;
                         }
-
+                        
                         $compteur_lignes[$cat_nageur]++;
+                        
                         if ($n['temps'] !== $dernier_temps[$cat_nageur]) {
                             $vraie_position[$cat_nageur] = $compteur_lignes[$cat_nageur];
                             $dernier_temps[$cat_nageur] = $n['temps'];
                         }
-
                         $position_nationale = $vraie_position[$cat_nageur];
 
                         if (isset($n['club']) && $n['club'] === $this->club_cible) {
@@ -199,7 +206,7 @@ class SyncController
                             $prenom_nageur = $n['prenom'] ?? '';
                             $nom_complet_1 = mb_strtolower($nom_nageur . ' ' . $prenom_nageur, 'UTF-8');
                             $nom_complet_2 = mb_strtolower($prenom_nageur . ' ' . $nom_nageur, 'UTF-8');
-
+                            
                             $est_blacklist = false;
                             foreach ($blacklist as $bl_nom) {
                                 if ($nom_complet_1 === $bl_nom || $nom_complet_2 === $bl_nom) {
@@ -207,43 +214,86 @@ class SyncController
                                     break;
                                 }
                             }
-
                             if ($est_blacklist) {
-                                $stmtDel = $this->pdo->prepare('DELETE FROM nageurs WHERE nom = ? AND prenom = ?');
-                                $stmtDel->execute([$nom_nageur, $prenom_nageur]);
-                                if ($stmtDel->rowCount() > 0) {
-                                    $info = "Suppression des données de : {$prenom_nageur} {$nom_nageur}";
-                                    $this->writeToLog('[BLACKLIST] ' . $info);
-                                    $this->logger->warning('BLACKLIST', $info);
-                                }
                                 continue;
                             }
 
+                            // On conserve la base de données MySQL stricto sensu pour les identifiants structurels
                             $nageur_id = $this->getOrCreateNageur($nom_nageur, $prenom_nageur, $cat_nom, null);
                             $categorie_id = $this->getOrCreateSimple('categories', 'nom_categorie', $n['categorie'] ?? 'NC');
                             $lieu_id = $this->getOrCreateSimple('lieux', 'nom_lieu', $n['lieu'] ?? 'NC');
 
-                            $stmtBest = $this->pdo->prepare('SELECT temps FROM performances WHERE nageur_id = ? AND epreuve_id = ? AND saison = ? ORDER BY temps ASC LIMIT 1');
-                            $stmtBest->execute([$nageur_id, $epreuve_id, $saison]);
-                            $old_best = $stmtBest->fetch(PDO::FETCH_ASSOC);
+                            // ---------------------------------------------------------
+                            // 2. RECHERCHE DANS LE JSON EN MÉMOIRE
+                            // ---------------------------------------------------------
+                            $old_best = null;
+                            $old_exact = null;
+                            $best_sec = PHP_INT_MAX;
 
-                            $stmtExact = $this->pdo->prepare('SELECT classement FROM performances WHERE nageur_id = ? AND epreuve_id = ? AND temps = ? AND date_perf = ?');
-                            $stmtExact->execute([$nageur_id, $epreuve_id, $n['temps'], $n['date'] ?? '']);
-                            $old_exact = $stmtExact->fetch(PDO::FETCH_ASSOC);
+                            foreach ($perfs_ref as $p) {
+                                if ($p['nageur_id'] == $nageur_id && $p['epreuve_id'] == $epreuve_id) {
+                                    // Vérifie si la perf exacte existe déjà (pour détecter une modification du classement)
+                                    if ($p['temps'] === $n['temps'] && $p['date_perf'] === ($n['date'] ?? '')) {
+                                        $old_exact = ['classement' => $p['classement']];
+                                    }
+                                    // Garde en mémoire le meilleur temps existant pour la saison en cours
+                                    if ($p['saison'] == $saison) {
+                                        $sec = $this->timeToSecondsSync($p['temps']);
+                                        if ($sec < $best_sec) {
+                                            $best_sec = $sec;
+                                            $old_best = ['temps' => $p['temps']];
+                                        }
+                                    }
+                                }
+                            }
 
-                            $affectedRows = $this->insertPerformance($nageur_id, $epreuve_id, $categorie_id, $lieu_id, $saison, $n['temps'], $n['date'] ?? '', $position_nationale);
+                            $affectedRows = 0;
+                            $found_perf = false;
 
+                            // ---------------------------------------------------------
+                            // 3. MISE À JOUR OU AJOUT DE LA LIGNE JSON
+                            // ---------------------------------------------------------
+                            foreach ($perfs_ref as &$p) {
+                                if ($p['nageur_id'] == $nageur_id && $p['epreuve_id'] == $epreuve_id && $p['temps'] === $n['temps'] && $p['date_perf'] === ($n['date'] ?? '')) {
+                                    $found_perf = true;
+                                    if ($p['classement'] != $position_nationale) {
+                                        $p['classement'] = (string)$position_nationale;
+                                        $affectedRows = 2; // Simule un UPDATE pour le journal d'activité
+                                        $json_updated = true;
+                                    }
+                                    break;
+                                }
+                            }
+
+                            // S'il s'agit d'une toute nouvelle performance, on l'injecte
+                            if (!$found_perf) {
+                                $max_id++;
+                                $perfs_ref[] = [
+                                    'id' => (string)$max_id,
+                                    'nageur_id' => (string)$nageur_id,
+                                    'epreuve_id' => (string)$epreuve_id,
+                                    'categorie_id' => (string)$categorie_id,
+                                    'lieu_id' => (string)$lieu_id,
+                                    'saison' => (string)$saison,
+                                    'temps' => $n['temps'],
+                                    'date_perf' => $n['date'] ?? '',
+                                    'classement' => (string)$position_nationale
+                                ];
+                                $affectedRows = 1; // Simule un INSERT
+                                $json_updated = true;
+                            }
+
+                            // ---------------------------------------------------------
+                            // 4. GESTION DU JOURNAL D'ACTIVITÉ (Logs)
+                            // ---------------------------------------------------------
                             if ($affectedRows > 0) {
-                                // NOUVEAU : Écriture de la requête en dur dans ffessm_nap.sql
-                                $this->writeToSqlFile($nageur_id, $epreuve_id, $categorie_id, $lieu_id, $saison, $n['temps'], $n['date'] ?? '', $position_nationale);
-
                                 if ($affectedRows === 1) {
                                     if ($old_best && $old_best['temps'] !== $n['temps']) {
-                                        $info = "{$prenom_nageur} {$nom_nageur} ({$epreuve}) | Ancien: {$old_best['temps']} -> Nouveau: {$n['temps']} à {$n['lieu']}";
+                                        $info = "{$prenom_nageur} {$nom_nageur} ({$epreuve}) | Ancien: {$old_best['temps']} -> Nouveau: {$n['temps']} @ {$n['lieu']}";
                                         $this->writeToLog('[NOUVEAU TEMPS] ' . $info);
                                         $this->logger->success('UPDATE', $info);
                                     } else {
-                                        $info = "{$prenom_nageur} {$nom_nageur} ({$epreuve}) | Ajout 1er temps : {$n['temps']} à {$n['lieu']}";
+                                        $info = "{$prenom_nageur} {$nom_nageur} ({$epreuve}) | Ajout 1er temps : {$n['temps']} @ {$n['lieu']}";
                                         $this->writeToLog('[AJOUT] ' . $info);
                                         $this->logger->info('INSERT', $info);
                                     }
@@ -258,17 +308,23 @@ class SyncController
                             }
                         }
                     }
+
+                    // ---------------------------------------------------------
+                    // 5. ÉCRITURE FINALE SUR LE DISQUE
+                    // ---------------------------------------------------------
+                    if ($json_updated) {
+                        file_put_contents($json_file, json_encode($json_content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+                    }
                 }
             }
 
-            // Gestion de la fermeture des logs
             if ($etape === 'fin') {
                 $this->writeToLog('--- FIN DE SYNCHRONISATION ---');
                 $this->logger->info('END', '--- FIN DE SYNCHRONISATION ---');
             }
 
-            // On envoie un succès JSON au navigateur
             echo json_encode(['error' => false, 'message' => "Traitement de {$epreuve} ({$cat_nom}) terminé."]);
+
         } catch (Exception $e) {
             $this->logger->error('FATAL', 'Erreur sur ' . $epreuve . ' : ' . $e->getMessage());
             echo json_encode(['error' => true, 'message' => 'Erreur interne : ' . $e->getMessage()]);
@@ -286,8 +342,7 @@ class SyncController
     {
         echo 'data: ' . json_encode(['progress' => $progress, 'message' => $message, 'done' => $is_done, 'error' => $is_error]) . "\n\n";
         echo str_pad('', 4096) . "\n";
-        if (ob_get_level() > 0)
-            ob_flush();
+        if (ob_get_level() > 0) ob_flush();
         flush();
     }
 
@@ -305,21 +360,11 @@ class SyncController
         $stmt = $this->pdo->prepare('SELECT id FROM nageurs WHERE nom = ? AND prenom = ?');
         $stmt->execute([$nom, $prenom]);
         $nageur = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($nageur)
-            return $nageur['id'];
+        if ($nageur) return $nageur['id'];
+
         $stmt = $this->pdo->prepare('INSERT INTO nageurs (nom, prenom, genre, date_naissance) VALUES (?, ?, ?, ?)');
         $stmt->execute([$nom, $prenom, $genre, $date_naissance]);
         return $this->pdo->lastInsertId();
-    }
-
-    private function insertPerformance($nageur_id, $epreuve_id, $categorie_id, $lieu_id, $saison, $temps, $date_perf, $classement)
-    {
-        $sql = 'INSERT INTO performances (nageur_id, epreuve_id, categorie_id, lieu_id, saison, temps, date_perf, classement)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                ON DUPLICATE KEY UPDATE classement = VALUES(classement)';
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$nageur_id, $epreuve_id, $categorie_id, $lieu_id, $saison, $temps, $date_perf, $classement]);
-        return $stmt->rowCount();
     }
 
     public function getLogs()
@@ -329,29 +374,5 @@ class SyncController
         } else {
             echo 'Aucun historique.';
         }
-    }
-
-    private function writeToSqlFile($nageur_id, $epreuve_id, $categorie_id, $lieu_id, $saison, $temps, $date_perf, $classement)
-    {
-        // Nettoyage et préparation des variables pour l'injection directe dans le fichier texte
-        $classement_val = empty($classement) ? 'NULL' : (int) $classement;
-        $temps_val = $this->pdo->quote($temps);
-        $date_val = empty($date_perf) ? 'NULL' : $this->pdo->quote($date_perf);
-
-        // Création de la requête brute
-        $sql = sprintf(
-            "INSERT INTO `performances` (`nageur_id`, `epreuve_id`, `categorie_id`, `lieu_id`, `saison`, `temps`, `date_perf`, `classement`) VALUES (%d, %d, %d, %d, %d, %s, %s, %s) ON DUPLICATE KEY UPDATE `classement` = VALUES(`classement`);\n",
-            (int) $nageur_id,
-            (int) $epreuve_id,
-            (int) $categorie_id,
-            (int) $lieu_id,
-            (int) $saison,
-            $temps_val,
-            $date_val,
-            $classement_val
-        );
-
-        // Ajout à la fin du fichier ffessm_nap.sql
-        file_put_contents($this->sql_file, $sql, FILE_APPEND);
     }
 }
