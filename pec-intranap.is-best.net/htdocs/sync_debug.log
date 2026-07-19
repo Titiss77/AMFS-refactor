@@ -1,0 +1,33 @@
+--------------------------------------------------------------------------------
+[2026-07-19 16:08:14] [INFO   ] [START          ] --- DÉBUT DE SYNCHRONISATION ---
+[2026-07-19 16:08:14] [INFO   ] [API_CALL       ] Requete: 50SF | F
+[2026-07-19 16:08:16] [INFO   ] [API_CALL       ] Requete: 50SF | M
+[2026-07-19 16:08:18] [INFO   ] [API_CALL       ] Requete: 100SF | F
+[2026-07-19 16:08:20] [INFO   ] [API_CALL       ] Requete: 100SF | M
+[2026-07-19 16:08:23] [INFO   ] [API_CALL       ] Requete: 200SF | F
+[2026-07-19 16:08:25] [INFO   ] [API_CALL       ] Requete: 200SF | M
+[2026-07-19 16:08:26] [INFO   ] [API_CALL       ] Requete: 400SF | F
+[2026-07-19 16:08:29] [INFO   ] [API_CALL       ] Requete: 400SF | M
+[2026-07-19 16:08:31] [INFO   ] [API_CALL       ] Requete: 800SF | F
+[2026-07-19 16:08:32] [INFO   ] [API_CALL       ] Requete: 800SF | M
+[2026-07-19 16:08:34] [INFO   ] [API_CALL       ] Requete: 1500SF | F
+[2026-07-19 16:08:36] [INFO   ] [API_CALL       ] Requete: 1500SF | M
+[2026-07-19 16:08:37] [INFO   ] [API_CALL       ] Requete: 50AP | F
+[2026-07-19 16:08:39] [INFO   ] [API_CALL       ] Requete: 50AP | M
+[2026-07-19 16:08:41] [INFO   ] [API_CALL       ] Requete: 100IS | F
+[2026-07-19 16:08:44] [INFO   ] [API_CALL       ] Requete: 100IS | M
+[2026-07-19 16:08:45] [INFO   ] [API_CALL       ] Requete: 800IS | F
+[2026-07-19 16:08:46] [INFO   ] [API_CALL       ] Requete: 800IS | M
+[2026-07-19 16:08:47] [INFO   ] [API_CALL       ] Requete: 200IS | F
+[2026-07-19 16:08:49] [INFO   ] [API_CALL       ] Requete: 200IS | M
+[2026-07-19 16:08:51] [INFO   ] [API_CALL       ] Requete: 400IS | F
+[2026-07-19 16:08:52] [INFO   ] [API_CALL       ] Requete: 400IS | M
+[2026-07-19 16:08:54] [INFO   ] [API_CALL       ] Requete: 50BI | F
+[2026-07-19 16:08:57] [INFO   ] [API_CALL       ] Requete: 50BI | M
+[2026-07-19 16:08:59] [INFO   ] [API_CALL       ] Requete: 100BI | F
+[2026-07-19 16:09:00] [INFO   ] [API_CALL       ] Requete: 100BI | M
+[2026-07-19 16:09:03] [INFO   ] [API_CALL       ] Requete: 200BI | F
+[2026-07-19 16:09:04] [INFO   ] [API_CALL       ] Requete: 200BI | M
+[2026-07-19 16:09:07] [INFO   ] [API_CALL       ] Requete: 400BI | F
+[2026-07-19 16:09:08] [INFO   ] [API_CALL       ] Requete: 400BI | M
+[2026-07-19 16:09:10] [INFO   ] [END            ] --- FIN DE SYNCHRONISATION ---
