@@ -70,6 +70,21 @@ class SyncController
             $this->writeToLog('--- DÉBUT DE SYNCHRONISATION ---');
             $this->logger->separator();
             $this->logger->info('START', '--- DÉBUT DE SYNCHRONISATION ---');
+
+            // DIAGNOSTIC : on logge une fois les capacités réelles de la libcurl du serveur
+            // (utile pour confirmer si le support Brotli/gzip est présent ou non).
+            $curl_v = curl_version();
+            $features = [];
+            if (defined('CURL_VERSION_LIBZ') && ($curl_v['features'] & CURL_VERSION_LIBZ)) {
+                $features[] = 'gzip/deflate';
+            }
+            if (defined('CURL_VERSION_BROTLI') && ($curl_v['features'] & CURL_VERSION_BROTLI)) {
+                $features[] = 'brotli';
+            }
+            $this->logger->info(
+                'CURL_INFO',
+                'libcurl ' . $curl_v['version'] . ' | SSL: ' . ($curl_v['ssl_version'] ?? 'N/A') . ' | Compressions supportées: ' . (empty($features) ? 'AUCUNE' : implode(', ', $features))
+            );
         }
 
         $this->logger->info('API_CALL', "Requete: $epreuve | $cat_code");
@@ -115,7 +130,12 @@ class SyncController
 
             // 3. Un User-Agent encore plus standard et récent
             curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36');
-            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate, br');  // Accepter la compression moderne
+            // CORRECTIF : on laisse cURL négocier lui-même l'encodage qu'il sait décoder
+            // (chaîne vide = "Accept-Encoding" auto-généré selon les capacités réelles de la
+            // libcurl installée). Forcer 'br' (Brotli) causait un corps de réponse vide sur
+            // les hébergements mutualisés dont la libcurl n'a pas le support Brotli compilé,
+            // alors qu'en local (libcurl plus récente) ça fonctionnait.
+            curl_setopt($ch, CURLOPT_ENCODING, '');
 
             $headers = [
                 'Accept: application/json, text/javascript, */*; q=0.01',
@@ -136,19 +156,23 @@ class SyncController
 
             $response = curl_exec($ch);
             $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $content_encoding = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 
             if (curl_errno($ch)) {
-                throw new Exception("Erreur réseau cURL ($http_code) : " . curl_error($ch));
+                $err = curl_error($ch);
+                curl_close($ch);
+                throw new Exception("Erreur réseau cURL ($http_code) : " . $err);
             }
             curl_close($ch);
 
             // Si page blanche ou erreur
             if ($response === false || trim($response) === '') {
-                $this->logger->warning('API_EMPTY', "L'API a renvoyé une page blanche pour $epreuve $cat_code.");
+                $this->logger->warning('API_EMPTY', "L'API a renvoyé une page blanche pour $epreuve $cat_code (HTTP $http_code, Content-Type: " . ($content_encoding ?: 'N/A') . ').');
             } else {
                 $donnees = json_decode($response, true);
                 if (json_last_error() !== JSON_ERROR_NONE) {
-                    $this->logger->error('API_JSON', "JSON invalide pour $epreuve $cat_code.");
+                    $extrait = substr(trim($response), 0, 300);
+                    $this->logger->error('API_JSON', "JSON invalide pour $epreuve $cat_code (HTTP $http_code). Extrait: " . $extrait);
                 } elseif (is_array($donnees)) {
                     $compteur_lignes = [];
                     $vraie_position = [];
