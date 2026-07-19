@@ -250,29 +250,33 @@ class SyncController
                             $found_perf = false;
 
                             // ---------------------------------------------------------
-                            // 3. MISE À JOUR OU AJOUT DE LA LIGNE JSON (Version Anti-doublons)
+                            // RECHERCHE D'UN DOUBLON EXISTANT (Nageur + Épreuve + Temps + Date)
                             // ---------------------------------------------------------
                             $found_key = null;
 
-                            // On cherche une correspondance stricte (Nageur + Épreuve + Date)
                             foreach ($perfs_ref as $key => $p) {
                                 if ($p['nageur_id'] == $nageur_id &&
                                         $p['epreuve_id'] == $epreuve_id &&
+                                        $p['temps'] === $n['temps'] &&
                                         $p['date_perf'] === ($n['date'] ?? '')) {
                                     $found_key = $key;
                                     break;
                                 }
                             }
 
+                            // ---------------------------------------------------------
+                            // DÉCISION : MISE À JOUR OU NOUVELLE PERFORMANCE
+                            // ---------------------------------------------------------
                             if ($found_key !== null) {
-                                // Cas : Performance trouvée, on met à jour les données (temps + classement)
-                                $perfs_ref[$found_key]['temps'] = $n['temps'];
-                                $perfs_ref[$found_key]['classement'] = (string) $position_nationale;
-                                $perfs_ref[$found_key]['saison'] = (string) $saison;
-                                $json_updated = true;
-                                $affectedRows = 2;  // Signalement de mise à jour
+                                // La performance existe déjà, on vérifie seulement si le classement a changé
+                                if ($perfs_ref[$found_key]['classement'] != $position_nationale) {
+                                    $perfs_ref[$found_key]['classement'] = (string) $position_nationale;
+                                    $json_updated = true;
+                                }
+                                // Pas d'ajout : on sort de la boucle pour passer à la suivante
+                                continue;
                             } else {
-                                // Cas : Performance absente, on ajoute
+                                // Performance inexistante : on l'ajoute
                                 $max_id++;
                                 $perfs_ref[] = [
                                     'id' => (string) $max_id,
@@ -285,25 +289,6 @@ class SyncController
                                     'date_perf' => $n['date'] ?? '',
                                     'classement' => (string) $position_nationale
                                 ];
-                                $json_updated = true;
-                                $affectedRows = 1;  // Signalement d'insertion
-                            }
-
-                            // S'il s'agit d'une toute nouvelle performance, on l'injecte
-                            if (!$found_perf) {
-                                $max_id++;
-                                $perfs_ref[] = [
-                                    'id' => (string) $max_id,
-                                    'nageur_id' => (string) $nageur_id,
-                                    'epreuve_id' => (string) $epreuve_id,
-                                    'categorie_id' => (string) $categorie_id,
-                                    'lieu_id' => (string) $lieu_id,
-                                    'saison' => (string) $saison,
-                                    'temps' => $n['temps'],
-                                    'date_perf' => $n['date'] ?? '',
-                                    'classement' => (string) $position_nationale
-                                ];
-                                $affectedRows = 1;  // Simule un INSERT
                                 $json_updated = true;
                             }
 
