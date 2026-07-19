@@ -2995,50 +2995,6 @@
                 "classement": "14"
             },
             {
-                "id": "8115",
-                "nageur_id": "13",
-                "epreuve_id": "1",
-                "categorie_id": "13",
-                "lieu_id": "92",
-                "saison": "2026",
-                "temps": "00:20.29",
-                "date_perf": "22\/05\/2026",
-                "classement": "29"
-            },
-            {
-                "id": "8115",
-                "nageur_id": "13",
-                "epreuve_id": "1",
-                "categorie_id": "13",
-                "lieu_id": "92",
-                "saison": "2026",
-                "temps": "00:20.29",
-                "date_perf": "22\/05\/2026",
-                "classement": "29"
-            },
-            {
-                "id": "8115",
-                "nageur_id": "13",
-                "epreuve_id": "1",
-                "categorie_id": "13",
-                "lieu_id": "92",
-                "saison": "2026",
-                "temps": "00:20.29",
-                "date_perf": "22\/05\/2026",
-                "classement": "29"
-            },
-            {
-                "id": "8115",
-                "nageur_id": "13",
-                "epreuve_id": "1",
-                "categorie_id": "13",
-                "lieu_id": "92",
-                "saison": "2026",
-                "temps": "00:20.29",
-                "date_perf": "22\/05\/2026",
-                "classement": "29"
-            },
-            {
                 "id": "276",
                 "nageur_id": "22",
                 "epreuve_id": "1",
@@ -5129,28 +5085,6 @@
                 "classement": "2"
             },
             {
-                "id": "8116",
-                "nageur_id": "13",
-                "epreuve_id": "9",
-                "categorie_id": "13",
-                "lieu_id": "1033",
-                "saison": "2026",
-                "temps": "00:17.50",
-                "date_perf": "24\/04\/2026",
-                "classement": "15"
-            },
-            {
-                "id": "8116",
-                "nageur_id": "13",
-                "epreuve_id": "9",
-                "categorie_id": "13",
-                "lieu_id": "1033",
-                "saison": "2026",
-                "temps": "00:17.50",
-                "date_perf": "24\/04\/2026",
-                "classement": "15"
-            },
-            {
                 "id": "473",
                 "nageur_id": "30",
                 "epreuve_id": "17",
@@ -5162,28 +5096,6 @@
                 "classement": "2"
             },
             {
-                "id": "8116",
-                "nageur_id": "13",
-                "epreuve_id": "9",
-                "categorie_id": "13",
-                "lieu_id": "1033",
-                "saison": "2026",
-                "temps": "00:17.50",
-                "date_perf": "24\/04\/2026",
-                "classement": "15"
-            },
-            {
-                "id": "8116",
-                "nageur_id": "13",
-                "epreuve_id": "9",
-                "categorie_id": "13",
-                "lieu_id": "1033",
-                "saison": "2026",
-                "temps": "00:17.50",
-                "date_perf": "24\/04\/2026",
-                "classement": "15"
-            },
-            {
                 "id": "476",
                 "nageur_id": "19",
                 "epreuve_id": "17",
@@ -5193,28 +5105,6 @@
                 "temps": "05:05.62",
                 "date_perf": "14\/03\/2026",
                 "classement": "20"
-            },
-            {
-                "id": "8116",
-                "nageur_id": "13",
-                "epreuve_id": "9",
-                "categorie_id": "13",
-                "lieu_id": "1033",
-                "saison": "2026",
-                "temps": "00:17.50",
-                "date_perf": "24\/04\/2026",
-                "classement": "15"
-            },
-            {
-                "id": "8116",
-                "nageur_id": "13",
-                "epreuve_id": "9",
-                "categorie_id": "13",
-                "lieu_id": "1033",
-                "saison": "2026",
-                "temps": "00:17.50",
-                "date_perf": "24\/04\/2026",
-                "classement": "15"
             },
             {
                 "id": "479",
@@ -25446,17 +25336,6 @@
                 "classement": "1"
             },
             {
-                "id": "8116",
-                "nageur_id": "13",
-                "epreuve_id": "9",
-                "categorie_id": "13",
-                "lieu_id": "1033",
-                "saison": "2026",
-                "temps": "00:17.50",
-                "date_perf": "24\/04\/2026",
-                "classement": "15"
-            },
-            {
                 "id": "7930",
                 "nageur_id": "8",
                 "epreuve_id": "1",
@@ -25477,17 +25356,6 @@
                 "temps": "00:26.96",
                 "date_perf": "22\/05\/2026",
                 "classement": "32"
-            },
-            {
-                "id": "8115",
-                "nageur_id": "13",
-                "epreuve_id": "1",
-                "categorie_id": "13",
-                "lieu_id": "92",
-                "saison": "2026",
-                "temps": "00:20.29",
-                "date_perf": "22\/05\/2026",
-                "classement": "29"
             },
             {
                 "id": "7943",
@@ -25587,17 +25455,6 @@
                 "temps": "04:58.05",
                 "date_perf": "22\/05\/2026",
                 "classement": "18"
-            },
-            {
-                "id": "8115",
-                "nageur_id": "13",
-                "epreuve_id": "1",
-                "categorie_id": "13",
-                "lieu_id": "92",
-                "saison": "2026",
-                "temps": "00:20.29",
-                "date_perf": "22\/05\/2026",
-                "classement": "29"
             },
             {
                 "id": "7999",
@@ -25796,17 +25653,6 @@
                 "temps": "00:27.54",
                 "date_perf": "06\/06\/2026",
                 "classement": "7"
-            },
-            {
-                "id": "8116",
-                "nageur_id": "13",
-                "epreuve_id": "9",
-                "categorie_id": "13",
-                "lieu_id": "1033",
-                "saison": "2026",
-                "temps": "00:17.50",
-                "date_perf": "24\/04\/2026",
-                "classement": "15"
             },
             {
                 "id": "8047",
@@ -26214,72 +26060,6 @@
                 "temps": "06:15.82",
                 "date_perf": "06\/06\/2026",
                 "classement": "14"
-            },
-            {
-                "id": "8116",
-                "nageur_id": "13",
-                "epreuve_id": "9",
-                "categorie_id": "13",
-                "lieu_id": "1033",
-                "saison": "2026",
-                "temps": "00:17.50",
-                "date_perf": "24\/04\/2026",
-                "classement": "15"
-            },
-            {
-                "id": "8116",
-                "nageur_id": "13",
-                "epreuve_id": "9",
-                "categorie_id": "13",
-                "lieu_id": "1033",
-                "saison": "2026",
-                "temps": "00:17.50",
-                "date_perf": "24\/04\/2026",
-                "classement": "15"
-            },
-            {
-                "id": "8115",
-                "nageur_id": "13",
-                "epreuve_id": "1",
-                "categorie_id": "13",
-                "lieu_id": "92",
-                "saison": "2026",
-                "temps": "00:20.29",
-                "date_perf": "22\/05\/2026",
-                "classement": "29"
-            },
-            {
-                "id": "8116",
-                "nageur_id": "13",
-                "epreuve_id": "9",
-                "categorie_id": "13",
-                "lieu_id": "1033",
-                "saison": "2026",
-                "temps": "00:17.50",
-                "date_perf": "24\/04\/2026",
-                "classement": "15"
-            },
-            {
-                "id": "8117",
-                "nageur_id": "44",
-                "epreuve_id": "17",
-                "categorie_id": "18",
-                "lieu_id": "2565",
-                "saison": "2026",
-                "temps": "05:18.87",
-                "date_perf": "06\/06\/2026",
-                "classement": "22"
-            },
-            {
-                "id": "8117",
-                "nageur_id": "44",
-                "epreuve_id": "17",
-                "categorie_id": "18",
-                "lieu_id": "2565",
-                "saison": "2026",
-                "temps": "05:18.87",
-                "date_perf": "06\/06\/2026",
-                "classement": "22"
             }
         ]
     }
