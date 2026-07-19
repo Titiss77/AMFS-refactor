@@ -1,1 +1,169 @@
--------------rien-------------
+--------------------------------------------------------------------------------
+[2026-07-19 15:05:54] [INFO   ] [START          ] --- DÉBUT DE SYNCHRONISATION ---
+[2026-07-19 15:05:54] [INFO   ] [CURL_INFO      ] libcurl 8.4.0 | SSL: OpenSSL/3.1.3 | Compressions supportées: gzip/deflate
+[2026-07-19 15:05:54] [INFO   ] [API_CALL       ] Requete: 50SF | F
+[2026-07-19 15:05:56] [SUCCESS] [UPDATE         ] Garance LEBEE (50SF) | Ancien: 00:30.35 -> Nouveau: 00:25.49 à Limoges
+[2026-07-19 15:05:56] [INFO   ] [RANKING        ] Maelys LE BIGOT  (50SF - 00:26.50) | Ancien Clt : 50 -> Nouveau : 51
+[2026-07-19 15:05:56] [SUCCESS] [UPDATE         ] Emma ROZE (50SF) | Ancien: 00:27.70 -> Nouveau: 00:26.96 à Limoges
+[2026-07-19 15:05:56] [INFO   ] [RANKING        ] Eloise KERJEAN (50SF - 00:27.18) | Ancien Clt : 27 -> Nouveau : 29
+[2026-07-19 15:05:56] [INFO   ] [RANKING        ] Maelys LE BIGOT (50SF - 00:27.36) | Ancien Clt : 53 -> Nouveau : 54
+[2026-07-19 15:05:56] [INFO   ] [RANKING        ] Pauline CAMUS (50SF - 00:28.13) | Ancien Clt : 31 -> Nouveau : 33
+[2026-07-19 15:05:56] [INFO   ] [RANKING        ] Sandra KERGOURLAY (50SF - 00:32.71) | Ancien Clt : 26 -> Nouveau : 29
+[2026-07-19 15:05:56] [INFO   ] [API_CALL       ] Requete: 50SF | M
+[2026-07-19 15:05:58] [SUCCESS] [UPDATE         ] Mathis FRANCES (50SF) | Ancien: 00:21.03 -> Nouveau: 00:20.29 à Limoges
+[2026-07-19 15:05:58] [SUCCESS] [UPDATE         ] Luca SOLLAZZO (50SF) | Ancien: 00:24.09 -> Nouveau: 00:23.30 à Limoges
+[2026-07-19 15:05:58] [INFO   ] [RANKING        ] Nevis VIGOUROUX (50SF - 00:26.51) | Ancien Clt : 25 -> Nouveau : 26
+[2026-07-19 15:05:58] [INFO   ] [RANKING        ] Yves PRIGENT (50SF - 00:27.28) | Ancien Clt : 19 -> Nouveau : 21
+[2026-07-19 15:05:58] [INFO   ] [RANKING        ] Thomas LEBEE (50SF - 00:27.67) | Ancien Clt : 23 -> Nouveau : 26
+[2026-07-19 15:05:58] [SUCCESS] [UPDATE         ] Simon LANDOLSI (50SF) | Ancien: 00:30.55 -> Nouveau: 00:29.59 à La roche-sur-yon
+[2026-07-19 15:05:58] [INFO   ] [API_CALL       ] Requete: 100SF | F
+[2026-07-19 15:06:00] [SUCCESS] [UPDATE         ] Garance LEBEE (100SF) | Ancien: 01:00.75 -> Nouveau: 00:57.60 à Limoges
+[2026-07-19 15:06:00] [SUCCESS] [UPDATE         ] Emma ROZE (100SF) | Ancien: 01:01.65 -> Nouveau: 00:59.87 à Limoges
+[2026-07-19 15:06:00] [INFO   ] [RANKING        ] Anne LAVIGNE  (100SF - 01:00.54) | Ancien Clt : 7 -> Nouveau : 10
+[2026-07-19 15:06:00] [INFO   ] [RANKING        ] Pauline CAMUS (100SF - 01:03.06) | Ancien Clt : 30 -> Nouveau : 31
+[2026-07-19 15:06:00] [INFO   ] [RANKING        ] Tifenn GOBIN (100SF - 01:03.83) | Ancien Clt : 14 -> Nouveau : 15
+[2026-07-19 15:06:00] [INFO   ] [INSERT         ] Helene LE GALL (100SF) | Ajout 1er temps : 01:11.69 à La roche-sur-yon
+[2026-07-19 15:06:00] [INFO   ] [RANKING        ] Anne FEAT (100SF - 01:12.08) | Ancien Clt : 13 -> Nouveau : 14
+[2026-07-19 15:06:00] [INFO   ] [RANKING        ] Nina VIGOUROUX (100SF - 01:16.19) | Ancien Clt : 38 -> Nouveau : 40
+[2026-07-19 15:06:01] [SUCCESS] [UPDATE         ] Céline MARTIN (100SF) | Ancien: 01:19.74 -> Nouveau: 01:19.64 à La roche-sur-yon
+[2026-07-19 15:06:01] [INFO   ] [API_CALL       ] Requete: 100SF | M
+[2026-07-19 15:06:03] [SUCCESS] [UPDATE         ] Mathis FRANCES (100SF) | Ancien: 00:45.73 -> Nouveau: 00:45.50 à Limoges
+[2026-07-19 15:06:03] [SUCCESS] [UPDATE         ] Luca SOLLAZZO (100SF) | Ancien: 00:54.04 -> Nouveau: 00:51.07 à Limoges
+[2026-07-19 15:06:03] [INFO   ] [RANKING        ] Nevis VIGOUROUX (100SF - 00:58.62) | Ancien Clt : 21 -> Nouveau : 22
+[2026-07-19 15:06:03] [SUCCESS] [UPDATE         ] Yves PRIGENT (100SF) | Ancien: 01:04.59 -> Nouveau: 01:00.53 à La roche-sur-yon
+[2026-07-19 15:06:03] [INFO   ] [RANKING        ] Thomas LEBEE (100SF - 01:04.02) | Ancien Clt : 21 -> Nouveau : 24
+[2026-07-19 15:06:03] [SUCCESS] [UPDATE         ] Thierry HENRI (100SF) | Ancien: 01:07.74 -> Nouveau: 01:07.42 à La roche-sur-yon
+[2026-07-19 15:06:03] [SUCCESS] [UPDATE         ] Simon LANDOLSI (100SF) | Ancien: 01:09.23 -> Nouveau: 01:07.66 à La roche-sur-yon
+[2026-07-19 15:06:03] [SUCCESS] [UPDATE         ] Maxime LE POGAM (100SF) | Ancien: 01:12.72 -> Nouveau: 01:07.93 à Limoges
+[2026-07-19 15:06:03] [INFO   ] [RANKING        ] Matthieu SANCEAU (100SF - 01:13.27) | Ancien Clt : 15 -> Nouveau : 16
+[2026-07-19 15:06:03] [INFO   ] [RANKING        ] Christophe KERJEAN (100SF - 01:13.66) | Ancien Clt : 33 -> Nouveau : 35
+[2026-07-19 15:06:03] [INFO   ] [API_CALL       ] Requete: 200SF | F
+[2026-07-19 15:06:04] [SUCCESS] [UPDATE         ] Florie BOUTOUILLER (200SF) | Ancien: 02:10.80 -> Nouveau: 02:00.72 à Limoges
+[2026-07-19 15:06:04] [INFO   ] [RANKING        ] Pauline CAMUS (200SF - 02:30.59) | Ancien Clt : 27 -> Nouveau : 29
+[2026-07-19 15:06:04] [INFO   ] [RANKING        ] Nina VIGOUROUX (200SF - 02:45.04) | Ancien Clt : 33 -> Nouveau : 37
+[2026-07-19 15:06:04] [SUCCESS] [UPDATE         ] Céline MARTIN (200SF) | Ancien: 03:00.51 -> Nouveau: 02:48.31 à La roche-sur-yon
+[2026-07-19 15:06:04] [INFO   ] [RANKING        ] Emy LE TREUT (200SF - 03:02.12) | Ancien Clt : 42 -> Nouveau : 43
+[2026-07-19 15:06:04] [INFO   ] [API_CALL       ] Requete: 200SF | M
+[2026-07-19 15:06:07] [SUCCESS] [UPDATE         ] Luca SOLLAZZO (200SF) | Ancien: 02:02.42 -> Nouveau: 01:58.36 à Limoges
+[2026-07-19 15:06:07] [SUCCESS] [UPDATE         ] Thierry HENRI (200SF) | Ancien: 02:19.80 -> Nouveau: 02:17.64 à La roche-sur-yon
+[2026-07-19 15:06:07] [INFO   ] [RANKING        ] Nevis VIGOUROUX (200SF - 02:21.79) | Ancien Clt : 25 -> Nouveau : 27
+[2026-07-19 15:06:07] [INFO   ] [RANKING        ] Yves PRIGENT (200SF - 02:22.64) | Ancien Clt : 14 -> Nouveau : 15
+[2026-07-19 15:06:07] [SUCCESS] [UPDATE         ] Maxime LE POGAM (200SF) | Ancien: 02:33.06 -> Nouveau: 02:23.92 à Limoges
+[2026-07-19 15:06:07] [SUCCESS] [UPDATE         ] Simon LANDOLSI (200SF) | Ancien: 02:26.67 -> Nouveau: 02:24.60 à La roche-sur-yon
+[2026-07-19 15:06:07] [INFO   ] [RANKING        ] Christophe KERJEAN (200SF - 02:33.95) | Ancien Clt : 20 -> Nouveau : 21
+[2026-07-19 15:06:07] [INFO   ] [API_CALL       ] Requete: 400SF | F
+[2026-07-19 15:06:09] [INFO   ] [RANKING        ] Anne FEAT (400SF - 05:07.87) | Ancien Clt : 6 -> Nouveau : 7
+[2026-07-19 15:06:09] [SUCCESS] [UPDATE         ] Céline MARTIN (400SF) | Ancien: 06:10.16 -> Nouveau: 05:42.42 à La roche-sur-yon
+[2026-07-19 15:06:09] [INFO   ] [API_CALL       ] Requete: 400SF | M
+[2026-07-19 15:06:12] [INFO   ] [RANKING        ] Luca SOLLAZZO (400SF - 04:26.15) | Ancien Clt : 10 -> Nouveau : 12
+[2026-07-19 15:06:12] [SUCCESS] [UPDATE         ] Thierry HENRI (400SF) | Ancien: 04:47.23 -> Nouveau: 04:41.30 à La roche-sur-yon
+[2026-07-19 15:06:12] [SUCCESS] [UPDATE         ] Simon LANDOLSI (400SF) | Ancien: 05:01.20 -> Nouveau: 04:57.27 à La roche-sur-yon
+[2026-07-19 15:06:12] [SUCCESS] [UPDATE         ] Maxime LE POGAM (400SF) | Ancien: 05:06.02 -> Nouveau: 04:58.05 à Limoges
+[2026-07-19 15:06:12] [INFO   ] [RANKING        ] Christophe KERJEAN (400SF - 05:12.67) | Ancien Clt : 14 -> Nouveau : 15
+[2026-07-19 15:06:12] [INFO   ] [INSERT         ] Yves PRIGENT (400SF) | Ajout 1er temps : 05:16.67 à La roche-sur-yon
+[2026-07-19 15:06:12] [INFO   ] [API_CALL       ] Requete: 800SF | F
+[2026-07-19 15:06:15] [INFO   ] [RANKING        ] Anne FEAT (800SF - 10:55.79) | Ancien Clt : 3 -> Nouveau : 4
+[2026-07-19 15:06:15] [INFO   ] [RANKING        ] Nina VIGOUROUX (800SF - 11:49.66) | Ancien Clt : 27 -> Nouveau : 32
+[2026-07-19 15:06:15] [INFO   ] [RANKING        ] Céline MARTIN (800SF - 12:35.60) | Ancien Clt : 9 -> Nouveau : 10
+[2026-07-19 15:06:15] [INFO   ] [API_CALL       ] Requete: 800SF | M
+[2026-07-19 15:06:16] [INFO   ] [RANKING        ] Christophe KERJEAN (800SF - 08:29.49) | Ancien Clt : 1 -> Nouveau : 3
+[2026-07-19 15:06:16] [SUCCESS] [UPDATE         ] Thierry HENRI (800SF) | Ancien: 09:41.36 -> Nouveau: 09:26.65 à La roche-sur-yon
+[2026-07-19 15:06:16] [SUCCESS] [UPDATE         ] Maxime LE POGAM (800SF) | Ancien: 10:39.36 -> Nouveau: 09:56.97 à Limoges
+[2026-07-19 15:06:16] [SUCCESS] [UPDATE         ] Simon LANDOLSI (800SF) | Ancien: 10:21.78 -> Nouveau: 10:18.09 à La roche-sur-yon
+[2026-07-19 15:06:16] [INFO   ] [INSERT         ] Yves PRIGENT (800SF) | Ajout 1er temps : 10:37.63 à La roche-sur-yon
+[2026-07-19 15:06:16] [INFO   ] [API_CALL       ] Requete: 1500SF | F
+[2026-07-19 15:06:18] [INFO   ] [API_CALL       ] Requete: 1500SF | M
+[2026-07-19 15:06:21] [INFO   ] [API_CALL       ] Requete: 50AP | F
+[2026-07-19 15:06:22] [INFO   ] [RANKING        ] Maelys LE BIGOT  (50AP - 00:23.08) | Ancien Clt : 38 -> Nouveau : 39
+[2026-07-19 15:06:22] [SUCCESS] [UPDATE         ] Garance LEBEE (50AP) | Ancien: 00:26.35 -> Nouveau: 00:24.06 à Limoges
+[2026-07-19 15:06:22] [INFO   ] [RANKING        ] Eloise KERJEAN (50AP - 00:25.15) | Ancien Clt : 23 -> Nouveau : 24
+[2026-07-19 15:06:22] [INFO   ] [INSERT         ] Julie LE TREUT (50AP) | Ajout 1er temps : 00:27.54 à La roche-sur-yon
+[2026-07-19 15:06:22] [INFO   ] [API_CALL       ] Requete: 50AP | M
+[2026-07-19 15:06:24] [SUCCESS] [UPDATE         ] Luca SOLLAZZO (50AP) | Ancien: 00:21.60 -> Nouveau: 00:19.39 à Limoges
+[2026-07-19 15:06:24] [INFO   ] [RANKING        ] Celian PRIGENT (50AP - 00:24.39) | Ancien Clt : 19 -> Nouveau : 20
+[2026-07-19 15:06:24] [SUCCESS] [UPDATE         ] Yves PRIGENT (50AP) | Ancien: 00:29.90 -> Nouveau: 00:28.05 à La roche-sur-yon
+[2026-07-19 15:06:24] [INFO   ] [API_CALL       ] Requete: 100IS | F
+[2026-07-19 15:06:26] [INFO   ] [RANKING        ] Anne LAVIGNE  (100IS - 00:56.34) | Ancien Clt : 1 -> Nouveau : 2
+[2026-07-19 15:06:26] [SUCCESS] [UPDATE         ] Garance LEBEE (100IS) | Ancien: 01:02.64 -> Nouveau: 00:58.19 à Limoges
+[2026-07-19 15:06:27] [INFO   ] [RANKING        ] Nina VIGOUROUX (100IS - 01:10.33) | Ancien Clt : 17 -> Nouveau : 23
+[2026-07-19 15:06:27] [INFO   ] [API_CALL       ] Requete: 100IS | M
+[2026-07-19 15:06:29] [SUCCESS] [UPDATE         ] Maxime LE POGAM (100IS) | Ancien: 01:25.06 -> Nouveau: 01:07.59 à Limoges
+[2026-07-19 15:06:29] [SUCCESS] [UPDATE         ] Simon LANDOLSI (100IS) | Ancien: 01:15.89 -> Nouveau: 01:11.39 à La roche-sur-yon
+[2026-07-19 15:06:29] [INFO   ] [API_CALL       ] Requete: 800IS | F
+[2026-07-19 15:06:31] [INFO   ] [API_CALL       ] Requete: 800IS | M
+[2026-07-19 15:06:32] [INFO   ] [API_CALL       ] Requete: 200IS | F
+[2026-07-19 15:06:34] [SUCCESS] [UPDATE         ] Garance LEBEE (200IS) | Ancien: 02:29.94 -> Nouveau: 02:19.30 à Limoges
+[2026-07-19 15:06:34] [INFO   ] [API_CALL       ] Requete: 200IS | M
+[2026-07-19 15:06:37] [SUCCESS] [UPDATE         ] Maxime LE POGAM (200IS) | Ancien: 03:07.15 -> Nouveau: 02:34.93 à Limoges
+[2026-07-19 15:06:37] [INFO   ] [API_CALL       ] Requete: 400IS | F
+[2026-07-19 15:06:39] [INFO   ] [API_CALL       ] Requete: 400IS | M
+[2026-07-19 15:06:41] [INFO   ] [API_CALL       ] Requete: 50BI | F
+[2026-07-19 15:06:42] [SUCCESS] [UPDATE         ] Florie BOUTOUILLER (50BI) | Ancien: 00:24.63 -> Nouveau: 00:24.55 à Limoges
+[2026-07-19 15:06:42] [SUCCESS] [UPDATE         ] Eloise KERJEAN (50BI) | Ancien: 00:26.25 -> Nouveau: 00:26.19 à Limoges
+[2026-07-19 15:06:42] [SUCCESS] [UPDATE         ] Garance LEBEE (50BI) | Ancien: 00:28.56 -> Nouveau: 00:27.86 à Limoges
+[2026-07-19 15:06:42] [INFO   ] [RANKING        ] Pauline CAMUS (50BI - 00:28.22) | Ancien Clt : 26 -> Nouveau : 27
+[2026-07-19 15:06:42] [SUCCESS] [UPDATE         ] Julie LE TREUT (50BI) | Ancien: 00:29.69 -> Nouveau: 00:29.40 à La roche-sur-yon
+[2026-07-19 15:06:42] [INFO   ] [RANKING        ] Nina VIGOUROUX (50BI - 00:30.20) | Ancien Clt : 19 -> Nouveau : 21
+[2026-07-19 15:06:42] [INFO   ] [RANKING        ] Helene LE GALL (50BI - 00:31.39) | Ancien Clt : 23 -> Nouveau : 25
+[2026-07-19 15:06:43] [INFO   ] [RANKING        ] Azzura SOLLAZZO (50BI - 00:40.69) | Ancien Clt : 7 -> Nouveau : 8
+[2026-07-19 15:06:43] [SUCCESS] [UPDATE         ] Sandra PRIGENT (50BI) | Ancien: 00:41.63 -> Nouveau: 00:40.80 à La roche-sur-yon
+[2026-07-19 15:06:43] [INFO   ] [API_CALL       ] Requete: 50BI | M
+[2026-07-19 15:06:45] [SUCCESS] [UPDATE         ] Killian TORC'H (50BI) | Ancien: 00:21.86 -> Nouveau: 00:21.78 à Limoges
+[2026-07-19 15:06:45] [INFO   ] [RANKING        ] Zacharie LEDUC (50BI - 00:23.08) | Ancien Clt : 10 -> Nouveau : 11
+[2026-07-19 15:06:45] [SUCCESS] [UPDATE         ] Nevis VIGOUROUX (50BI) | Ancien: 00:25.99 -> Nouveau: 00:25.04 à Limoges
+[2026-07-19 15:06:45] [INFO   ] [RANKING        ] Thomas LEBEE (50BI - 00:26.92) | Ancien Clt : 25 -> Nouveau : 26
+[2026-07-19 15:06:45] [INFO   ] [RANKING        ] Maxime LE POGAM (50BI - 00:27.78) | Ancien Clt : 36 -> Nouveau : 37
+[2026-07-19 15:06:45] [INFO   ] [RANKING        ] Simon LANDOLSI (50BI - 00:29.46) | Ancien Clt : 15 -> Nouveau : 16
+[2026-07-19 15:06:45] [INFO   ] [RANKING        ] Titouan LEGRAND (50BI - 00:32.99) | Ancien Clt : 67 -> Nouveau : 68
+[2026-07-19 15:06:45] [INFO   ] [API_CALL       ] Requete: 100BI | F
+[2026-07-19 15:06:47] [SUCCESS] [UPDATE         ] Florie BOUTOUILLER (100BI) | Ancien: 00:53.80 -> Nouveau: 00:53.63 à Limoges
+[2026-07-19 15:06:47] [SUCCESS] [UPDATE         ] Eloise KERJEAN (100BI) | Ancien: 00:58.55 -> Nouveau: 00:57.17 à Limoges
+[2026-07-19 15:06:48] [INFO   ] [RANKING        ] Tifenn GOBIN (100BI - 01:02.25) | Ancien Clt : 3 -> Nouveau : 4
+[2026-07-19 15:06:48] [INFO   ] [INSERT         ] Julie LE TREUT (100BI) | Ajout 1er temps : 01:04.96 à La roche-sur-yon
+[2026-07-19 15:06:48] [INFO   ] [RANKING        ] Maelys LE BIGOT  (100BI - 01:07.25) | Ancien Clt : 54 -> Nouveau : 55
+[2026-07-19 15:06:48] [INFO   ] [INSERT         ] Helene LE GALL (100BI) | Ajout 1er temps : 01:07.93 à La roche-sur-yon
+[2026-07-19 15:06:48] [INFO   ] [RANKING        ] Sandra KERGOURLAY (100BI - 01:12.67) | Ancien Clt : 20 -> Nouveau : 22
+[2026-07-19 15:06:48] [SUCCESS] [UPDATE         ] Céline MARTIN (100BI) | Ancien: 01:36.27 -> Nouveau: 01:33.66 à La roche-sur-yon
+[2026-07-19 15:06:48] [INFO   ] [INSERT         ] Sandra PRIGENT (100BI) | Ajout 1er temps : 01:36.00 à La roche-sur-yon
+[2026-07-19 15:06:48] [INFO   ] [API_CALL       ] Requete: 100BI | M
+[2026-07-19 15:06:50] [SUCCESS] [UPDATE         ] Killian TORC'H (100BI) | Ancien: 00:48.60 -> Nouveau: 00:48.54 à Limoges
+[2026-07-19 15:06:50] [INFO   ] [RANKING        ] Mathis FRANCES (100BI - 00:53.41) | Ancien Clt : 44 -> Nouveau : 45
+[2026-07-19 15:06:50] [SUCCESS] [UPDATE         ] Nevis VIGOUROUX (100BI) | Ancien: 00:58.67 -> Nouveau: 00:56.66 à Limoges
+[2026-07-19 15:06:50] [SUCCESS] [UPDATE         ] Yves PRIGENT (100BI) | Ancien: 01:01.49 -> Nouveau: 00:59.59 à La roche-sur-yon
+[2026-07-19 15:06:50] [SUCCESS] [UPDATE         ] Thierry HENRI (100BI) | Ancien: 01:03.75 -> Nouveau: 01:01.60 à La roche-sur-yon
+[2026-07-19 15:06:50] [SUCCESS] [UPDATE         ] Thomas LEBEE (100BI) | Ancien: 01:03.67 -> Nouveau: 01:02.16 à La roche-sur-yon
+[2026-07-19 15:06:50] [INFO   ] [RANKING        ] Christophe KERJEAN (100BI - 01:02.19) | Ancien Clt : 24 -> Nouveau : 26
+[2026-07-19 15:06:50] [INFO   ] [RANKING        ] Matthieu SANCEAU (100BI - 01:07.22) | Ancien Clt : 16 -> Nouveau : 17
+[2026-07-19 15:06:50] [INFO   ] [RANKING        ] Titouan LEGRAND (100BI - 01:14.43) | Ancien Clt : 56 -> Nouveau : 58
+[2026-07-19 15:06:50] [INFO   ] [API_CALL       ] Requete: 200BI | F
+[2026-07-19 15:06:51] [SUCCESS] [UPDATE         ] Florie BOUTOUILLER (200BI) | Ancien: 01:57.65 -> Nouveau: 01:57.47 à Limoges
+[2026-07-19 15:06:51] [SUCCESS] [UPDATE         ] Eloise KERJEAN (200BI) | Ancien: 02:07.63 -> Nouveau: 02:07.17 à Limoges
+[2026-07-19 15:06:51] [INFO   ] [INSERT         ] Julie LE TREUT (200BI) | Ajout 1er temps : 02:38.79 à La roche-sur-yon
+[2026-07-19 15:06:51] [INFO   ] [INSERT         ] Helene LE GALL (200BI) | Ajout 1er temps : 02:39.44 à La roche-sur-yon
+[2026-07-19 15:06:51] [INFO   ] [RANKING        ] Sandra KERGOURLAY (200BI - 02:48.78) | Ancien Clt : 18 -> Nouveau : 22
+[2026-07-19 15:06:51] [SUCCESS] [UPDATE         ] Céline MARTIN (200BI) | Ancien: 03:15.45 -> Nouveau: 03:10.53 à La roche-sur-yon
+[2026-07-19 15:06:52] [INFO   ] [API_CALL       ] Requete: 200BI | M
+[2026-07-19 15:06:53] [INFO   ] [RANKING        ] Zacharie LEDUC (200BI - 02:00.40) | Ancien Clt : 9 -> Nouveau : 10
+[2026-07-19 15:06:53] [INFO   ] [RANKING        ] Celian PRIGENT (200BI - 02:03.22) | Ancien Clt : 11 -> Nouveau : 12
+[2026-07-19 15:06:53] [SUCCESS] [UPDATE         ] Thierry HENRI (200BI) | Ancien: 02:13.90 -> Nouveau: 02:09.66 à La roche-sur-yon
+[2026-07-19 15:06:53] [SUCCESS] [UPDATE         ] Nevis VIGOUROUX (200BI) | Ancien: 02:15.00 -> Nouveau: 02:12.24 à Limoges
+[2026-07-19 15:06:53] [SUCCESS] [UPDATE         ] Yves PRIGENT (200BI) | Ancien: 02:21.35 -> Nouveau: 02:19.53 à La roche-sur-yon
+[2026-07-19 15:06:53] [SUCCESS] [UPDATE         ] Thomas LEBEE (200BI) | Ancien: 02:24.51 -> Nouveau: 02:24.42 à La roche-sur-yon
+[2026-07-19 15:06:53] [INFO   ] [RANKING        ] Christophe KERJEAN (200BI - 02:32.98) | Ancien Clt : 34 -> Nouveau : 35
+[2026-07-19 15:06:53] [INFO   ] [RANKING        ] Titouan LEGRAND (200BI - 02:37.89) | Ancien Clt : 43 -> Nouveau : 45
+[2026-07-19 15:06:53] [INFO   ] [API_CALL       ] Requete: 400BI | F
+[2026-07-19 15:06:55] [SUCCESS] [UPDATE         ] Eloise KERJEAN (400BI) | Ancien: 04:34.68 -> Nouveau: 04:29.42 à Limoges
+[2026-07-19 15:06:55] [INFO   ] [INSERT         ] Julie LE TREUT (400BI) | Ajout 1er temps : 05:22.12 à La roche-sur-yon
+[2026-07-19 15:06:55] [INFO   ] [INSERT         ] Helene LE GALL (400BI) | Ajout 1er temps : 05:22.90 à La roche-sur-yon
+[2026-07-19 15:06:55] [INFO   ] [RANKING        ] Sandra KERGOURLAY (400BI - 05:45.62) | Ancien Clt : 13 -> Nouveau : 17
+[2026-07-19 15:06:55] [SUCCESS] [UPDATE         ] Céline MARTIN (400BI) | Ancien: 06:27.67 -> Nouveau: 06:15.82 à La roche-sur-yon
+[2026-07-19 15:06:55] [INFO   ] [API_CALL       ] Requete: 400BI | M
+[2026-07-19 15:06:57] [INFO   ] [RANKING        ] Luca SOLLAZZO (400BI - 04:09.50) | Ancien Clt : 1 -> Nouveau : 2
+[2026-07-19 15:06:57] [SUCCESS] [UPDATE         ] Thierry HENRI (400BI) | Ancien: 04:37.71 -> Nouveau: 04:32.71 à La roche-sur-yon
+[2026-07-19 15:06:57] [INFO   ] [RANKING        ] Maxime LE POGAM (400BI - 04:47.74) | Ancien Clt : 13 -> Nouveau : 15
+[2026-07-19 15:06:57] [SUCCESS] [UPDATE         ] Nevis VIGOUROUX (400BI) | Ancien: 05:05.62 -> Nouveau: 04:57.17 à Limoges
+[2026-07-19 15:06:57] [INFO   ] [RANKING        ] Killian TORC'H (400BI - 05:04.56) | Ancien Clt : 41 -> Nouveau : 42
+[2026-07-19 15:06:57] [INFO   ] [RANKING        ] Christophe KERJEAN (400BI - 05:15.92) | Ancien Clt : 18 -> Nouveau : 19
+[2026-07-19 15:06:57] [SUCCESS] [UPDATE         ] Thomas LEBEE (400BI) | Ancien: 05:20.24 -> Nouveau: 05:18.87 à La roche-sur-yon
+[2026-07-19 15:06:57] [INFO   ] [RANKING        ] Yves PRIGENT (400BI - 05:25.65) | Ancien Clt : 22 -> Nouveau : 23
+[2026-07-19 15:06:57] [INFO   ] [END            ] --- FIN DE SYNCHRONISATION ---
