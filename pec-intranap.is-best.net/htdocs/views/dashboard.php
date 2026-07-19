@@ -21,22 +21,15 @@
         <h1>🏆 Meilleurs Temps du PEC</h1>
 
         <div style="margin-bottom: 20px;">
+            <?php if ($_SERVER['REMOTE_ADDR'] === '127.0.0.1' || $_SERVER['REMOTE_ADDR'] === '::1'): ?>
             <button id="btnSync" class="btn-primary" onclick="lancerSync()">
                 🔄 Synchroniser avec la FFESSM
             </button>
-            <!-- Bouton de synchronisation
-            
-
-
             <button onclick="voirLogs()"
                 style="background: none; padding: 4px 10px; font-size: 0.8rem; color: var(--texte-secondaire);">
                 📜 Voir les dernières modifs
             </button>
-
-
-            <div><button type="button" class="btn-primary" style="background-color: #007bff; color: white;"
-                    onclick="openPdfModal()">📄 Ajout via un pdf officiel</button></div>
-                    -->
+            <?php endif; ?>
 
 
             <div id="pdfModal" class="modal">
