@@ -250,33 +250,31 @@ class SyncController
                             $found_perf = false;
 
                             // ---------------------------------------------------------
-                            // RECHERCHE D'UN DOUBLON EXISTANT (Nageur + Épreuve + Temps + Date)
+                            // RECHERCHE D'UNE PERFORMANCE EXISTANTE (Idem que précédent)
                             // ---------------------------------------------------------
                             $found_key = null;
-
                             foreach ($perfs_ref as $key => $p) {
-                                if ($p['nageur_id'] == $nageur_id &&
-                                        $p['epreuve_id'] == $epreuve_id &&
-                                        $p['temps'] === $n['temps'] &&
-                                        $p['date_perf'] === ($n['date'] ?? '')) {
+                                if ($p['nageur_id'] == $nageur_id && $p['epreuve_id'] == $epreuve_id && $p['temps'] === $n['temps'] && $p['date_perf'] === ($n['date'] ?? '')) {
                                     $found_key = $key;
                                     break;
                                 }
                             }
 
-                            // ---------------------------------------------------------
-                            // DÉCISION : MISE À JOUR OU NOUVELLE PERFORMANCE
-                            // ---------------------------------------------------------
                             if ($found_key !== null) {
-                                // La performance existe déjà, on vérifie seulement si le classement a changé
+                                // La perf existe. Vérifions si le classement a changé.
                                 if ($perfs_ref[$found_key]['classement'] != $position_nationale) {
+                                    $ancien_clt = $perfs_ref[$found_key]['classement'];
                                     $perfs_ref[$found_key]['classement'] = (string) $position_nationale;
                                     $json_updated = true;
+
+                                    // LOG : Mise à jour du classement
+                                    $info = "{$prenom_nageur} {$nom_nageur} ({$epreuve} - {$n['temps']}) | Ancien Clt : {$ancien_clt} -> Nouveau : {$position_nationale}";
+                                    $this->writeToLog('[MAJ CLASSEMENT] ' . $info);
+                                    $this->logger->info('RANKING', $info);
                                 }
-                                // Pas d'ajout : on sort de la boucle pour passer à la suivante
-                                continue;
+                                // Si rien n'a changé, on ne fait rien (donc pas de log, c'est normal)
                             } else {
-                                // Performance inexistante : on l'ajoute
+                                // La perf n'existe pas, on l'ajoute.
                                 $max_id++;
                                 $perfs_ref[] = [
                                     'id' => (string) $max_id,
@@ -290,6 +288,11 @@ class SyncController
                                     'classement' => (string) $position_nationale
                                 ];
                                 $json_updated = true;
+
+                                // LOG : Ajout
+                                $info = "{$prenom_nageur} {$nom_nageur} ({$epreuve}) | Ajout 1er temps : {$n['temps']} @ {$n['lieu']}";
+                                $this->writeToLog('[AJOUT] ' . $info);
+                                $this->logger->info('INSERT', $info);
                             }
 
                             // ---------------------------------------------------------
