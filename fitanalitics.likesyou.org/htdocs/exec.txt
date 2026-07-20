@@ -1,0 +1,1 @@
+python extraire_fit_coros.py; python generer_historique.py

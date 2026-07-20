@@ -1,0 +1,452 @@
+{
+    "Crunch abdos à la poulie": [
+        {
+            "date": "20260714",
+            "series": 4,
+            "total_reps": 51,
+            "poids": 60.5,
+            "volume": 3085
+        }
+    ],
+    "Curl biceps": [
+        {
+            "date": "20260713",
+            "series": 4,
+            "total_reps": 44,
+            "poids": 14.0,
+            "volume": 616
+        },
+        {
+            "date": "20260720",
+            "series": 4,
+            "total_reps": 50,
+            "poids": 14.0,
+            "volume": 700
+        }
+    ],
+    "Curl marteau": [
+        {
+            "date": "20260625",
+            "series": 4,
+            "total_reps": 43,
+            "poids": 18.0,
+            "volume": 774
+        },
+        {
+            "date": "20260703",
+            "series": 4,
+            "total_reps": 47,
+            "poids": 18.0,
+            "volume": 846
+        },
+        {
+            "date": "20260709",
+            "series": 4,
+            "total_reps": 49,
+            "poids": 18.0,
+            "volume": 882
+        },
+        {
+            "date": "20260716",
+            "series": 4,
+            "total_reps": 50,
+            "poids": 18.0,
+            "volume": 900
+        }
+    ],
+    "Curl à la barre ez": [
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 39,
+            "poids": 30.5,
+            "volume": 1189
+        }
+    ],
+    "Developpé couché": [
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 39,
+            "poids": 24.2,
+            "volume": 945
+        },
+        {
+            "date": "20260706",
+            "series": 4,
+            "total_reps": 42,
+            "poids": 24.0,
+            "volume": 1008
+        },
+        {
+            "date": "20260713",
+            "series": 4,
+            "total_reps": 42,
+            "poids": 24.0,
+            "volume": 1008
+        },
+        {
+            "date": "20260720",
+            "series": 4,
+            "total_reps": 46,
+            "poids": 24.0,
+            "volume": 1104
+        }
+    ],
+    "Developpé incliné": [
+        {
+            "date": "20260625",
+            "series": 4,
+            "total_reps": 47,
+            "poids": 18.0,
+            "volume": 846
+        },
+        {
+            "date": "20260703",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 18.0,
+            "volume": 864
+        },
+        {
+            "date": "20260709",
+            "series": 4,
+            "total_reps": 46,
+            "poids": 18.0,
+            "volume": 828
+        },
+        {
+            "date": "20260716",
+            "series": 4,
+            "total_reps": 45,
+            "poids": 18.0,
+            "volume": 810
+        }
+    ],
+    "Developpé militaire": [
+        {
+            "date": "20260625",
+            "series": 4,
+            "total_reps": 42,
+            "poids": 18.0,
+            "volume": 756
+        },
+        {
+            "date": "20260703",
+            "series": 4,
+            "total_reps": 47,
+            "poids": 18.0,
+            "volume": 846
+        },
+        {
+            "date": "20260709",
+            "series": 4,
+            "total_reps": 45,
+            "poids": 18.0,
+            "volume": 810
+        },
+        {
+            "date": "20260716",
+            "series": 4,
+            "total_reps": 42,
+            "poids": 18.0,
+            "volume": 756
+        }
+    ],
+    "Extentions de jambes": [
+        {
+            "date": "20260716",
+            "series": 4,
+            "total_reps": 44,
+            "poids": 55.0,
+            "volume": 2420
+        }
+    ],
+    "Extentions lombaires": [
+        {
+            "date": "20260714",
+            "series": 4,
+            "total_reps": 39,
+            "poids": 37.5,
+            "volume": 1462
+        }
+    ],
+    "Fentes bulgares": [
+        {
+            "date": "20260714",
+            "series": 4,
+            "total_reps": 36,
+            "poids": 80.0,
+            "volume": 2880
+        },
+        {
+            "date": "20260716",
+            "series": 3,
+            "total_reps": 30,
+            "poids": 17.3,
+            "volume": 520
+        }
+    ],
+    "Planche": [
+        {
+            "date": "20260716",
+            "series": 4,
+            "total_reps": 18,
+            "poids": 3.0,
+            "volume": 54
+        }
+    ],
+    "Presse à cuisses": [
+        {
+            "date": "20260714",
+            "series": 4,
+            "total_reps": 39,
+            "poids": 130.0,
+            "volume": 5070
+        }
+    ],
+    "RDL": [
+        {
+            "date": "20260714",
+            "series": 4,
+            "total_reps": 42,
+            "poids": 62.5,
+            "volume": 2625
+        }
+    ],
+    "Rowing à la barre": [
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 50.0,
+            "volume": 2400
+        },
+        {
+            "date": "20260706",
+            "series": 4,
+            "total_reps": 44,
+            "poids": 55.0,
+            "volume": 2420
+        },
+        {
+            "date": "20260713",
+            "series": 4,
+            "total_reps": 46,
+            "poids": 55.0,
+            "volume": 2530
+        },
+        {
+            "date": "20260720",
+            "series": 4,
+            "total_reps": 49,
+            "poids": 55.0,
+            "volume": 2695
+        }
+    ],
+    "Squats à la barre": [
+        {
+            "date": "20260716",
+            "series": 4,
+            "total_reps": 28,
+            "poids": 70.0,
+            "volume": 1960
+        }
+    ],
+    "Tirage vertical": [
+        {
+            "date": "20260625",
+            "series": 4,
+            "total_reps": 44,
+            "poids": 60.0,
+            "volume": 2640
+        },
+        {
+            "date": "20260703",
+            "series": 4,
+            "total_reps": 45,
+            "poids": 60.0,
+            "volume": 2700
+        },
+        {
+            "date": "20260709",
+            "series": 4,
+            "total_reps": 46,
+            "poids": 60.0,
+            "volume": 2760
+        },
+        {
+            "date": "20260716",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 60.0,
+            "volume": 2880
+        }
+    ],
+    "Tractions": [
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 26,
+            "poids": 0.0,
+            "volume": 0
+        },
+        {
+            "date": "20260706",
+            "series": 4,
+            "total_reps": 26,
+            "poids": 0.0,
+            "volume": 0
+        },
+        {
+            "date": "20260713",
+            "series": 4,
+            "total_reps": 27,
+            "poids": 0.0,
+            "volume": 0
+        },
+        {
+            "date": "20260720",
+            "series": 4,
+            "total_reps": 19,
+            "poids": 6.2,
+            "volume": 118
+        }
+    ],
+    "Triceps à la poulie": [
+        {
+            "date": "20260625",
+            "series": 4,
+            "total_reps": 52,
+            "poids": 25.0,
+            "volume": 1300
+        },
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 42,
+            "poids": 28.1,
+            "volume": 1181
+        },
+        {
+            "date": "20260703",
+            "series": 4,
+            "total_reps": 50,
+            "poids": 25.0,
+            "volume": 1250
+        },
+        {
+            "date": "20260706",
+            "series": 8,
+            "total_reps": 95,
+            "poids": 30.2,
+            "volume": 2873
+        },
+        {
+            "date": "20260709",
+            "series": 4,
+            "total_reps": 57,
+            "poids": 25.0,
+            "volume": 1425
+        },
+        {
+            "date": "20260713",
+            "series": 4,
+            "total_reps": 47,
+            "poids": 27.5,
+            "volume": 1292
+        },
+        {
+            "date": "20260716",
+            "series": 4,
+            "total_reps": 52,
+            "poids": 25.0,
+            "volume": 1300
+        },
+        {
+            "date": "20260720",
+            "series": 4,
+            "total_reps": 44,
+            "poids": 27.5,
+            "volume": 1210
+        }
+    ],
+    "curls ischio": [
+        {
+            "date": "20260714",
+            "series": 4,
+            "total_reps": 23,
+            "poids": 50.0,
+            "volume": 1150
+        }
+    ],
+    "Élévations des mollets": [
+        {
+            "date": "20260716",
+            "series": 4,
+            "total_reps": 51,
+            "poids": 72.5,
+            "volume": 3697
+        }
+    ],
+    "Élévations latérales": [
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 10.0,
+            "volume": 480
+        },
+        {
+            "date": "20260706",
+            "series": 4,
+            "total_reps": 50,
+            "poids": 10.0,
+            "volume": 500
+        },
+        {
+            "date": "20260713",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 10.0,
+            "volume": 480
+        },
+        {
+            "date": "20260720",
+            "series": 4,
+            "total_reps": 49,
+            "poids": 10.0,
+            "volume": 490
+        }
+    ],
+    "Élévations latérales position penchée": [
+        {
+            "date": "20260625",
+            "series": 4,
+            "total_reps": 52,
+            "poids": 12.0,
+            "volume": 624
+        },
+        {
+            "date": "20260703",
+            "series": 4,
+            "total_reps": 51,
+            "poids": 12.0,
+            "volume": 612
+        },
+        {
+            "date": "20260709",
+            "series": 4,
+            "total_reps": 50,
+            "poids": 12.0,
+            "volume": 600
+        },
+        {
+            "date": "20260716",
+            "series": 4,
+            "total_reps": 50,
+            "poids": 12.0,
+            "volume": 600
+        }
+    ]
+}

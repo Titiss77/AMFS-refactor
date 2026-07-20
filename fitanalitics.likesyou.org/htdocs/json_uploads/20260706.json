@@ -1,0 +1,146 @@
+[
+    {
+        "timestamp": "2026-07-06T13:37:14+00:00",
+        "exercice": "Tractions",
+        "repetitions": 9,
+        "poids": null
+    },
+    {
+        "timestamp": "2026-07-06T13:40:37+00:00",
+        "exercice": "Tractions",
+        "repetitions": 6,
+        "poids": null
+    },
+    {
+        "timestamp": "2026-07-06T13:44:02+00:00",
+        "exercice": "Tractions",
+        "repetitions": 6,
+        "poids": null
+    },
+    {
+        "timestamp": "2026-07-06T13:47:41+00:00",
+        "exercice": "Tractions",
+        "repetitions": 5,
+        "poids": null
+    },
+    {
+        "timestamp": "2026-07-06T13:50:38+00:00",
+        "exercice": "Developpé couché",
+        "repetitions": 13,
+        "poids": 24.0
+    },
+    {
+        "timestamp": "2026-07-06T13:53:26+00:00",
+        "exercice": "Developpé couché",
+        "repetitions": 13,
+        "poids": 24.0
+    },
+    {
+        "timestamp": "2026-07-06T13:56:02+00:00",
+        "exercice": "Developpé couché",
+        "repetitions": 7,
+        "poids": 24.0
+    },
+    {
+        "timestamp": "2026-07-06T13:59:38+00:00",
+        "exercice": "Developpé couché",
+        "repetitions": 9,
+        "poids": 24.0
+    },
+    {
+        "timestamp": "2026-07-06T14:05:42+00:00",
+        "exercice": "Rowing à la barre",
+        "repetitions": 13,
+        "poids": 55.0
+    },
+    {
+        "timestamp": "2026-07-06T14:08:13+00:00",
+        "exercice": "Rowing à la barre",
+        "repetitions": 12,
+        "poids": 55.0
+    },
+    {
+        "timestamp": "2026-07-06T14:10:55+00:00",
+        "exercice": "Rowing à la barre",
+        "repetitions": 10,
+        "poids": 55.0
+    },
+    {
+        "timestamp": "2026-07-06T14:13:32+00:00",
+        "exercice": "Rowing à la barre",
+        "repetitions": 9,
+        "poids": 55.0
+    },
+    {
+        "timestamp": "2026-07-06T14:18:32+00:00",
+        "exercice": "Triceps à la poulie",
+        "repetitions": 13,
+        "poids": 33.0
+    },
+    {
+        "timestamp": "2026-07-06T14:21:39+00:00",
+        "exercice": "Triceps à la poulie",
+        "repetitions": 13,
+        "poids": 33.0
+    },
+    {
+        "timestamp": "2026-07-06T14:24:32+00:00",
+        "exercice": "Triceps à la poulie",
+        "repetitions": 12,
+        "poids": 33.0
+    },
+    {
+        "timestamp": "2026-07-06T14:27:29+00:00",
+        "exercice": "Triceps à la poulie",
+        "repetitions": 8,
+        "poids": 33.0
+    },
+    {
+        "timestamp": "2026-07-06T14:30:15+00:00",
+        "exercice": "Triceps à la poulie",
+        "repetitions": 13,
+        "poids": 27.5
+    },
+    {
+        "timestamp": "2026-07-06T14:32:49+00:00",
+        "exercice": "Triceps à la poulie",
+        "repetitions": 12,
+        "poids": 27.5
+    },
+    {
+        "timestamp": "2026-07-06T14:35:17+00:00",
+        "exercice": "Triceps à la poulie",
+        "repetitions": 12,
+        "poids": 27.5
+    },
+    {
+        "timestamp": "2026-07-06T14:38:14+00:00",
+        "exercice": "Triceps à la poulie",
+        "repetitions": 12,
+        "poids": 27.5
+    },
+    {
+        "timestamp": "2026-07-06T14:40:06+00:00",
+        "exercice": "Élévations latérales",
+        "repetitions": 14,
+        "poids": 10.0
+    },
+    {
+        "timestamp": "2026-07-06T14:42:40+00:00",
+        "exercice": "Élévations latérales",
+        "repetitions": 12,
+        "poids": 10.0
+    },
+    {
+        "timestamp": "2026-07-06T14:45:09+00:00",
+        "exercice": "Élévations latérales",
+        "repetitions": 12,
+        "poids": 10.0
+    },
+    {
+        "timestamp": "2026-07-06T14:48:08+00:00",
+        "exercice": "Élévations latérales",
+        "repetitions": 12,
+        "poids": 10.0
+    }
+]
