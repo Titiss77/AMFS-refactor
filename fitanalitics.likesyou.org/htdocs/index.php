@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FitAnalytics - Progression ptit test</title>
+    <title>FitAnalytics - Progression</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
     :root {

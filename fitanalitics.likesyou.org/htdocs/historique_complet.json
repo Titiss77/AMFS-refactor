@@ -209,6 +209,83 @@
             ]
         }
     ],
+    "Curl marteau": [
+        {
+            "date": "20260709",
+            "series": 4,
+            "total_reps": 49,
+            "poids": 18.0,
+            "volume": 882,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                }
+            ]
+        },
+        {
+            "date": "20260716",
+            "series": 4,
+            "total_reps": 50,
+            "poids": 18.0,
+            "volume": 900,
+            "details": [
+                {
+                    "reps": 14,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                }
+            ]
+        },
+        {
+            "date": "20260723",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 18.0,
+            "volume": 864,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                }
+            ]
+        }
+    ],
     "Developpé Militaire": [
         {
             "date": "20260709",
@@ -1158,83 +1235,6 @@
                 {
                     "reps": 2,
                     "poids": 10.0
-                }
-            ]
-        }
-    ],
-    "curl marteau": [
-        {
-            "date": "20260709",
-            "series": 4,
-            "total_reps": 49,
-            "poids": 18.0,
-            "volume": 882,
-            "details": [
-                {
-                    "reps": 12,
-                    "poids": 18.0
-                },
-                {
-                    "reps": 13,
-                    "poids": 18.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 18.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 18.0
-                }
-            ]
-        },
-        {
-            "date": "20260716",
-            "series": 4,
-            "total_reps": 50,
-            "poids": 18.0,
-            "volume": 900,
-            "details": [
-                {
-                    "reps": 14,
-                    "poids": 18.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 18.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 18.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 18.0
-                }
-            ]
-        },
-        {
-            "date": "20260723",
-            "series": 4,
-            "total_reps": 48,
-            "poids": 18.0,
-            "volume": 864,
-            "details": [
-                {
-                    "reps": 12,
-                    "poids": 18.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 18.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 18.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 18.0
                 }
             ]
         }
