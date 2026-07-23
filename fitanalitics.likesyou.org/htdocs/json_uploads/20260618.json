@@ -1,0 +1,146 @@
+[
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Exercice d'haltères en position assise",
+        "repetitions": 16,
+        "poids": 16
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Exercice d'haltères en position assise",
+        "repetitions": 15,
+        "poids": 16
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Exercice d'haltères en position assise",
+        "repetitions": 13,
+        "poids": 16
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Exercice d'haltères en position assise",
+        "repetitions": 13,
+        "poids": 16
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Presses d'haltères inclinées",
+        "repetitions": 13,
+        "poids": 18
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Presses d'haltères inclinées",
+        "repetitions": 12,
+        "poids": 18
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Presses d'haltères inclinées",
+        "repetitions": 13,
+        "poids": 18
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Presses d'haltères inclinées",
+        "repetitions": 12,
+        "poids": 18
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Lever latéral en position penchée",
+        "repetitions": 13,
+        "poids": 12
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Lever latéral en position penchée",
+        "repetitions": 14,
+        "poids": 12
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Lever latéral en position penchée",
+        "repetitions": 12,
+        "poids": 12
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Lever latéral en position penchée",
+        "repetitions": 12,
+        "poids": 12
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Seated Lat Pulldowns",
+        "repetitions": 13,
+        "poids": 60
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Seated Lat Pulldowns",
+        "repetitions": 12,
+        "poids": 60
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Seated Lat Pulldowns",
+        "repetitions": 10,
+        "poids": 60
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Seated Lat Pulldowns",
+        "repetitions": 9,
+        "poids": 60
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Curl marteau",
+        "repetitions": 12,
+        "poids": 18
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Curl marteau",
+        "repetitions": 12,
+        "poids": 18
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Curl marteau",
+        "repetitions": 12,
+        "poids": 18
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Curl marteau",
+        "repetitions": 10,
+        "poids": 18
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Extension Triceps A poulie basse",
+        "repetitions": 20,
+        "poids": 20
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Extension Triceps A poulie basse",
+        "repetitions": 14,
+        "poids": 25
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Extension Triceps A poulie basse",
+        "repetitions": 13,
+        "poids": 25
+    },
+    {
+        "timestamp": "2026-06-18T12:00:00",
+        "exercice": "Extension Triceps A poulie basse",
+        "repetitions": 13,
+        "poids": 25
+    }
+]

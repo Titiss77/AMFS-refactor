@@ -1,6 +1,81 @@
 {
     "Arrière épaules": [
         {
+            "date": "20260618",
+            "series": 4,
+            "total_reps": 51,
+            "poids": 12.0,
+            "volume": 612,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 12.0
+                },
+                {
+                    "reps": 14,
+                    "poids": 12.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 12.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 12.0
+                }
+            ]
+        },
+        {
+            "date": "20260625",
+            "series": 4,
+            "total_reps": 52,
+            "poids": 12.0,
+            "volume": 624,
+            "details": [
+                {
+                    "reps": 15,
+                    "poids": 12.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 12.0
+                },
+                {
+                    "reps": 14,
+                    "poids": 12.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 12.0
+                }
+            ]
+        },
+        {
+            "date": "20260703",
+            "series": 4,
+            "total_reps": 51,
+            "poids": 12.0,
+            "volume": 612,
+            "details": [
+                {
+                    "reps": 14,
+                    "poids": 12.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 12.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 12.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 12.0
+                }
+            ]
+        },
+        {
             "date": "20260709",
             "series": 4,
             "total_reps": 50,
@@ -77,6 +152,81 @@
         }
     ],
     "Barbell Row": [
+        {
+            "date": "20260623",
+            "series": 4,
+            "total_reps": 51,
+            "poids": 50.0,
+            "volume": 2550,
+            "details": [
+                {
+                    "reps": 15,
+                    "poids": 50.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 50.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 50.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 50.0
+                }
+            ]
+        },
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 50.0,
+            "volume": 2400,
+            "details": [
+                {
+                    "reps": 15,
+                    "poids": 50.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 50.0
+                },
+                {
+                    "reps": 11,
+                    "poids": 50.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 50.0
+                }
+            ]
+        },
+        {
+            "date": "20260706",
+            "series": 4,
+            "total_reps": 44,
+            "poids": 55.0,
+            "volume": 2420,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 9,
+                    "poids": 55.0
+                }
+            ]
+        },
         {
             "date": "20260713",
             "series": 4,
@@ -211,6 +361,81 @@
     ],
     "Curl marteau": [
         {
+            "date": "20260618",
+            "series": 4,
+            "total_reps": 46,
+            "poids": 18.0,
+            "volume": 828,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 18.0
+                }
+            ]
+        },
+        {
+            "date": "20260625",
+            "series": 4,
+            "total_reps": 43,
+            "poids": 18.0,
+            "volume": 774,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 11,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 9,
+                    "poids": 18.0
+                }
+            ]
+        },
+        {
+            "date": "20260703",
+            "series": 4,
+            "total_reps": 47,
+            "poids": 18.0,
+            "volume": 846,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 11,
+                    "poids": 18.0
+                }
+            ]
+        },
+        {
             "date": "20260709",
             "series": 4,
             "total_reps": 49,
@@ -287,6 +512,81 @@
         }
     ],
     "Developpé Militaire": [
+        {
+            "date": "20260618",
+            "series": 4,
+            "total_reps": 57,
+            "poids": 16.0,
+            "volume": 912,
+            "details": [
+                {
+                    "reps": 16,
+                    "poids": 16.0
+                },
+                {
+                    "reps": 15,
+                    "poids": 16.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 16.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 16.0
+                }
+            ]
+        },
+        {
+            "date": "20260625",
+            "series": 4,
+            "total_reps": 42,
+            "poids": 18.0,
+            "volume": 756,
+            "details": [
+                {
+                    "reps": 14,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 6,
+                    "poids": 18.0
+                }
+            ]
+        },
+        {
+            "date": "20260703",
+            "series": 4,
+            "total_reps": 47,
+            "poids": 18.0,
+            "volume": 846,
+            "details": [
+                {
+                    "reps": 14,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 11,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 18.0
+                }
+            ]
+        },
         {
             "date": "20260709",
             "series": 4,
@@ -365,6 +665,81 @@
     ],
     "Developpé couché": [
         {
+            "date": "20260623",
+            "series": 4,
+            "total_reps": 33,
+            "poids": 24.0,
+            "volume": 792,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 24.0
+                },
+                {
+                    "reps": 11,
+                    "poids": 24.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 24.0
+                },
+                {
+                    "reps": 0,
+                    "poids": 24.0
+                }
+            ]
+        },
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 39,
+            "poids": 24.2,
+            "volume": 945,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 25.0
+                },
+                {
+                    "reps": 11,
+                    "poids": 25.0
+                },
+                {
+                    "reps": 6,
+                    "poids": 25.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 22.0
+                }
+            ]
+        },
+        {
+            "date": "20260706",
+            "series": 4,
+            "total_reps": 35,
+            "poids": 24.0,
+            "volume": 840,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 24.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 24.0
+                },
+                {
+                    "reps": 0,
+                    "poids": 24.0
+                },
+                {
+                    "reps": 9,
+                    "poids": 24.0
+                }
+            ]
+        },
+        {
             "date": "20260713",
             "series": 4,
             "total_reps": 42,
@@ -438,6 +813,83 @@
             ]
         }
     ],
+    "Drag Curl": [
+        {
+            "date": "20260623",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 28.0,
+            "volume": 1344,
+            "details": [
+                {
+                    "reps": 14,
+                    "poids": 28.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 28.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 28.0
+                },
+                {
+                    "reps": 11,
+                    "poids": 28.0
+                }
+            ]
+        },
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 39,
+            "poids": 30.5,
+            "volume": 1192,
+            "details": [
+                {
+                    "reps": 11,
+                    "poids": 33.0
+                },
+                {
+                    "reps": 9,
+                    "poids": 33.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 28.0
+                },
+                {
+                    "reps": 7,
+                    "poids": 28.0
+                }
+            ]
+        },
+        {
+            "date": "20260706",
+            "series": 4,
+            "total_reps": 46,
+            "poids": 33.0,
+            "volume": 1518,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 33.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 33.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 33.0
+                },
+                {
+                    "reps": 8,
+                    "poids": 33.0
+                }
+            ]
+        }
+    ],
     "Dragon flag": [
         {
             "date": "20260721",
@@ -462,6 +914,81 @@
         }
     ],
     "Développé incliné": [
+        {
+            "date": "20260618",
+            "series": 4,
+            "total_reps": 50,
+            "poids": 18.0,
+            "volume": 900,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                }
+            ]
+        },
+        {
+            "date": "20260625",
+            "series": 4,
+            "total_reps": 47,
+            "poids": 18.0,
+            "volume": 846,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 11,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                }
+            ]
+        },
+        {
+            "date": "20260703",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 18.0,
+            "volume": 864,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 18.0
+                }
+            ]
+        },
         {
             "date": "20260709",
             "series": 4,
@@ -567,6 +1094,106 @@
     ],
     "Extension triceps à poulie basse": [
         {
+            "date": "20260618",
+            "series": 4,
+            "total_reps": 60,
+            "poids": 23.8,
+            "volume": 1400,
+            "details": [
+                {
+                    "reps": 20,
+                    "poids": 20.0
+                },
+                {
+                    "reps": 14,
+                    "poids": 25.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 25.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 25.0
+                }
+            ]
+        },
+        {
+            "date": "20260625",
+            "series": 4,
+            "total_reps": 52,
+            "poids": 25.0,
+            "volume": 1300,
+            "details": [
+                {
+                    "reps": 15,
+                    "poids": 25.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 25.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 25.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 25.0
+                }
+            ]
+        },
+        {
+            "date": "20260703",
+            "series": 4,
+            "total_reps": 50,
+            "poids": 25.0,
+            "volume": 1250,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 25.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 25.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 25.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 25.0
+                }
+            ]
+        },
+        {
+            "date": "20260706",
+            "series": 4,
+            "total_reps": 49,
+            "poids": 27.5,
+            "volume": 1347,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 27.5
+                },
+                {
+                    "reps": 12,
+                    "poids": 27.5
+                },
+                {
+                    "reps": 12,
+                    "poids": 27.5
+                },
+                {
+                    "reps": 12,
+                    "poids": 27.5
+                }
+            ]
+        },
+        {
             "date": "20260709",
             "series": 4,
             "total_reps": 57,
@@ -668,6 +1295,56 @@
         }
     ],
     "Extension triceps à poulie haute": [
+        {
+            "date": "20260623",
+            "series": 4,
+            "total_reps": 52,
+            "poids": 20.0,
+            "volume": 1040,
+            "details": [
+                {
+                    "reps": 15,
+                    "poids": 20.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 20.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 20.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 20.0
+                }
+            ]
+        },
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 42,
+            "poids": 28.1,
+            "volume": 1147,
+            "details": [
+                {
+                    "reps": 16,
+                    "poids": 25.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 27.5
+                },
+                {
+                    "reps": 8,
+                    "poids": 30.0
+                },
+                {
+                    "reps": 5,
+                    "poids": 30.0
+                }
+            ]
+        },
         {
             "date": "20260713",
             "series": 4,
@@ -876,6 +1553,81 @@
         }
     ],
     "Levée latérale": [
+        {
+            "date": "20260623",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 10.0,
+            "volume": 480,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                }
+            ]
+        },
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 10.0,
+            "volume": 480,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                }
+            ]
+        },
+        {
+            "date": "20260706",
+            "series": 4,
+            "total_reps": 50,
+            "poids": 10.0,
+            "volume": 500,
+            "details": [
+                {
+                    "reps": 14,
+                    "poids": 10.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                }
+            ]
+        },
         {
             "date": "20260713",
             "series": 4,
@@ -1112,6 +1864,81 @@
     ],
     "Tirage vertical": [
         {
+            "date": "20260618",
+            "series": 4,
+            "total_reps": 44,
+            "poids": 60.0,
+            "volume": 2640,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 60.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 60.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 60.0
+                },
+                {
+                    "reps": 9,
+                    "poids": 60.0
+                }
+            ]
+        },
+        {
+            "date": "20260625",
+            "series": 4,
+            "total_reps": 44,
+            "poids": 60.0,
+            "volume": 2640,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 60.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 60.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 60.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 60.0
+                }
+            ]
+        },
+        {
+            "date": "20260703",
+            "series": 4,
+            "total_reps": 45,
+            "poids": 60.0,
+            "volume": 2700,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 60.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 60.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 60.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 60.0
+                }
+            ]
+        },
+        {
             "date": "20260709",
             "series": 4,
             "total_reps": 46,
@@ -1188,6 +2015,81 @@
         }
     ],
     "Tractions": [
+        {
+            "date": "20260623",
+            "series": 4,
+            "total_reps": 31,
+            "poids": 0.0,
+            "volume": 0,
+            "details": [
+                {
+                    "reps": 11,
+                    "poids": 0.0
+                },
+                {
+                    "reps": 7,
+                    "poids": 0.0
+                },
+                {
+                    "reps": 7,
+                    "poids": 0.0
+                },
+                {
+                    "reps": 6,
+                    "poids": 0.0
+                }
+            ]
+        },
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 26,
+            "poids": 0.0,
+            "volume": 0,
+            "details": [
+                {
+                    "reps": 9,
+                    "poids": 0.0
+                },
+                {
+                    "reps": 7,
+                    "poids": 0.0
+                },
+                {
+                    "reps": 6,
+                    "poids": 0.0
+                },
+                {
+                    "reps": 4,
+                    "poids": 0.0
+                }
+            ]
+        },
+        {
+            "date": "20260706",
+            "series": 4,
+            "total_reps": 26,
+            "poids": 0.0,
+            "volume": 0,
+            "details": [
+                {
+                    "reps": 9,
+                    "poids": 0.0
+                },
+                {
+                    "reps": 6,
+                    "poids": 0.0
+                },
+                {
+                    "reps": 6,
+                    "poids": 0.0
+                },
+                {
+                    "reps": 5,
+                    "poids": 0.0
+                }
+            ]
+        },
         {
             "date": "20260713",
             "series": 4,

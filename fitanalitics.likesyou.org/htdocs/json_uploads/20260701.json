@@ -1,0 +1,146 @@
+[
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Tractions",
+        "repetitions": 9,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Tractions",
+        "repetitions": 7,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Tractions",
+        "repetitions": 6,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Tractions",
+        "repetitions": 4,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Banc d'haltères",
+        "repetitions": 12,
+        "poids": 25
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Banc d'haltères",
+        "repetitions": 11,
+        "poids": 25
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Banc d'haltères",
+        "repetitions": 6,
+        "poids": 25
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Banc d'haltères",
+        "repetitions": 10,
+        "poids": 22
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Barbell Row",
+        "repetitions": 15,
+        "poids": 50
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Barbell Row",
+        "repetitions": 12,
+        "poids": 50
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Barbell Row",
+        "repetitions": 11,
+        "poids": 50
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Barbell Row",
+        "repetitions": 10,
+        "poids": 50
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Drag Curl",
+        "repetitions": 11,
+        "poids": 33
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Drag Curl",
+        "repetitions": 9,
+        "poids": 33
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Drag Curl",
+        "repetitions": 12,
+        "poids": 28
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Drag Curl",
+        "repetitions": 7,
+        "poids": 28
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Extension triceps tte poulie haute",
+        "repetitions": 16,
+        "poids": 25
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Extension triceps tte poulie haute",
+        "repetitions": 13,
+        "poids": 27.5
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Extension triceps tte poulie haute",
+        "repetitions": 8,
+        "poids": 30
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Extension triceps tte poulie haute",
+        "repetitions": 5,
+        "poids": 30
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Levée latérale d'haltères",
+        "repetitions": 12,
+        "poids": 10
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Levée latérale d'haltères",
+        "repetitions": 12,
+        "poids": 10
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Levée latérale d'haltères",
+        "repetitions": 12,
+        "poids": 10
+    },
+    {
+        "timestamp": "2026-07-01T12:00:00",
+        "exercice": "Levée latérale d'haltères",
+        "repetitions": 12,
+        "poids": 10
+    }
+]
