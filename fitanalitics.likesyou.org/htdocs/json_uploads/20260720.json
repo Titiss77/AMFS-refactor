@@ -1,146 +1,146 @@
 [
     {
-        "timestamp": "2026-07-20T12:33:24+00:00",
+        "timestamp": "2026-07-20T12:00:00",
         "exercice": "Tractions",
         "repetitions": 8,
-        "poids": null
+        "poids": 0
     },
     {
-        "timestamp": "2026-07-20T12:33:35+00:00",
+        "timestamp": "2026-07-20T12:00:00",
         "exercice": "Tractions",
         "repetitions": 5,
-        "poids": 5.0
+        "poids": 5
     },
     {
-        "timestamp": "2026-07-20T12:37:31+00:00",
+        "timestamp": "2026-07-20T12:00:00",
         "exercice": "Tractions",
         "repetitions": 4,
-        "poids": 10.0
+        "poids": 10
     },
     {
-        "timestamp": "2026-07-20T12:41:09+00:00",
+        "timestamp": "2026-07-20T12:00:00",
         "exercice": "Tractions",
         "repetitions": 2,
-        "poids": 10.0
+        "poids": 10
     },
     {
-        "timestamp": "2026-07-20T12:44:35+00:00",
-        "exercice": "Developpé couché",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Banc d'haltères",
         "repetitions": 14,
-        "poids": 24.0
+        "poids": 24
     },
     {
-        "timestamp": "2026-07-20T12:47:25+00:00",
-        "exercice": "Developpé couché",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Banc d'haltères",
         "repetitions": 12,
-        "poids": 24.0
+        "poids": 24
     },
     {
-        "timestamp": "2026-07-20T12:50:19+00:00",
-        "exercice": "Developpé couché",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Banc d'haltères",
         "repetitions": 10,
-        "poids": 24.0
+        "poids": 24
     },
     {
-        "timestamp": "2026-07-20T12:53:27+00:00",
-        "exercice": "Developpé couché",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Banc d'haltères",
         "repetitions": 10,
-        "poids": 24.0
+        "poids": 24
     },
     {
-        "timestamp": "2026-07-20T12:57:16+00:00",
-        "exercice": "Rowing à la barre",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Barbell Row",
         "repetitions": 13,
-        "poids": 55.0
+        "poids": 55
     },
     {
-        "timestamp": "2026-07-20T12:59:49+00:00",
-        "exercice": "Rowing à la barre",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Barbell Row",
         "repetitions": 12,
-        "poids": 55.0
+        "poids": 55
     },
     {
-        "timestamp": "2026-07-20T13:02:26+00:00",
-        "exercice": "Rowing à la barre",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Barbell Row",
         "repetitions": 12,
-        "poids": 55.0
+        "poids": 55
     },
     {
-        "timestamp": "2026-07-20T13:05:27+00:00",
-        "exercice": "Rowing à la barre",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Barbell Row",
         "repetitions": 12,
-        "poids": 55.0
+        "poids": 55
     },
     {
-        "timestamp": "2026-07-20T13:08:29+00:00",
-        "exercice": "Curl biceps",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Biceps Curl haltères",
         "repetitions": 14,
-        "poids": 14.0
+        "poids": 14
     },
     {
-        "timestamp": "2026-07-20T13:11:32+00:00",
-        "exercice": "Curl biceps",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Biceps Curl haltères",
         "repetitions": 12,
-        "poids": 14.0
+        "poids": 14
     },
     {
-        "timestamp": "2026-07-20T13:15:02+00:00",
-        "exercice": "Curl biceps",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Biceps Curl haltères",
         "repetitions": 12,
-        "poids": 14.0
+        "poids": 14
     },
     {
-        "timestamp": "2026-07-20T13:17:42+00:00",
-        "exercice": "Curl biceps",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Biceps Curl haltères",
         "repetitions": 12,
-        "poids": 14.0
+        "poids": 14
     },
     {
-        "timestamp": "2026-07-20T13:20:28+00:00",
-        "exercice": "Triceps à la poulie",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Extension triceps A",
         "repetitions": 12,
         "poids": 27.5
     },
     {
-        "timestamp": "2026-07-20T13:23:01+00:00",
-        "exercice": "Triceps à la poulie",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Extension triceps A",
         "repetitions": 11,
         "poids": 27.5
     },
     {
-        "timestamp": "2026-07-20T13:25:43+00:00",
-        "exercice": "Triceps à la poulie",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Extension triceps A",
         "repetitions": 12,
         "poids": 27.5
     },
     {
-        "timestamp": "2026-07-20T13:29:16+00:00",
-        "exercice": "Triceps à la poulie",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Extension triceps A",
         "repetitions": 9,
         "poids": 27.5
     },
     {
-        "timestamp": "2026-07-20T13:31:27+00:00",
-        "exercice": "Élévations latérales",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Levée latérale d'haltères",
         "repetitions": 13,
-        "poids": 10.0
+        "poids": 10
     },
     {
-        "timestamp": "2026-07-20T13:34:25+00:00",
-        "exercice": "Élévations latérales",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Levée latérale d'haltères",
         "repetitions": 12,
-        "poids": 10.0
+        "poids": 10
     },
     {
-        "timestamp": "2026-07-20T13:37:06+00:00",
-        "exercice": "Élévations latérales",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Levée latérale d'haltères",
         "repetitions": 12,
-        "poids": 10.0
+        "poids": 10
     },
     {
-        "timestamp": "2026-07-20T13:40:11+00:00",
-        "exercice": "Élévations latérales",
+        "timestamp": "2026-07-20T12:00:00",
+        "exercice": "Levée latérale d'haltères",
         "repetitions": 12,
-        "poids": 10.0
+        "poids": 10
     }
 ]

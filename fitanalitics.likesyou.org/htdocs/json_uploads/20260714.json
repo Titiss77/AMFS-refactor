@@ -1,146 +1,146 @@
 [
     {
-        "timestamp": "2026-07-14T12:04:33+00:00",
-        "exercice": "RDL",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Hip trust",
         "repetitions": 12,
-        "poids": 60.0
+        "poids": 80
     },
     {
-        "timestamp": "2026-07-14T12:08:07+00:00",
-        "exercice": "RDL",
-        "repetitions": 13,
-        "poids": 60.0
-    },
-    {
-        "timestamp": "2026-07-14T12:11:56+00:00",
-        "exercice": "RDL",
-        "repetitions": 9,
-        "poids": 65.0
-    },
-    {
-        "timestamp": "2026-07-14T12:15:29+00:00",
-        "exercice": "RDL",
-        "repetitions": 8,
-        "poids": 65.0
-    },
-    {
-        "timestamp": "2026-07-14T12:19:45+00:00",
-        "exercice": "Presse à cuisses",
-        "repetitions": 10,
-        "poids": 120.0
-    },
-    {
-        "timestamp": "2026-07-14T12:22:55+00:00",
-        "exercice": "Presse à cuisses",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Hip trust",
         "repetitions": 12,
-        "poids": 120.0
+        "poids": 80
     },
     {
-        "timestamp": "2026-07-14T12:25:30+00:00",
-        "exercice": "Presse à cuisses",
-        "repetitions": 9,
-        "poids": 140.0
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Hip trust",
+        "repetitions": 7,
+        "poids": 80
     },
     {
-        "timestamp": "2026-07-14T12:28:06+00:00",
-        "exercice": "Presse à cuisses",
-        "repetitions": 8,
-        "poids": 140.0
-    },
-    {
-        "timestamp": "2026-07-14T12:30:25+00:00",
-        "exercice": "curls ischio",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Hip trust",
         "repetitions": 5,
-        "poids": 55.0
+        "poids": 80
     },
     {
-        "timestamp": "2026-07-14T12:32:48+00:00",
-        "exercice": "curls ischio",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Levée de terre roumaine",
+        "repetitions": 12,
+        "poids": 60
+    },
+    {
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Levée de terre roumaine",
+        "repetitions": 13,
+        "poids": 60
+    },
+    {
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Levée de terre roumaine",
+        "repetitions": 9,
+        "poids": 65
+    },
+    {
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Levée de terre roumaine",
         "repetitions": 8,
-        "poids": 50.0
+        "poids": 65
     },
     {
-        "timestamp": "2026-07-14T12:35:24+00:00",
-        "exercice": "curls ischio",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Presse inclinée",
+        "repetitions": 10,
+        "poids": 120
+    },
+    {
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Presse inclinée",
+        "repetitions": 12,
+        "poids": 120
+    },
+    {
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Presse inclinée",
+        "repetitions": 9,
+        "poids": 140
+    },
+    {
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Presse inclinée",
+        "repetitions": 8,
+        "poids": 140
+    },
+    {
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Curls jambes couchés",
+        "repetitions": 5,
+        "poids": 55
+    },
+    {
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Curls jambes couchés",
+        "repetitions": 8,
+        "poids": 50
+    },
+    {
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Curls jambes couchés",
         "repetitions": 4,
-        "poids": 50.0
+        "poids": 50
     },
     {
-        "timestamp": "2026-07-14T12:37:43+00:00",
-        "exercice": "curls ischio",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Curls jambes couchés",
         "repetitions": 6,
-        "poids": 45.0
+        "poids": 45
     },
     {
-        "timestamp": "2026-07-14T12:40:18+00:00",
-        "exercice": "Extentions lombaires",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Extension lombaires",
         "repetitions": 12,
-        "poids": 30.0
+        "poids": 30
     },
     {
-        "timestamp": "2026-07-14T12:43:03+00:00",
-        "exercice": "Extentions lombaires",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Extension lombaires",
         "repetitions": 10,
-        "poids": 40.0
+        "poids": 40
     },
     {
-        "timestamp": "2026-07-14T12:45:33+00:00",
-        "exercice": "Extentions lombaires",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Extension lombaires",
         "repetitions": 10,
-        "poids": 40.0
+        "poids": 40
     },
     {
-        "timestamp": "2026-07-14T12:48:38+00:00",
-        "exercice": "Extentions lombaires",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Extension lombaires",
         "repetitions": 7,
-        "poids": 40.0
+        "poids": 40
     },
     {
-        "timestamp": "2026-07-14T13:02:35+00:00",
-        "exercice": "Crunch abdos à la poulie",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Crunches poulies hautes",
         "repetitions": 14,
-        "poids": 58.0
+        "poids": 58
     },
     {
-        "timestamp": "2026-07-14T13:02:53+00:00",
-        "exercice": "Crunch abdos à la poulie",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Crunches poulies hautes",
         "repetitions": 14,
-        "poids": 58.0
+        "poids": 58
     },
     {
-        "timestamp": "2026-07-14T13:03:00+00:00",
-        "exercice": "Crunch abdos à la poulie",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Crunches poulies hautes",
         "repetitions": 13,
-        "poids": 63.0
+        "poids": 63
     },
     {
-        "timestamp": "2026-07-14T13:03:12+00:00",
-        "exercice": "Crunch abdos à la poulie",
+        "timestamp": "2026-07-14T12:00:00",
+        "exercice": "Crunches poulies hautes",
         "repetitions": 10,
-        "poids": 63.0
-    },
-    {
-        "timestamp": "2026-07-14T13:05:01+00:00",
-        "exercice": "Fentes bulgares",
-        "repetitions": 12,
-        "poids": 80.0
-    },
-    {
-        "timestamp": "2026-07-14T13:05:09+00:00",
-        "exercice": "Fentes bulgares",
-        "repetitions": 12,
-        "poids": 80.0
-    },
-    {
-        "timestamp": "2026-07-14T13:05:20+00:00",
-        "exercice": "Fentes bulgares",
-        "repetitions": 7,
-        "poids": 80.0
-    },
-    {
-        "timestamp": "2026-07-14T13:06:46+00:00",
-        "exercice": "Fentes bulgares",
-        "repetitions": 5,
-        "poids": 80.0
+        "poids": 63
     }
 ]

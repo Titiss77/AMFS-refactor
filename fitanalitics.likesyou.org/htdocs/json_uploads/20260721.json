@@ -1,0 +1,152 @@
+[
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Dorsiflexion",
+        "repetitions": 12,
+        "poids": 12
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Dorsiflexion",
+        "repetitions": 10,
+        "poids": 16
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Dorsiflexion",
+        "repetitions": 10,
+        "poids": 16
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Hip trust",
+        "repetitions": 7,
+        "poids": 100
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Hip trust",
+        "repetitions": 5,
+        "poids": 120
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Hip trust",
+        "repetitions": 5,
+        "poids": 120
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Hip trust",
+        "repetitions": 6,
+        "poids": 120
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Squats avec Barre",
+        "repetitions": 5,
+        "poids": 75
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Squats avec Barre",
+        "repetitions": 5,
+        "poids": 75
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Squats avec Barre",
+        "repetitions": 5,
+        "poids": 75
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Squats avec Barre",
+        "repetitions": 5,
+        "poids": 75
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Nordic Curl",
+        "repetitions": 6,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Nordic Curl",
+        "repetitions": 6,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Nordic Curl",
+        "repetitions": 6,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Roulement de roue avec RP abdominaux à genoux",
+        "repetitions": 8,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Roulement de roue avec RP abdominaux à genoux",
+        "repetitions": 8,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Roulement de roue avec RP abdominaux à genoux",
+        "repetitions": 6,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Roulement de roue avec RP abdominaux à genoux",
+        "repetitions": 0,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Dragon flag",
+        "repetitions": 6,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Dragon flag",
+        "repetitions": 6,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Dragon flag",
+        "repetitions": 4,
+        "poids": 0
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Lever les mollets sur une jambe",
+        "repetitions": 10,
+        "poids": 40
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Lever les mollets sur une jambe",
+        "repetitions": 10,
+        "poids": 50
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Lever les mollets sur une jambe",
+        "repetitions": 10,
+        "poids": 50
+    },
+    {
+        "timestamp": "2026-07-21T12:00:00",
+        "exercice": "Lever les mollets sur une jambe",
+        "repetitions": 10,
+        "poids": 50
+    }
+]

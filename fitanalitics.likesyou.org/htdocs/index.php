@@ -78,30 +78,31 @@
 <body>
     <div class="container">
         <h1>Progression par Exercice</h1>
-
         <div class="selector-box">
             <select id="exoSelector" onchange="updateChart()">
                 <option value="">Choisir un exercice...</option>
             </select>
         </div>
-
         <div class="card">
             <canvas id="progressionChart"></canvas>
         </div>
-
         <div id="tableContainer" class="card"></div>
     </div>
-
     <script>
     let fullHistory = {};
     let myChart;
-
     fetch('historique_complet.json')
         .then(res => res.json())
         .then(data => {
             fullHistory = data;
             const selector = document.getElementById('exoSelector');
-            Object.keys(data).forEach(exo => {
+
+            // 1. On extrait toutes les clés (noms des exos)
+            // 2. On les trie proprement par ordre alphabétique
+            const exercicesTries = Object.keys(data).sort((a, b) => a.localeCompare(b));
+
+            // 3. On génère les options du menu avec la liste triée
+            exercicesTries.forEach(exo => {
                 selector.innerHTML += `<option value="${exo}">${exo}</option>`;
             });
         });
@@ -109,12 +110,9 @@
     function updateChart() {
         const exo = document.getElementById('exoSelector').value;
         if (!exo) return;
-
         const dataPoints = fullHistory[exo].sort((a, b) => a.date.localeCompare(b.date));
         const ctx = document.getElementById('progressionChart').getContext('2d');
-
         if (myChart) myChart.destroy();
-
         myChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -159,12 +157,30 @@
             }
         });
 
-        let tableHtml = `<h3>Séances : ${exo}</h3>
-                <table>
-                    <tr><th>Date</th><th>Séries</th><th>Reps</th><th>Poids</th><th>Volume</th></tr>`;
+        let tableHtml = `<h3>Séances : ${exo}</h3>                 
+        <table>                     
+            <tr>
+                <th>Date</th>
+                <th>Séries</th>
+                <th>Reps Totales</th>
+                <th>Poids Moyen</th>
+                <th>Volume</th>
+                <th>Détails (Reps x Poids)</th>
+            </tr>`;
+
         dataPoints.forEach(p => {
+            // Création du texte détaillé (ex: 12x18kg | 10x18kg)
+            let detailsText = p.details ? p.details.map(d => `${d.reps}x${d.poids}kg`).join(' | ') : "N/A";
+
             tableHtml +=
-                `<tr><td>${p.date}</td><td>${p.series}</td><td>${p.total_reps}</td><td>${p.poids} kg</td><td>${p.volume}</td></tr>`;
+                `<tr>
+                    <td>${p.date}</td>
+                    <td>${p.series}</td>
+                    <td>${p.total_reps}</td>
+                    <td>${p.poids} kg</td>
+                    <td>${p.volume}</td>
+                    <td style="font-size: 0.9em; color: #555;">${detailsText}</td>
+                </tr>`;
         });
         tableHtml += `</table>`;
         document.getElementById('tableContainer').innerHTML = tableHtml;

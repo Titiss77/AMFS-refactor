@@ -1,146 +1,146 @@
 [
     {
-        "timestamp": "2026-07-13T13:08:44+00:00",
+        "timestamp": "2026-07-13T12:00:00",
         "exercice": "Tractions",
         "repetitions": 10,
-        "poids": null
+        "poids": 0
     },
     {
-        "timestamp": "2026-07-13T13:12:20+00:00",
+        "timestamp": "2026-07-13T12:00:00",
         "exercice": "Tractions",
         "repetitions": 7,
-        "poids": null
+        "poids": 0
     },
     {
-        "timestamp": "2026-07-13T13:15:34+00:00",
+        "timestamp": "2026-07-13T12:00:00",
         "exercice": "Tractions",
         "repetitions": 6,
-        "poids": null
+        "poids": 0
     },
     {
-        "timestamp": "2026-07-13T13:18:48+00:00",
+        "timestamp": "2026-07-13T12:00:00",
         "exercice": "Tractions",
         "repetitions": 4,
-        "poids": null
+        "poids": 0
     },
     {
-        "timestamp": "2026-07-13T13:22:49+00:00",
-        "exercice": "Developpé couché",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Banc d'haltères",
         "repetitions": 14,
-        "poids": 24.0
+        "poids": 24
     },
     {
-        "timestamp": "2026-07-13T13:25:48+00:00",
-        "exercice": "Developpé couché",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Banc d'haltères",
         "repetitions": 12,
-        "poids": 24.0
+        "poids": 24
     },
     {
-        "timestamp": "2026-07-13T13:28:52+00:00",
-        "exercice": "Developpé couché",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Banc d'haltères",
         "repetitions": 8,
-        "poids": 24.0
+        "poids": 24
     },
     {
-        "timestamp": "2026-07-13T13:31:49+00:00",
-        "exercice": "Developpé couché",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Banc d'haltères",
         "repetitions": 8,
-        "poids": 24.0
+        "poids": 24
     },
     {
-        "timestamp": "2026-07-13T13:35:23+00:00",
-        "exercice": "Rowing à la barre",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Barbell Row",
         "repetitions": 13,
-        "poids": 55.0
+        "poids": 55
     },
     {
-        "timestamp": "2026-07-13T13:37:58+00:00",
-        "exercice": "Rowing à la barre",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Barbell Row",
         "repetitions": 12,
-        "poids": 55.0
+        "poids": 55
     },
     {
-        "timestamp": "2026-07-13T13:40:34+00:00",
-        "exercice": "Rowing à la barre",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Barbell Row",
         "repetitions": 12,
-        "poids": 55.0
+        "poids": 55
     },
     {
-        "timestamp": "2026-07-13T13:42:58+00:00",
-        "exercice": "Rowing à la barre",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Barbell Row",
         "repetitions": 9,
-        "poids": 55.0
+        "poids": 55
     },
     {
-        "timestamp": "2026-07-13T13:45:42+00:00",
-        "exercice": "Curl biceps",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Curl incliné",
         "repetitions": 12,
-        "poids": 14.0
+        "poids": 14
     },
     {
-        "timestamp": "2026-07-13T13:48:20+00:00",
-        "exercice": "Curl biceps",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Curl incliné",
         "repetitions": 12,
-        "poids": 14.0
+        "poids": 14
     },
     {
-        "timestamp": "2026-07-13T13:50:58+00:00",
-        "exercice": "Curl biceps",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Curl incliné",
         "repetitions": 12,
-        "poids": 14.0
+        "poids": 14
     },
     {
-        "timestamp": "2026-07-13T13:53:36+00:00",
-        "exercice": "Curl biceps",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Curl incliné",
         "repetitions": 8,
-        "poids": 14.0
+        "poids": 14
     },
     {
-        "timestamp": "2026-07-13T13:56:13+00:00",
-        "exercice": "Triceps à la poulie",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Extension triceps tte poulie haute",
         "repetitions": 13,
         "poids": 27.5
     },
     {
-        "timestamp": "2026-07-13T13:58:38+00:00",
-        "exercice": "Triceps à la poulie",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Extension triceps tte poulie haute",
         "repetitions": 12,
         "poids": 27.5
     },
     {
-        "timestamp": "2026-07-13T14:01:13+00:00",
-        "exercice": "Triceps à la poulie",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Extension triceps tte poulie haute",
         "repetitions": 12,
         "poids": 27.5
     },
     {
-        "timestamp": "2026-07-13T14:03:49+00:00",
-        "exercice": "Triceps à la poulie",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Extension triceps tte poulie haute",
         "repetitions": 10,
         "poids": 27.5
     },
     {
-        "timestamp": "2026-07-13T14:06:53+00:00",
-        "exercice": "Élévations latérales",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Levée latérale d'haltères",
         "repetitions": 12,
-        "poids": 10.0
+        "poids": 10
     },
     {
-        "timestamp": "2026-07-13T14:09:31+00:00",
-        "exercice": "Élévations latérales",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Levée latérale d'haltères",
         "repetitions": 12,
-        "poids": 10.0
+        "poids": 10
     },
     {
-        "timestamp": "2026-07-13T14:12:03+00:00",
-        "exercice": "Élévations latérales",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Levée latérale d'haltères",
         "repetitions": 12,
-        "poids": 10.0
+        "poids": 10
     },
     {
-        "timestamp": "2026-07-13T14:14:53+00:00",
-        "exercice": "Élévations latérales",
+        "timestamp": "2026-07-13T12:00:00",
+        "exercice": "Levée latérale d'haltères",
         "repetitions": 12,
-        "poids": 10.0
+        "poids": 10
     }
 ]

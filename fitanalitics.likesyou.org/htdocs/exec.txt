@@ -1,1 +1,1 @@
-python extraire_fit_coros.py; python generer_historique.py
+node extraire_img_ocr.js; python generer_historique.py
