@@ -18,8 +18,8 @@ if (file_exists($envPath)) {
     }
 }
 
-// Définition des constantes de configuration via les variables d'environnement (ou valeurs par défaut)
-define('DB_HOST', getenv('DB_HOST') ?: '');
-define('DB_USER', getenv('DB_USER') ?: '');
+// Définition des constantes de configuration à l'intérieur du fichier de config
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_USER', getenv('DB_USER') ?: 'root');
 define('DB_PASS', getenv('DB_PASS') ?: '');
-define('DB_NAME', getenv('DB_NAME') ?: '');
+define('DB_NAME', getenv('DB_NAME') ?: 'sprint_metrics_db');
