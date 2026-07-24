@@ -76,8 +76,6 @@ class UserModel extends BaseModel
 
     /**
      * Mark the next find* query to include identities
-     *
-     * @return $this
      */
     public function withIdentities(): self
     {
@@ -88,8 +86,6 @@ class UserModel extends BaseModel
 
     /**
      * Mark the next find* query to include groups
-     *
-     * @return $this
      */
     public function withGroups(): self
     {
@@ -100,8 +96,6 @@ class UserModel extends BaseModel
 
     /**
      * Mark the next find* query to include permissions
-     *
-     * @return $this
      */
     public function withPermissions(): self
     {
@@ -131,7 +125,6 @@ class UserModel extends BaseModel
             return $data;
         }
 
-        /** @var UserIdentityModel $identityModel */
         $identityModel = model(UserIdentityModel::class);
 
         // Get our identities for all users
@@ -209,7 +202,6 @@ class UserModel extends BaseModel
             return $data;
         }
 
-        /** @var GroupModel $groupModel */
         $groupModel = model(GroupModel::class);
 
         // Get our groups for all users
@@ -247,7 +239,6 @@ class UserModel extends BaseModel
             return $data;
         }
 
-        /** @var PermissionModel $permissionModel */
         $permissionModel = model(PermissionModel::class);
 
         $permissions = $permissionModel->getPermissionsByUserIds($userIds);
@@ -304,7 +295,6 @@ class UserModel extends BaseModel
     {
         $defaultGroup = setting('AuthGroups.defaultGroup');
 
-        /** @var GroupModel $groupModel */
         $groupModel = model(GroupModel::class);
 
         if (empty($defaultGroup) || ! $groupModel->isValidGroup($defaultGroup)) {
