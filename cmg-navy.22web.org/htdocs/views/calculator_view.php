@@ -7,7 +7,7 @@
     <title>Calculateur de Masse Grasse & Métabolisme</title>
     <link rel="stylesheet" href="public/style.css">
     <style>
-    /* Styles spécifiques à l'historique et au bouton de sauvegarde */
+    /* Styles spécifiques conservés de l'ancien fichier */
     .save-section {
         margin-top: 2.5rem;
         padding-top: 1.5rem;
@@ -86,14 +86,16 @@
     <div class="user-bar">
         <span>Connecté en tant que
             <strong><?= htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8') ?></strong></span>
-        <a href="index.php?action=logout">Se déconnecter</a>
+        <a href="index.php?action=export" class="btn-export">Exporter CSV</a>
+        <a href="index.php?action=logout" style="color: var(--danger);">Se déconnecter</a>
     </div>
+
     <div class="widget-container">
         <h2>Calculateur US Navy & Énergie</h2>
+        <form id="metric-form" method="POST" action="index.php?action=save">
+            <input type="hidden" name="csrf_token"
+                value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
 
-        <form method="POST" action="index.php?action=save">
-            <!-- Zone des inputs -->
-            <!-- Zone des inputs (Modifiés pour accepter la virgule) -->
             <div class="form-group">
                 <label for="gender">Genre</label>
                 <select id="gender" name="gender">
@@ -102,7 +104,6 @@
                 </select>
             </div>
 
-            <!-- Définition des dernières valeurs enregistrées (ou valeurs par défaut si vide) -->
             <?php
             $last_height = !empty($history) ? $history[0]['height'] : '170';
             $last_weight = !empty($history) ? $history[0]['weight'] : '75';
@@ -111,49 +112,63 @@
             $last_hip = (!empty($history) && $history[0]['hip'] !== null) ? $history[0]['hip'] : '95';
             ?>
 
-            <!-- Zone des inputs -->
             <div class="form-group">
                 <label for="height">Taille (cm)</label>
-                <input type="text" inputmode="decimal" pattern="[0-9]+([.,][0-9]+)?" id="height" name="height"
-                    value="<?= $last_height ?>">
+                <div class="stepper">
+                    <button type="button" class="minus">-</button>
+                    <input type="number" step="0.5" id="height" name="height" value="<?= $last_height ?>">
+                    <button type="button" class="plus">+</button>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="weight">Poids (kg)</label>
-                <input type="text" inputmode="decimal" pattern="[0-9]+([.,][0-9]+)?" id="weight" name="weight"
-                    value="<?= $last_weight ?>">
+                <div class="stepper">
+                    <button type="button" class="minus">-</button>
+                    <input type="number" step="0.1" id="weight" name="weight" value="<?= $last_weight ?>">
+                    <button type="button" class="plus">+</button>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="neck">Tour de cou (cm)</label>
-                <input type="text" inputmode="decimal" pattern="[0-9]+([.,][0-9]+)?" id="neck" name="neck"
-                    value="<?= $last_neck ?>">
+                <div class="stepper">
+                    <button type="button" class="minus">-</button>
+                    <input type="number" step="0.5" id="neck" name="neck" value="<?= $last_neck ?>">
+                    <button type="button" class="plus">+</button>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="waist">Tour de taille (cm) - Au niveau du nombril</label>
-                <input type="text" inputmode="decimal" pattern="[0-9]+([.,][0-9]+)?" id="waist" name="waist"
-                    value="<?= $last_waist ?>">
+                <div class="stepper">
+                    <button type="button" class="minus">-</button>
+                    <input type="number" step="0.5" id="waist" name="waist" value="<?= $last_waist ?>">
+                    <button type="button" class="plus">+</button>
+                </div>
             </div>
 
             <div class="form-group hidden" id="hip-group">
                 <label for="hip">Tour de hanches (cm) - Point le plus large</label>
-                <input type="text" inputmode="decimal" pattern="[0-9]+([.,][0-9]+)?" id="hip" name="hip"
-                    value="<?= $last_hip ?>">
+                <div class="stepper">
+                    <button type="button" class="minus">-</button>
+                    <input type="number" step="0.5" id="hip" name="hip" value="<?= $last_hip ?>">
+                    <button type="button" class="plus">+</button>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="activity">Niveau d'activité hebdomadaire (NEAT & Sport)</label>
+                <label for="activity">Niveau d'activité hebdomadaire</label>
                 <select id="activity" name="activity">
                     <option value="1.2">Sédentaire (Travail de bureau, pas de sport)</option>
                     <option value="1.375">Légèrement actif (Sport léger 1 à 3 fois/semaine)</option>
-                    <option value="1.55" selected>Modérément actif (Sport modéré 3 à 5 fois/semaine)</option>
+                    <option value="1.55" selected>Modérément actif (Sport modéré 5 fois/semaine)</option>
                     <option value="1.725">Très actif (Entraînement intense 6 à 7 jours/semaine)</option>
                     <option value="1.9">Extrêmement actif (Biquotidien)</option>
                 </select>
             </div>
 
-            <!-- Première échelle : Pourcentage de graisse -->
+            <!-- Graphique Graisse -->
             <div class="chart-container">
                 <div class="zones">
                     <div class="zone" id="zone-bas" style="background-color: #d1d5db;">Bas</div>
@@ -175,7 +190,6 @@
                 </div>
             </div>
 
-
             <div class="summary-container">
                 <div class="summary-box">
                     <div class="summary-label">GRAISSE CORPORELLE</div>
@@ -188,18 +202,16 @@
                 </div>
             </div>
 
-            <!-- NOUVELLE ÉCHELLE : IMC -->
+            <!-- Graphique IMC -->
             <div class="info-section">
-                <p>L'IMC est un indicateur purement statistique et indicatif ; il ne constitue en rien un facteur ou une
-                    mesure fiable de l'état de santé.</p>
+                <p>L'IMC est un indicateur purement statistique et indicatif.</p>
             </div>
             <div class="chart-container" style="margin-top: 3.5rem;">
                 <div class="zones">
                     <div class="zone" style="background-color: #b4c6e7; width: 37.03%;">Maigreur</div>
-                    <!-- IMC < 18.5 -->
-                    <div class="zone" style="background-color: #b5d3ba; width: 22.22%;">Normal</div> <!-- 18.5 - 25 -->
-                    <div class="zone" style="background-color: #ffe699; width: 18.52%;">Surpoids</div> <!-- 25 - 30 -->
-                    <div class="zone" style="background-color: #e6b8b7; width: 22.22%;">Obésité</div> <!-- 30 - 40+ -->
+                    <div class="zone" style="background-color: #b5d3ba; width: 22.22%;">Normal</div>
+                    <div class="zone" style="background-color: #ffe699; width: 18.52%;">Surpoids</div>
+                    <div class="zone" style="background-color: #e6b8b7; width: 22.22%;">Obèse</div>
                 </div>
                 <div class="axis">
                     <span>0</span><span>5</span><span>10</span><span>15</span>
@@ -238,16 +250,39 @@
                 </div>
             </div>
 
+            <!-- NOUVEAU: Section Macros -->
+            <div class="macros-section" style="margin-top: 2rem;">
+                <h4
+                    style="text-align: center; color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem;">
+                    Répartition Macronutriments</h4>
+                <select id="training-type" class="training-select" style="margin-bottom: 1rem;">
+                    <option value="repos">Jour de repos</option>
+                    <option value="force" selected>Séance Force (Upper/Lower, PPL)</option>
+                    <option value="endurance">Séance Vitesse/Endurance (Monopalme, Course)</option>
+                </select>
+                <div class="macros-grid">
+                    <div class="macro-box">
+                        <span class="macro-label">Protéines</span>
+                        <strong id="macro-protein">--g</strong>
+                    </div>
+                    <div class="macro-box">
+                        <span class="macro-label">Glucides</span>
+                        <strong id="macro-carbs">--g</strong>
+                    </div>
+                    <div class="macro-box">
+                        <span class="macro-label">Lipides</span>
+                        <strong id="macro-fat">--g</strong>
+                    </div>
+                </div>
+            </div>
 
             <div class="save-section">
-                <p>Les résultats s'affichent en direct au-dessus. Cliquez ici uniquement pour sauvegarder officiellement
-                    ce relevé.</p>
-                <button type="submit" class="btn-primary">Enregistrer le relevé officiel</button>
+                <button type="submit" class="btn-save">Enregistrer le relevé officiel</button>
             </div>
         </form>
     </div>
 
-    <!-- Affichage de l'historique PHP (Optionnel, en bas) -->
+    <!-- Historique -->
     <?php if (!empty($history)): ?>
     <div class="widget-container history-container" style="max-width: 650px; margin-top: 2rem;">
         <h3 style="margin-top: 0; text-align: center; color: var(--text-main);">Historique des Mesures</h3>
@@ -257,7 +292,7 @@
                     <th>Date</th>
                     <th>Poids</th>
                     <th>MG (%)</th>
-                    <th>Masse Maigre</th>
+                    <th>M. Maigre</th>
                     <th>TDEE</th>
                 </tr>
             </thead>
@@ -274,40 +309,29 @@
             </tbody>
         </table>
 
-        <!-- Graphique Chart.js -->
         <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--border);">
             <canvas id="historyChart"></canvas>
         </div>
 
-        <!-- NOUVEAU : Badges de Progression (Deltas) -->
         <?php
         if (count($history) >= 2):
-            $current = $history[0];  // La mesure la plus récente
-            $previous = $history[1];  // La mesure précédente
-            $first = end($history);  // La toute première mesure enregistrée (la dernière du tableau)
+            $current = $history[0];
+            $previous = $history[1];
+            $first = end($history);
+            
+            $deltaWeight = $current['weight'] - $first['weight'];
+            $deltaBF = $current['body_fat'] - $previous['body_fat'];
+            $deltaLean = $current['lean_mass'] - $previous['lean_mass'];
 
-            // Calculs des deltas
-            $deltaWeight = $current['weight'] - $first['weight'];  // Depuis le TOUT DÉBUT
-            $deltaBF = $current['body_fat'] - $previous['body_fat'];  // Depuis la dernière fois
-            $deltaLean = $current['lean_mass'] - $previous['lean_mass'];  // Depuis la dernière fois
-
-            // Fonction pour formater les deltas avec les bonnes couleurs
-            function formatDelta($val, $unit, $invertColors = false)
-            {
-                if ($val == 0)
-                    return "<span style='color: #64748b; font-weight: bold;'>= 0 $unit</span>";
-
+            function formatDelta($val, $unit, $invertColors = false) {
+                if ($val == 0) return "<span style='color: #64748b; font-weight: bold;'>= 0 $unit</span>";
                 $sign = $val > 0 ? '+' : '';
-                $color = '#64748b';  // Gris par défaut
-
-                if ($val > 0)
-                    $color = $invertColors ? '#ef4444' : '#22c55e';  // Rouge si inversé (gras), Vert sinon (muscle)
-                if ($val < 0)
-                    $color = $invertColors ? '#22c55e' : '#ef4444';  // Vert si inversé (perte de gras), Rouge sinon (perte de muscle)
-
+                $color = '#64748b';
+                if ($val > 0) $color = $invertColors ? '#ef4444' : '#22c55e';
+                if ($val < 0) $color = $invertColors ? '#22c55e' : '#ef4444';
                 return "<span style='color: $color; font-weight: bold;'>" . $sign . number_format($val, 2, ',', ' ') . " $unit</span>";
             }
-            ?>
+        ?>
         <div class="badges-container">
             <div class="badge">
                 <div class="badge-title">Poids Total</div>
@@ -317,7 +341,6 @@
             <div class="badge">
                 <div class="badge-title">Masse Grasse</div>
                 <div class="badge-value"><?= formatDelta($deltaBF, '%', true) ?></div>
-                <!-- True pour inverser les couleurs (baisse = vert) -->
                 <div class="badge-context">Tissu adipeux</div>
             </div>
             <div class="badge">
@@ -329,12 +352,10 @@
         <?php endif; ?>
     </div>
 
-    <!-- Chargement de la librairie Chart.js -->
+    <!-- Chart.js intégré -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
     const historyData = <?= json_encode(array_reverse($history)) ?>;
-
     if (historyData.length > 0) {
         const labels = historyData.map(row => {
             const d = new Date(row.created_at);
@@ -353,13 +374,12 @@
             data: {
                 labels: labels,
                 datasets: [{
-                        label: 'Poids Total (kg)',
+                        label: 'Poids (kg)',
                         data: weights,
                         borderColor: '#64748b',
                         backgroundColor: 'rgba(100, 116, 139, 0.1)',
                         yAxisID: 'y',
-                        tension: 0.4,
-                        borderWidth: 2
+                        tension: 0.4
                     },
                     {
                         label: 'Masse Maigre (kg)',
@@ -368,7 +388,6 @@
                         backgroundColor: 'rgba(59, 130, 246, 0.2)',
                         yAxisID: 'y',
                         tension: 0.4,
-                        borderWidth: 3,
                         fill: true
                     },
                     {
@@ -378,8 +397,7 @@
                         backgroundColor: 'rgba(239, 68, 68, 0.1)',
                         yAxisID: 'y1',
                         tension: 0.4,
-                        borderDash: [5, 5],
-                        borderWidth: 2
+                        borderDash: [5, 5]
                     }
                 ]
             },
@@ -389,35 +407,16 @@
                     mode: 'index',
                     intersect: false
                 },
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            usePointStyle: true,
-                            boxWidth: 8
-                        }
-                    }
-                },
                 scales: {
                     y: {
                         type: 'linear',
-                        display: true,
                         position: 'left',
-                        title: {
-                            display: true,
-                            text: 'Kilogrammes (kg)'
-                        },
                         suggestedMin: Math.min(...leanMasses) - 2,
                         suggestedMax: Math.max(...weights) + 2
                     },
                     y1: {
                         type: 'linear',
-                        display: true,
                         position: 'right',
-                        title: {
-                            display: true,
-                            text: 'Pourcentage MG (%)'
-                        },
                         grid: {
                             drawOnChartArea: false
                         }
@@ -429,7 +428,8 @@
     </script>
     <?php endif; ?>
 
-    <script src="public/script.js"></script>
+    <!-- Importation du script type module -->
+    <script type="module" src="public/script.js"></script>
 </body>
 
 </html>

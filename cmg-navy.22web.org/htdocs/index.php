@@ -6,8 +6,12 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
     ini_set('session.cookie_secure', 1);
 }
 ini_set('session.cookie_samesite', 'Strict');
-
 session_start();
+
+// Génération du token CSRF s'il n'existe pas
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 require_once 'controllers/MetricController.php';
 require_once 'controllers/AuthController.php';
@@ -35,8 +39,11 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
 
 // Gestion des routes protégées
 $controller = new MetricController();
+
 if ($action === 'save') {
     $controller->save();
+} elseif ($action === 'export') {
+    $controller->exportCSV();
 } else {
     $controller->index();
 }
