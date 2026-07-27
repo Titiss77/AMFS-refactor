@@ -14,11 +14,11 @@ class MetricModel {
     }
 
     public function insertMetric($data) {
-        $sql = "INSERT INTO metrics_history 
-                 (id_user, gender, height, weight, neck, waist, hip, activity_multiplier, body_fat, fat_mass, lean_mass, bmr, tdee) 
-                 VALUES 
-                 (:id_user, :gender, :height, :weight, :neck, :waist, :hip, :activity, :body_fat, :fat_mass, :lean_mass, :bmr, :tdee)";
-                 
+        $sql = "INSERT INTO metrics_history
+                  (id_user, gender, height, weight, neck, waist, hip, activity_multiplier, body_fat, fat_mass, lean_mass, bmr, tdee, created_at)
+                  VALUES
+                  (:id_user, :gender, :height, :weight, :neck, :waist, :hip, :activity, :body_fat, :fat_mass, :lean_mass, :bmr, :tdee, :created_at)";
+                          
         $stmt = $this->db->prepare($sql);
         return $stmt->execute($data);
     }
@@ -28,5 +28,14 @@ class MetricModel {
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':id_user' => $id_user]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteMetric($id, $id_user) {
+        $sql = "DELETE FROM metrics_history WHERE id = :id AND id_user = :id_user";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([
+            ':id' => $id, 
+            ':id_user' => $id_user
+        ]);
     }
 }

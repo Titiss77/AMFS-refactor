@@ -32,6 +32,11 @@ class MetricController {
             $hip = isset($_POST['hip']) && $_POST['hip'] !== '' ? (float) str_replace(',', '.', $_POST['hip']) : 0;
             $activity = (float) $_POST['activity'];
 
+            // NOUVEAU : Récupération de la date
+            $createdAt = isset($_POST['created_at']) && !empty($_POST['created_at']) 
+                         ? $_POST['created_at'] . ' ' . date('H:i:s') 
+                         : date('Y-m-d H:i:s');
+
             $density = 0;
             if ($gender === 'male') {
                 $density = 1.0324 - 0.19077 * log10($waist - $neck) + 0.15456 * log10($height);
@@ -58,7 +63,8 @@ class MetricController {
                 ':fat_mass' => round($fatMass, 2),
                 ':lean_mass' => round($leanMass, 2),
                 ':bmr' => round($bmr),
-                ':tdee' => round($tdee)
+                ':tdee' => round($tdee),
+                ':created_at' => $createdAt
             ];
 
             if ($this->model->insertMetric($data)) {
@@ -100,5 +106,22 @@ class MetricController {
         header('Content-Type: application/json');
         echo json_encode($data);
         exit();
+    }
+
+    public function delete() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!isset($_SESSION['user_id'])) {
+                $this->sendJson(['success' => false, 'message' => 'Non authentifié.']);
+            }
+
+            $id = $_POST['id'] ?? null;
+            $id_user = $_SESSION['user_id'];
+
+            if ($id && $this->model->deleteMetric($id, $id_user)) {
+                $this->sendJson(['success' => true, 'message' => 'Mesure supprimée avec succès.']);
+            } else {
+                $this->sendJson(['success' => false, 'message' => 'Erreur lors de la suppression.']);
+            }
+        }
     }
 }

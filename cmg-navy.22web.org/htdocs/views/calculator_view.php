@@ -92,9 +92,15 @@
 
     <div class="widget-container">
         <h2>Calculateur US Navy & Énergie</h2>
+
         <form id="metric-form" method="POST" action="index.php?action=save">
             <input type="hidden" name="csrf_token"
                 value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+
+            <div class="form-group">
+                <label for="created_at">Date de la mesure</label>
+                <input type="date" id="created_at" name="created_at" value="<?= date('Y-m-d') ?>" required>
+            </div>
 
             <div class="form-group">
                 <label for="gender">Genre</label>
@@ -294,6 +300,7 @@
                     <th>MG (%)</th>
                     <th>M. Maigre</th>
                     <th>TDEE</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -304,6 +311,11 @@
                     <td style="color: var(--primary); font-weight: bold;"><?= $row['body_fat'] ?>%</td>
                     <td><?= $row['lean_mass'] ?> kg</td>
                     <td><?= $row['tdee'] ?> kcal</td>
+                    <td>
+                        <button class="btn-delete" data-id="<?= $row['id'] ?>"
+                            style="color: var(--danger); background: none; border: none; cursor: pointer; font-size: 1.2rem;"
+                            title="Supprimer">×</button>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -316,13 +328,14 @@
         <?php
         if (count($history) >= 2):
             $current = $history[0];
-            $previous = $history[1];
+            // $previous n'est plus nécessaire car tout est calculé depuis le début
             $first = end($history);
             
+            // Calcul des deltas depuis le début pour les 3 métriques
             $deltaWeight = $current['weight'] - $first['weight'];
-            $deltaBF = $current['body_fat'] - $previous['body_fat'];
-            $deltaLean = $current['lean_mass'] - $previous['lean_mass'];
-
+            $deltaBF = $current['body_fat'] - $first['body_fat'];
+            $deltaLean = $current['lean_mass'] - $first['lean_mass'];
+            
             function formatDelta($val, $unit, $invertColors = false) {
                 if ($val == 0) return "<span style='color: #64748b; font-weight: bold;'>= 0 $unit</span>";
                 $sign = $val > 0 ? '+' : '';
@@ -336,17 +349,17 @@
             <div class="badge">
                 <div class="badge-title">Poids Total</div>
                 <div class="badge-value"><?= formatDelta($deltaWeight, 'kg') ?></div>
-                <div class="badge-context">Depuis la 1ère pesée</div>
+                <div class="badge-context">Masse Maigre + Masse Grasse</div>
             </div>
             <div class="badge">
                 <div class="badge-title">Masse Grasse</div>
                 <div class="badge-value"><?= formatDelta($deltaBF, '%', true) ?></div>
-                <div class="badge-context">Tissu adipeux</div>
+                <div class="badge-context">Tissus Adipeux</div>
             </div>
             <div class="badge">
                 <div class="badge-title">Masse Maigre</div>
                 <div class="badge-value"><?= formatDelta($deltaLean, 'kg') ?></div>
-                <div class="badge-context">Gain musculaire / Eau</div>
+                <div class="badge-context">Os, Muscles, Eau</div>
             </div>
         </div>
         <?php endif; ?>

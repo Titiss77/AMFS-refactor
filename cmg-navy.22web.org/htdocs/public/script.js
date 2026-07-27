@@ -134,4 +134,34 @@ function updateUI() {
         document.getElementById('macro-carbs').textContent = `${macros.carbs}g`;
         document.getElementById('macro-fat').textContent = `${macros.fat}g`;
     }
+
+    // Gestion de la suppression d'une mesure
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            if (confirm('Voulez-vous vraiment supprimer ce relevé ?')) {
+                const id = e.target.getAttribute('data-id');
+                
+                try {
+                    const formData = new FormData();
+                    formData.append('id', id);
+
+                    const response = await fetch('index.php?action=delete', {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        window.location.reload(); // Recharge pour actualiser le tableau et le graphique
+                    } else {
+                        alert('Erreur: ' + data.message);
+                    }
+                } catch (err) {
+                    alert('Erreur réseau lors de la suppression.');
+                }
+            }
+        });
+    });
 }
