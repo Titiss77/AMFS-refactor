@@ -1,4 +1,4 @@
-export function calculateBodyMetrics(gender, height, weight, neck, waist, hip, activityMultiplier) {
+export function calculateBodyMetrics(gender, height, weight, neck, waist, hip, activityMultiplier, isAthlete = false) {
     const diff = gender === 'male' ? (waist - neck) : (waist + hip - neck);
     if (!height || !weight || !neck || !waist || (gender === 'female' && !hip) || diff <= 0) return null;
 
@@ -6,7 +6,15 @@ export function calculateBodyMetrics(gender, height, weight, neck, waist, hip, a
         ? 1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)
         : 1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.22100 * Math.log10(height);
 
-    const bodyFat = Math.max(0, (495 / density) - 450);
+    let bodyFat = Math.max(0, (495 / density) - 450);
+
+    // CORRECTION ATHLÈTE
+    if (isAthlete) {
+        // On compense le tour de taille musculaire en réduisant de 1.5% la MG
+        const minFat = gender === 'male' ? 4.0 : 12.0; 
+        bodyFat = Math.max(minFat, bodyFat - 1.5);
+    }
+
     const fatMass = weight * (bodyFat / 100);
     const leanMass = weight - fatMass;
     const bmr = 370 + (21.6 * leanMass);

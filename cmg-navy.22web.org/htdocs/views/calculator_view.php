@@ -122,6 +122,7 @@
         <form id="metric-form" method="POST" action="index.php?action=save">
             <input type="hidden" name="csrf_token"
                 value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+            <input type="hidden" name="id" id="edit_id" value=""> <!-- NOUVEAU -->
 
             <div class="form-group">
                 <label for="created_at">Date de la mesure</label>
@@ -187,6 +188,19 @@
                     <input type="number" step="0.5" id="hip" name="hip" value="<?= $last_hip ?>">
                     <button type="button" class="plus">+</button>
                 </div>
+            </div>
+
+            <!-- NOUVEAU: Checkbox Profil Athlète -->
+            <div class="form-group checkbox-group"
+                style="display: flex; align-items: center; gap: 10px; padding: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;">
+                <input type="checkbox" id="is-athlete" name="is_athlete" value="1"
+                    style="width: auto; transform: scale(1.3); cursor: pointer;">
+                <label for="is-athlete" style="margin-bottom: 0; color: #1e3a8a; cursor: pointer;">
+                    <strong>Profil Athlète</strong><br>
+                    <span style="font-size: 0.75rem; font-weight: normal; color: #475569;">Corrige le biais de la
+                        formule pour les masses musculaires importantes (ex: tronc développé par la musculation /
+                        nage).</span>
+                </label>
             </div>
 
             <div class="form-group">
@@ -340,12 +354,26 @@
                         <td><?= date('d/m/Y', strtotime($row['created_at'])) ?></td>
                         <td><?= $row['weight'] ?> kg</td>
                         <td><?= $row['waist'] ?> / <?= $row['neck'] ?> cm</td>
-                        <td style="color: var(--primary); font-weight: bold;"><?= $row['body_fat'] ?>%</td>
-                        <td><?= $row['lean_mass'] ?> kg</td>
+                        <td style="color: var(--primary); font-weight: bold;"><?= $row['body_fat'] ?>%
+                            <p style="margin: 0; color:#EF4444; font-size: smaller;">
+                                <?= $row['is_athlete'] == 1 ? '(Athlète)' : '' ?>
+                            </p>
+                        </td>
+                        <td><?= $row['lean_mass'] ?> kg
+                        </td>
                         <td><?= $row['bmr'] ?> kcal
                             <p style="margin: 0; color:#6ECF68;"><?= $row['tdee'] ?> kcal</p>
                         </td>
                         <td>
+                            <button type="button" class="btn-edit" data-id="<?= $row['id'] ?>"
+                                data-date="<?= date('Y-m-d', strtotime($row['created_at'])) ?>"
+                                data-gender="<?= $row['gender'] ?>" data-height="<?= $row['height'] ?>"
+                                data-weight="<?= $row['weight'] ?>" data-waist="<?= $row['waist'] ?>"
+                                data-neck="<?= $row['neck'] ?>" data-hip="<?= $row['hip'] ?? '' ?>"
+                                data-activity="<?= $row['activity_multiplier'] ?>"
+                                data-athlete="<?= $row['is_athlete'] ?? 0 ?>"
+                                style="color: var(--primary); background: none; border: none; cursor: pointer; font-size: 1.2rem; margin-right: 8px;"
+                                title="Modifier">✏️</button>
                             <button class="btn-delete" data-id="<?= $row['id'] ?>"
                                 style="color: var(--danger); background: none; border: none; cursor: pointer; font-size: 1.2rem;"
                                 title="Supprimer">×</button>
@@ -365,21 +393,25 @@
             $current = $history[0];
             // $previous n'est plus nécessaire car tout est calculé depuis le début
             $first = end($history);
-            
+
             // Calcul des deltas depuis le début pour les 3 métriques
             $deltaWeight = $current['weight'] - $first['weight'];
             $deltaBF = $current['body_fat'] - $first['body_fat'];
             $deltaLean = $current['lean_mass'] - $first['lean_mass'];
-            
-            function formatDelta($val, $unit, $invertColors = false) {
-                if ($val == 0) return "<span style='color: #64748b; font-weight: bold;'>= 0 $unit</span>";
+
+            function formatDelta($val, $unit, $invertColors = false)
+            {
+                if ($val == 0)
+                    return "<span style='color: #64748b; font-weight: bold;'>= 0 $unit</span>";
                 $sign = $val > 0 ? '+' : '';
                 $color = '#64748b';
-                if ($val > 0) $color = $invertColors ? '#ef4444' : '#22c55e';
-                if ($val < 0) $color = $invertColors ? '#22c55e' : '#ef4444';
+                if ($val > 0)
+                    $color = $invertColors ? '#ef4444' : '#22c55e';
+                if ($val < 0)
+                    $color = $invertColors ? '#22c55e' : '#ef4444';
                 return "<span style='color: $color; font-weight: bold;'>" . $sign . number_format($val, 2, ',', ' ') . " $unit</span>";
             }
-        ?>
+            ?>
         <div class="badges-container">
             <div class="badge">
                 <div class="badge-title">Poids Total</div>
@@ -401,10 +433,13 @@
     </div>
 
     <!-- Chart.js intégré -->
+    <!-- Chart.js intégré -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     const historyData = <?= json_encode(array_reverse($history)) ?>;
+
     if (historyData.length > 0) {
+        // 1. Définition des variables manquantes
         const labels = historyData.map(row => {
             const d = new Date(row.created_at);
             return d.toLocaleDateString('fr-FR', {
@@ -416,6 +451,21 @@
         const leanMasses = historyData.map(row => row.lean_mass);
         const bodyFats = historyData.map(row => row.body_fat);
 
+        // 2. Fonction de lissage (EMA)
+        function calculateEMA(data, period = 3) {
+            if (data.length === 0) return [];
+            const k = 2 / (period + 1);
+            let emaData = [data[0]];
+            for (let i = 1; i < data.length; i++) {
+                emaData.push((data[i] * k) + (emaData[i - 1] * (1 - k)));
+            }
+            return emaData;
+        }
+
+        const smoothedLeanMasses = calculateEMA(leanMasses);
+        const smoothedBodyFats = calculateEMA(bodyFats);
+
+        // 3. Rendu du graphique
         const ctx = document.getElementById('historyChart').getContext('2d');
         new Chart(ctx, {
             type: 'line',
@@ -430,8 +480,8 @@
                         tension: 0.4
                     },
                     {
-                        label: 'Masse Maigre (kg)',
-                        data: leanMasses,
+                        label: 'Masse Maigre LISSÉE (kg)',
+                        data: smoothedLeanMasses,
                         borderColor: '#3b82f6',
                         backgroundColor: 'rgba(59, 130, 246, 0.2)',
                         yAxisID: 'y',
@@ -439,8 +489,8 @@
                         fill: true
                     },
                     {
-                        label: 'Masse Grasse (%)',
-                        data: bodyFats,
+                        label: 'Masse Grasse LISSÉE (%)',
+                        data: smoothedBodyFats,
                         borderColor: '#ef4444',
                         backgroundColor: 'rgba(239, 68, 68, 0.1)',
                         yAxisID: 'y1',

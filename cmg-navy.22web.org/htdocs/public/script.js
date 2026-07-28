@@ -91,6 +91,12 @@ function updateZones(gender) {
     document.getElementById('zone-obe').style.width = ((max - t.moy) / max * 100) + '%';
 }
 
+// Ajoute cet écouteur avec les autres (vers la ligne 25)
+const isAthleteElem = document.getElementById('is-athlete');
+if (isAthleteElem) {
+    isAthleteElem.addEventListener('change', updateUI);
+}
+
 function updateUI() {
     const gender = document.getElementById('gender').value;
     const weight = parseFloat(document.getElementById('weight').value.replace(',', '.'));
@@ -100,8 +106,12 @@ function updateUI() {
     const hip = document.getElementById('hip') ? parseFloat(document.getElementById('hip').value.replace(',', '.')) : 0;
     const activity = parseFloat(document.getElementById('activity').value);
     const trainingType = document.getElementById('training-type').value;
+    
+    // NOUVEAU
+    const isAthlete = document.getElementById('is-athlete') ? document.getElementById('is-athlete').checked : false;
 
-    const metrics = calculateBodyMetrics(gender, height, weight, neck, waist, hip, activity);
+    // Mise à jour de l'appel
+    const metrics = calculateBodyMetrics(gender, height, weight, neck, waist, hip, activity, isAthlete);
     
     if (metrics) {
         updateZones(gender);
@@ -162,6 +172,49 @@ function updateUI() {
                     alert('Erreur réseau lors de la suppression.');
                 }
             }
+        });
+    });
+
+    // Gestion de la modification d'une mesure
+    document.querySelectorAll('.btn-edit').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const target = e.currentTarget;
+            
+            // 1. Remplissage des champs du formulaire
+            document.getElementById('edit_id').value = target.dataset.id;
+            document.getElementById('created_at').value = target.dataset.date;
+            document.getElementById('gender').value = target.dataset.gender;
+            document.getElementById('height').value = target.dataset.height;
+            document.getElementById('weight').value = target.dataset.weight;
+            document.getElementById('waist').value = target.dataset.waist;
+            document.getElementById('neck').value = target.dataset.neck;
+            
+            if (document.getElementById('hip')) {
+                document.getElementById('hip').value = target.dataset.hip || 0;
+            }
+            
+            const rawActivity = target.dataset.activity;
+            document.getElementById('activity').value = parseFloat(rawActivity).toString();
+            
+            // NOUVEAU : Coche ou décoche le profil athlète
+            const isAthleteCheckbox = document.getElementById('is-athlete');
+            if (isAthleteCheckbox) {
+                isAthleteCheckbox.checked = target.dataset.athlete === '1';
+            }
+            
+            // Affichage de la zone "hanches" si c'est une femme
+            document.getElementById('hip-group').classList.toggle('hidden', target.dataset.gender !== 'female');
+            
+            // 2. Changement visuel du bouton pour indiquer le mode "Édition"
+            const submitBtn = document.querySelector('.btn-save');
+            submitBtn.textContent = 'Mettre à jour le relevé';
+            submitBtn.style.backgroundColor = '#f59e0b'; // Un orange pour marquer la modification
+            
+            // 3. Remonter l'écran vers le formulaire
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // 4. Forcer le recalcul instantané des graphiques et des macros avec les données chargées
+            updateUI();
         });
     });
 }
