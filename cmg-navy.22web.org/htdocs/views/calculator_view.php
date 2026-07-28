@@ -297,9 +297,12 @@
                 <tr>
                     <th>Date</th>
                     <th>Poids</th>
+                    <th>T. Taille / Cou</th>
                     <th>MG (%)</th>
                     <th>M. Maigre</th>
-                    <th>TDEE</th>
+                    <th>BMR
+                        <p style="margin: 0; color:#6ECF68;">TDEE</p>
+                    </th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -308,9 +311,12 @@
                 <tr>
                     <td><?= date('d/m/Y', strtotime($row['created_at'])) ?></td>
                     <td><?= $row['weight'] ?> kg</td>
+                    <td><?= $row['waist'] ?> / <?= $row['neck'] ?> cm</td>
                     <td style="color: var(--primary); font-weight: bold;"><?= $row['body_fat'] ?>%</td>
                     <td><?= $row['lean_mass'] ?> kg</td>
-                    <td><?= $row['tdee'] ?> kcal</td>
+                    <td><?= $row['bmr'] ?> kcal
+                        <p style="margin: 0; color:#6ECF68;"><?= $row['tdee'] ?> kcal</p>
+                    </td>
                     <td>
                         <button class="btn-delete" data-id="<?= $row['id'] ?>"
                             style="color: var(--danger); background: none; border: none; cursor: pointer; font-size: 1.2rem;"
