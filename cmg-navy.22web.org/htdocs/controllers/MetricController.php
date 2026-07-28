@@ -130,19 +130,113 @@ class MetricController
         header('Content-Disposition: attachment; filename=historique_metriques.csv');
 
         $output = fopen('php://output', 'w');
-        fputcsv($output, ['Date', 'Poids (kg)', 'Masse Grasse (%)', 'Masse Maigre (kg)', 'TDEE (kcal)']);
+        fputcsv($output, ['created_at','gender','height', 'weight','waist', 'neck', 'hip', 'activity_multiplier', 'is_athlete']);
 
         foreach ($history as $row) {
             fputcsv($output, [
                 $row['created_at'],
+                $row['gender'],
+                $row['height'],
                 $row['weight'],
-                $row['body_fat'],
-                $row['lean_mass'],
-                $row['tdee']
+                $row['waist'],
+                $row['neck'],
+                $row['hip'],
+                $row['activity_multiplier'],
+                $row['is_athlete']
             ]);
         }
         fclose($output);
         exit();
+    }
+
+    public function importCSV()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: index.php?action=login');
+            exit();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['csv_file'])) {
+            $file = $_FILES['csv_file']['tmp_name'];
+            $id_user = $_SESSION['user_id'];
+
+            if (!empty($file) && ($handle = fopen($file, 'r')) !== FALSE) {
+                // Ignorer la première ligne (les en-têtes)
+                fgetcsv($handle, 1000, ',');
+
+                while (($dataRow = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                    // Vérification que la ligne contient bien les 9 colonnes de l'export
+                    if (count($dataRow) < 9) continue;
+
+                    $createdAt = $dataRow[0];
+                    $gender    = $dataRow[1];
+                    $height    = (float)$dataRow[2];
+                    $weight    = (float)$dataRow[3];
+                    $waist     = (float)$dataRow[4];
+                    $neck      = (float)$dataRow[5];
+                    $hip       = empty($dataRow[6]) ? null : (float)$dataRow[6];
+                    $activity  = (float)$dataRow[7];
+                    $isAthlete = (int)$dataRow[8];
+
+                    // Sécurité contre les erreurs mathématiques (log10)
+                    if ($height <= 0 || $waist <= 0 || $neck <= 0) continue;
+
+                    // Calcul de la densité[cite: 1]
+                    $density = 0;
+                    if ($gender === 'male') {
+                        $diff = $waist - $neck;
+                        if ($diff <= 0) continue;
+                        $density = 1.0324 - 0.19077 * log10($diff) + 0.15456 * log10($height);
+                    } else {
+                        $diff = $waist + $hip - $neck;
+                        if ($diff <= 0) continue;
+                        $density = 1.29579 - 0.35004 * log10($diff) + 0.221 * log10($height);
+                    }
+
+                    // Calcul de la masse grasse (Body Fat)[cite: 1]
+                    $bodyFat = max(0, (495 / $density) - 450);
+
+                    // Correction pour le profil athlète[cite: 1]
+                    if ($isAthlete) {
+                        $minFat = $gender === 'male' ? 4.0 : 12.0;
+                        $bodyFat = max($minFat, $bodyFat - 1.5);
+                    }
+
+                    // Calcul des masses et de l'énergie[cite: 1]
+                    $fatMass  = $weight * ($bodyFat / 100);
+                    $leanMass = $weight - $fatMass;
+                    $bmr      = 370 + (21.6 * $leanMass);
+                    $tdee     = $bmr * $activity;
+
+                    // Préparation des données pour l'insertion[cite: 1]
+                    $dataToInsert = [
+                        ':id_user'    => $id_user,
+                        ':gender'     => $gender,
+                        ':height'     => $height,
+                        ':weight'     => $weight,
+                        ':neck'       => $neck,
+                        ':waist'      => $waist,
+                        ':hip'        => $gender === 'female' ? $hip : null,
+                        ':activity'   => $activity,
+                        ':is_athlete' => $isAthlete ? 1 : 0,
+                        ':body_fat'   => round($bodyFat, 2),
+                        ':fat_mass'   => round($fatMass, 2),
+                        ':lean_mass'  => round($leanMass, 2),
+                        ':bmr'        => round($bmr),
+                        ':tdee'       => round($tdee),
+                        ':created_at' => $createdAt
+                    ];
+
+                    // Insertion via le modèle[cite: 1]
+                    $this->model->insertMetric($dataToInsert);
+                }
+                fclose($handle);
+            }
+            
+            // Redirection après l'importation
+            header('Location: index.php');
+            exit();
+        }
     }
 
     private function sendJson($data)

@@ -112,6 +112,16 @@
     <div class="user-bar">
         <span>Connecté en tant que
             <strong><?= htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8') ?></strong></span>
+
+        <!-- Formulaire d'importation CSV -->
+        <form action="index.php?action=import" method="POST" enctype="multipart/form-data"
+            style="display:inline; margin-left:15px;">
+            <input type="file" name="csv_file" accept=".csv" required style="display: none;" id="csv-upload"
+                onchange="this.form.submit()">
+            <label for="csv-upload" class="btn-export" style="background: var(--primary); cursor: pointer;">Importer
+                CSV</label>
+        </form>
+
         <a href="index.php?action=export" class="btn-export">Exporter CSV</a>
         <a href="index.php?action=logout" style="color: var(--danger);">Se déconnecter</a>
     </div>
@@ -143,6 +153,7 @@
             $last_neck = !empty($history) ? $history[0]['neck'] : '37';
             $last_waist = !empty($history) ? $history[0]['waist'] : '79';
             $last_hip = (!empty($history) && $history[0]['hip'] !== null) ? $history[0]['hip'] : '95';
+            $last_is_athlete = (!empty($history) && isset($history[0]['is_athlete']) && $history[0]['is_athlete'] == 1) ? 'checked' : '';
             ?>
 
             <div class="form-group">
@@ -190,11 +201,10 @@
                 </div>
             </div>
 
-            <!-- NOUVEAU: Checkbox Profil Athlète -->
             <div class="form-group checkbox-group"
                 style="display: flex; align-items: center; gap: 10px; padding: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;">
                 <input type="checkbox" id="is-athlete" name="is_athlete" value="1"
-                    style="width: auto; transform: scale(1.3); cursor: pointer;">
+                    style="width: auto; transform: scale(1.3); cursor: pointer;" <?= $last_is_athlete ?>>
                 <label for="is-athlete" style="margin-bottom: 0; color: #1e3a8a; cursor: pointer;">
                     <strong>Profil Athlète</strong><br>
                     <span style="font-size: 0.75rem; font-weight: normal; color: #475569;">Corrige le biais de la
@@ -480,7 +490,7 @@
                         tension: 0.4
                     },
                     {
-                        label: 'Masse Maigre LISSÉE (kg)',
+                        label: 'Masse Maigre (kg)',
                         data: smoothedLeanMasses,
                         borderColor: '#3b82f6',
                         backgroundColor: 'rgba(59, 130, 246, 0.2)',
@@ -489,7 +499,7 @@
                         fill: true
                     },
                     {
-                        label: 'Masse Grasse LISSÉE (%)',
+                        label: 'Masse Grasse (%)',
                         data: smoothedBodyFats,
                         borderColor: '#ef4444',
                         backgroundColor: 'rgba(239, 68, 68, 0.1)',

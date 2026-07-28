@@ -44,7 +44,9 @@ if ($action === 'save') {
     $controller->save();
 } elseif ($action === 'export') {
     $controller->exportCSV();
-} elseif ($action === 'delete') {  // NOUVELLE ROUTE
+} elseif ($action === 'import') { // ROUTE D'IMPORTATION
+    $controller->importCSV();
+} elseif ($action === 'delete') { 
     $controller->delete();
 } else {
     $controller->index();
