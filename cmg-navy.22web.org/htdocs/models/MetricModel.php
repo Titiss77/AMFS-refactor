@@ -24,7 +24,7 @@ class MetricModel {
     }
 
     public function getAllHistory($id_user) {
-        $sql = "SELECT * FROM metrics_history WHERE id_user = :id_user ORDER BY created_at DESC LIMIT 10";
+        $sql = "SELECT * FROM metrics_history WHERE id_user = :id_user ORDER BY created_at DESC";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':id_user' => $id_user]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

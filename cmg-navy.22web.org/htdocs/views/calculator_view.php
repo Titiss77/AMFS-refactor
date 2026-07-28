@@ -79,6 +79,32 @@
         text-transform: uppercase;
         font-size: 0.75rem;
     }
+
+    .table-wrapper {
+        max-height: 500px;
+        /* Hauteur approximative pour ~10 lignes avant d'activer le scroll */
+        overflow-y: auto;
+        margin-bottom: 1rem;
+        /* Style optionnel de la barre de défilement pour un rendu plus propre */
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 transparent;
+    }
+
+    /* Rend l'en-tête fixe pendant le défilement */
+    .history-table th {
+        position: sticky;
+        top: 0;
+        background-color: #ffffff;
+        /* Évite de voir le texte en transparence */
+        z-index: 10;
+        /* Tes styles existants pour th : */
+        color: var(--text-muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        border-bottom: 2px solid var(--border);
+        /* Un peu plus  épais pour démarquer */
+    }
     </style>
 </head>
 
@@ -292,40 +318,43 @@
     <?php if (!empty($history)): ?>
     <div class="widget-container history-container" style="max-width: 650px; margin-top: 2rem;">
         <h3 style="margin-top: 0; text-align: center; color: var(--text-main);">Historique des Mesures</h3>
-        <table class="history-table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Poids</th>
-                    <th>T. Taille / Cou</th>
-                    <th>MG (%)</th>
-                    <th>M. Maigre</th>
-                    <th>BMR
-                        <p style="margin: 0; color:#6ECF68;">TDEE</p>
-                    </th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($history as $row): ?>
-                <tr>
-                    <td><?= date('d/m/Y', strtotime($row['created_at'])) ?></td>
-                    <td><?= $row['weight'] ?> kg</td>
-                    <td><?= $row['waist'] ?> / <?= $row['neck'] ?> cm</td>
-                    <td style="color: var(--primary); font-weight: bold;"><?= $row['body_fat'] ?>%</td>
-                    <td><?= $row['lean_mass'] ?> kg</td>
-                    <td><?= $row['bmr'] ?> kcal
-                        <p style="margin: 0; color:#6ECF68;"><?= $row['tdee'] ?> kcal</p>
-                    </td>
-                    <td>
-                        <button class="btn-delete" data-id="<?= $row['id'] ?>"
-                            style="color: var(--danger); background: none; border: none; cursor: pointer; font-size: 1.2rem;"
-                            title="Supprimer">×</button>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+
+        <div class="table-wrapper">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Poids</th>
+                        <th>T. Taille / Cou</th>
+                        <th>MG (%)</th>
+                        <th>M. Maigre</th>
+                        <th>BMR
+                            <p style="margin: 0; color:#6ECF68;">TDEE</p>
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($history as $row): ?>
+                    <tr>
+                        <td><?= date('d/m/Y', strtotime($row['created_at'])) ?></td>
+                        <td><?= $row['weight'] ?> kg</td>
+                        <td><?= $row['waist'] ?> / <?= $row['neck'] ?> cm</td>
+                        <td style="color: var(--primary); font-weight: bold;"><?= $row['body_fat'] ?>%</td>
+                        <td><?= $row['lean_mass'] ?> kg</td>
+                        <td><?= $row['bmr'] ?> kcal
+                            <p style="margin: 0; color:#6ECF68;"><?= $row['tdee'] ?> kcal</p>
+                        </td>
+                        <td>
+                            <button class="btn-delete" data-id="<?= $row['id'] ?>"
+                                style="color: var(--danger); background: none; border: none; cursor: pointer; font-size: 1.2rem;"
+                                title="Supprimer">×</button>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
         <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--border);">
             <canvas id="historyChart"></canvas>
