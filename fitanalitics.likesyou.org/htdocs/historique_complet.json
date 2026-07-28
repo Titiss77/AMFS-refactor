@@ -151,133 +151,6 @@
             ]
         }
     ],
-    "Barbell Row": [
-        {
-            "date": "20260623",
-            "series": 4,
-            "total_reps": 51,
-            "poids": 50.0,
-            "volume": 2550,
-            "details": [
-                {
-                    "reps": 15,
-                    "poids": 50.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 50.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 50.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 50.0
-                }
-            ]
-        },
-        {
-            "date": "20260701",
-            "series": 4,
-            "total_reps": 48,
-            "poids": 50.0,
-            "volume": 2400,
-            "details": [
-                {
-                    "reps": 15,
-                    "poids": 50.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 50.0
-                },
-                {
-                    "reps": 11,
-                    "poids": 50.0
-                },
-                {
-                    "reps": 10,
-                    "poids": 50.0
-                }
-            ]
-        },
-        {
-            "date": "20260706",
-            "series": 4,
-            "total_reps": 44,
-            "poids": 55.0,
-            "volume": 2420,
-            "details": [
-                {
-                    "reps": 13,
-                    "poids": 55.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 55.0
-                },
-                {
-                    "reps": 10,
-                    "poids": 55.0
-                },
-                {
-                    "reps": 9,
-                    "poids": 55.0
-                }
-            ]
-        },
-        {
-            "date": "20260713",
-            "series": 4,
-            "total_reps": 46,
-            "poids": 55.0,
-            "volume": 2530,
-            "details": [
-                {
-                    "reps": 13,
-                    "poids": 55.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 55.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 55.0
-                },
-                {
-                    "reps": 9,
-                    "poids": 55.0
-                }
-            ]
-        },
-        {
-            "date": "20260720",
-            "series": 4,
-            "total_reps": 49,
-            "poids": 55.0,
-            "volume": 2695,
-            "details": [
-                {
-                    "reps": 13,
-                    "poids": 55.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 55.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 55.0
-                },
-                {
-                    "reps": 12,
-                    "poids": 55.0
-                }
-            ]
-        }
-    ],
     "Biceps Curl haltères": [
         {
             "date": "20260720",
@@ -300,6 +173,31 @@
                 },
                 {
                     "reps": 12,
+                    "poids": 14.0
+                }
+            ]
+        },
+        {
+            "date": "20260727",
+            "series": 4,
+            "total_reps": 47,
+            "poids": 14.0,
+            "volume": 658,
+            "details": [
+                {
+                    "reps": 14,
+                    "poids": 14.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 14.0
+                },
+                {
+                    "reps": 11,
+                    "poids": 14.0
+                },
+                {
+                    "reps": 10,
                     "poids": 14.0
                 }
             ]
@@ -663,7 +561,7 @@
             ]
         }
     ],
-    "Developpé couché": [
+    "Developpé couché aux haltères": [
         {
             "date": "20260623",
             "series": 4,
@@ -781,6 +679,31 @@
                 },
                 {
                     "reps": 10,
+                    "poids": 24.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 24.0
+                }
+            ]
+        },
+        {
+            "date": "20260727",
+            "series": 4,
+            "total_reps": 46,
+            "poids": 24.0,
+            "volume": 1104,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 24.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 24.0
+                },
+                {
+                    "reps": 12,
                     "poids": 24.0
                 },
                 {
@@ -913,7 +836,7 @@
             ]
         }
     ],
-    "Développé incliné": [
+    "Développé incliné aux haltères": [
         {
             "date": "20260618",
             "series": 4,
@@ -1061,6 +984,37 @@
                 {
                     "reps": 12,
                     "poids": 18.0
+                }
+            ]
+        }
+    ],
+    "Exention de Jambes à la poulie": [
+        {
+            "date": "20260725",
+            "series": 5,
+            "total_reps": 50,
+            "poids": 20.4,
+            "volume": 1020,
+            "details": [
+                {
+                    "reps": 10,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 18.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 22.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 22.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 22.0
                 }
             ]
         }
@@ -1369,6 +1323,31 @@
                     "poids": 27.5
                 }
             ]
+        },
+        {
+            "date": "20260727",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 27.5,
+            "volume": 1320,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 27.5
+                },
+                {
+                    "reps": 13,
+                    "poids": 27.5
+                },
+                {
+                    "reps": 12,
+                    "poids": 27.5
+                },
+                {
+                    "reps": 10,
+                    "poids": 27.5
+                }
+            ]
         }
     ],
     "Extensions de jambes": [
@@ -1496,6 +1475,29 @@
                 {
                     "reps": 6,
                     "poids": 45.0
+                }
+            ]
+        }
+    ],
+    "Gainage swiss ball": [
+        {
+            "date": "20260725",
+            "series": 3,
+            "total_reps": 30,
+            "poids": 0.0,
+            "volume": 0,
+            "details": [
+                {
+                    "reps": 10,
+                    "poids": 0.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 0.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 0.0
                 }
             ]
         }
@@ -1677,6 +1679,31 @@
                     "poids": 10.0
                 }
             ]
+        },
+        {
+            "date": "20260727",
+            "series": 4,
+            "total_reps": 50,
+            "poids": 10.0,
+            "volume": 500,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 10.0
+                },
+                {
+                    "reps": 13,
+                    "poids": 10.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 10.0
+                }
+            ]
         }
     ],
     "Nordic Curl": [
@@ -1783,6 +1810,29 @@
             ]
         }
     ],
+    "Rotation du câble": [
+        {
+            "date": "20260725",
+            "series": 3,
+            "total_reps": 30,
+            "poids": 28.0,
+            "volume": 840,
+            "details": [
+                {
+                    "reps": 10,
+                    "poids": 30.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 27.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 27.0
+                }
+            ]
+        }
+    ],
     "Roulement de roue": [
         {
             "date": "20260721",
@@ -1806,6 +1856,158 @@
                 {
                     "reps": 0,
                     "poids": 0.0
+                }
+            ]
+        }
+    ],
+    "Rowing à la barre": [
+        {
+            "date": "20260623",
+            "series": 4,
+            "total_reps": 51,
+            "poids": 50.0,
+            "volume": 2550,
+            "details": [
+                {
+                    "reps": 15,
+                    "poids": 50.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 50.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 50.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 50.0
+                }
+            ]
+        },
+        {
+            "date": "20260701",
+            "series": 4,
+            "total_reps": 48,
+            "poids": 50.0,
+            "volume": 2400,
+            "details": [
+                {
+                    "reps": 15,
+                    "poids": 50.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 50.0
+                },
+                {
+                    "reps": 11,
+                    "poids": 50.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 50.0
+                }
+            ]
+        },
+        {
+            "date": "20260706",
+            "series": 4,
+            "total_reps": 44,
+            "poids": 55.0,
+            "volume": 2420,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 10,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 9,
+                    "poids": 55.0
+                }
+            ]
+        },
+        {
+            "date": "20260713",
+            "series": 4,
+            "total_reps": 46,
+            "poids": 55.0,
+            "volume": 2530,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 9,
+                    "poids": 55.0
+                }
+            ]
+        },
+        {
+            "date": "20260720",
+            "series": 4,
+            "total_reps": 49,
+            "poids": 55.0,
+            "volume": 2695,
+            "details": [
+                {
+                    "reps": 13,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 55.0
+                }
+            ]
+        },
+        {
+            "date": "20260727",
+            "series": 4,
+            "total_reps": 47,
+            "poids": 55.0,
+            "volume": 2585,
+            "details": [
+                {
+                    "reps": 12,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 12,
+                    "poids": 55.0
+                },
+                {
+                    "reps": 11,
+                    "poids": 55.0
                 }
             ]
         }
@@ -2137,6 +2339,31 @@
                 {
                     "reps": 2,
                     "poids": 10.0
+                }
+            ]
+        },
+        {
+            "date": "20260727",
+            "series": 4,
+            "total_reps": 21,
+            "poids": 5.0,
+            "volume": 105,
+            "details": [
+                {
+                    "reps": 6,
+                    "poids": 5.0
+                },
+                {
+                    "reps": 6,
+                    "poids": 5.0
+                },
+                {
+                    "reps": 5,
+                    "poids": 5.0
+                },
+                {
+                    "reps": 4,
+                    "poids": 5.0
                 }
             ]
         }

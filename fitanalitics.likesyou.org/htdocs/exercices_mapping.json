@@ -1,13 +1,13 @@
 {
     "Exercice d'haltères en position assise": "Developpé Militaire",
-    "Presses d'haltères inclinées": "Développé incliné",
+    "Presses d'haltères inclinées": "Développé incliné aux haltères",
     "Lever latéral en position penchée": "Arrière épaules",
     "Seated Lat Pulldowns": "Tirage vertical",
     "Curl marteau": "Curl marteau",
     "Extension Triceps A poulie basse": "Extension triceps à poulie basse",
     "Tractions": "Tractions",
-    "Banc d'haltères": "Developpé couché",
-    "Barbell Row": "Barbell Row",
+    "Banc d'haltères": "Developpé couché aux haltères",
+    "Barbell Row": "Rowing à la barre",
     "Curl incliné": "Curl incliné",
     "Extension triceps tte poulie haute": "Extension triceps à poulie haute",
     "Levée latérale d'haltères": "Levée latérale",
@@ -30,5 +30,8 @@
     "Dragon flag": "Dragon flag",
     "Lever les mollets sur une jambe": "Extentions des mollets",
     "Extension lombaires": "Extension lombaire",
-    "Drag Curl": "Drag Curl"
+    "Drag Curl": "Drag Curl",
+    "Hip snap": "Exention de Jambes à la poulie",
+    "Strip the pot": "Gainage swiss ball",
+    "Rotation du câble": "Rotation du câble"
 }
