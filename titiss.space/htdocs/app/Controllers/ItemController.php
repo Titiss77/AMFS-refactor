@@ -217,33 +217,53 @@ class ItemController extends BaseController
             return $this->response->setJSON([]);
         }
 
-        $client = Services::curlrequest([
-            'timeout'         => 10,
+        // ========================================================
+        // 1. INITIALISATION DU CACHE CÔTÉ SERVEUR
+        // ========================================================
+        $cache = \Config\Services::cache();
+        $cacheKey = 'api_search_' . md5($query . '_' . $type);
+
+        if ($cachedResult = $cache->get($cacheKey)) {
+            return $this->response->setJSON($cachedResult);
+        }
+
+        $client = \Config\Services::curlrequest([
+            'timeout'         => 8,
             'connect_timeout' => 5,
             'http_errors'     => false,
             'verify'          => false,
-            'user_agent'      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+            'user_agent'      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) CodeIgniter4/AMFS'
         ]);
 
         try {
+            // --- Recherche par URL (Scraping OpenGraph) ---
             if (filter_var($query, FILTER_VALIDATE_URL)) {
                 $metaData = $this->scrapeOpenGraph($query);
-                return $this->response->setJSON($metaData ? [$metaData] : ['error' => 'Impossible de lire le lien.']);
-            }
-
-            if ('manga' === $type || 'anime' === $type) {
-                $url = "https://api.jikan.moe/v4/{$type}?q=" . urlencode($query) . '&limit=5';
-                $response = $client->get($url);
-                $body = json_decode($response->getBody(), true);
-
-                if ($response->getStatusCode() !== 200) {
-                    $erreur = $body['message'] ?? $body['error'] ?? "Erreur API Jikan ({$response->getStatusCode()})";
-                    return $this->response->setJSON(['error' => $erreur]);
+                $body = $metaData ? [$metaData] : ['error' => 'Impossible de lire le lien.'];
+                
+                if (!isset($body['error'])) {
+                    $cache->save($cacheKey, $body, 3600);
                 }
-
                 return $this->response->setJSON($body);
             }
 
+            // --- Recherche Jikan (Animes/Mangas) ---
+            if ('manga' === $type || 'anime' === $type) {
+                $url = "https://api.jikan.moe/v4/{$type}?q=" . urlencode($query) . '&limit=5';
+                $response = $client->get($url);
+                
+                // Si Jikan répond avec succès, on sauvegarde et on renvoie les données
+                if ($response->getStatusCode() === 200) {
+                    $body = json_decode($response->getBody(), true);
+                    $cache->save($cacheKey, $body, 3600);
+                    return $this->response->setJSON($body);
+                }
+                
+                // NOUVEAU : Si Jikan plante (MyAnimeList down, 429 Rate Limit, etc.), 
+                // on ne renvoie PLUS l'erreur. On laisse le code continuer pour utiliser TMDB en Plan B !
+            }
+
+            // --- Recherche TMDB (Films/Séries + Plan B pour les Animes) ---
             $apiKey = env('TMDB_API_KEY') ?? 'ba55da0439797150ed58c4e524584823';
             $url = 'https://api.themoviedb.org/3/search/multi?query=' . urlencode($query) . "&api_key={$apiKey}&language=fr-FR";
             $response = $client->get($url);
@@ -254,7 +274,9 @@ class ItemController extends BaseController
                  return $this->response->setJSON(['error' => $erreur]);
             }
 
+            $cache->save($cacheKey, $body, 3600);
             return $this->response->setJSON($body);
+
         } catch (\Exception $e) {
             return $this->response->setJSON(['error' => 'Erreur de recherche : ' . $e->getMessage()]);
         }
