@@ -32,7 +32,6 @@ jobs:
           server-dir: /
           state-name: htdocs/.ftp-deploy-sync-state.json
           
-          # Attention : Ne jamais mettre de commentaires (#) à la fin des lignes ci-dessous
           exclude: |
             **/.git*
             **/.git*/**
@@ -52,3 +51,6 @@ jobs:
             vendor/mockery/**
             **/sites_non_lances/
             **/sites_non_lances/**
+            writable/cache/**
+            writable/logs/**
+            writable/session/**
