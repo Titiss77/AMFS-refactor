@@ -1,4 +1,0 @@
-htdocs/.env
-*.log
-/htdocs/writable/session
-/htdocs/writable/debugbar
