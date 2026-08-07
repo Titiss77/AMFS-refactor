@@ -25,7 +25,15 @@
         <form action="index.php?action=import" method="POST" enctype="multipart/form-data" style="display:inline; margin-left:15px;">
             <input type="file" name="csv_file" accept=".csv" required style="display: none;" id="csv-upload" onchange="this.form.submit()">
             <label for="csv-upload" class="btn-export" style="background: var(--primary); cursor: pointer;">Importer CSV</label>
+        <!-- Formulaire d'importation CSV 
+        <form action="index.php?action=import" method="POST" enctype="multipart/form-data"
+            style="display:inline; margin-left:15px;">
+            <input type="file" name="csv_file" accept=".csv" required style="display: none;" id="csv-upload"
+                onchange="this.form.submit()">
+            <label for="csv-upload" class="btn-export" style="background: var(--primary); cursor: pointer;">Importer
+                CSV</label>
         </form>
+        -->
         <a href="index.php?action=export" class="btn-export">Exporter CSV</a>
         <a href="index.php?action=logout" style="color: var(--danger);">Se déconnecter</a>
     </div>
