@@ -12,9 +12,9 @@
     <div class="widget-container auth-container">
         <h2>Connexion</h2>
 
-        <?php if (!empty($error)): ?>
-        <div class="error-msg"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
-        <?php endif; ?>
+        <?php if (!empty($error)) { ?>
+        <div class="error-msg"><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></div>
+        <?php } ?>
 
         <form method="POST" action="index.php?action=login">
             <div class="form-group">

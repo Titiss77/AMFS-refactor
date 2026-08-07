@@ -1,22 +1,27 @@
 <?php
+
 require_once 'models/UserModel.php';
 
-class AuthController {
+class AuthController
+{
     private $model;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->model = new UserModel();
     }
 
-    public function login() {
+    public function login()
+    {
         // Rediriger si déjà connecté
         if (isset($_SESSION['user_id'])) {
             header('Location: index.php');
-            exit();
+
+            exit;
         }
 
         $error = '';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
             $username = trim($_POST['username'] ?? '');
             $password = $_POST['password'] ?? '';
 
@@ -27,29 +32,31 @@ class AuthController {
                     session_regenerate_id(true);
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['username'] = $user['username'];
-                    
+
                     header('Location: index.php');
-                    exit();
-                } else {
-                    // Message générique pour éviter l'énumération des utilisateurs
-                    $error = 'Identifiants ou mot de passe incorrects.';
+
+                    exit;
                 }
+                // Message générique pour éviter l'énumération des utilisateurs
+                $error = 'Identifiants ou mot de passe incorrects.';
             } else {
                 $error = 'Veuillez remplir tous les champs.';
             }
         }
-        
+
         require 'views/login_view.php';
     }
 
-    public function register() {
+    public function register()
+    {
         if (isset($_SESSION['user_id'])) {
             header('Location: index.php');
-            exit();
+
+            exit;
         }
 
         $error = '';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
             $username = trim($_POST['username'] ?? '');
             $password = $_POST['password'] ?? '';
             $confirm_password = $_POST['confirm_password'] ?? '';
@@ -69,12 +76,12 @@ class AuthController {
                             session_regenerate_id(true);
                             $_SESSION['user_id'] = $user['id'];
                             $_SESSION['username'] = $user['username'];
-                            
+
                             header('Location: index.php');
-                            exit();
-                        } else {
-                            $error = 'Une erreur est survenue lors de l\'inscription.';
+
+                            exit;
                         }
+                        $error = 'Une erreur est survenue lors de l\'inscription.';
                     } else {
                         $error = 'Ce nom d\'utilisateur est déjà pris.';
                     }
@@ -83,23 +90,30 @@ class AuthController {
                 $error = 'Veuillez remplir tous les champs.';
             }
         }
-        
+
         require 'views/register_view.php';
     }
 
-    public function logout() {
-        $_SESSION = array();
+    public function logout()
+    {
+        $_SESSION = [];
 
-        if (ini_get("session.use_cookies")) {
+        if (ini_get('session.use_cookies')) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
             );
         }
 
         session_destroy();
         header('Location: index.php?action=login');
-        exit();
+
+        exit;
     }
 }

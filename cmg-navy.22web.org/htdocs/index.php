@@ -1,8 +1,9 @@
 <?php
+
 // Configuration sécurisée des cookies de session avant le démarrage
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_strict_mode', 1);
-if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+if (isset($_SERVER['HTTPS']) && 'on' === $_SERVER['HTTPS']) {
     ini_set('session.cookie_secure', 1);
 }
 ini_set('session.cookie_samesite', 'Strict');
@@ -14,39 +15,46 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 require_once 'controllers/MetricController.php';
+
 require_once 'controllers/AuthController.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 $authController = new AuthController();
 
 // Gestion des routes publiques
-if ($action === 'login') {
+if ('login' === $action) {
     $authController->login();
-    exit();
-} elseif ($action === 'register') {
+
+    exit;
+}
+if ('register' === $action) {
     $authController->register();
-    exit();
-} elseif ($action === 'logout') {
+
+    exit;
+}
+if ('logout' === $action) {
     $authController->logout();
-    exit();
+
+    exit;
 }
 
 // Vérification stricte de l'authentification pour toutes les autres actions
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
     header('Location: index.php?action=login');
-    exit();
+
+    exit;
 }
 
 // Gestion des routes protégées
 $controller = new MetricController();
 
-if ($action === 'save') {
+if ('save' === $action) {
     $controller->save();
-} elseif ($action === 'export') {
+} elseif ('export' === $action) {
     $controller->exportCSV();
-} elseif ($action === 'import') { // ROUTE D'IMPORTATION
+} elseif ('import' === $action) { // ROUTE D'IMPORTATION
     $controller->importCSV();
-} elseif ($action === 'delete') { 
+} elseif ('delete' === $action) {
     $controller->delete();
 } else {
     $controller->index();

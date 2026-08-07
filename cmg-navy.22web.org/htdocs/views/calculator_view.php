@@ -1,145 +1,43 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculateur de Masse Grasse & Métabolisme</title>
     <link rel="stylesheet" href="public/style.css">
     <style>
-    /* Styles spécifiques conservés de l'ancien fichier */
-    .save-section {
-        margin-top: 2.5rem;
-        padding-top: 1.5rem;
-        border-top: 1px dashed var(--border);
-        text-align: center;
-    }
-
-    .save-section p {
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        margin-bottom: 1rem;
-    }
-
-    .info-section {
-        margin-top: 2.5rem;
-        border-top: 1px dashed red;
-        text-align: center;
-    }
-
-    .info-section p {
-        font-size: 0.85rem;
-        color: red;
-        margin-bottom: -2rem;
-    }
-
-    .btn-save {
-        width: 100%;
-        padding: 1rem;
-        background-color: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition: background 0.3s, transform 0.1s;
-        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
-    }
-
-    .btn-save:hover {
-        background-color: #2563eb;
-        transform: translateY(-1px);
-    }
-
-    .history-container {
-        margin-top: 3rem;
-        background: #ffffff;
-        padding: 1.5rem;
-        border-radius: 12px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-
-    .history-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.85rem;
-    }
-
-    .history-table th,
-    .history-table td {
-        border-bottom: 1px solid var(--border);
-        padding: 10px 8px;
-        text-align: center;
-    }
-
-    .history-table th {
-        color: var(--text-muted);
-        font-weight: 600;
-        text-transform: uppercase;
-        font-size: 0.75rem;
-    }
-
-    .table-wrapper {
-        max-height: 500px;
-        /* Hauteur approximative pour ~10 lignes avant d'activer le scroll */
-        overflow-y: auto;
-        margin-bottom: 1rem;
-        /* Style optionnel de la barre de défilement pour un rendu plus propre */
-        scrollbar-width: thin;
-        scrollbar-color: #cbd5e1 transparent;
-    }
-
-    /* Rend l'en-tête fixe pendant le défilement */
-    .history-table th {
-        position: sticky;
-        top: 0;
-        background-color: #ffffff;
-        /* Évite de voir le texte en transparence */
-        z-index: 10;
-        /* Tes styles existants pour th : */
-        color: var(--text-muted);
-        font-weight: 600;
-        text-transform: uppercase;
-        font-size: 0.75rem;
-        border-bottom: 2px solid var(--border);
-        /* Un peu plus  épais pour démarquer */
-    }
+    .save-section { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px dashed var(--border); text-align: center; }
+    .save-section p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .info-section { margin-top: 2.5rem; border-top: 1px dashed red; text-align: center; }
+    .info-section p { font-size: 0.85rem; color: red; margin-bottom: -2rem; }
+    .btn-save { width: 100%; padding: 1rem; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: background 0.3s, transform 0.1s; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2); }
+    .btn-save:hover { background-color: #2563eb; transform: translateY(-1px); }
+    .history-container { margin-top: 3rem; background: #ffffff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+    .history-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .history-table th, .history-table td { border-bottom: 1px solid var(--border); padding: 10px 8px; text-align: center; }
+    .history-table th { color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; position: sticky; top: 0; background-color: #ffffff; z-index: 10; border-bottom: 2px solid var(--border); }
+    .table-wrapper { max-height: 500px; overflow-y: auto; margin-bottom: 1rem; scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
     </style>
 </head>
-
 <body>
     <div class="user-bar">
-        <span>Connecté en tant que
-            <strong><?= htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8') ?></strong></span>
-
-        <!-- Formulaire d'importation CSV 
-        <form action="index.php?action=import" method="POST" enctype="multipart/form-data"
-            style="display:inline; margin-left:15px;">
-            <input type="file" name="csv_file" accept=".csv" required style="display: none;" id="csv-upload"
-                onchange="this.form.submit()">
-            <label for="csv-upload" class="btn-export" style="background: var(--primary); cursor: pointer;">Importer
-                CSV</label>
+        <span>Connecté en tant que <strong><?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?></strong></span>
+        <form action="index.php?action=import" method="POST" enctype="multipart/form-data" style="display:inline; margin-left:15px;">
+            <input type="file" name="csv_file" accept=".csv" required style="display: none;" id="csv-upload" onchange="this.form.submit()">
+            <label for="csv-upload" class="btn-export" style="background: var(--primary); cursor: pointer;">Importer CSV</label>
         </form>
-        -->
-
         <a href="index.php?action=export" class="btn-export">Exporter CSV</a>
         <a href="index.php?action=logout" style="color: var(--danger);">Se déconnecter</a>
     </div>
-
     <div class="widget-container">
-        <h2>Calculateur US Navy & Énergie</h2>
-
+        <h2>Calculateur Scientifique Hybride & Énergie</h2>
         <form id="metric-form" method="POST" action="index.php?action=save">
-            <input type="hidden" name="csrf_token"
-                value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
-            <input type="hidden" name="id" id="edit_id" value=""> <!-- NOUVEAU -->
-
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
+            <input type="hidden" name="id" id="edit_id" value="">
             <div class="form-group">
                 <label for="created_at">Date de la mesure</label>
-                <input type="date" id="created_at" name="created_at" value="<?= date('Y-m-d') ?>" required>
+                <input type="date" id="created_at" name="created_at" value="<?php echo date('Y-m-d'); ?>" required>
             </div>
-
             <div class="form-group">
                 <label for="gender">Genre</label>
                 <select id="gender" name="gender">
@@ -147,85 +45,71 @@
                     <option value="female">Femme</option>
                 </select>
             </div>
-
             <?php
             $last_height = !empty($history) ? $history[0]['height'] : '170';
-            $last_weight = !empty($history) ? $history[0]['weight'] : '75';
-            $last_neck = !empty($history) ? $history[0]['neck'] : '37';
-            $last_waist = !empty($history) ? $history[0]['waist'] : '79';
-            $last_hip = (!empty($history) && $history[0]['hip'] !== null) ? $history[0]['hip'] : '95';
-            $last_is_athlete = (!empty($history) && isset($history[0]['is_athlete']) && $history[0]['is_athlete'] == 1) ? 'checked' : '';
-            ?>
-
+        $last_weight = !empty($history) ? $history[0]['weight'] : '75';
+        $last_neck = !empty($history) ? $history[0]['neck'] : '37';
+        $last_waist = !empty($history) ? $history[0]['waist'] : '79';
+        $last_hip = (!empty($history) && null !== $history[0]['hip']) ? $history[0]['hip'] : '95';
+        $last_is_athlete = (!empty($history) && isset($history[0]['is_athlete']) && 1 == $history[0]['is_athlete']) ? 'checked' : '';
+        ?>
             <div class="form-group">
                 <label for="height">Taille (cm)</label>
                 <div class="stepper">
                     <button type="button" class="minus">-</button>
-                    <input type="number" step="0.5" id="height" name="height" value="<?= $last_height ?>">
+                    <input type="number" step="0.5" id="height" name="height" value="<?php echo $last_height; ?>">
                     <button type="button" class="plus">+</button>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="weight">Poids (kg)</label>
                 <div class="stepper">
                     <button type="button" class="minus">-</button>
-                    <input type="number" step="0.1" id="weight" name="weight" value="<?= $last_weight ?>">
+                    <input type="number" step="0.1" id="weight" name="weight" value="<?php echo $last_weight; ?>">
                     <button type="button" class="plus">+</button>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="neck">Tour de cou (cm)</label>
                 <div class="stepper">
                     <button type="button" class="minus">-</button>
-                    <input type="number" step="0.5" id="neck" name="neck" value="<?= $last_neck ?>">
+                    <input type="number" step="0.5" id="neck" name="neck" value="<?php echo $last_neck; ?>">
                     <button type="button" class="plus">+</button>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="waist">Tour de taille (cm) - Au niveau du nombril</label>
                 <div class="stepper">
                     <button type="button" class="minus">-</button>
-                    <input type="number" step="0.5" id="waist" name="waist" value="<?= $last_waist ?>">
+                    <input type="number" step="0.5" id="waist" name="waist" value="<?php echo $last_waist; ?>">
                     <button type="button" class="plus">+</button>
                 </div>
             </div>
-
             <div class="form-group hidden" id="hip-group">
                 <label for="hip">Tour de hanches (cm) - Point le plus large</label>
                 <div class="stepper">
                     <button type="button" class="minus">-</button>
-                    <input type="number" step="0.5" id="hip" name="hip" value="<?= $last_hip ?>">
+                    <input type="number" step="0.5" id="hip" name="hip" value="<?php echo $last_hip; ?>">
                     <button type="button" class="plus">+</button>
                 </div>
             </div>
-
-            <div class="form-group checkbox-group"
-                style="display: flex; align-items: center; gap: 10px; padding: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;">
-                <input type="checkbox" id="is-athlete" name="is_athlete" value="1"
-                    style="width: auto; transform: scale(1.3); cursor: pointer;" <?= $last_is_athlete ?>>
+            <div class="form-group checkbox-group" style="display: flex; align-items: center; gap: 10px; padding: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;">
+                <input type="checkbox" id="is-athlete" name="is_athlete" value="1" style="width: auto; transform: scale(1.3); cursor: pointer;" <?php echo $last_is_athlete; ?>>
                 <label for="is-athlete" style="margin-bottom: 0; color: #1e3a8a; cursor: pointer;">
                     <strong>Profil Athlète</strong><br>
-                    <span style="font-size: 0.75rem; font-weight: normal; color: #475569;">Corrige le biais de la
-                        formule pour les masses musculaires importantes (ex: tronc développé par la musculation /
-                        nage).</span>
+                    <span style="font-size: 0.75rem; font-weight: normal; color: #475569;">Modèle physiologique ajusté : Majorations de la densité de la masse maigre (FFM) pour corriger les limites anthropométriques de la formule de base.</span>
                 </label>
             </div>
-
             <div class="form-group">
                 <label for="activity">Niveau d'activité hebdomadaire</label>
                 <select id="activity" name="activity">
-                    <option value="1.2">Sédentaire (Travail de bureau, pas de sport)</option>
-                    <option value="1.375">Légèrement actif (Sport léger 1 à 3 fois/semaine)</option>
-                    <option value="1.55" selected>Modérément actif (Sport modéré 5 fois/semaine)</option>
-                    <option value="1.725">Très actif (Entraînement intense 6 à 7 jours/semaine)</option>
-                    <option value="1.9">Extrêmement actif (Biquotidien)</option>
+                    <option value="1.2">Sédentaire</option>
+                    <option value="1.375">Légèrement actif</option>
+                    <option value="1.55" selected>Modérément actif</option>
+                    <option value="1.725">Très actif</option>
+                    <option value="1.9">Extrêmement actif</option>
                 </select>
             </div>
-
-            <!-- Graphique Graisse -->
             <div class="chart-container">
                 <div class="zones">
                     <div class="zone" id="zone-bas" style="background-color: #d1d5db;">Bas</div>
@@ -246,7 +130,6 @@
                     <div class="indicator-line"></div>
                 </div>
             </div>
-
             <div class="summary-container">
                 <div class="summary-box">
                     <div class="summary-label">GRAISSE CORPORELLE</div>
@@ -258,8 +141,6 @@
                     <div class="summary-cat-text" id="summary-cat">--</div>
                 </div>
             </div>
-
-            <!-- Graphique IMC -->
             <div class="info-section">
                 <p>L'IMC est un indicateur purement statistique et indicatif.</p>
             </div>
@@ -280,7 +161,6 @@
                     <div class="indicator-line"></div>
                 </div>
             </div>
-
             <div class="details-container">
                 <div class="detail-box">
                     <div class="detail-label">MASSE GRASSE</div>
@@ -293,7 +173,6 @@
                     <div class="detail-sub">Muscles, eau, os</div>
                 </div>
             </div>
-
             <div class="energy-container">
                 <div class="energy-box">
                     <div class="energy-label">MÉTABOLISME DE BASE (BMR)</div>
@@ -306,13 +185,9 @@
                     <div class="energy-sub">Objectif journalier pour maintenir le poids</div>
                 </div>
             </div>
-
-            <!-- NOUVEAU: Section Macros -->
             <div class="macros-section" style="margin-top: 2rem;">
-                <h4
-                    style="text-align: center; color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem;">
-                    Répartition Macronutriments</h4>
-                <select id="training-type" class="training-select" style="margin-bottom: 1rem;">
+                <h4 style="text-align: center; color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem;">Répartition Macronutriments</h4>
+                <select id="training-type" class="training-select" style="margin-bottom: 1rem; width: 100%; padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border);">
                     <option value="repos">Jour de repos</option>
                     <option value="force" selected>Séance Force (Upper/Lower, PPL)</option>
                     <option value="endurance">Séance Vitesse/Endurance (Monopalme, Course)</option>
@@ -332,18 +207,14 @@
                     </div>
                 </div>
             </div>
-
             <div class="save-section">
                 <button type="submit" class="btn-save">Enregistrer le relevé officiel</button>
             </div>
         </form>
     </div>
-
-    <!-- Historique -->
-    <?php if (!empty($history)): ?>
+    <?php if (!empty($history)) { ?>
     <div class="widget-container history-container" style="max-width: 650px; margin-top: 2rem;">
         <h3 style="margin-top: 0; text-align: center; color: var(--text-main);">Historique des Mesures</h3>
-
         <div class="table-wrapper">
             <table class="history-table">
                 <thead>
@@ -353,116 +224,85 @@
                         <th>T. Taille / Cou</th>
                         <th>MG (%)</th>
                         <th>M. Maigre</th>
-                        <th>BMR
-                            <p style="margin: 0; color:#6ECF68;">TDEE</p>
-                        </th>
+                        <th>BMR <p style="margin: 0; color:#6ECF68;">TDEE</p></th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($history as $row): ?>
+                    <?php foreach ($history as $row) { ?>
                     <tr>
-                        <td><?= date('d/m/Y', strtotime($row['created_at'])) ?></td>
-                        <td><?= $row['weight'] ?> kg</td>
-                        <td><?= $row['waist'] ?> / <?= $row['neck'] ?> cm</td>
-                        <td style="color: var(--primary); font-weight: bold;"><?= $row['body_fat'] ?>%
-                            <p style="margin: 0; color:#EF4444; font-size: smaller;">
-                                <?= $row['is_athlete'] == 1 ? '(Athlète)' : '' ?>
-                            </p>
-                        </td>
-                        <td><?= $row['lean_mass'] ?> kg
-                        </td>
-                        <td><?= $row['bmr'] ?> kcal
-                            <p style="margin: 0; color:#6ECF68;"><?= $row['tdee'] ?> kcal</p>
-                        </td>
+                        <td><?php echo date('d/m/Y', strtotime($row['created_at'])); ?></td>
+                        <td><?php echo $row['weight']; ?> kg</td>
+                        <td><?php echo $row['waist']; ?> / <?php echo $row['neck']; ?> cm</td>
+                        <td style="color: var(--primary); font-weight: bold;"><?php echo $row['body_fat']; ?>% <p style="margin: 0; color:#EF4444; font-size: smaller;"><?php echo 1 == $row['is_athlete'] ? '(Athlète)' : ''; ?></p></td>
+                        <td><?php echo $row['lean_mass']; ?> kg</td>
+                        <td><?php echo $row['bmr']; ?> kcal <p style="margin: 0; color:#6ECF68;"><?php echo $row['tdee']; ?> kcal</p></td>
                         <td>
-                            <button type="button" class="btn-edit" data-id="<?= $row['id'] ?>"
-                                data-date="<?= date('Y-m-d', strtotime($row['created_at'])) ?>"
-                                data-gender="<?= $row['gender'] ?>" data-height="<?= $row['height'] ?>"
-                                data-weight="<?= $row['weight'] ?>" data-waist="<?= $row['waist'] ?>"
-                                data-neck="<?= $row['neck'] ?>" data-hip="<?= $row['hip'] ?? '' ?>"
-                                data-activity="<?= $row['activity_multiplier'] ?>"
-                                data-athlete="<?= $row['is_athlete'] ?? 0 ?>"
-                                style="color: var(--primary); background: none; border: none; cursor: pointer; font-size: 1.2rem; margin-right: 8px;"
-                                title="Modifier">✏️</button>
-                            <button class="btn-delete" data-id="<?= $row['id'] ?>"
-                                style="color: var(--danger); background: none; border: none; cursor: pointer; font-size: 1.2rem;"
-                                title="Supprimer">×</button>
+                            <button type="button" class="btn-edit" data-id="<?php echo $row['id']; ?>" data-date="<?php echo date('Y-m-d', strtotime($row['created_at'])); ?>" data-gender="<?php echo $row['gender']; ?>" data-height="<?php echo $row['height']; ?>" data-weight="<?php echo $row['weight']; ?>" data-waist="<?php echo $row['waist']; ?>" data-neck="<?php echo $row['neck']; ?>" data-hip="<?php echo $row['hip'] ?? ''; ?>" data-activity="<?php echo $row['activity_multiplier']; ?>" data-athlete="<?php echo $row['is_athlete'] ?? 0; ?>" style="color: var(--primary); background: none; border: none; cursor: pointer; font-size: 1.2rem; margin-right: 8px;" title="Modifier">✎</button>
+                            <button class="btn-delete" data-id="<?php echo $row['id']; ?>" style="color: var(--danger); background: none; border: none; cursor: pointer; font-size: 1.2rem;" title="Supprimer">✕</button>
                         </td>
                     </tr>
-                    <?php endforeach; ?>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
-
         <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--border);">
             <canvas id="historyChart"></canvas>
         </div>
-
         <?php
-        if (count($history) >= 2):
+        if (count($history) >= 2) {
             $current = $history[0];
-            // $previous n'est plus nécessaire car tout est calculé depuis le début
             $first = end($history);
-
-            // Calcul des deltas depuis le début pour les 3 métriques
             $deltaWeight = $current['weight'] - $first['weight'];
             $deltaBF = $current['body_fat'] - $first['body_fat'];
             $deltaLean = $current['lean_mass'] - $first['lean_mass'];
-
             function formatDelta($val, $unit, $invertColors = false)
             {
-                if ($val == 0)
-                    return "<span style='color: #64748b; font-weight: bold;'>= 0 $unit</span>";
+                if (0 == $val) {
+                    return "<span style='color: #64748b; font-weight: bold;'>= 0 {$unit}</span>";
+                }
                 $sign = $val > 0 ? '+' : '';
                 $color = '#64748b';
-                if ($val > 0)
+                if ($val > 0) {
                     $color = $invertColors ? '#ef4444' : '#22c55e';
-                if ($val < 0)
+                }
+                if ($val < 0) {
                     $color = $invertColors ? '#22c55e' : '#ef4444';
-                return "<span style='color: $color; font-weight: bold;'>" . $sign . number_format($val, 2, ',', ' ') . " $unit</span>";
+                }
+
+                return "<span style='color: {$color}; font-weight: bold;'>".$sign.number_format($val, 2, ',', ' ')." {$unit}</span>";
             }
             ?>
         <div class="badges-container">
             <div class="badge">
                 <div class="badge-title">Poids Total</div>
-                <div class="badge-value"><?= formatDelta($deltaWeight, 'kg') ?></div>
+                <div class="badge-value"><?php echo formatDelta($deltaWeight, 'kg'); ?></div>
                 <div class="badge-context">Masse Maigre + Masse Grasse</div>
             </div>
             <div class="badge">
                 <div class="badge-title">Masse Grasse</div>
-                <div class="badge-value"><?= formatDelta($deltaBF, '%', true) ?></div>
+                <div class="badge-value"><?php echo formatDelta($deltaBF, '%', true); ?></div>
                 <div class="badge-context">Tissus Adipeux</div>
             </div>
             <div class="badge">
                 <div class="badge-title">Masse Maigre</div>
-                <div class="badge-value"><?= formatDelta($deltaLean, 'kg') ?></div>
+                <div class="badge-value"><?php echo formatDelta($deltaLean, 'kg'); ?></div>
                 <div class="badge-context">Os, Muscles, Eau</div>
             </div>
         </div>
-        <?php endif; ?>
+        <?php } ?>
     </div>
-
-    <!-- Chart.js intégré -->
-    <!-- Chart.js intégré -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-    const historyData = <?= json_encode(array_reverse($history)) ?>;
-
+    const historyData = <?php echo json_encode(array_reverse($history)); ?>;
     if (historyData.length > 0) {
-        // 1. Définition des variables manquantes
         const labels = historyData.map(row => {
             const d = new Date(row.created_at);
-            return d.toLocaleDateString('fr-FR', {
-                day: '2-digit',
-                month: '2-digit'
-            });
+            return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
         });
         const weights = historyData.map(row => row.weight);
         const leanMasses = historyData.map(row => row.lean_mass);
         const bodyFats = historyData.map(row => row.body_fat);
-
-        // 2. Fonction de lissage (EMA)
         function calculateEMA(data, period = 3) {
             if (data.length === 0) return [];
             const k = 2 / (period + 1);
@@ -472,73 +312,22 @@
             }
             return emaData;
         }
-
         const smoothedLeanMasses = calculateEMA(leanMasses);
         const smoothedBodyFats = calculateEMA(bodyFats);
-
-        // 3. Rendu du graphique
         const ctx = document.getElementById('historyChart').getContext('2d');
         new Chart(ctx, {
             type: 'line',
             data: {
                 labels: labels,
-                datasets: [{
-                        label: 'Poids (kg)',
-                        data: weights,
-                        borderColor: '#64748b',
-                        backgroundColor: 'rgba(100, 116, 139, 0.1)',
-                        yAxisID: 'y',
-                        tension: 0.4
-                    },
-                    {
-                        label: 'Masse Maigre (kg)',
-                        data: smoothedLeanMasses,
-                        borderColor: '#3b82f6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                        yAxisID: 'y',
-                        tension: 0.4,
-                        fill: true
-                    },
-                    {
-                        label: 'Masse Grasse (%)',
-                        data: smoothedBodyFats,
-                        borderColor: '#ef4444',
-                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                        yAxisID: 'y1',
-                        tension: 0.4,
-                        borderDash: [5, 5]
-                    }
-                ]
+                datasets: [{ label: 'Poids (kg)', data: weights, borderColor: '#64748b', backgroundColor: 'rgba(100, 116, 139, 0.1)', yAxisID: 'y', tension: 0.4 },
+                           { label: 'Masse Maigre (kg)', data: smoothedLeanMasses, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.2)', yAxisID: 'y', tension: 0.4, fill: true },
+                           { label: 'Masse Grasse (%)', data: smoothedBodyFats, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', yAxisID: 'y1', tension: 0.4, borderDash: [5, 5] }]
             },
-            options: {
-                responsive: true,
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                },
-                scales: {
-                    y: {
-                        type: 'linear',
-                        position: 'left',
-                        suggestedMin: Math.min(...leanMasses) - 2,
-                        suggestedMax: Math.max(...weights) + 2
-                    },
-                    y1: {
-                        type: 'linear',
-                        position: 'right',
-                        grid: {
-                            drawOnChartArea: false
-                        }
-                    }
-                }
-            }
+            options: { responsive: true, interaction: { mode: 'index', intersect: false }, scales: { y: { type: 'linear', position: 'left', suggestedMin: Math.min(...leanMasses) - 2, suggestedMax: Math.max(...weights) + 2 }, y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false } } } }
         });
     }
     </script>
-    <?php endif; ?>
-
-    <!-- Importation du script type module -->
+    <?php } ?>
     <script type="module" src="public/script.js"></script>
 </body>
-
 </html>

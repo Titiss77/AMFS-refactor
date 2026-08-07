@@ -1,10 +1,11 @@
 <?php
+
 // Lecture sécurisée du fichier .env
-$envPath = __DIR__ . '/.env';
+$envPath = __DIR__.'/.env';
 if (file_exists($envPath)) {
     $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($lines as $line) {
-        if (strpos(trim($line), '#') === 0) {
+        if (0 === strpos(trim($line), '#')) {
             continue;
         }
         list($name, $value) = explode('=', $line, 2);
@@ -26,7 +27,7 @@ $dbName = trim(getenv('DB_NAME') ?: $_ENV['DB_NAME'] ?? '');
 
 // Vérification de sécurité : si les variables manquent, on coupe l'exécution
 if (empty($dbHost) || empty($dbUser) || empty($dbName)) {
-    die("Erreur de configuration critique.");
+    exit('Erreur de configuration critique.');
 }
 
 define('DB_HOST', $dbHost);
