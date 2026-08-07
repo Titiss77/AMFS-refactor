@@ -107,11 +107,11 @@
             <div class="form-group">
                 <label for="activity">Niveau d'activité hebdomadaire</label>
                 <select id="activity" name="activity">
-                    <option value="1.2">Sédentaire</option>
-                    <option value="1.375">Légèrement actif</option>
-                    <option value="1.55" selected>Modérément actif</option>
-                    <option value="1.725">Très actif</option>
-                    <option value="1.9">Extrêmement actif</option>
+                    <option value="1.2">Sédentaire (Travail de bureau, pas de sport)</option>
+                    <option value="1.375">Légèrement actif (Sport léger 1 à 3 fois/semaine)</option>
+                    <option value="1.55" selected>Modérément actif (Sport modéré 5 fois/semaine)</option>
+                    <option value="1.725">Très actif (Entraînement intense 6 à 7 jours/semaine)</option>
+                    <option value="1.9">Extrêmement actif (Biquotidien)</option>
                 </select>
             </div>
             <div class="chart-container">
