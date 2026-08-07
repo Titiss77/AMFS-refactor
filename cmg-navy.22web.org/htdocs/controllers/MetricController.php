@@ -130,7 +130,7 @@ class MetricController
         header('Content-Disposition: attachment; filename=historique_metriques.csv');
 
         $output = fopen('php://output', 'w');
-        fputcsv($output, ['created_at','gender','height', 'weight','waist', 'neck', 'hip', 'activity_multiplier', 'is_athlete']);
+        fputcsv($output, ['created_at','gender','height', 'weight','waist', 'neck', 'hip', 'activity_multiplier', 'is_athlete'], ';');
 
         foreach ($history as $row) {
             fputcsv($output, [
@@ -143,7 +143,7 @@ class MetricController
                 $row['hip'],
                 $row['activity_multiplier'],
                 $row['is_athlete']
-            ]);
+            ], ';');
         }
         fclose($output);
         exit();
@@ -162,9 +162,9 @@ class MetricController
 
             if (!empty($file) && ($handle = fopen($file, 'r')) !== FALSE) {
                 // Ignorer la première ligne (les en-têtes)
-                fgetcsv($handle, 1000, ',');
+                fgetcsv($handle, 1000, ';');
 
-                while (($dataRow = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                while (($dataRow = fgetcsv($handle, 1000, ';')) !== FALSE) {
                     // Vérification que la ligne contient bien les 9 colonnes de l'export
                     if (count($dataRow) < 9) continue;
 
