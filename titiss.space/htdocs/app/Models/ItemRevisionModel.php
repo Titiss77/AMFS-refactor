@@ -10,11 +10,12 @@ class ItemRevisionModel extends Model
 {
     protected $table = 'item_revisions';
     protected $primaryKey = 'id';
-    protected $returnType = 'array'; // On peut utiliser des tableaux simples ici pour faciliter les manipulations
+    protected $returnType = 'array';
     protected $allowedFields = [
         'original_item_id',
         'id_user',
         'titre',
+        'sous_categorie',
         'status',
         'image',
         'lien',
@@ -26,12 +27,8 @@ class ItemRevisionModel extends Model
         'revision_status',
     ];
 
-    // Dates gérées automatiquement par la base (CURRENT_TIMESTAMP)
     protected $useTimestamps = false;
 
-    /**
-     * Récupère toutes les révisions en attente avec les infos de la carte originale.
-     */
     public function getPendingRevisions()
     {
         return $this->db->table('item_revisions ir')

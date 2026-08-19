@@ -22,9 +22,24 @@ class ItemController extends BaseController
 
     public function form($id = null)
     {
+        $userId = auth()->loggedIn() ? auth()->id() : null;
+        $subCategories = [];
+
+        // Récupérer la liste des sous-catégories déjà créées par l'utilisateur
+        if ($userId) {
+            $subCategories = $this->model
+                ->where('id_user', $userId)
+                ->where('sous_categorie IS NOT NULL')
+                ->where('sous_categorie !=', '')
+                ->distinct()
+                ->findColumn('sous_categorie') ?? []
+            ;
+        }
+
         $data = [
             'headers' => $this->model->getHeaders(),
             'divisions' => $this->model->getDivisions(),
+            'subCategories' => $subCategories,
             'item' => null,
             'view' => 'item_form',
             'redirect_url' => $this->request->getUserAgent()->getReferrer() ?? site_url('/'),
@@ -47,7 +62,7 @@ class ItemController extends BaseController
             $rules = [
                 'titre' => 'required|max_length[100]',
                 'id_division' => 'required|numeric',
-                'status' => 'in_list[Aucun,À voir,En cours,En pause,Terminé]',
+                'status' => 'in_list[Aucun, À voir,En cours,En pause,Terminé]',
             ];
 
             if (!$this->validate($rules)) {
@@ -71,6 +86,15 @@ class ItemController extends BaseController
             $data['saison'] = ('' === $this->request->getPost('saison')) ? null : $this->request->getPost('saison');
             $data['episode'] = ('' === $this->request->getPost('episode')) ? null : $this->request->getPost('episode');
 
+            $sousCatSelect = $this->request->getPost('sous_categorie_select');
+            $sousCatNew = $this->request->getPost('sous_categorie_new');
+
+            if ('__NEW__' === $sousCatSelect) {
+                $data['sous_categorie'] = empty($sousCatNew) ? null : trim((string) $sousCatNew);
+            } else {
+                $data['sous_categorie'] = empty($sousCatSelect) ? null : trim((string) $sousCatSelect);
+            }
+
             $existing = null;
             if ($id) {
                 $existing = $this->model->find($id);
@@ -88,6 +112,7 @@ class ItemController extends BaseController
                 $canEdit = $existing && ((int) $existing->id_user === (int) auth()->id() || $isAdmin);
                 if (!$canEdit) {
                     $audit->logAction('Violation Accès', "Tentative non autorisée de modification sur la carte ID {$id}.");
+
                     return redirect()->back()->with('error', "Vous n'avez pas les droits pour modifier cette carte.");
                 }
 
@@ -96,12 +121,14 @@ class ItemController extends BaseController
                     $existingRevision = $revisionModel
                         ->where('original_item_id', $id)
                         ->where('revision_status', 'pending')
-                        ->first();
+                        ->first()
+                    ;
 
                     $revisionData = [
                         'original_item_id' => $id,
                         'id_user' => auth()->id(),
                         'titre' => $data['titre'],
+                        'sous_categorie' => $data['sous_categorie'] ?? $existing->sous_categorie,
                         'status' => $data['status'],
                         'image' => $data['image'] ?? $existing->image,
                         'lien' => $data['lien'] ?? null,
@@ -118,16 +145,19 @@ class ItemController extends BaseController
                     }
 
                     $revisionModel->save($revisionData);
+
                     $actionLog = $existingRevision ? 'Mise à jour Draft' : 'Soumission Draft';
                     $audit->logAction($actionLog, "L'utilisateur a proposé une modification pour la carte publique ID {$id} ('{$existing->titre}').");
 
                     return redirect()
-                        ->to($backUrl . $separator . 'open=' . $existing->id_division . '#div-' . $existing->id_division)
-                        ->with('message', 'Votre modification a été soumise au SuperAdmin pour validation.');
+                        ->to($backUrl.$separator.'open='.$existing->id_division.'#div-'.$existing->id_division)
+                        ->with('message', 'Votre modification a été soumise au SuperAdmin pour validation.')
+                    ;
                 }
 
                 $item = new Item($data);
                 $this->model->save($item);
+
                 $statutVisibility = 1 == $data['is_public'] ? 'Publique' : 'Privée';
                 $audit->logAction('Mise à jour Carte', "Modification de la carte ID {$id} ('{$data['titre']}'). Visibilité : {$statutVisibility}.");
 
@@ -136,7 +166,8 @@ class ItemController extends BaseController
                     $revisionModel
                         ->where('original_item_id', $id)
                         ->where('revision_status', 'pending')
-                        ->delete();
+                        ->delete()
+                    ;
                     $audit->logAction('Nettoyage Draft', "Passage en privé de la carte ID {$id} : Suppression automatique des drafts en attente.");
                 }
             } else {
@@ -147,9 +178,10 @@ class ItemController extends BaseController
                     ->selectMax('position')
                     ->get()
                     ->getRow()
-                    ->position;
+                    ->position
+                ;
 
-                $data['position'] = ($maxPosition !== null) ? ((int) $maxPosition + 1) : 0;
+                $data['position'] = (null !== $maxPosition) ? ((int) $maxPosition + 1) : 0;
                 $item = new Item($data);
                 $this->model->save($item);
                 $newId = $this->model->getInsertID();
@@ -158,7 +190,7 @@ class ItemController extends BaseController
                 $audit->logAction('Création Carte', "Création de la carte ID {$newId} ('{$data['titre']}'). Visibilité initiale: {$statutVisibility}.");
             }
 
-            return redirect()->to($backUrl . $separator . 'open=' . $data['id_division'] . '#div-' . $data['id_division']);
+            return redirect()->to($backUrl.$separator.'open='.$data['id_division'].'#div-'.$data['id_division']);
         }
     }
 
@@ -179,7 +211,7 @@ class ItemController extends BaseController
                 $backUrl = $this->request->getUserAgent()->getReferrer() ?: site_url('/');
                 $separator = (str_contains($backUrl, '?')) ? '&' : '?';
 
-                return redirect()->to($backUrl . $separator . 'open=' . $id_div . '#div-' . $id_div);
+                return redirect()->to($backUrl.$separator.'open='.$id_div.'#div-'.$id_div);
             }
         }
 
@@ -217,68 +249,61 @@ class ItemController extends BaseController
             return $this->response->setJSON([]);
         }
 
-        // ========================================================
-        // 1. INITIALISATION DU CACHE CÔTÉ SERVEUR
-        // ========================================================
-        $cache = \Config\Services::cache();
-        $cacheKey = 'api_search_' . md5($query . '_' . $type);
-
+        $cache = Services::cache();
+        $cacheKey = 'api_search_'.md5($query.'_'.$type);
         if ($cachedResult = $cache->get($cacheKey)) {
             return $this->response->setJSON($cachedResult);
         }
 
-        $client = \Config\Services::curlrequest([
-            'timeout'         => 8,
+        $client = Services::curlrequest([
+            'timeout' => 8,
             'connect_timeout' => 5,
-            'http_errors'     => false,
-            'verify'          => false,
-            'user_agent'      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) CodeIgniter4/AMFS'
+            'http_errors' => false,
+            'verify' => false,
+            'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) CodeIgniter4/AMFS',
         ]);
 
         try {
-            // --- Recherche par URL (Scraping OpenGraph) ---
             if (filter_var($query, FILTER_VALIDATE_URL)) {
                 $metaData = $this->scrapeOpenGraph($query);
                 $body = $metaData ? [$metaData] : ['error' => 'Impossible de lire le lien.'];
-                
+
                 if (!isset($body['error'])) {
                     $cache->save($cacheKey, $body, 3600);
                 }
+
                 return $this->response->setJSON($body);
             }
 
-            // --- Recherche Jikan (Animes/Mangas) ---
             if ('manga' === $type || 'anime' === $type) {
-                $url = "https://api.jikan.moe/v4/{$type}?q=" . urlencode($query) . '&limit=5';
+                $url = "https://api.jikan.moe/v4/{$type}?q=".urlencode($query).'&limit=5';
                 $response = $client->get($url);
-                
-                // Si Jikan répond avec succès, on sauvegarde et on renvoie les données
-                if ($response->getStatusCode() === 200) {
+
+                if (200 === $response->getStatusCode()) {
                     $body = json_decode($response->getBody(), true);
                     $cache->save($cacheKey, $body, 3600);
+
                     return $this->response->setJSON($body);
                 }
-                
-                // NOUVEAU : Si Jikan plante (MyAnimeList down, 429 Rate Limit, etc.), 
-                // on ne renvoie PLUS l'erreur. On laisse le code continuer pour utiliser TMDB en Plan B !
             }
 
-            // --- Recherche TMDB (Films/Séries + Plan B pour les Animes) ---
             $apiKey = env('TMDB_API_KEY') ?? 'ba55da0439797150ed58c4e524584823';
-            $url = 'https://api.themoviedb.org/3/search/multi?query=' . urlencode($query) . "&api_key={$apiKey}&language=fr-FR";
+            $url = 'https://api.themoviedb.org/3/search/multi?query='.urlencode($query)."&api_key={$apiKey}&language=fr-FR";
+
             $response = $client->get($url);
             $body = json_decode($response->getBody(), true);
 
-            if ($response->getStatusCode() !== 200) {
-                 $erreur = $body['status_message'] ?? "Erreur API TMDB ({$response->getStatusCode()})";
-                 return $this->response->setJSON(['error' => $erreur]);
+            if (200 !== $response->getStatusCode()) {
+                $erreur = $body['status_message'] ?? "Erreur API TMDB ({$response->getStatusCode()})";
+
+                return $this->response->setJSON(['error' => $erreur]);
             }
 
             $cache->save($cacheKey, $body, 3600);
-            return $this->response->setJSON($body);
 
+            return $this->response->setJSON($body);
         } catch (\Exception $e) {
-            return $this->response->setJSON(['error' => 'Erreur de recherche : ' . $e->getMessage()]);
+            return $this->response->setJSON(['error' => 'Erreur de recherche : '.$e->getMessage()]);
         }
     }
 
@@ -287,6 +312,7 @@ class ItemController extends BaseController
         $data = [
             'items' => $this->model->checkToGlobal(),
         ];
+
         return view('global_items', $data);
     }
 
@@ -299,6 +325,7 @@ class ItemController extends BaseController
             $this->model->update($id, ['id_user' => 1]);
             $audit = new AuditLogModel();
             $audit->logAction('Transfert Carte', "La carte ID {$id} ('{$item->titre}') a été transférée à l'admin.");
+
             return redirect()->back()->with('message', "La carte a été transférée à l'admin avec succès.");
         }
 
@@ -314,17 +341,19 @@ class ItemController extends BaseController
                 if (!auth()->loggedIn()) {
                     return $this->response->setJSON([
                         'success' => false,
-                        'error'   => 'Session expirée. Veuillez recharger la page.'
+                        'error' => 'Session expirée. Veuillez recharger la page.',
                     ]);
                 }
 
                 $userId = auth()->id();
-                $isAdmin = auth()->user()->inGroup('admin', 'superadmin');
+                $isSuperAdmin = auth()->user()->inGroup('superadmin');
                 $count = 0;
 
                 foreach ($json->order as $index => $itemId) {
                     $item = $this->model->find($itemId);
-                    if ($item && ((int) $item->id_user === (int) $userId || $isAdmin)) {
+
+                    // Seuls le propriétaire ou le Super-Admin peuvent réordonner
+                    if ($item && ((int) $item->id_user === (int) $userId || $isSuperAdmin)) {
                         $this->model->update($itemId, ['position' => $index]);
                         ++$count;
                     }
@@ -336,8 +365,8 @@ class ItemController extends BaseController
                 }
 
                 return $this->response->setJSON([
-                    'success'    => true,
-                    'message'    => 'Ordre mis à jour avec succès.',
+                    'success' => true,
+                    'message' => 'Ordre mis à jour avec succès.',
                     'csrf_token' => csrf_hash(),
                 ]);
             }
@@ -345,8 +374,101 @@ class ItemController extends BaseController
 
         return $this->response->setJSON([
             'success' => false,
-            'error'   => 'Requête invalide ou données manquantes.',
+            'error' => 'Requête invalide ou données manquantes.',
         ]);
+    }
+
+    public function checkDispo()
+    {
+        $urlCible = $this->request->getGet('urlCible');
+
+        if (empty($urlCible) || !filter_var($urlCible, FILTER_VALIDATE_URL)) {
+            return $this->response->setJSON(['success' => false, 'error' => 'URL invalide.']);
+        }
+
+        $siteConfigModel = new SiteConfigModel();
+        $sites = $siteConfigModel->where('is_active', 1)->findAll();
+        $currentConfig = null;
+
+        foreach ($sites as $config) {
+            if (false !== stripos($urlCible, $config['domain'])) {
+                $currentConfig = $config;
+
+                break;
+            }
+        }
+
+        if (!$currentConfig) {
+            return $this->response->setJSON([
+                'success' => false,
+                'error' => 'Domaine non supporté par le script de vérification.',
+            ]);
+        }
+
+        preg_match($currentConfig['regex_episode'], $urlCible, $matches);
+        $episodeExtrait = $matches[1] ?? null;
+
+        $indicateursPageInvalide = json_decode($currentConfig['indicateurs_page_invalide'], true) ?? [];
+        $indicateursLecteur = json_decode($currentConfig['indicateurs_lecteur'], true) ?? [];
+
+        try {
+            $client = Services::curlrequest([
+                'timeout' => 8,
+                'connect_timeout' => 5,
+                'http_errors' => false,
+                'allow_redirects' => true,
+                'verify' => false,
+                'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) CodeIgniter4/Checker',
+            ]);
+
+            $response = $client->get($urlCible);
+
+            if (404 === $response->getStatusCode()) {
+                return $this->response->setJSON([
+                    'success' => true,
+                    'disponible' => false,
+                    'details' => ['erreur' => 'Page 404 retournée'],
+                ]);
+            }
+
+            $html = (string) $response->getBody();
+            $estSurFicheAnime = false;
+
+            foreach ($indicateursPageInvalide as $indicator) {
+                if (false !== stripos($html, $indicator)) {
+                    $estSurFicheAnime = true;
+
+                    break;
+                }
+            }
+
+            $lecteurPresent = false;
+            foreach ($indicateursLecteur as $indicator) {
+                $indicatorFinal = $episodeExtrait ? str_replace('{ep}', (string) $episodeExtrait, $indicator) : $indicator;
+                if (false !== stripos($html, $indicatorFinal)) {
+                    $lecteurPresent = true;
+
+                    break;
+                }
+            }
+
+            $estDisponible = !$estSurFicheAnime && $lecteurPresent;
+
+            return $this->response->setJSON([
+                'success' => true,
+                'disponible' => $estDisponible,
+                'details' => [
+                    'estSurFicheAnime' => $estSurFicheAnime,
+                    'lecteurPresent' => $lecteurPresent,
+                    'episodeDetecte' => $episodeExtrait,
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            return $this->response->setJSON([
+                'success' => false,
+                'error' => 'Erreur Interne : '.$e->getMessage(),
+            ]);
+        }
     }
 
     private function scrapeOpenGraph(string $url): ?array
@@ -391,102 +513,5 @@ class ItemController extends BaseController
         }
 
         return $data;
-    }
-
-    public function checkDispo()
-    {
-        $urlCible = $this->request->getGet('urlCible');
-        
-        if (empty($urlCible) || !filter_var($urlCible, FILTER_VALIDATE_URL)) {
-            return $this->response->setJSON(['success' => false, 'error' => 'URL invalide.']);
-        }
-
-        $siteConfigModel = new \App\Models\SiteConfigModel();
-        $sites = $siteConfigModel->where('is_active', 1)->findAll();
-
-        $currentConfig = null;
-        foreach ($sites as $config) {
-            if (stripos($urlCible, $config['domain']) !== false) {
-                $currentConfig = $config;
-                break;
-            }
-        }
-
-        if (!$currentConfig) {
-            return $this->response->setJSON([
-                'success' => false, 
-                'error' => 'Domaine non supporté par le script de vérification.'
-            ]);
-        }
-
-        preg_match($currentConfig['regex_episode'], $urlCible, $matches);
-        $episodeExtrait = $matches[1] ?? null;
-
-        $indicateursPageInvalide = json_decode($currentConfig['indicateurs_page_invalide'], true) ?? [];
-        $indicateursLecteur = json_decode($currentConfig['indicateurs_lecteur'], true) ?? [];
-
-        try {
-            $client = \Config\Services::curlrequest([
-                'timeout'         => 8,
-                'connect_timeout' => 5,
-                'http_errors'     => false,
-                'allow_redirects' => true,
-                'verify'          => false,
-                'user_agent'      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) CodeIgniter4/Checker'
-            ]);
-
-            $response = $client->get($urlCible);
-            
-            // Si la page est en 404 (Introuvable)
-            if ($response->getStatusCode() === 404) {
-                return $this->response->setJSON([
-                    'success'    => true,
-                    'disponible' => false,
-                    'details'    => ['erreur' => 'Page 404 retournée']
-                ]);
-            }
-
-            $html = (string) $response->getBody();
-
-            // Vérification 1 : Est-on redirigé sur une fiche globale au lieu de l'épisode ?
-            $estSurFicheAnime = false;
-            foreach ($indicateursPageInvalide as $indicator) {
-                if (stripos($html, $indicator) !== false) {
-                    $estSurFicheAnime = true;
-                    break;
-                }
-            }
-
-            // Vérification 2 : Y a-t-il le lecteur vidéo (avec remplacement de {ep}) ?
-            $lecteurPresent = false;
-            foreach ($indicateursLecteur as $indicator) {
-                $indicatorFinal = $episodeExtrait ? str_replace('{ep}', (string)$episodeExtrait, $indicator) : $indicator;
-
-                if (stripos($html, $indicatorFinal) !== false) {
-                    $lecteurPresent = true;
-                    break;
-                }
-            }
-            
-            // L'ÉQUATION FINALE CORRIGÉE : 
-            // C'est disponible uniquement si on n'est PAS sur une fiche ET que le lecteur est présent.
-            $estDisponible = !$estSurFicheAnime && $lecteurPresent;
-
-            return $this->response->setJSON([
-                'success'    => true, // On renvoie "true" pour que le Javascript traite la réponse
-                'disponible' => $estDisponible,
-                'details'    => [
-                    'estSurFicheAnime' => $estSurFicheAnime,
-                    'lecteurPresent'   => $lecteurPresent,
-                    'episodeDetecte'   => $episodeExtrait
-                ]
-            ]);
-
-        } catch (\Throwable $e) {
-            return $this->response->setJSON([
-                'success' => false, 
-                'error'   => 'Erreur Interne : ' . $e->getMessage()
-            ]);
-        }
     }
 }
