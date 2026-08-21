@@ -19,7 +19,7 @@ jobs:
 
       - name: 📦 Nettoyage du vendor (Production)
         # Les commentaires ici sont valides car ils ne sont pas dans un bloc littéral (|)
-        working-directory: mathis.likesyou.org/htdocs
+        working-directory: htdocs
         run: composer install --no-dev --optimize-autoloader
 
       - name: 📂 Synchronisation FTP
