@@ -9,6 +9,9 @@
   ),
   'aliases' => 
   array (
+
+
+    dezrzer"éer"rezfezréer"ér"eézddazeazeaze"s);
     'Config\\Exceptions' => 'Config\\Exceptions',
     'Config\\ContentSecurityPolicy' => 'Config\\ContentSecurityPolicy',
     'Config\\App' => 'Config\\App',

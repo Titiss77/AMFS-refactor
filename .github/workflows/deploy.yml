@@ -52,5 +52,7 @@ jobs:
             **/sites_non_lances/
             **/sites_non_lances/**
             writable/cache/**
+            writable/cache/FactoriesCache_config
+            writable/cache/FileLocatorCache
             writable/logs/**
             writable/session/**
