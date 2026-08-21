@@ -17,18 +17,29 @@ jobs:
       - name: 🚚 Récupération du code
         uses: actions/checkout@v3
 
-      - name: 📦 Nettoyage du vendor de titiss.space
-        # On prépare les dépendances de production AVANT l'envoi
-        working-directory: titiss.space/htdocs
-        run: composer install --no-dev --optimize-autoloader
+      - name: 📦 Préparation de tous les sites (Composer & Cache)
+        # On boucle sur tous les dossiers de vos sites pour les préparer
+        run: |
+          for site in htdocs titiss.space/htdocs etc; do
+            if [ -d "$site" ]; then
+              echo "Préparation de $site..."
+              cd $site
+              
+              # Installation des dépendances de prod si composer.json existe
+              if [ -f "composer.json" ]; then
+                composer install --no-dev --optimize-autoloader
+              fi
+              
+              # Nettoyage du cache CI4 si le dossier existe
+              if [ -d "writable/cache" ]; then
+                rm -rf writable/cache/*
+              fi
+              
+              cd - > /dev/null
+            fi
+          done
 
-      - name: 🗑️ Nettoyage du cache de titiss.space
-        # On vide le cache AVANT l'envoi
-        working-directory: titiss.space/htdocs
-        run: rm -rf writable/cache/*
-
-      - name: 📂 Synchronisation FTP
-        # L'envoi FTP se fait en dernier, avec un dossier propre
+      - name: 📂 Synchronisation FTP Globale
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -36,26 +47,25 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           server-dir: /
-          state-name: htdocs/.ftp-deploy-sync-state.json
+          state-name: .ftp-deploy-sync-state.json
           
           exclude: |
             **/.git*
             **/.git*/**
             **/.github/**
-            **/tests/**
-            **/user_guide_src/**
-            **/phpunit.xml.dist
             **/.env
             **/spark
+            **/phpunit.xml.dist
             **/README.md
-            LICENSE
-            composer.json
-            composer.lock
+            **/LICENSE
+            **/composer.json
+            **/composer.lock
+            **/tests/**
+            **/user_guide_src/**
             **/vendor/phpunit/**
             **/vendor/fakerphp/**
             **/vendor/symfony/**
             **/vendor/mockery/**
-            **/sites_non_lances/
             **/sites_non_lances/**
             **/writable/cache/**
             **/writable/logs/**
