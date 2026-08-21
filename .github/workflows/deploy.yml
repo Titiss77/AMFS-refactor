@@ -17,12 +17,18 @@ jobs:
       - name: 🚚 Récupération du code
         uses: actions/checkout@v3
 
-      - name: 📦 Nettoyage du vendor (Production)
-        # Les commentaires ici sont valides car ils ne sont pas dans un bloc littéral (|)
-        working-directory: htdocs
+      - name: 📦 Nettoyage du vendor de titiss.space
+        # On prépare les dépendances de production AVANT l'envoi
+        working-directory: titiss.space/htdocs
         run: composer install --no-dev --optimize-autoloader
 
+      - name: 🗑️ Nettoyage du cache de titiss.space
+        # On vide le cache AVANT l'envoi
+        working-directory: titiss.space/htdocs
+        run: rm -rf writable/cache/*
+
       - name: 📂 Synchronisation FTP
+        # L'envoi FTP se fait en dernier, avec un dossier propre
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -36,23 +42,21 @@ jobs:
             **/.git*
             **/.git*/**
             **/.github/**
-            tests/**
-            user_guide_src/**
-            phpunit.xml.dist
-            .env
-            spark
-            README.md
+            **/tests/**
+            **/user_guide_src/**
+            **/phpunit.xml.dist
+            **/.env
+            **/spark
+            **/README.md
             LICENSE
             composer.json
             composer.lock
-            vendor/phpunit/**
-            vendor/fakerphp/**
-            vendor/symfony/**
-            vendor/mockery/**
+            **/vendor/phpunit/**
+            **/vendor/fakerphp/**
+            **/vendor/symfony/**
+            **/vendor/mockery/**
             **/sites_non_lances/
             **/sites_non_lances/**
-            writable/cache/**
-            writable/cache/FactoriesCache_config
-            writable/cache/FileLocatorCache
-            writable/logs/**
-            writable/session/**
+            **/writable/cache/**
+            **/writable/logs/**
+            **/writable/session/**
