@@ -18,19 +18,18 @@ jobs:
         uses: actions/checkout@v3
 
       - name: 📦 Préparation de tous les sites (Composer & Cache)
-        # On boucle sur tous les dossiers de vos sites pour les préparer
         run: |
-          for site in htdocs titiss.space/htdocs etc; do
+          # Ajoute bien tous tes chemins séparés par des espaces
+          for site in htdocs titiss.space/htdocs mathis.likesyou.org/htdocs; do
             if [ -d "$site" ]; then
               echo "Préparation de $site..."
               cd $site
               
-              # Installation des dépendances de prod si composer.json existe
               if [ -f "composer.json" ]; then
+                # Va générer un vendor tout neuf sans les dépendances de dev
                 composer install --no-dev --optimize-autoloader
               fi
               
-              # Nettoyage du cache CI4 si le dossier existe
               if [ -d "writable/cache" ]; then
                 rm -rf writable/cache/*
               fi
