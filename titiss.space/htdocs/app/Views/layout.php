@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMFS</title>
+    <title>AMFS test</title>
 
     <!-- DNS Prefetch / Preconnect pour accélérer le chargement des images externes -->
     <link rel="preconnect" href="https://image.tmdb.org" crossorigin>
