@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
@@ -35,7 +33,7 @@ class ItemModel extends Model
         ;
 
         if (null === $userId) {
-            $builder->where('i.is_public', 2);
+            $builder->where('i.is_public', 1);
         } else {
             $builder->groupStart()->where('i.id_user', $userId)->orWhere('i.is_public', 1)->groupEnd();
         }
@@ -46,12 +44,13 @@ class ItemModel extends Model
 
         $builder->orderBy('h.id', 'ASC')->orderBy('d.id', 'ASC')->orderBy('i.position', 'ASC');
         $results = $builder->get()->getCustomResultObject(Item::class);
-        $groupedData = [];
 
+        $groupedData = [];
         foreach ($results as $item) {
             $header = $item->header_nom;
             $division = $item->division_nom;
             $subCat = empty($item->sous_categorie) ? 'Sans sous-catégorie' : $item->sous_categorie;
+
             if (!isset($groupedData[$header])) {
                 $groupedData[$header] = [];
             }
@@ -61,10 +60,33 @@ class ItemModel extends Model
             if (!isset($groupedData[$header][$division][$subCat])) {
                 $groupedData[$header][$division][$subCat] = [];
             }
+
             $groupedData[$header][$division][$subCat][] = $item;
         }
 
         return $groupedData;
+    }
+
+    // Nouvelle méthode pour ne récupérer que les onglets contenant des cartes
+    public function getActiveHeaders($userId = null)
+    {
+        $builder = $this->db->table('header h')
+            ->select('h.*')
+            ->distinct() // Pour ne pas récupérer la catégorie en double si elle a plusieurs cartes
+            ->join('division d', 'd.id_header = h.id')
+            ->join('item i', 'i.id_division = d.id')
+            ->where('i.deleted_at IS NULL')
+            ->where('i.id_user !=', 0);
+
+        // On filtre selon ce que la personne a le droit de voir
+        if (null === $userId) {
+            $builder->where('i.is_public', 1); // Visiteur = Uniquement publique
+        } else {
+            // Utilisateur co = Ses propres cartes OU les cartes publiques
+            $builder->groupStart()->where('i.id_user', $userId)->orWhere('i.is_public', 1)->groupEnd();
+        }
+
+        return $builder->orderBy('h.id', 'ASC')->get()->getResultArray();
     }
 
     public function getDivisions()
@@ -74,6 +96,7 @@ class ItemModel extends Model
 
     public function getHeaders()
     {
+        // On garde cette méthode intacte pour que le formulaire de création continue d'afficher TOUTES les catégories
         return $this->db->table('header')->orderBy('id', 'ASC')->get()->getResultArray();
     }
 
