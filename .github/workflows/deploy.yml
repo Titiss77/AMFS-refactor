@@ -17,25 +17,23 @@ jobs:
       - name: 🚚 Récupération du code
         uses: actions/checkout@v4
 
-      - name: 📦 Préparation de tous les sites (Composer & Cache)
+      - name: 📦 Préparation automatique de tous les sites
         run: |
-          # Ajoute bien tous tes chemins séparés par des espaces
-          for site in htdocs titiss.space/htdocs cmg-navy.22web.org/htdocs; do
-            if [ -d "$site" ]; then
-              echo "Préparation de $site..."
-              cd $site
-              
-              if [ -f "composer.json" ]; then
-                # Va générer un vendor tout neuf sans les dépendances de dev
-                composer install --no-dev --optimize-autoloader
-              fi
-              
-              if [ -d "writable/cache" ]; then
-                rm -rf writable/cache/*
-              fi
-              
-              cd - > /dev/null
+          # Recherche automatique de tous les dossiers contenant un composer.json ou un dossier writable/cache (excluant les vendor)
+          find . -maxdepth 3 -name "composer.json" -not -path "*/vendor/*" | while read -r file; do
+            site=$(dirname "$file")
+            echo "Préparation automatique de $site..."
+            cd "$site"
+            
+            # Installation des dépendances de production
+            composer install --no-dev --optimize-autoloader
+            
+            # Nettoyage du cache s'il existe
+            if [ -d "writable/cache" ]; then
+              rm -rf writable/cache/*
             fi
+            
+            cd - > /dev/null
           done
 
       - name: 📂 Synchronisation FTP Globale
