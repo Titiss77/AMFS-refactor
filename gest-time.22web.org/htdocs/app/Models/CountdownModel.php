@@ -4,7 +4,7 @@ use CodeIgniter\Model;
 
 class CountdownModel extends Model
 {
-    protected $table = 'allDates'; // Ou 'allDates' selon le nom de votre table
+    protected $table = 'alldates'; // Ou 'allDates' selon le nom de votre table
     protected $primaryKey = 'id';
     
     // Ajout de 'last_active'
