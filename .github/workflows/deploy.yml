@@ -45,6 +45,7 @@ jobs:
           protocol: ftp
           server-dir: ./
           state-name: htdocs/.ftp-deploy-sync-state.json
+          timeout: 300000
           
           exclude: |
             **/.git*
